@@ -1,0 +1,14 @@
+.title {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0 0 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(295px, auto));
+  gap: 20px;
+  justify-content: start;
+}
