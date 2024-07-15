@@ -1,0 +1,16 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.sub {
+  color: var(--text-color-secondary);
+  font-size: 16px;
+  line-height: 1.4;
+}
