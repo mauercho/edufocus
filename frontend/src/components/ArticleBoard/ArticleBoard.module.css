@@ -1,0 +1,23 @@
+.articleBoard {
+  width: 920px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.title {
+  width: 820px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
