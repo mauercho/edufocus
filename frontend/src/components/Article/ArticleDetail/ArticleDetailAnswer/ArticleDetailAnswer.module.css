@@ -1,0 +1,25 @@
+.answer {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 12px 16px;
+}
+
+.answerHeader {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.content {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.author {
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 1.4;
+    color: var(--text-color-secondary);
+    margin-left: 4px;
+}
