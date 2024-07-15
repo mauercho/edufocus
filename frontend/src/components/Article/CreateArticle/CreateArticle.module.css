@@ -1,0 +1,87 @@
+.header {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.backButton {
+    display: flex;
+    color: var(--text-color-secondary);
+    flex-wrap: nowrap;
+    line-height: 1.2;
+    font-weight: 400;
+    font-size: 20px;
+    padding-bottom: 8px;
+}
+
+.backText {
+    padding-left: 4px;
+}
+
+.title {
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.formWrapper {
+    margin-top: 20px;
+}
+
+.fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+}
+
+.label {
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+
+.titleInput {
+    padding: 20px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.contentInput {
+    padding: 20px;
+    height: 150px;
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+
+.buttonWrapper {
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.buttonText {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+    padding-left: 8px;
+}
