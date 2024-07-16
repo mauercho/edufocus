@@ -1,5 +1,21 @@
 .area {
+  width: 100%;
   max-width: 1320px;
   padding: 0 40px;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.hasSideBar {
+  display: flex;
+  gap: 20px;
+
+  & > aside {
+    flex-shrink: 0;
+    width: 320px;
+  }
+
+  & > main {
+    width: 100%;
+  }
 }

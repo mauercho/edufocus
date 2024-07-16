@@ -3,7 +3,7 @@ import styles from './SideLink.module.css';
 
 export default function SideLink({ children, path }) {
   return (
-    <li>
+    <li className={styles.list}>
       <Link
         to={path}
         className={styles.link}
