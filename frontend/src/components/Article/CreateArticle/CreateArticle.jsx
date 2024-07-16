@@ -5,8 +5,7 @@ import styles from "./CreateArticle.module.css"
 export default function CreateArticle() {
     // TODO: 입력 크기에 따라 반응형으로 textarea 크기 변경 
     return (
-        <>
-        <div>
+        <div className={styles.createArticle}>
             <header className={styles.header}>
                 <div>
                     <Link to={'/'} className={styles.backButton}>
@@ -35,6 +34,5 @@ export default function CreateArticle() {
                 </form>
             </div>
         </div>
-        </>
     )
 }
