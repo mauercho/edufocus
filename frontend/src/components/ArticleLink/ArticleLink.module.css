@@ -1,6 +1,6 @@
 .articleLink {
   border-radius: 8px;
-  width: 820px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
