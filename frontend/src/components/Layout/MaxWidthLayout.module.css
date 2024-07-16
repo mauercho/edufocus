@@ -12,6 +12,9 @@
 
   & > aside {
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     width: 320px;
   }
 
