@@ -3,7 +3,6 @@ import styles from './ArticleDetailAnswer.module.css'
 
 export default function ArticleDetailAnswer () {
     return (
-        <>
         <div className={styles.answer}>
             <div className={styles.answerHeader}>
                 <div>--</div>
@@ -11,6 +10,5 @@ export default function ArticleDetailAnswer () {
             </div>
             <div className={styles.content}>Lorem ipsum dolor sit amet.</div>
         </div>
-        </>
     )
 }

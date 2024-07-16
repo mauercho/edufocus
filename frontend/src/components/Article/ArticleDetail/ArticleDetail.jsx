@@ -8,7 +8,6 @@ export default function ArticleDetail() {
     const author = '이재용';
     const content = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis sed dolorem vitae?';
     return (
-        <>
         <div className={styles.articleDetail}>
             <header>
                 <div>
@@ -27,6 +26,5 @@ export default function ArticleDetail() {
             </div>
             <ArticleDetailAnswer />
         </div>
-        </>
     )
 }
