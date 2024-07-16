@@ -1,38 +1,38 @@
 .articleDetail {
-    width: 100%;
-    background-color: var(--background-default);
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  width: 100%;
+  background-color: var(--background-default);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .articleDetail > * {
-    padding-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 .backButton {
-    display: flex;
-    color: var(--text-color-secondary);
-    flex-wrap: nowrap;
-    line-height: 1.2;
-    font-weight: 400;
-    font-size: 20px;
-    padding-bottom: 8px;
+  display: flex;
+  color: var(--text-color-secondary);
+  flex-wrap: nowrap;
+  line-height: 1.2;
+  font-weight: 400;
+  font-size: 20px;
+  padding-bottom: 8px;
 }
 
 .backText {
-    padding-left: 4px;
+  padding-left: 4px;
 }
 
 .title {
-    font-size: 32px;
-    line-height: 1.2;
-    font-weight: 800;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 800;
 }
 
 .author {
-    font-size: 14px;
-    font-weight: 200;
-    line-height: 1.4;
-    color: var(--text-color-secondary);
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 1.4;
+  color: var(--text-color-secondary);
 }
