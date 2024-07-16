@@ -124,6 +124,17 @@
   --warning-color: var(--yellow500);
   --info-color: var(--blue500);
 
+  --on-primary: var(--whiteOpacity800);
+  --on-error: var(--whiteOpacity800);
+  --on-success: var(--whiteOpacity800);
+  --on-warning: var(--whiteOpacity800);
+  --on-info: var(--whiteOpacity800);
+
+  --error-border: var(--red700);
+  --success-border: var(--green700);
+  --warning-border: var(--yellow700);
+  --info-border: var(--blue700);
+
   /* shadow */
   --shadow: 2px 4px 12px var(--greyOpacity200);
   --shadow-hard: 2px 4px 16px var(--greyOpacity300);
