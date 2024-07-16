@@ -14,9 +14,7 @@ export default function ClassInfo({ classTerm, classTime }) {
           <div className={styles.content}>{classTime}</div>
         </div>
       </div>
-      <button className={styles.button}>
-        <div className={styles.buttonText}>수강신청</div>
-      </button>
+      <button className={styles.button}>수강신청</button>
     </div>
   );
 }
