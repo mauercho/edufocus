@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody User user) throws Exception {
 
-        System.out.println("!!!");
+
         userService.join(user);
         return ResponseEntity.ok("User registered successfully");
     }
