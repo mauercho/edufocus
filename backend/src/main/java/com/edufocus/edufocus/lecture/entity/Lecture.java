@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.lecture.entity;
 
+import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,9 @@ public class Lecture {
     @Column
     private Long id;
 
-    @Column(name = "teacher_id")
-    private String teacherId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String title;

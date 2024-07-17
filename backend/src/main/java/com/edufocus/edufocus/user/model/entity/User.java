@@ -17,7 +17,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 설정
     private Long id;
 
-    private String user_id;
+    @Column(name = "user_id", unique = true, nullable = false)
+    private String userId;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING) // 혹은 EnumType.ORDINAL
