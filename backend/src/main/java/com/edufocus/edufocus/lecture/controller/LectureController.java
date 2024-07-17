@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.lecture.controller;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
+import com.edufocus.edufocus.lecture.entity.LectureRegist;
 import com.edufocus.edufocus.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,26 +20,28 @@ public class LectureController {
     private final LectureService lectureService;
 
     @PostMapping
-    public ResponseEntity<?> createLecture (@RequestBody Lecture lecture) {
-        lectureService.createLecture(lecture);
+    public ResponseEntity<?> createLecture (@RequestBody long userId, @RequestBody LectureRegist lectureRegist) {
+        lectureService.createLecture(userId, lectureRegist);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{lectureId}")
-    public ResponseEntity<?> deleteLecture (@PathVariable long lectureId) {
-        lectureService.deleteLecture(lectureId);
+    public ResponseEntity<?> deleteLecture (@RequestBody long userId, @PathVariable long lectureId) {
+        if (!lectureService.deleteLecture(userId, lectureId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
     public ResponseEntity<?> findAllLecture () {
         List<Lecture> lectures = lectureService.findAllLecture();
-        return new ResponseEntity<>(lectures, HttpStatus.OK);
-    }
 
-    @GetMapping("/teacherId/{teacherId}")
-    public ResponseEntity<?> findByTeacherId (@PathVariable String teacherId) {
-        List<Lecture> lectures = lectureService.findLectureByTeacherId(teacherId);
+        if (lectures.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
 
@@ -52,5 +55,7 @@ public class LectureController {
 
         return new ResponseEntity<>(lecture, HttpStatus.OK);
     }
+
+
 
 }

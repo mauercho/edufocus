@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.lecture.entity;
 
-import com.edufocus.edufocus.qna.entity.Qna;
+
+import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,9 @@ public class Lecture {
     @Column(name="lecture_id")
     private Long id;
 
-    @Column(name = "teacher_id")
-    private String teacherId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String title;
@@ -42,8 +44,6 @@ public class Lecture {
     @Column
     private boolean online;
 
-//
-//    @OneToMany(mappedBy = "lecture")
-//    private List<Qna> qnas = new ArrayList<>();
+
 
 }

@@ -24,6 +24,7 @@ public class User {
     private Long id;
 
 
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
     private String email;
     private String password;
@@ -31,8 +32,6 @@ public class User {
     private UserRole role;
 
 
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Qna> qnas= new ArrayList<>();
+
 
 }
