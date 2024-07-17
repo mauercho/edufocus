@@ -1,6 +1,6 @@
 import { ClassCard } from '../../components/ClassCard';
 import { ClassGrid } from '../../components/ClassGrid';
-import styles from './StudentHomeMainPage.module.css';
+import { MaxWidthLayout } from '../../components/Layout';
 
 export default function StudentHomeMainPage() {
   const onGoingClasses = [
@@ -18,7 +18,7 @@ export default function StudentHomeMainPage() {
     { lecture_id: 6, title: '스페인어' },
   ];
   return (
-    <div className={styles.lectures}>
+    <MaxWidthLayout>
       <ClassGrid title="수강중인 강의">
         {onGoingClasses.map((lecture) => (
           <ClassCard
@@ -39,6 +39,6 @@ export default function StudentHomeMainPage() {
           </ClassCard>
         ))}
       </ClassGrid>
-    </div>
+    </MaxWidthLayout>
   );
 }
