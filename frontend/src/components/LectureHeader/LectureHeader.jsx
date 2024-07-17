@@ -1,6 +1,6 @@
 import styles from './LectureHeader.module.css';
 
-export default function LectureHeader({ img, title, tutorImg, tutor, isLive }) {
+export default function LectureHeader({ img, title, tutorImg, tutor, isLive = false }) {
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
