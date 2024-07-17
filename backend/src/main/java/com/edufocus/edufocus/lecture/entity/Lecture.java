@@ -35,6 +35,8 @@ public class Lecture {
     @Lob
     private String plan;
 
+    @Column
+    private boolean online;
 
 
 }
