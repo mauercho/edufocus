@@ -1,10 +1,13 @@
 package com.edufocus.edufocus.lecture.entity;
 
+import com.edufocus.edufocus.qna.entity.Qna;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,7 +15,8 @@ import java.util.Date;
 public class Lecture {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+
+    @Column(name="lecture_id")
     private Long id;
 
     @Column(name = "teacher_id")
@@ -38,5 +42,8 @@ public class Lecture {
     @Column
     private boolean online;
 
+//
+//    @OneToMany(mappedBy = "lecture")
+//    private List<Qna> qnas = new ArrayList<>();
 
 }
