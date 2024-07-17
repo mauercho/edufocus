@@ -3,6 +3,7 @@
   padding: 20px;
   box-sizing: border-box;
   border-radius: 20px;
+  border: 1px solid var(--border-color);
   background-color: var(--background-default);
 }
 
