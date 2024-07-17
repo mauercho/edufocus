@@ -1,16 +1,16 @@
-import styles from './QuestionListPage.module.css';
 import LectureHeader from '../../components/LectureHeader/LectureHeader';
 import { SideBar, SideLink, SideItem } from '../../components/SideBar';
 import { ArticleLink } from '../../components/ArticleLink';
 import { MaxWidthLayout } from '../../components/Layout';
+import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 
 export default function QuestionListPage() {
   const notices = [
     {},
-    { title: '공지사항1', noticeDate: '7-12 오전 11:40:57' },
-    { title: '공지사하앙2', noticeDate: '7-12 오전 11:40:57' },
-    { title: '공지사하앙33', noticeDate: '7-15 오전 11:40:57' },
-    { title: '제목만 있는 경우' },
+    { title: 'Question1', noticeDate: '7-12 오전 11:40:57' },
+    { title: 'Question2', noticeDate: '7-12 오전 11:40:57' },
+    { title: '헷갈리는게 있어요', noticeDate: '7-15 오전 11:40:57' },
+    { title: '궁금궁금', noticeDate: '7-15 오전 11:40:57' },
     { noticeDate: '날짜만 있는 경우' },
   ];
 
@@ -46,17 +46,11 @@ export default function QuestionListPage() {
           </SideBar>
         </aside>
         <main>
-          <div className={styles.title}>
-            <div className={styles.titleText}>Q&A</div>
-            <button
-              type="button"
-              className={styles.button}
-            >
-              <div>ㅁ</div>
-              <div className={styles.buttonText}>글쓰기</div>
-            </button>
-          </div>
-          <div>
+          <ArticleBoard
+            title="Q&A"
+            canCreate={true}
+            createPath="/"
+          >
             {notices.map((notice) => {
               if (notice.noticeDate && notice.title) {
                 return (
@@ -68,7 +62,7 @@ export default function QuestionListPage() {
                 );
               }
             })}
-          </div>
+          </ArticleBoard>
         </main>
       </MaxWidthLayout>
     </>
