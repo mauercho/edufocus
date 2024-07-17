@@ -1,0 +1,9 @@
+.lectures {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 0 40px;
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+}
