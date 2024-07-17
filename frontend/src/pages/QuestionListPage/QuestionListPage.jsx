@@ -26,53 +26,51 @@ export default function QuestionListPage() {
         tutor={lecture.tutor}
         isLive={lecture.isLive}
       />
-      <div>
-        <MaxWidthLayout hasSideBar>
-          <aside className={styles.aside}>
-            <SideBar title="바로가기">
-              <SideLink path={'/'}>공지사항</SideLink>
-              <SideLink path={'/'}>Q&A</SideLink>
-              <SideLink path={'/'}>수업자료</SideLink>
-              <SideLink path={'/'}>퀴즈</SideLink>
-            </SideBar>
-            <SideBar title="내 학습">
-              <SideItem
-                name="진도율"
-                sub="2 / 12"
-              />
-              <SideItem
-                name="퀴즈 정답률"
-                sub="80%"
-              />
-            </SideBar>
-          </aside>
-          <main>
-            <div className={styles.title}>
-              <div className={styles.titleText}>Q&A</div>
-              <button
-                type="button"
-                className={styles.button}
-              >
-                <div>ㅁ</div>
-                <div className={styles.buttonText}>글쓰기</div>
-              </button>
-            </div>
-            <div>
-              {notices.map((notice) => {
-                if (notice.noticeDate && notice.title) {
-                  return (
-                    <ArticleLink
-                      key={notice.noticeDate}
-                      title={notice.title}
-                      noticeDate={notice.noticeDate}
-                    />
-                  );
-                }
-              })}
-            </div>
-          </main>
-        </MaxWidthLayout>
-      </div>
+      <MaxWidthLayout hasSideBar>
+        <aside>
+          <SideBar title="바로가기">
+            <SideLink path={'/'}>공지사항</SideLink>
+            <SideLink path={'/'}>Q&A</SideLink>
+            <SideLink path={'/'}>수업자료</SideLink>
+            <SideLink path={'/'}>퀴즈</SideLink>
+          </SideBar>
+          <SideBar title="내 학습">
+            <SideItem
+              name="진도율"
+              sub="2 / 12"
+            />
+            <SideItem
+              name="퀴즈 정답률"
+              sub="80%"
+            />
+          </SideBar>
+        </aside>
+        <main>
+          <div className={styles.title}>
+            <div className={styles.titleText}>Q&A</div>
+            <button
+              type="button"
+              className={styles.button}
+            >
+              <div>ㅁ</div>
+              <div className={styles.buttonText}>글쓰기</div>
+            </button>
+          </div>
+          <div>
+            {notices.map((notice) => {
+              if (notice.noticeDate && notice.title) {
+                return (
+                  <ArticleLink
+                    key={`${notice.title}${notice.noticeDate}`}
+                    title={notice.title}
+                    noticeDate={notice.noticeDate}
+                  />
+                );
+              }
+            })}
+          </div>
+        </main>
+      </MaxWidthLayout>
     </>
   );
 }
