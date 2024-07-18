@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import styles from './ArticleDetail.module.css';
 import ArticleDetailAnswer from './ArticleDetailAnswer/ArticleDetailAnswer';
 
-export default function ArticleDetail() {
-  const title = '헷갈리는게 있어요';
-  const author = '이재용';
-  const content = 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis sed dolorem vitae?';
+export default function ArticleDetail({ topic, title, author, content, answer }) {
+  // TODO: 답변 작성 기능 추가
+  console.log(answer);
   return (
     <div className={styles.articleDetail}>
       <header>
@@ -15,7 +14,7 @@ export default function ArticleDetail() {
             className={styles.backButton}
           >
             <div>-</div>
-            <div className={styles.backText}>Q&A</div>
+            <div className={styles.backText}>{topic}</div>
           </Link>
         </div>
         <div>
@@ -26,7 +25,7 @@ export default function ArticleDetail() {
       <div>
         <p className={styles.content}>{content}</p>
       </div>
-      <ArticleDetailAnswer />
+      <ArticleDetailAnswer answer={answer} />
     </div>
   );
 }
