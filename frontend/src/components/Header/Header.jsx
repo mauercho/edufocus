@@ -11,7 +11,10 @@ export default function Header() {
               to={'/'}
               className={styles.logo}
             >
-              Logo
+              <img
+                src="/src/assets/logo.svg"
+                alt="logo"
+              />
             </Link>
           </li>
           <li>
