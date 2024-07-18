@@ -16,8 +16,7 @@ import java.util.List;
 public class Lecture {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name="lecture_id")
+    @Column
     private Long id;
 
     @ManyToOne
