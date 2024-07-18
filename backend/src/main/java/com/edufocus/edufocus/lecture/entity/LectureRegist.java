@@ -12,6 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class LectureRegist {
 
+    private Long userId;
+
     private String title;
 
     private String description;

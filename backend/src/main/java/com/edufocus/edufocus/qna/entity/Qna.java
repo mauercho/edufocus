@@ -22,10 +22,6 @@ public class Qna {
     @Column(name= "qna_id")
     private Long id;
 
-    // user_id
-    // lecture_id
-
-
 
     @Column
     private String title;
