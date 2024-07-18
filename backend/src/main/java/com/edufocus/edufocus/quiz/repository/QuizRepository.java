@@ -1,4 +1,7 @@
 package com.edufocus.edufocus.quiz.repository;
 
-public interface QuizRepository {
+import com.edufocus.edufocus.quiz.entity.Quiz;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuizRepository extends JpaRepository<Quiz, Long> {
 }
