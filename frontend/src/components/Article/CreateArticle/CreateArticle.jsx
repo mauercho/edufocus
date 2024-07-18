@@ -6,7 +6,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
   const navigate = useNavigate();
 
   const [articleTitle, setArticleTitle] = useState('');
-  const [articleContent, setContent] = useState('');
+  const [articleContent, setArticleContent] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
             value={articleContent}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={(e) => setArticleContent(e.target.value)}
           ></textarea>
         </div>
         <button
