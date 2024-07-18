@@ -5,13 +5,10 @@ import java.util.Date;
 import java.util.Map;
 
 import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -61,8 +58,12 @@ public class JWTUtil {
                     .parseClaimsJws(token);
             log.debug("claims: {}", claims);
             return true;
-        } catch (Exception e) {
+        } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException | SignatureException | ExpiredJwtException e) {
             log.error("Token validation error: {}", e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.out.println(token);
+            log.error("Unexpected error while validating token: {}", e.getMessage());
             return false;
         }
     }
