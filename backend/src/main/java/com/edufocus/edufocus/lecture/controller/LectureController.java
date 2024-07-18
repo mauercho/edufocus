@@ -22,6 +22,8 @@ public class LectureController {
     @PostMapping
     public ResponseEntity<?> createLecture (@RequestBody long userId, LectureRegist lectureRegist) {
         System.out.println("@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>> "+userId);
+
+    // 여기서 id 로직
         lectureService.createLecture(userId, lectureRegist);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

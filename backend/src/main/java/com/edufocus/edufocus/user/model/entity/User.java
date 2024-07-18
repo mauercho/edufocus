@@ -30,7 +30,6 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING) // 혹은 EnumType.ORDINAL
     private UserRole role;
-
     private String refreshToken;
 
 
