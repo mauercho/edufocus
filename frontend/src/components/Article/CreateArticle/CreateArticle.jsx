@@ -6,12 +6,12 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
   const navigate = useNavigate();
 
   const [articleTitle, setArticleTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [articleContent, setContent] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: 글 작성 기능 연결
-    if (articleTitle && content) {
+    if (articleTitle && articleContent) {
       navigate(backPath);
     }
   };
@@ -50,7 +50,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
           <textarea
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
-            value={content}
+            value={articleContent}
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         </div>
@@ -58,7 +58,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
           type="button"
           className={styles.button}
           onClick={handleSubmit}
-          disabled={!articleTitle || !content}
+          disabled={!articleTitle || !articleContent}
         >
           <div>| i |</div>
           <div>글 쓰기</div>
