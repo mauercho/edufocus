@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+
     public User login(User user) throws SQLException
     {
         Optional<User> findUser = userRepository.findByUserId(user.getUserId());
@@ -57,6 +58,19 @@ public class UserServiceImpl implements UserService{
             throw new UserException("없는 유저");
 
 
+        }
+
+    }
+
+    @Override
+    public User userInfo(Long id)
+    {
+        try{
+            return userRepository.findById(id).get();
+        }
+        catch (Exception e)
+        {
+            throw new UserException(e.getMessage());
         }
 
     }
