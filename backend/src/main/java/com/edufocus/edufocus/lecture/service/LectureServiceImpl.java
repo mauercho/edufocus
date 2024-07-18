@@ -1,7 +1,7 @@
 package com.edufocus.edufocus.lecture.service;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
+import com.edufocus.edufocus.lecture.entity.LectureRegist;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
@@ -21,18 +21,18 @@ public class LectureServiceImpl implements LectureService {
     private final UserRepository userRepository;
 
     @Override
-    public void createLecture(long userId, LectureCreateRequest lectureCreateRequest) {
+    public void createLecture(long userId, LectureRegist lectureRegist) {
 
         User user = userRepository.findById(userId).get();
 
         Lecture lecture = new Lecture();
         lecture.setUser(user);
 
-        lecture.setTitle(lectureCreateRequest.getTitle());
-        lecture.setDescription(lectureCreateRequest.getDescription());
-        lecture.setStartDate(lectureCreateRequest.getStartDate());
-        lecture.setEndDate(lectureCreateRequest.getEndDate());
-        lecture.setPlan(lectureCreateRequest.getPlan());
+        lecture.setTitle(lectureRegist.getTitle());
+        lecture.setDescription(lectureRegist.getDescription());
+        lecture.setStartDate(lectureRegist.getStartDate());
+        lecture.setEndDate(lectureRegist.getEndDate());
+        lecture.setPlan(lectureRegist.getPlan());
 
         lectureRepository.save(lecture);
     }

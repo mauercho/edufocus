@@ -1,7 +1,7 @@
 package com.edufocus.edufocus.lecture.controller;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
+import com.edufocus.edufocus.lecture.entity.LectureRegist;
 import com.edufocus.edufocus.lecture.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,8 @@ public class LectureController {
     private final LectureService lectureService;
 
     @PostMapping
-    public ResponseEntity<?> createLecture (@RequestBody long userId, @RequestBody LectureCreateRequest lectureCreateRequest) {
-        lectureService.createLecture(userId, lectureCreateRequest);
+    public ResponseEntity<?> createLecture (@RequestBody long userId, @RequestBody LectureRegist lectureRegist) {
+        lectureService.createLecture(userId, lectureRegist);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

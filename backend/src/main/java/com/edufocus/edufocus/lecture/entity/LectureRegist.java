@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LectureCreateRequest {
+public class LectureRegist {
 
     private String title;
 
