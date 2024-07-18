@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import styles from './ArticleDetail.module.css';
 import ArticleDetailAnswer from './ArticleDetailAnswer/ArticleDetailAnswer';
 
-export default function ArticleDetail({ topic, title, author, content, answer = null }) {
+export default function ArticleDetail({ topic, title, author = null, content, answer = null }) {
   // TODO: 답변 작성 기능 추가
-  console.log(answer);
+
   return (
     <div className={styles.articleDetail}>
       <header>
@@ -19,7 +19,7 @@ export default function ArticleDetail({ topic, title, author, content, answer = 
         </div>
         <div>
           <div className={styles.title}>{title}</div>
-          <div className={styles.author}>{author}</div>
+          {author && <div className={styles.author}>{author}</div>}
         </div>
       </header>
       <div>
