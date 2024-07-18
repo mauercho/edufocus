@@ -1,8 +1,7 @@
 package com.edufocus.edufocus.lecture.service;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import com.edufocus.edufocus.lecture.entity.LectureRegist;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +10,12 @@ import java.util.List;
 @Service
 public interface LectureService {
 
-    void createLecture(Lecture lecture);
+    void createLecture(long userId, LectureRegist lectureRegist);
 
-    void deleteLecture(long lectureId);
+    boolean deleteLecture(long userId, long LectureId);
+
+    List<Lecture> findAllLecture();
 
     Lecture findLectureByTitle(String title);
 
-    List<Lecture> findLectureByTeacherId(String teacherId);
-
-    List<Lecture> findAllLecture();
 }

@@ -1,10 +1,14 @@
 package com.edufocus.edufocus.lecture.entity;
 
+
+import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,11 +16,13 @@ import java.util.Date;
 public class Lecture {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+
+    @Column(name="lecture_id")
     private Long id;
 
-    @Column(name = "teacher_id")
-    private String teacherId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String title;
@@ -34,6 +40,9 @@ public class Lecture {
 
     @Lob
     private String plan;
+
+    @Column
+    private boolean online;
 
 
 

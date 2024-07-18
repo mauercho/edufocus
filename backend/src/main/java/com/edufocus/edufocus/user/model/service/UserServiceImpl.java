@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,18 +28,65 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
+
     public User login(User user) throws SQLException
     {
-        Optional<User> findUser = userRepository.findById(user.getId());
+        Optional<User> findUser = userRepository.findByUserId(user.getUserId());
+
 
         if(findUser.isEmpty())
         {
             throw new UserException("없는 유저");
 
         }
-        return findUser.get();
+
+
+        if(findUser.isPresent())
+        {
+
+            User find = findUser.get();
+            if(find.getPassword().equals(user.getPassword()))
+            {
+                return find;
+            }
+            else{
+                throw new UserException("비밀번호 틀림");
+
+            }
+        }
+        else{
+            throw new UserException("없는 유저");
+
+
+        }
+
     }
 
+    @Override
+    public User userInfo(Long id)
+    {
+        try{
+            return userRepository.findById(id).get();
+        }
+        catch (Exception e)
+        {
+            throw new UserException(e.getMessage());
+        }
 
+    }
+    @Override
+    public void saveRefreshToken(Long id, String refreshToken) throws Exception {
+        userRepository.saveRefreshToken(id, refreshToken);
+    }
+
+    @Override
+    public String getRefreshToken(Long id) throws Exception {
+        return userRepository.getRefreshToken(id);
+    }
+
+    @Override
+    public void deleteRefreshToken(Long id) throws Exception {
+        userRepository.deleteRefreshToken(id);
+    }
 
 }
