@@ -20,7 +20,8 @@ public class LectureController {
     private final LectureService lectureService;
 
     @PostMapping
-    public ResponseEntity<?> createLecture (@RequestBody long userId, @RequestBody LectureRegist lectureRegist) {
+    public ResponseEntity<?> createLecture (@RequestBody long userId, LectureRegist lectureRegist) {
+        System.out.println("@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>> "+userId);
         lectureService.createLecture(userId, lectureRegist);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

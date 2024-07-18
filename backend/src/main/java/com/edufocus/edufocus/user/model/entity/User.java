@@ -31,6 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING) // 혹은 EnumType.ORDINAL
     private UserRole role;
 
+    private String refreshToken;
+
 
 
 
