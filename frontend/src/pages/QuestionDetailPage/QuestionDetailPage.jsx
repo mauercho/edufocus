@@ -3,7 +3,7 @@ import { SideBar, SideLink, SideItem } from '../../components/SideBar';
 import { MaxWidthLayout } from '../../components/Layout';
 import { ArticleDetail } from '../../components/Article';
 
-export default function LearningLectureDetailPage() {
+export default function QuestionDetailPage() {
   const lecture = {
     title: '정보처리기사 실기 완전정복',
     tutor: '박정민',
