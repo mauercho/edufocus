@@ -1,43 +1,69 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './CreateArticle.module.css';
 
-export default function CreateArticle() {
+export default function CreateArticle({ topic, title, backPath = '/' }) {
+  const navigate = useNavigate();
+
+  const [articleTitle, setArticleTitle] = useState('');
+  const [articleContent, setArticleContent] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: 글 작성 기능 연결
+    if (articleTitle && articleContent) {
+      navigate(backPath);
+    }
+  };
   // TODO: 입력 크기에 따라 반응형으로 textarea 크기 변경
+
   return (
     <div className={styles.createArticle}>
-      <header className={styles.header}>
+      <header>
         <div>
           <Link
-            to={'/'}
+            to={backPath}
             className={styles.backButton}
           >
             <div>-</div>
-            <div className={styles.backText}>Q&A</div>
+            <div className={styles.backText}>{title}</div>
           </Link>
         </div>
-        <div className={styles.title}>질문하기</div>
+        <div className={styles.title}>{topic}</div>
       </header>
-      <div className={styles.formWrapper}>
-        <form>
-          <div className={styles.fieldWrapper}>
-            <label className={styles.label}>제목</label>
-            <input
-              type="text"
-              className={styles.titleInput}
-            />
-          </div>
-          <div className={styles.fieldWrapper}>
-            <label className={styles.label}>내용</label>
-            <textarea className={styles.contentInput}></textarea>
-          </div>
-          <div className={styles.buttonWrapper}>
-            <button className={styles.button}>
-              <div>| i |</div>
-              <div className={styles.buttonText}>글 쓰기</div>
-            </button>
-          </div>
-        </form>
-      </div>
+      <form
+        className={styles.formWrapper}
+        onSubmit={handleSubmit}
+      >
+        <div className={styles.fieldWrapper}>
+          <label className={styles.label}>제목</label>
+          <input
+            type="text"
+            className={styles.titleInput}
+            placeholder="제목을 입력하세요"
+            value={articleTitle}
+            onChange={(e) => setArticleTitle(e.target.value)}
+          />
+        </div>
+        <div className={styles.fieldWrapper}>
+          <label className={styles.label}>내용</label>
+          <textarea
+            className={styles.contentInput}
+            placeholder="내용을 입력하세요"
+            value={articleContent}
+            onChange={(e) => setArticleContent(e.target.value)}
+          ></textarea>
+        </div>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={handleSubmit}
+          disabled={!articleTitle || !articleContent}
+        >
+          <div>| i |</div>
+          <div>글 쓰기</div>
+        </button>
+      </form>
     </div>
   );
 }

@@ -2,11 +2,6 @@
   width: 100%;
 }
 
-.header {
-  padding-left: 20px;
-  width: 100%;
-}
-
 .backButton {
   display: flex;
   color: var(--text-color-secondary);
@@ -28,6 +23,8 @@
 }
 
 .formWrapper {
+  display: flex;
+  flex-direction: column;
   margin-top: 20px;
 }
 
@@ -48,12 +45,16 @@
 
 .titleInput {
   padding: 20px;
-  background: var(--background-color);
+  background: var(--background);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 20px;
   line-height: 1.2;
   font-weight: 500;
+}
+
+.titleInput::placeholder {
+  color: var(--text-color-tertiary);
 }
 
 .contentInput {
@@ -67,9 +68,8 @@
   font-weight: 400;
 }
 
-.buttonWrapper {
-  display: flex;
-  justify-content: end;
+.contentInput::placeholder {
+  color: var(--text-color-tertiary);
 }
 
 .button {
@@ -77,14 +77,23 @@
   flex-direction: row;
   padding: 16px 24px;
   border-radius: 8px;
+  box-sizing: border-box;
   border: 1px solid var(--primary-color);
+  cursor: pointer;
   background-color: var(--primary-color);
   color: white;
-}
-
-.buttonText {
+  font-family: inherit;
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
   padding-left: 8px;
+  align-self: end;
+  gap: 8px;
+}
+
+.button:disabled,
+.button[disabled] {
+  border: 1px solid var(--background-tertiary);
+  background-color: var(--background-tertiary);
+  color: var(--text-color-tertiary);
 }
