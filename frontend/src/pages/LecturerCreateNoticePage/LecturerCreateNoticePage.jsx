@@ -3,7 +3,7 @@ import { SideBar, SideLink, SideItem } from '../../components/SideBar';
 import { MaxWidthLayout } from '../../components/Layout';
 import { CreateArticle } from '../../components/Article';
 
-export default function CreateQuestionPage() {
+export default function LecturerCreateNoticePage() {
   const lecture = {
     title: '정보처리기사 실기 완전정복',
     tutor: '박정민',
@@ -25,7 +25,7 @@ export default function CreateQuestionPage() {
             <SideLink to={'/'}>퀴즈</SideLink>
           </SideBar>
 
-          <SideBar title="내 학습">
+          <SideBar title="내 강의">
             <SideItem
               name={'학습 진도'}
               sub={'2 / 12'}
@@ -38,8 +38,8 @@ export default function CreateQuestionPage() {
         </aside>
         <main>
           <CreateArticle
-            topic="질문하기"
-            title="Q&A"
+            topic="글 쓰기"
+            title="공지사항"
           />
         </main>
       </MaxWidthLayout>
