@@ -2,6 +2,8 @@ package com.edufocus.edufocus.qna.controller;
 
 import com.edufocus.edufocus.qna.entity.Qna;
 import com.edufocus.edufocus.qna.service.QnaService;
+import com.edufocus.edufocus.user.util.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
@@ -18,12 +20,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QnaController {
     private final QnaService qnaService;
-
+    private final JWTUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity<Qna> createQna(@RequestBody Qna qna) {
+    public ResponseEntity<Qna> createQna(@RequestBody Qna qna , HttpServletRequest request) {
+
+
         try{
-            qnaService.createQna(qna);
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+            qnaService.createQna(userId,qna);
             return new ResponseEntity<>(qna, HttpStatus.CREATED);
 
         }catch (Exception e){

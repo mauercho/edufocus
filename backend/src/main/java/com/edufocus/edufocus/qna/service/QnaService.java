@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public interface QnaService {
 
-    void createQna(Qna qna) throws SQLException;
+    void createQna(Long id,Qna qna) throws SQLException;
     void updateQna(Long id,Qna qna) throws SQLException;
     void deleteQna(Long id) throws SQLException;
     Qna getQna(Long id) throws SQLException;

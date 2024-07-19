@@ -32,6 +32,8 @@ public class User {
     private UserRole role;
     private String refreshToken;
 
+    private String name;
+
 
 
 
