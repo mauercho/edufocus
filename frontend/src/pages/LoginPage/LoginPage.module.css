@@ -1,0 +1,15 @@
+.wrapper {
+  padding-top: 120px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.textBodyStrong {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.secondaryColor {
+  color: var(--text-color-secondary);
+}
