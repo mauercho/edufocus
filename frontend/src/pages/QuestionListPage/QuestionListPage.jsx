@@ -7,11 +7,11 @@ import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 export default function QuestionListPage() {
   const notices = [
     {},
-    { title: 'Question1', noticeDate: '7-12 오전 11:40:57' },
-    { title: 'Question2', noticeDate: '7-12 오전 11:40:57' },
-    { title: '헷갈리는게 있어요', noticeDate: '7-15 오전 11:40:57' },
-    { title: '궁금궁금', noticeDate: '7-15 오전 11:40:57' },
-    { noticeDate: '날짜만 있는 경우' },
+    { title: 'Question1', sub: '7-12 오전 11:40:57' },
+    { title: 'Question2', sub: '7-12 오전 11:40:57' },
+    { title: '헷갈리는게 있어요', sub: '7-15 오전 11:40:57' },
+    { title: '궁금궁금', sub: '7-15 오전 11:40:57' },
+    { sub: '날짜만 있는 경우' },
   ];
 
   const lecture = {
@@ -52,12 +52,12 @@ export default function QuestionListPage() {
             createPath="/"
           >
             {notices.map((notice) => {
-              if (notice.noticeDate && notice.title) {
+              if (notice.sub && notice.title) {
                 return (
                   <ArticleLink
-                    key={`${notice.title}${notice.noticeDate}`}
+                    key={`${notice.title}${notice.sub}`}
                     title={notice.title}
-                    noticeDate={notice.noticeDate}
+                    sub={notice.sub}
                   />
                 );
               }

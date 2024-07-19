@@ -4,14 +4,13 @@ import { ArticleLink } from '../../components/ArticleLink';
 import { MaxWidthLayout } from '../../components/Layout';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 
-export default function NoticeListPage() {
-  const notices = [
-    {},
-    { title: '공지사항1', sub: '7-12 오전 11:40:57' },
-    { title: '공지사하앙2', sub: '7-12 오전 11:40:57' },
-    { title: '공지사하앙33', sub: '7-15 오전 11:40:57' },
-    { title: '제목만 있는 경우' },
-    { sub: '날짜만 있는 경우' },
+export default function QuestionListPage() {
+  const students = [
+    { name: '학생1', quizScore: 40 },
+    { name: '학생2', quizScore: 40 },
+    { name: '학생3', quizScore: 40 },
+    { name: '학생4', quizScore: 40 },
+    { name: '이재용', quizScore: 80 },
   ];
 
   const lecture = {
@@ -34,32 +33,23 @@ export default function NoticeListPage() {
             <SideLink path={'/'}>수업자료</SideLink>
             <SideLink path={'/'}>퀴즈</SideLink>
           </SideBar>
-          <SideBar title="내 학습">
+          <SideBar title="수업 정보">
             <SideItem
-              name="진도율"
-              sub="2 / 12"
-            />
-            <SideItem
-              name="퀴즈 정답률"
-              sub="80%"
+              name="수강생"
+              sub="총 12명"
             />
           </SideBar>
         </aside>
         <main>
-          <ArticleBoard
-            title="공지사항"
-            canCreate={true}
-          >
-            {notices.map((notice) => {
-              if (notice.sub && notice.title) {
-                return (
-                  <ArticleLink
-                    key={`${notice.title}${notice.sub}`}
-                    title={notice.title}
-                    sub={notice.sub}
-                  />
-                );
-              }
+          <ArticleBoard title="Q&A">
+            {students.map((student) => {
+              return (
+                <ArticleLink
+                  key={`${student.name}${student.sub}`}
+                  title={student.name}
+                  sub={`퀴즈 점수: ${student.quizScore}`}
+                />
+              );
             })}
           </ArticleBoard>
         </main>
