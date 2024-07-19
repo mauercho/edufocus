@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.lecture.controller;
 
+import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
 import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
 import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
@@ -24,7 +25,6 @@ public class LectureController {
 
     private final LectureService lectureService;
     private final JWTUtil jwtUtil;
-    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<?> createLecture(@RequestHeader("Authorization") String accessToken, @RequestBody LectureCreateRequest lectureCreateRequest) {
@@ -33,6 +33,18 @@ public class LectureController {
         lectureService.createLecture(userId, lectureCreateRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PutMapping("/{lectureId}")
+    public ResponseEntity<?> updateLecture(@RequestHeader("Authorization") String accessToken, @PathVariable Long lectureId, @RequestBody LectureCreateRequest lectureCreateRequest) {
+        Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+
+        if (!lectureService.updateLecture(userId, lectureId, lectureCreateRequest)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{lectureId}")
     public ResponseEntity<?> deleteLecture(@RequestBody long userId, @PathVariable long lectureId) {
