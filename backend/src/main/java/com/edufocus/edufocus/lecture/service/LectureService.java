@@ -19,7 +19,7 @@ public interface LectureService {
 
     List<LectureSearchResponse> findAllLecture();
 
-    LectureDetailResponse findLectureById(long lectureId);
+    LectureDetailResponse findLectureById(Long userId, long lectureId);
 
     List<LectureSearchResponse> findMyLecture(long userId);
 
