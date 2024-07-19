@@ -3,8 +3,7 @@ package com.edufocus.edufocus.qna.entity;
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.Date;
@@ -12,6 +11,9 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Qna {
 
     // 연관관계 주인
@@ -42,6 +44,7 @@ public class Qna {
     private String answer;
 
 
+    private String name;
     @ManyToOne
     @JoinColumn(name= "id")
     private User user;
@@ -49,6 +52,7 @@ public class Qna {
     @ManyToOne
     @JoinColumn(name= "lecture_id")
     private Lecture lecture;
+
 
 
 }
