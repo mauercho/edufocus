@@ -8,6 +8,7 @@ import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
 import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
@@ -31,20 +32,52 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void createLecture(long userId, LectureCreateRequest lectureCreateRequest) {
-
         User user = userRepository.findById(userId).get();
 
-        Lecture lecture = new Lecture();
-        lecture.setUser(user);
-
-        lecture.setTitle(lectureCreateRequest.getTitle());
-        lecture.setDescription(lectureCreateRequest.getDescription());
-        lecture.setImage(lectureCreateRequest.getImage());
-        lecture.setStartDate(lectureCreateRequest.getStartDate());
-        lecture.setEndDate(lectureCreateRequest.getEndDate());
-        lecture.setPlan(lectureCreateRequest.getPlan());
+        Lecture lecture = new Lecture().builder()
+                .user(user)
+                .title(lectureCreateRequest.getTitle())
+                .description(lectureCreateRequest.getDescription())
+                .image(lectureCreateRequest.getImage())
+                .startDate(lectureCreateRequest.getStartDate())
+                .endDate(lectureCreateRequest.getEndDate())
+                .plan(lectureCreateRequest.getPlan())
+                .build();
 
         lectureRepository.save(lecture);
+    }
+
+    @Override
+    public boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest) {
+        User user = userRepository.findById(userId).get();
+
+        Lecture lecture = lectureRepository.findById(lectureId).get();
+
+        if (lecture.getUser().getId() != user.getId()) {
+            return false;
+        }
+
+        if (lectureCreateRequest.getTitle() != null) {
+            lecture.setTitle(lectureCreateRequest.getTitle());
+        }
+        if (lectureCreateRequest.getDescription() != null) {
+            lecture.setDescription(lectureCreateRequest.getDescription());
+        }
+        if (lectureCreateRequest.getImage() != null) {
+            lecture.setImage(lectureCreateRequest.getImage());
+        }
+        if (lectureCreateRequest.getStartDate() != null) {
+            lecture.setStartDate(lectureCreateRequest.getStartDate());
+        }
+        if (lectureCreateRequest.getEndDate() != null) {
+            lecture.setEndDate(lectureCreateRequest.getEndDate());
+        }
+        if (lectureCreateRequest.getPlan() != null) {
+            lecture.setPlan(lectureCreateRequest.getPlan());
+        }
+
+        lectureRepository.save(lecture);
+        return true;
     }
 
     @Override
@@ -105,9 +138,8 @@ public class LectureServiceImpl implements LectureService {
 
         List<LectureSearchResponse> myLectureList = new ArrayList<>();
 
-        if (user.getRole().equals("ADMIN")) {
-            List<Lecture> lectureList = lectureRepository.findAllByUserId(userId);
-
+        if (user.getRole() == UserRole.ADMIN) {
+            List<Lecture> lectureList = lectureRepository.findLecturesByUserId(userId);
             for (Lecture lecture : lectureList) {
                 LectureSearchResponse lectureSearchResponse = new LectureSearchResponse().builder()
                         .id(lecture.getId())
