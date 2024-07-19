@@ -1,0 +1,28 @@
+name: Change PR target if base branch is master
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - master
+
+jobs:
+  change-pr-target:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set target environment variable
+        run: |
+          if [[ "${GITHUB_HEAD_REF}" == fe* || "${GITHUB_HEAD_REF}" == FE* ]]; then
+            echo "target=frontend" >> $GITHUB_ENV
+          elif [[ "${GITHUB_HEAD_REF}" == be* || "${GITHUB_HEAD_REF}" == BE* ]]; then
+            echo "target=backend" >> $GITHUB_ENV
+          fi
+
+      - name: Change base branch for PR
+        if: env.target == 'frontend' || env.target == 'backend'
+        run: gh pr edit ${{ github.event.pull_request.number }} --base ${{ env.target }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
