@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
 import styles from './InputBox.module.css';
 
-const InputBox = forwardRef(({ title, id = null, type, children }, ref) => {
+const InputBox = forwardRef(({ title, id = null, type, hasError = null, children }, ref) => {
   return (
-    <div className={styles.inputBox}>
+    <div className={`${styles.inputBox} ${hasError && styles.errorBox}`}>
       <label
         htmlFor={id}
         className={styles.textBody}
