@@ -1,4 +1,2 @@
-package com.edufocus.edufocus.board.entity.dto;
-
-public class RequestCommentDto {
+package com.edufocus.edufocus.board.entity.dto;public class RequestCommentDto {
 }
