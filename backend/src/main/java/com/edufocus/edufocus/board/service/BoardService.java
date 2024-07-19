@@ -1,23 +1,27 @@
 package com.edufocus.edufocus.board.service;
 
-import com.edufocus.edufocus.board.entity.dto.RequestBoardDto;
-import com.edufocus.edufocus.board.entity.dto.RequestBoardUpdateDto;
-import com.edufocus.edufocus.board.entity.dto.RequestCommentDto;
-import com.edufocus.edufocus.board.entity.vo.Board;
-import com.edufocus.edufocus.board.entity.vo.Comment;
+import com.edufocus.edufocus.board.entity.dto.*;
 
 import java.util.List;
 
 public interface BoardService {
 
-    public List<Board> findBoards(int pageNo, String category, long lectureId);
-    public Board findBoardDetail(long boardId);
     public void createBoard(long userId, RequestBoardDto requestBoardDto);
+
+    public List<ResponseBoardSummaryDto> findBoards(int pageNo, String category, long lectureId);
+
+    public ResponseBoardDetailDto findBoardDetail(long boardId);
+
     public void updateBoard(long boardId, RequestBoardUpdateDto requestBoardUpdateDto);
+
     public void deleteBoard(long boardId);
-    public List<Comment> findComments(long userId, long boardId);
-    public void createComment(long userId, long boardId, String content);
-    public void updateComment(long commentId, String content);
+
+    public void createComment(long userId, long boardId, RequestCommentDto requestCommentDto);
+
+    public List<ResponseCommentDto> findComments(long boardId);
+
+    public void updateComment(long commentId, RequestCommentDto requestCommentDto);
+
     public void deleteComment(long commentId);
 
 }

@@ -12,8 +12,9 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 public class ResponseBoardDetailDto {
-    private int id;
+    private long id;
     private String name;
+    private String title;
     private String content;
     private int viewCount;
     private LocalTime createdAt;

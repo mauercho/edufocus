@@ -1,9 +1,7 @@
 package com.edufocus.edufocus.board.service;
 
 
-import com.edufocus.edufocus.board.entity.dto.RequestBoardDto;
-import com.edufocus.edufocus.board.entity.dto.RequestBoardUpdateDto;
-import com.edufocus.edufocus.board.entity.dto.RequestCommentDto;
+import com.edufocus.edufocus.board.entity.dto.*;
 import com.edufocus.edufocus.board.entity.vo.Board;
 import com.edufocus.edufocus.board.entity.vo.Comment;
 import com.edufocus.edufocus.board.repository.BoardRepository;
@@ -12,22 +10,23 @@ import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
     private static final int PAGE_SIZE = 10;
 
-    private final UserRepository userRepository;
-    private final LectureRepository lectureRepository;
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final LectureRepository lectureRepository;
 
     public BoardServiceImpl(BoardRepository boardRepository, CommentRepository commentRepository, UserRepository userRepository, LectureRepository lectureRepository){
         this.boardRepository = boardRepository;
@@ -37,28 +36,32 @@ public class BoardServiceImpl implements BoardService {
     }
 
 
-    @Override
-    public List<Board> findBoards(int pageNo, String category, long lectureId) {
+    @Transactional
+    public List<ResponseBoardSummaryDto> findBoards(int pageNo, String category, long lectureId) {
         Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
-        Page<Board> boards = boardRepository.findByLectureIdAndCategory(lectureId, category, pageable);
-        return boards.getContent();
+
+        List<Board> boards = boardRepository.findByLectureIdAndCategory(lectureId, category, pageable).getContent();
+
+        return boards.stream().map(Board::makeSummaryDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Board findBoardDetail(long boardId) {
-        Board board = boardRepository.findById(boardId).get();
-        return board;
+    @Transactional
+    public ResponseBoardDetailDto findBoardDetail(long boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow()
+                .makeDetailDto();
     }
 
-    @Override
+    @Transactional
     public void createBoard(long userId, RequestBoardDto requestBoardDto) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow();
         Lecture lecture = lectureRepository.findById(requestBoardDto.getLectureId()).get();
 
         Board board = Board.builder()
                 .title(requestBoardDto.getTitle())
                 .category(requestBoardDto.getCategory())
-                .content(requestBoardDto.getCategory())
+                .content(requestBoardDto.getContent())
                 .user(user)
                 .lecture(lecture)
                 .build();
@@ -66,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.save(board);
     }
 
-    @Override
+    @Transactional
     public void updateBoard(long boardId, RequestBoardUpdateDto requestBoardUpdateDto) {
         Board board = boardRepository.findById(boardId).get();
 
@@ -77,25 +80,27 @@ public class BoardServiceImpl implements BoardService {
     }
 
 
-    @Override
+    @Transactional
     public void deleteBoard(long boardId) {
         Board board = boardRepository.findById(boardId).get();
 
         boardRepository.delete(board);
     }
 
-    @Override
-    public List<Comment> findComments(long userId, long boardId) {
-        return  commentRepository.findByBoardId(boardId);
+    @Transactional
+    public List<ResponseCommentDto> findComments(long boardId) {
+        return  commentRepository.findByBoardId(boardId).stream()
+                .map(Comment::makeCommentDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public void createComment(long userId, long boardId, String content) {
+    @Transactional
+    public void createComment(long userId, long boardId, RequestCommentDto requestCommentDto) {
        User user = userRepository.findById(userId).get();
        Board board = boardRepository.findById(boardId).get();
 
        Comment comment = Comment.builder()
-               .content(content)
+               .content(requestCommentDto.getContent())
                .board(board)
                .user(user)
                .build();
@@ -105,16 +110,19 @@ public class BoardServiceImpl implements BoardService {
 
 
 
-    @Override
-    public void updateComment(long commentId, String content) {
+    @Transactional
+    public void updateComment(long commentId, RequestCommentDto requestCommentDto) {
         Comment comment = commentRepository.findById(commentId).get();
-        comment.setContent(content);
+
+        comment.setContent(requestCommentDto.getContent());
+
         commentRepository.save(comment);
     }
 
-    @Override
+    @Transactional
     public void deleteComment(long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
+
         commentRepository.delete(comment);
     }
 

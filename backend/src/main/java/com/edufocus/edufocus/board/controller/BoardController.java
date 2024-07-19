@@ -1,11 +1,10 @@
 package com.edufocus.edufocus.board.controller;
 
-import com.edufocus.edufocus.board.entity.dto.RequestBoardDto;
-import com.edufocus.edufocus.board.entity.dto.RequestBoardUpdateDto;
-import com.edufocus.edufocus.board.entity.dto.RequestCommentDto;
+import com.edufocus.edufocus.board.entity.dto.*;
 import com.edufocus.edufocus.board.entity.vo.Board;
 import com.edufocus.edufocus.board.entity.vo.Comment;
 import com.edufocus.edufocus.board.service.BoardService;
+import com.edufocus.edufocus.user.util.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
@@ -18,13 +17,16 @@ import java.util.List;
 /**
  * @author Haneol Kim
  */
-@RestController("/board")
+@RestController
+@RequestMapping("/board")
 public class BoardController {
 
+    private final JWTUtil jwtUtil;
     private final BoardService boardService;
 
-    public BoardController(BoardService boardService){
+    public BoardController(BoardService boardService, JWTUtil jwtUtil){
         this.boardService = boardService;
+        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping()
@@ -33,22 +35,22 @@ public class BoardController {
             @RequestParam(value = "lectureId", required = true) long lectureId,
             @RequestParam(value = "pageNo", required = false, defaultValue = "0") int pageNo
     ){
-        List<Board> boards = boardService.findBoards(pageNo, category, lectureId);
+        List<ResponseBoardSummaryDto> boardSummaries = boardService.findBoards(pageNo, category, lectureId);
 
-        if(boards.isEmpty()){
-            return ResponseEntity.noContent().build();
+        if(boardSummaries.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return ResponseEntity.ok(boards);
+        return new ResponseEntity<>(boardSummaries, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{boardId}")
     public ResponseEntity<?> getBoardDetail(
-            @PathVariable @Positive int boardId
+            @PathVariable int boardId
     ){
-        Board responseBoardDetail = boardService.findBoardDetail(boardId);
+        ResponseBoardDetailDto responseBoardDetailDto = boardService.findBoardDetail(boardId);
 
-        return ResponseEntity.ok(responseBoardDetail);
+        return new ResponseEntity<>(responseBoardDetailDto, HttpStatus.OK);
     }
 
     @PostMapping
@@ -56,8 +58,8 @@ public class BoardController {
             @RequestBody RequestBoardDto requestBoardDto,
             HttpServletRequest request
     ){
-
-        long userId = Long.parseLong(request.getHeader("Authentication"));
+        String token = request.getHeader("Authorization");
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
 
         boardService.createBoard(userId, requestBoardDto);
 
@@ -66,12 +68,9 @@ public class BoardController {
 
     @PutMapping(value = "/{boardId}")
     public ResponseEntity<?> updateBoard(
-            @PathVariable @Positive long boardId,
-            @RequestBody RequestBoardUpdateDto requestBoardUpdateDto,
-            HttpServletRequest request
+            @PathVariable long boardId,
+            @RequestBody RequestBoardUpdateDto requestBoardUpdateDto
     ){
-        long userId = Long.parseLong(request.getHeader("Authentication"));
-
         boardService.updateBoard(boardId, requestBoardUpdateDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -89,49 +88,41 @@ public class BoardController {
 
     @GetMapping(value = "/comment/{boardId}")
     public ResponseEntity<?> getComments(
-            @PathVariable @Positive int boardId,
-            HttpServletRequest request
+            @PathVariable int boardId
     ){
-        long userId = Long.parseLong(request.getHeader("Authentication"));
+        List<ResponseCommentDto> comments = boardService.findComments(boardId);
 
-        List<Comment> comments = boardService.findComments(userId, boardId);
-
-        return ResponseEntity.ok(comments);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PostMapping(value = "/comment/{boardId}")
     public ResponseEntity<?> addComment(
-            @PathVariable @Positive int boardId,
-            @RequestParam String content,
+            @PathVariable int boardId,
+            @RequestBody RequestCommentDto requestCommentDto,
             HttpServletRequest request
     ){
-        long userId = Long.parseLong(request.getHeader("Authentication"));
+        String token = request.getHeader("Authorization");
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
 
-        boardService.createComment(userId, boardId, content);
+        boardService.createComment(userId, boardId, requestCommentDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = "/comment/{commentId}")
     public ResponseEntity<?> updateComment(
-            @PathVariable @Positive int commentId,
-            @RequestParam String content,
-            HttpServletRequest request
+            @PathVariable int commentId,
+            @RequestBody RequestCommentDto requestCommentDto
     ){
-        long userId = Long.parseLong(request.getHeader("Authentication"));
-
-        boardService.updateComment(commentId, content);
+        boardService.updateComment(commentId, requestCommentDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/comment/{commentId}")
     public ResponseEntity<?> deleteComment(
-            @PathVariable @Positive int commentId,
-            HttpServletRequest request
+            @PathVariable int commentId
     ){
-        long userId = Long.parseLong(request.getHeader("Authentication"));
-
         boardService.deleteComment(commentId);
 
         return new ResponseEntity<>(HttpStatus.OK);

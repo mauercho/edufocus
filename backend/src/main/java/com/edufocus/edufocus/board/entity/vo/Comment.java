@@ -1,7 +1,9 @@
 package com.edufocus.edufocus.board.entity.vo;
 
 
+import com.edufocus.edufocus.board.entity.dto.ResponseCommentDto;
 import com.edufocus.edufocus.user.model.entity.User;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +17,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Comment {
     @Id
     @GeneratedValue
@@ -26,7 +29,7 @@ public class Comment {
     private LocalTime createdAt;
 
     @Column
-    private LocalTime updatedAt;
+    private LocalTime modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -36,5 +39,14 @@ public class Comment {
     @JoinColumn(name = "board_id")
     Board board;
 
+    public ResponseCommentDto makeCommentDto() {
+        return ResponseCommentDto.builder()
+                .id(id)
+                .name(user.getEmail())
+                .content(content)
+                .createAt(createdAt)
+                .modifiedAt(modifiedAt)
+                .build();
+    }
 
 }
