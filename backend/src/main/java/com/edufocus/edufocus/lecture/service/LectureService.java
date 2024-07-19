@@ -13,6 +13,8 @@ public interface LectureService {
 
     void createLecture(long userId, LectureCreateRequest lectureCreateRequest);
 
+    boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest);
+
     boolean deleteLecture(long userId, long LectureId);
 
     List<LectureSearchResponse> findAllLecture();
