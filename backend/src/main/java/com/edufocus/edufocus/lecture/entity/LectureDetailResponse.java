@@ -1,29 +1,33 @@
 package com.edufocus.edufocus.lecture.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LectureRegist {
+public class LectureDetailResponse {
 
-    private Long userId;
+    private Long id;
+
+    private String teacherName;
 
     private String title;
 
     private String description;
 
-    @Temporal(TemporalType.DATE)
+    private String image;
+
     private Date startDate;
 
-    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     private String plan;
 
+    private boolean online;
 }

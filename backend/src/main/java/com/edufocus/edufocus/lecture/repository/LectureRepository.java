@@ -12,4 +12,6 @@ import java.util.List;
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
     Lecture findByTitle(@Param("title") String title);
 
+    List<Lecture> findAllByUserId(@Param("userId") Long userId);
+
 }

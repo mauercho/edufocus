@@ -20,9 +20,10 @@ public class QnaServiceImpl implements QnaService{
 
 
     @Override
-    public void createQna(Qna qna) {
+    public void createQna(Long id,Qna qna) {
 
 
+        qna.setId(id);
         qnaRepository.save(qna);
 
     }

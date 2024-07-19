@@ -29,6 +29,9 @@ public class Lecture {
     @Lob
     private String description;
 
+    @Column
+    private String image;
+
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -42,7 +45,5 @@ public class Lecture {
 
     @Column
     private boolean online;
-
-
 
 }
