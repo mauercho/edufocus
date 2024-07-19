@@ -1,11 +1,9 @@
 package com.edufocus.edufocus.lecture.service;
 
-import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
-import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
-import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
+import com.edufocus.edufocus.lecture.entity.*;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
+import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.entity.UserRole;
@@ -110,12 +108,36 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureDetailResponse findLectureById(long lectureId) {
-
+    public LectureDetailResponse findLectureById(Long userId, long lectureId) {
         Lecture lecture = lectureRepository.findById(lectureId).get();
 
         if (lecture == null) {
             return null;
+        }
+
+        String userStatus;
+        if (userId == null) {
+            userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
+        } else {
+            User user = userRepository.findById(userId).get();
+
+            if (user.getRole() == UserRole.ADMIN) {
+                if (lecture.getUser().getId() == user.getId()) {
+                    userStatus = String.valueOf(UserStatus.MANAGED_BY_ME);
+                } else{
+                    userStatus = String.valueOf(UserStatus.MANAGED_BY_OTHERS);
+                }
+            } else {
+                Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
+
+                if (registration == null) {
+                    userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
+                } else if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
+                    userStatus = String.valueOf(UserStatus.ENROLLED);
+                } else {
+                    userStatus = String.valueOf(UserStatus.PENDING);
+                }
+            }
         }
 
         LectureDetailResponse lectureDetailResponse = new LectureDetailResponse().builder()
@@ -128,6 +150,7 @@ public class LectureServiceImpl implements LectureService {
                 .plan(lecture.getPlan())
                 .online(lecture.isOnline())
                 .teacherName(lecture.getUser().getName())
+                .status(userStatus)
                 .build();
 
         return lectureDetailResponse;

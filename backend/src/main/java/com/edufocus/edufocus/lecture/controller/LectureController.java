@@ -67,12 +67,20 @@ public class LectureController {
     }
 
     @GetMapping("/{lectureId}")
-    public ResponseEntity<?> findById(@PathVariable long lectureId) {
-        LectureDetailResponse lectureDetailResponse = lectureService.findLectureById(lectureId);
+    public ResponseEntity<?> findById(@RequestHeader(value = "Authorization", required = false) String accessToken, @PathVariable long lectureId) {
+        Long userId = null;
+
+        if (accessToken != null) {
+            userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+        }
+
+        LectureDetailResponse lectureDetailResponse = lectureService.findLectureById(userId, lectureId);
 
         if (lectureDetailResponse == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
+
 
         return new ResponseEntity<>(lectureDetailResponse, HttpStatus.OK);
     }

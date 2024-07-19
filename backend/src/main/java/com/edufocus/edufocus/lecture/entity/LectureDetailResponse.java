@@ -30,4 +30,6 @@ public class LectureDetailResponse {
     private String plan;
 
     private boolean online;
+
+    private String status;
 }

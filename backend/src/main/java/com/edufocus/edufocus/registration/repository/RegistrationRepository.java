@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     List<Registration> findAllByUserId(@Param("userId") Long userId);
+
+    Registration findByUserIdAndLectureId(Long userId, Long lectureId);
 }
