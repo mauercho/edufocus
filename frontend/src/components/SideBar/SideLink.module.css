@@ -3,11 +3,17 @@
   margin-bottom: 16px;
 }
 
-.link {
+.link,
+.active {
   width: 100%;
   text-decoration: none;
   color: var(--text-color);
   font-size: 20px;
   line-height: 1.2;
   font-weight: 400;
+}
+
+.active {
+  font-weight: 700;
+  text-decoration: underline;
 }
