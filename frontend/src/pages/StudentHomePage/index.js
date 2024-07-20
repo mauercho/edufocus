@@ -1,1 +1,1 @@
-export { default as StudentHomePage } from './StudentHomePage';
+export { default } from './StudentHomePage';

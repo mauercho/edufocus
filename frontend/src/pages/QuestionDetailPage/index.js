@@ -1,1 +1,1 @@
-export { default as QuestionDetailPage } from './QuestionDetailPage';
+export { default } from './QuestionDetailPage';

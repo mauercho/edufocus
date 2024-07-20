@@ -1,1 +1,1 @@
-export { default as LearningLectureDetailPage } from './LearningLectureDetailPage';
+export { default } from './LearningLectureDetailPage';

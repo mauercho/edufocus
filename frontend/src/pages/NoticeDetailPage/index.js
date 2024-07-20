@@ -1,1 +1,1 @@
-export { default as NoticeDetailPage } from './NoticeDetailPage';
+export { default } from './NoticeDetailPage';

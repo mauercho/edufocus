@@ -1,1 +1,1 @@
-export { default as TeacherNoticeListPage } from './TeacherNoticeListPage';
+export { default } from './TeacherNoticeListPage';

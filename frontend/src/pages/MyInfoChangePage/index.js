@@ -1,1 +1,1 @@
-export { default as MyInfoChangePage } from './MyInfoChangePage';
+export { default } from './MyInfoChangePage';
