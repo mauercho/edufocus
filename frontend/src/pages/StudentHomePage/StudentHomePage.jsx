@@ -23,7 +23,7 @@ export default function StudentHomePage() {
         {onGoingClasses.map((lecture) => (
           <ClassCard
             key={lecture.lecture_id}
-            path={`/class/${lecture.lecture_id}`}
+            path={`/lecture/${lecture.lecture_id}`}
           >
             {lecture.title}
           </ClassCard>
