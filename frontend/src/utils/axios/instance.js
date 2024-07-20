@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const ACCESS_TOKEN_KEY = import.meta.env.VITE_ACCESS_TOKEN_KEY;
+import useBoundStore from '../../store';
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -9,7 +8,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const accessToken = sessionStorage.getItem(ACCESS_TOKEN_KEY);
+  const accessToken = useBoundStore.getState().accessToken;
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -31,7 +30,7 @@ instance.interceptors.response.use(
     return instance.post(REFRESH_API_URL).then((response) => {
       const { accessToken } = response.data;
 
-      sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+      useBoundStore.setState({ accessToken });
       error.config.headers.Authorization = `Bearer ${accessToken}`;
       return instance(error.config);
     });
