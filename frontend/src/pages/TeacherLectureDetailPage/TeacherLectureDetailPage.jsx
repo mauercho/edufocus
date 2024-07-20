@@ -2,9 +2,9 @@ import LectureHeader from '../../components/LectureHeader/LectureHeader';
 import { SideBar, SideLink, SideItem } from '../../components/SideBar';
 import { MaxWidthLayout } from '../../components/Layout';
 import ArticlePreview from '../../components/Article/ArticlePreview/ArticlePreview';
-import styles from './LecturerLectureDetailPage.module.css';
+import styles from './TeacherLectureDetailPage.module.css';
 
-export default function LecturerLectureDetailPage() {
+export default function TeacherLectureDetailPage() {
   const lecture = {
     title: '정보처리기사 실기 완전정복',
     tutor: '박정민',

@@ -4,7 +4,7 @@ import { ArticleLink } from '../../components/ArticleLink';
 import { MaxWidthLayout } from '../../components/Layout';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 
-export default function QuestionListPage() {
+export default function StudentListPage() {
   const students = [
     { name: '학생1', quizScore: 40 },
     { name: '학생2', quizScore: 40 },
