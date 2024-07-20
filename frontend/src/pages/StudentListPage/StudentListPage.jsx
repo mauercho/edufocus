@@ -41,7 +41,7 @@ export default function StudentListPage() {
           </SideBar>
         </aside>
         <main>
-          <ArticleBoard title="Q&A">
+          <ArticleBoard title="수강생 관리">
             {students.map((student) => {
               return (
                 <ArticleLink
