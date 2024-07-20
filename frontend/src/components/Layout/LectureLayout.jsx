@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import LectureHeader from '../LectureHeader/LectureHeader';
 import { SideBar, SideLink } from '../SideBar';
 import MaxWidthLayout from './MaxWidthLayout';
+import { Suspense } from 'react';
 
 export default function LectureLayout() {
   const lecture = {
@@ -27,7 +28,9 @@ export default function LectureLayout() {
           </SideBar>
         </aside>
         <main>
-          <Outlet />
+          <Suspense fallback={<div>loading</div>}>
+            <Outlet />
+          </Suspense>
         </main>
       </MaxWidthLayout>
     </>
