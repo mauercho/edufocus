@@ -19,8 +19,8 @@
 
 .thumbnail {
   flex-shrink: 0;
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 120px;
   border-radius: 16px;
   border: 1px solid var(--border-color);
 }
@@ -42,6 +42,7 @@
 .desc {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .tutor {
@@ -60,7 +61,7 @@
 .liveButton {
   padding: 12px 16px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.4;
   font-family: inherit;
   font-weight: 700;
