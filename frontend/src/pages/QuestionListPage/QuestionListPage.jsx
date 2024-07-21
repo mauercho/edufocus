@@ -13,7 +13,6 @@ export default function QuestionListPage() {
     <ArticleBoard
       title="Q&A"
       canCreate={true}
-      createPath="/"
     >
       {questions.map((question) => (
         <ArticleLink
