@@ -74,26 +74,27 @@
 
 .button {
   display: flex;
-  flex-direction: row;
-  padding: 16px 24px;
-  border-radius: 8px;
-  box-sizing: border-box;
+  gap: 8px;
+  padding: 12px 16px;
   border: 1px solid var(--primary-color);
-  cursor: pointer;
   background-color: var(--primary-color);
-  color: white;
-  font-family: inherit;
+  color: var(--on-primary);
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
-  padding-left: 8px;
   align-self: end;
-  gap: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s,
+    color 0.25s;
 }
 
 .button:disabled,
 .button[disabled] {
-  border: 1px solid var(--background-tertiary);
+  border-color: var(--border-color);
   background-color: var(--background-tertiary);
   color: var(--text-color-tertiary);
+  cursor: not-allowed;
 }

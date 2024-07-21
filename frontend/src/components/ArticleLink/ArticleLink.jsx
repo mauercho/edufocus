@@ -7,7 +7,7 @@ export default function ArticleLink({ to, title, sub }) {
       to={to}
       className={styles.articleLink}
     >
-      <span className={styles.note}>{title}</span>
+      <h3 className={styles.title}>{title}</h3>
       <span className={styles.date}>{sub}</span>
     </Link>
   );

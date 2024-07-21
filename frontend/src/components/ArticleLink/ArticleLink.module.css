@@ -5,16 +5,18 @@
   justify-content: space-between;
   box-sizing: border-box;
   padding: 16px 20px;
+  transition: background-color 0.25s;
 }
 
 .articleLink:hover {
   background-color: var(--background-secondary);
 }
 
-.note {
-  font-size: 20px;
-  line-height: 1.2;
+.title {
+  font-size: 16px;
+  line-height: 1.4;
   font-weight: 400;
+  margin: 0;
 }
 
 .date {

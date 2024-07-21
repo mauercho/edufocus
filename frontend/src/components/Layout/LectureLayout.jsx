@@ -21,6 +21,12 @@ export default function LectureLayout() {
       <MaxWidthLayout hasSideBar>
         <aside>
           <SideBar title="바로가기">
+            <SideLink
+              to={''}
+              end
+            >
+              수업 홈
+            </SideLink>
             <SideLink to={'notice'}>공지사항</SideLink>
             <SideLink to={'qna'}>Q&A</SideLink>
             <SideLink to={'file'}>수업자료</SideLink>
