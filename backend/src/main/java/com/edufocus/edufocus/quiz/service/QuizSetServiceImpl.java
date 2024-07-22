@@ -1,7 +1,7 @@
 package com.edufocus.edufocus.quiz.service;
 
-import com.edufocus.edufocus.quiz.entity.QuizSet;
-import com.edufocus.edufocus.quiz.entity.SetCreateRequest;
+import com.edufocus.edufocus.quiz.entity.*;
+import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
@@ -17,6 +17,7 @@ public class QuizSetServiceImpl implements QuizSetService {
     private final QuizSetRepository quizSetRepository;
 
     private final UserRepository userRepository;
+    private final QuizRepository quizRepository;
 
 
     @Override
@@ -41,5 +42,10 @@ public class QuizSetServiceImpl implements QuizSetService {
     @Override
     public void deleteQuizSet(long quizSetId) {
         quizSetRepository.deleteById(quizSetId);
+    }
+
+    @Override
+    public QuizSet findQuizSet(long quizSetId) {
+        return quizSetRepository.findById(quizSetId).get();
     }
 }

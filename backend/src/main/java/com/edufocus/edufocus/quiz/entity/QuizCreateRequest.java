@@ -3,7 +3,6 @@ package com.edufocus.edufocus.quiz.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
@@ -14,10 +13,17 @@ public class QuizCreateRequest {
 
     private String description;
 
-    private boolean isSingle;
-
     private String answer;
+
+    private boolean isSingle;
 
     private String image;
 
+    private String choice1;
+
+    private String choice2;
+
+    private String choice3;
+
+    private String choice4;
 }
