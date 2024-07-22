@@ -1,6 +1,6 @@
 package com.edufocus.edufocus.report.service;
 
-import com.edufocus.edufocus.report.entity.Answer;
+import com.edufocus.edufocus.report.entity.vo.Answer;
 import com.edufocus.edufocus.report.repository.AnswerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
