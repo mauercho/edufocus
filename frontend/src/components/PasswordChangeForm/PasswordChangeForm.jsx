@@ -68,7 +68,7 @@ export default function PasswordChangeForm() {
         className={styles.button}
         type="submit"
       >
-        <div className={styles.buttonText}>비밀번호 변경</div>
+        비밀번호 변경
       </button>
     </form>
   );

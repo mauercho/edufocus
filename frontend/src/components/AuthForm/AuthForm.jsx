@@ -21,11 +21,10 @@ export default function AuthForm({ children, title, buttonText, linkProps = null
           type="submit"
         >
           {buttonText}
-          {/* 로그인 버튼 색깔이랑 글자 색깔 바꿔야함. */}
         </button>
         {linkProps && (
           <span className={styles.textBody}>
-            {linkProps.message}&nbsp;&nbsp;
+            {`${linkProps.message} `}
             <Link
               to={linkProps.path}
               className={styles.textBodyStrong}

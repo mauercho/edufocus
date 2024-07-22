@@ -1,35 +1,12 @@
 .wrapper {
-  padding-top: 120px;
+  padding-top: 20px;
   max-width: 480px;
   margin: 0 auto;
 }
 
-.RegisterForm {
-  max-width: 480px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 40px;
-  gap: 40px;
-}
-
-.RegisterText {
-  font-size: 36px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.textBodyStrong {
+.errorMsg {
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
-}
-
-.secondaryColor {
-  color: var(--text-color-secondary);
-}
-
-.dangerColor {
   color: var(--error-color);
 }

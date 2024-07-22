@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styles from './InputBox.module.css';
 
-const InputBox = forwardRef(({ title, id = null, type, hasError = null, children }, ref) => {
+export default forwardRef(function InputBox({ title, id = null, type, hasError = null, children }, ref) {
   return (
     <div className={`${styles.inputBox} ${hasError && styles.errorBox}`}>
       <label
@@ -21,6 +21,3 @@ const InputBox = forwardRef(({ title, id = null, type, hasError = null, children
     </div>
   );
 });
-InputBox.displayName = 'InputBox';
-
-export default InputBox;

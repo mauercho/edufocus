@@ -81,19 +81,24 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'login',
-        element: <LoginPage />,
+        path: 'auth',
+        children: [
+          {
+            path: 'login',
+            element: <LoginPage />,
+          },
+          {
+            path: 'register',
+            element: <UserRegisterPage />,
+          },
+          {
+            path: 'password-reset',
+            element: <PasswordResetPage />,
+          },
+        ],
       },
       {
-        path: 'register',
-        element: <UserRegisterPage />,
-      },
-      {
-        path: 'password-reset',
-        element: <PasswordResetPage />,
-      },
-      {
-        path: 'user/:username',
+        path: 'user/my',
         element: <MyPageLayout />,
         children: [
           {
@@ -101,11 +106,11 @@ const router = createBrowserRouter([
             element: <LearningLecturesPage />,
           },
           {
-            path: 'change-info',
+            path: 'edit',
             element: <MyInfoChangePage />,
           },
           {
-            path: 'password-change',
+            path: 'changePw',
             element: <PasswordChangePage />,
           },
         ],
