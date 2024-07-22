@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
+import LearningLecturesPage from './pages/LearningLecturesPage/LearningLecturesPage';
 
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <></>,
+            element: <LearningLecturesPage />,
           },
           {
             path: 'change-info',
