@@ -10,9 +10,14 @@ export default function MyPageLayout() {
       <MaxWidthLayout hasSideBar>
         <aside>
           <SideBar title="마이페이지">
-            <SideLink to={'/'}>계정 정보 변경</SideLink>
-            <SideLink to={'/'}>비밀번호 변경</SideLink>
-            <SideLink to={'/'}>수강중인 강의</SideLink>
+            <SideLink to={'change-info'}>계정 정보 변경</SideLink>
+            <SideLink to={'password-change'}>비밀번호 변경</SideLink>
+            <SideLink
+              to={''}
+              end
+            >
+              수강중인 강의
+            </SideLink>
           </SideBar>
         </aside>
         <main>

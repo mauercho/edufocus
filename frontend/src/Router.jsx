@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         element: <PasswordResetPage />,
       },
       {
-        path: ':username',
+        path: 'user/:username',
         element: <MyPageLayout />,
         children: [
           {
