@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Builder
 @Service
@@ -47,11 +48,9 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest) {
-        User user = userRepository.findById(userId).get();
-
         Lecture lecture = lectureRepository.findById(lectureId).get();
 
-        if (lecture.getUser().getId() != user.getId()) {
+        if (lecture.getUser().getId() != userId) {
             return false;
         }
 
@@ -80,9 +79,14 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public boolean deleteLecture(long userId, long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId).get();
+        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
 
-        if (lecture.getUser().getId() != userId) {
+        if (lecture.isEmpty()) {
+            return false;
+        }
+        lecture = Optional.of(lecture.get());
+
+        if (lecture.get().getUser().getId() != userId) {
             return false;
         }
 
@@ -109,11 +113,12 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public LectureDetailResponse findLectureById(Long userId, long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId).get();
+        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
 
-        if (lecture == null) {
+        if (lecture.isEmpty()) {
             return null;
         }
+        lecture = Optional.of(lecture.get());
 
         String userStatus;
         if (userId == null) {
@@ -122,9 +127,9 @@ public class LectureServiceImpl implements LectureService {
             User user = userRepository.findById(userId).get();
 
             if (user.getRole() == UserRole.ADMIN) {
-                if (lecture.getUser().getId() == user.getId()) {
+                if (lecture.get().getUser().getId() == user.getId()) {
                     userStatus = String.valueOf(UserStatus.MANAGED_BY_ME);
-                } else{
+                } else {
                     userStatus = String.valueOf(UserStatus.MANAGED_BY_OTHERS);
                 }
             } else {
@@ -141,15 +146,15 @@ public class LectureServiceImpl implements LectureService {
         }
 
         LectureDetailResponse lectureDetailResponse = new LectureDetailResponse().builder()
-                .id(lecture.getId())
-                .title(lecture.getTitle())
-                .description(lecture.getDescription())
-                .image(lecture.getImage())
-                .startDate(lecture.getStartDate())
-                .endDate(lecture.getEndDate())
-                .plan(lecture.getPlan())
-                .online(lecture.isOnline())
-                .teacherName(lecture.getUser().getName())
+                .id(lecture.get().getId())
+                .title(lecture.get().getTitle())
+                .description(lecture.get().getDescription())
+                .image(lecture.get().getImage())
+                .startDate(lecture.get().getStartDate())
+                .endDate(lecture.get().getEndDate())
+                .plan(lecture.get().getPlan())
+                .online(lecture.get().isOnline())
+                .teacherName(lecture.get().getUser().getName())
                 .status(userStatus)
                 .build();
 
@@ -189,4 +194,8 @@ public class LectureServiceImpl implements LectureService {
         return myLectureList;
     }
 
+    @Override
+    public Lecture findLectureByTitle(String title) {
+        return lectureRepository.findByTitle(title);
+    }
 }
