@@ -1,4 +1,4 @@
-package com.edufocus.edufocus.report.entity;
+package com.edufocus.edufocus.report.entity.dto;
 
 public class QuizSubmissionDto {
     private Long quizSetId;

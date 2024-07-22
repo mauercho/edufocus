@@ -5,10 +5,11 @@ import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.service.QuizService;
 import com.edufocus.edufocus.quiz.service.QuizSetService;
-import com.edufocus.edufocus.report.entity.Answer;
-import com.edufocus.edufocus.report.entity.AnswerInput;
-import com.edufocus.edufocus.report.entity.Report;
-import com.edufocus.edufocus.report.entity.ReportRequset;
+import com.edufocus.edufocus.report.entity.dto.ReportResponse;
+import com.edufocus.edufocus.report.entity.vo.Answer;
+import com.edufocus.edufocus.report.entity.dto.AnswerInput;
+import com.edufocus.edufocus.report.entity.vo.Report;
+import com.edufocus.edufocus.report.entity.dto.ReportRequset;
 import com.edufocus.edufocus.report.repository.ReportRepository;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
@@ -36,7 +37,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public Report grading(ReportRequset reportRequset) throws SQLException {
+    public ReportResponse grading(ReportRequset reportRequset) throws SQLException {
 
 
         QuizSet quizSet = quizSetService.findQuizSet(reportRequset.getQuizsetId());
@@ -90,10 +91,15 @@ public class ReportServiceImpl implements ReportService {
                                         .allCount(allCount)
                                                 .correctCount(correctCount)
                                                         .testAt(new Date()).build();
+        ReportResponse reportResponse = ReportResponse.builder()
+                .quizesetId(quizSet.getId())
+                .userId(testuser.getId())
+                .title(quizSet.getTitle())
+                .allCount(allCount)
+                .correctCount(correctCount)
+                .testAt(new Date())
+                .build();
 
-        reportRepository.save(report);
-        return report;
-
-
+        return reportResponse;
     }
 }
