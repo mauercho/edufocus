@@ -32,7 +32,7 @@ export default function Header() {
             <Link to={'/'}>마이페이지</Link>
           </li>
           <li>
-            <Link to={'/'}>로그인</Link>
+            <Link to={'/login'}>로그인</Link>
           </li>
         </ul>
       </nav>

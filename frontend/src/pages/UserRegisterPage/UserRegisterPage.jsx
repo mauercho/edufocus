@@ -22,7 +22,7 @@ export default function UserRegisterPage() {
 
   const linkProps = {
     message: '이미 회원이신가요?',
-    path: '/',
+    path: '../login',
     title: '로그인',
   };
 
