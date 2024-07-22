@@ -3,20 +3,25 @@ import { ClassGrid } from '../../components/ClassGrid';
 import { MaxWidthLayout } from '../../components/Layout';
 
 export default function StudentHomePage() {
-  const onGoingClasses = [
-    { lecture_id: 1, title: '한국어' },
-    { lecture_id: 2, title: '영어' },
-    { lecture_id: 3, title: '일본어' },
-  ];
+  const { data: onGoingClasses } = {
+    data: [
+      { lecture_id: 1, title: '한국어' },
+      { lecture_id: 2, title: '영어' },
+      { lecture_id: 3, title: '일본어' },
+    ],
+  };
 
-  const allClasses = [
-    { lecture_id: 1, title: '한국어' },
-    { lecture_id: 2, title: '영어' },
-    { lecture_id: 3, title: '일본어' },
-    { lecture_id: 4, title: '중국어' },
-    { lecture_id: 5, title: '프랑스어' },
-    { lecture_id: 6, title: '스페인어' },
-  ];
+  const { data: allClasses } = {
+    data: [
+      { lecture_id: 1, title: '한국어' },
+      { lecture_id: 2, title: '영어' },
+      { lecture_id: 3, title: '일본어' },
+      { lecture_id: 4, title: '중국어' },
+      { lecture_id: 5, title: '프랑스어' },
+      { lecture_id: 6, title: '스페인어' },
+    ],
+  };
+
   return (
     <MaxWidthLayout>
       <ClassGrid title="수강중인 강의">
