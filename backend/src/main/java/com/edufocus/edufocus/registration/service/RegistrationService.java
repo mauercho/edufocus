@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RegistrationService {
 
-    void createRegistration(Registration registration);
+    void createRegistration(long userId, long registrationId);
 
     void acceptRegistration(long RegistrationId);
 
