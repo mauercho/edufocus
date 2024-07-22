@@ -1,6 +1,5 @@
 package com.edufocus.edufocus.quiz.service;
 
-import com.edufocus.edufocus.quiz.entity.MutipleQuizCreateRequest;
 import com.edufocus.edufocus.quiz.entity.Quiz;
 import com.edufocus.edufocus.quiz.entity.QuizCreateRequest;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
@@ -9,6 +8,8 @@ import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -23,15 +24,20 @@ public class QuizServiceImpl implements QuizService {
     public void createQuiz(long quizSetId, QuizCreateRequest quizCreateRequest) {
         QuizSet quizSet = quizSetRepository.findById(quizSetId).get();
 
-        Quiz quiz = new Quiz();
+        Quiz quiz = new Quiz().builder()
+                .title(quizCreateRequest.getTitle())
+                .description(quizCreateRequest.getDescription())
+                .answer(quizCreateRequest.getAnswer())
+                .image(quizCreateRequest.getImage())
+                .quizSet(quizSet)
+                .build();
 
-        quiz.setTitle(quizCreateRequest.getTitle());
-        quiz.setDescription(quizCreateRequest.getDescription());
-        quiz.setAnswer(quizCreateRequest.getAnswer());
-        quiz.setImage(quizCreateRequest.getImage());
-
-
-        quiz.setQuizSet(quizSet);
+        if (!quiz.isSingle()) {
+            quiz.setChoice1(quizCreateRequest.getChoice1());
+            quiz.setChoice2(quizCreateRequest.getChoice2());
+            quiz.setChoice3(quizCreateRequest.getChoice3());
+            quiz.setChoice4(quizCreateRequest.getChoice4());
+        }
 
         quizRepository.save(quiz);
     }
@@ -46,4 +52,5 @@ public class QuizServiceImpl implements QuizService {
         quizRepository.deleteById(quizId);
         return true;
     }
+
 }

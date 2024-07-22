@@ -13,4 +13,5 @@ public interface QuizSetService {
 
     void deleteQuizSet(long quizSetId);
 
+    QuizSet findQuizSet(long quizSetId);
 }
