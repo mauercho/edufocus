@@ -4,6 +4,8 @@ import PageLayout from './components/Layout/PageLayout';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
+import MyPageLayout from './components/Layout/MyPageLayout';
+import LearningLecturesPage from './pages/LearningLecturesPage/LearningLecturesPage';
 
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
@@ -17,6 +19,8 @@ const NoticeWritePage = lazy(async () => await import('./pages/NoticeWritePage/N
 const LoginPage = lazy(async () => await import('./pages/LoginPage'));
 const UserRegisterPage = lazy(async () => await import('./pages/UserRegisterPage'));
 const PasswordResetPage = lazy(async () => await import('./pages/PasswordResetPage'));
+const MyInfoChangePage = lazy(async () => await import('./pages/MyInfoChangePage'));
+const PasswordChangePage = lazy(async () => await import('./pages/PasswordChangePage'));
 
 const router = createBrowserRouter([
   {
@@ -87,6 +91,24 @@ const router = createBrowserRouter([
       {
         path: 'password-reset',
         element: <PasswordResetPage />,
+      },
+      {
+        path: 'user/:username',
+        element: <MyPageLayout />,
+        children: [
+          {
+            index: true,
+            element: <LearningLecturesPage />,
+          },
+          {
+            path: 'change-info',
+            element: <MyInfoChangePage />,
+          },
+          {
+            path: 'password-change',
+            element: <PasswordChangePage />,
+          },
+        ],
       },
     ],
   },
