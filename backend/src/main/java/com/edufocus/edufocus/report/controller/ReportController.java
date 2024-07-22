@@ -1,7 +1,8 @@
 package com.edufocus.edufocus.report.controller;
 
-import com.edufocus.edufocus.report.entity.Report;
-import com.edufocus.edufocus.report.entity.ReportRequset;
+import com.edufocus.edufocus.report.entity.dto.ReportResponse;
+import com.edufocus.edufocus.report.entity.vo.Report;
+import com.edufocus.edufocus.report.entity.dto.ReportRequset;
 import com.edufocus.edufocus.report.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class ReportController{
 
 
     @PostMapping("/submit")
-    public ResponseEntity<Report> submit(@RequestBody ReportRequset reportRequset) throws SQLException {
-        Report report = reportService.grading(reportRequset);
+    public ResponseEntity<ReportResponse> submit(@RequestBody ReportRequset reportRequset) throws SQLException {
+        ReportResponse report = reportService.grading(reportRequset);
         return new ResponseEntity<>(report,HttpStatus.CREATED);
 
     }

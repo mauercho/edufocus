@@ -1,4 +1,4 @@
-package com.edufocus.edufocus.report.entity;
+package com.edufocus.edufocus.report.entity.vo;
 
 
 import com.edufocus.edufocus.quiz.entity.Quiz;
