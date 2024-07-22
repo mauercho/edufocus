@@ -6,18 +6,24 @@ export default function ArticlePreview({ to, title, contents = [] }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.title}>{title}</div>
+        <Link
+          to={to}
+          className={styles.title}
+        >
+          {title}
+        </Link>
         <Link to={to}>ICON</Link>
       </div>
       <div className={styles.main}>
         {contents.map((content) => {
           return (
-            <div
+            <Link
+              to={`${to}/${content.id}`}
               key={content.id}
               className={styles.content}
             >
               {content.title}
-            </div>
+            </Link>
           );
         })}
       </div>
