@@ -20,7 +20,7 @@ export default function LearningLectureDetailPage() {
     ],
   };
   return (
-    <main className={styles.previews}>
+    <section className={styles.previews}>
       <ArticlePreview
         to="notice"
         title="공지사항"
@@ -32,6 +32,6 @@ export default function LearningLectureDetailPage() {
         contents={questions}
       />
       <ArticlePreview title="커리큘럼" />
-    </main>
+    </section>
   );
 }
