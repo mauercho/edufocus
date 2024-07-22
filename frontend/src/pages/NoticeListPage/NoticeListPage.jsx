@@ -16,7 +16,7 @@ export default function NoticeListPage() {
   return (
     <ArticleBoard
       title="공지사항"
-      canCreate={true}
+      canCreate={false}
     >
       {notices.map((notice) => (
         <ArticleLink
