@@ -22,10 +22,12 @@ export default function LearningLectureDetailPage() {
   return (
     <main className={styles.previews}>
       <ArticlePreview
+        to="notice"
         title="공지사항"
         contents={notices}
       />
       <ArticlePreview
+        to="qna"
         title="Q&A"
         contents={questions}
       />
