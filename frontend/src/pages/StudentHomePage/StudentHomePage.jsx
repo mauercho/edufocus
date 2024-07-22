@@ -2,7 +2,7 @@ import { ClassCard } from '../../components/ClassCard';
 import { ClassGrid } from '../../components/ClassGrid';
 import { MaxWidthLayout } from '../../components/Layout';
 
-export default function StudentHomeMainPage() {
+export default function StudentHomePage() {
   const onGoingClasses = [
     { lecture_id: 1, title: '한국어' },
     { lecture_id: 2, title: '영어' },
@@ -23,7 +23,7 @@ export default function StudentHomeMainPage() {
         {onGoingClasses.map((lecture) => (
           <ClassCard
             key={lecture.lecture_id}
-            path={`/class/${lecture.lecture_id}`}
+            path={`/lecture/${lecture.lecture_id}`}
           >
             {lecture.title}
           </ClassCard>

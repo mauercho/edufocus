@@ -60,7 +60,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
           onClick={handleSubmit}
           disabled={!articleTitle || !articleContent}
         >
-          <div>| i |</div>
+          <div>i</div>
           <div>글 쓰기</div>
         </button>
       </form>

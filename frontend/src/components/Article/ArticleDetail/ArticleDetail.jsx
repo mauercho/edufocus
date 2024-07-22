@@ -10,7 +10,7 @@ export default function ArticleDetail({ topic, title, author = null, content, an
       <header>
         <div>
           <Link
-            to={'/'}
+            to={'..'}
             className={styles.backButton}
           >
             <div>-</div>

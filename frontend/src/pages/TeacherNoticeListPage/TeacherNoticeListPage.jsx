@@ -4,7 +4,7 @@ import { ArticleLink } from '../../components/ArticleLink';
 import { MaxWidthLayout } from '../../components/Layout';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 
-export default function LecturerNoticeListPage() {
+export default function TeacherNoticeListPage() {
   const notices = [
     {},
     { title: '공지사항1', sub: '7-12 오전 11:40:57' },
