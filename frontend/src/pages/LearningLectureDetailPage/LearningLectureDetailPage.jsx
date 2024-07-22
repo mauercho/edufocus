@@ -1,4 +1,5 @@
 import ArticlePreview from '../../components/Article/ArticlePreview/ArticlePreview';
+import styles from './LearningLectureDetailPage.module.css';
 
 export default function LearningLectureDetailPage() {
   const { data: notices } = {
@@ -19,16 +20,18 @@ export default function LearningLectureDetailPage() {
     ],
   };
   return (
-    <>
+    <main className={styles.previews}>
       <ArticlePreview
+        to="notice"
         title="공지사항"
         contents={notices}
       />
       <ArticlePreview
+        to="qna"
         title="Q&A"
         contents={questions}
       />
       <ArticlePreview title="커리큘럼" />
-    </>
+    </main>
   );
 }
