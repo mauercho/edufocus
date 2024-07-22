@@ -11,8 +11,6 @@ export default function NoticeListPage() {
     ],
   };
 
-  // const { data: notices } = useNotices();
-
   return (
     <ArticleBoard
       title="공지사항"
