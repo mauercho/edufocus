@@ -9,11 +9,9 @@ export default function LoginPage() {
   // linkProps : 버튼 아래 나오는 링크(회원가입 등)에 대한 props object
   const linkProps = {
     message: '아직 회원이 아니신가요?',
-    path: '/',
+    path: '../register',
     title: '회원가입',
   };
-
-  const findPasswordPath = '/';
 
   const handleSubmit = () => {
     // TODO: 로그인 POST 기능 추가
@@ -40,7 +38,7 @@ export default function LoginPage() {
           ref={passwordRef}
         >
           <Link
-            to={findPasswordPath}
+            to={'../password-reset'}
             className={`${styles.textBodyStrong} ${styles.secondaryColor}`}
           >
             비밀번호를 잊으셨나요?

@@ -14,6 +14,9 @@ const QuestionListPage = lazy(async () => await import('./pages/QuestionListPage
 const QuestionDetailPage = lazy(async () => await import('./pages/QuestionDetailPage'));
 const CreateQuestionPage = lazy(async () => await import('./pages/CreateQuestionPage'));
 const NoticeWritePage = lazy(async () => await import('./pages/NoticeWritePage/NoticeWritePage'));
+const LoginPage = lazy(async () => await import('./pages/LoginPage'));
+const UserRegisterPage = lazy(async () => await import('./pages/UserRegisterPage'));
+const PasswordResetPage = lazy(async () => await import('./pages/PasswordResetPage'));
 
 const router = createBrowserRouter([
   {
@@ -72,6 +75,18 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <UserRegisterPage />,
+      },
+      {
+        path: 'password-reset',
+        element: <PasswordResetPage />,
       },
     ],
   },
