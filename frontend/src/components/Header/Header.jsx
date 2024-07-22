@@ -29,10 +29,10 @@ export default function Header() {
         </ul>
         <ul className={styles.group}>
           <li>
-            <Link to={'user/user123'}>마이페이지</Link>
+            <Link to={'user/my'}>마이페이지</Link>
           </li>
           <li>
-            <Link to={'/login'}>로그인</Link>
+            <Link to={'/auth/login'}>로그인</Link>
           </li>
         </ul>
       </nav>

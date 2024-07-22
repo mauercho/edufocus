@@ -22,7 +22,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 900px;
 }
 
 .inputBox {
@@ -42,13 +41,14 @@
   padding: 12px;
   background-color: var(--primary-color);
   border: 1px solid var(--border-color);
-  color: white;
+  color: var(--on-primary);
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
   box-sizing: border-box;
   border-radius: 8px;
   align-self: end;
+  cursor: pointer;
 }
 
 .buttonCover {

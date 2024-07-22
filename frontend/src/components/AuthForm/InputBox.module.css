@@ -18,12 +18,6 @@
   font-weight: 400;
 }
 
-.textBodyStrong {
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 700;
-}
-
 .errorBox * {
   color: var(--error-color);
 }
@@ -31,8 +25,4 @@
 .errorBox input {
   outline: none;
   border: 1px solid var(--error-border);
-}
-
-.dangerColor {
-  color: var(--error-color);
 }

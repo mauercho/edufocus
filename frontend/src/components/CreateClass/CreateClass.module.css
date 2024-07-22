@@ -55,7 +55,7 @@
   border-radius: 8px;
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);
-  color: white;
+  color: var(--on-primary);
   gap: 8px;
   align-self: end;
 }
