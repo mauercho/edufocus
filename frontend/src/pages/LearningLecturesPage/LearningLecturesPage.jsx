@@ -1,5 +1,5 @@
-import { ClassCard } from '../../components/ClassCard';
-import { ClassGrid } from '../../components/ClassGrid';
+import styles from './LearningLecturesPage.module.css';
+import { Link } from 'react-router-dom';
 
 export default function LearningLecturesPage() {
   const { data: onGoingClasses } = {
@@ -11,15 +11,20 @@ export default function LearningLecturesPage() {
   };
 
   return (
-    <ClassGrid title="수강중인 강의">
-      {onGoingClasses.map((lecture) => (
-        <ClassCard
-          key={lecture.lecture_id}
-          path={`/lecture/${lecture.lecture_id}`}
-        >
-          {lecture.title}
-        </ClassCard>
-      ))}
-    </ClassGrid>
+    <section>
+      <h2 className={styles.title}>수강중인 강의</h2>
+      <div className={styles.grid}>
+        {onGoingClasses.map((lecture) => (
+          <Link
+            key={lecture.lecture_id}
+            to={`/lecture/${lecture.lecture_id}`}
+            className={styles.card}
+          >
+            <div className={styles.thumbnail} />
+            <div>{lecture.title}</div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
