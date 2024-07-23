@@ -1,0 +1,32 @@
+.title {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0 0 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, auto));
+  gap: 20px;
+  justify-content: start;
+  margin-bottom: 40px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.thumbnail {
+  width: 286.66px;
+  height: 220px;
+  border-radius: 20px;
+  background-color: var(--background-secondary);
+  box-sizing: border-box;
+}
