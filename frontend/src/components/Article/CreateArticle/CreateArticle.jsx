@@ -64,7 +64,7 @@ export default function CreateArticle({ topic, title }) {
           onClick={handleSubmit}
           disabled={!articleTitle || !articleContent}
         >
-          <EditIcon className={styles.icon} />
+          <EditIcon />
           <div>글 쓰기</div>
         </button>
       </form>
