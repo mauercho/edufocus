@@ -21,7 +21,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final LectureRepository lectureRepository;
 
     @Override
-    public void createRegistration(long userId, long lectureId) {
+    public boolean createRegistration(long userId, long lectureId) {
+        if (registrationRepository.findByUserIdAndLectureId(userId, lectureId) != null) {
+            return false;
+        }
+
         Registration registration = new Registration().builder()
                 .user(userRepository.getReferenceById(userId))
                 .lecture(lectureRepository.getReferenceById(lectureId))
@@ -29,25 +33,33 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .build();
 
         registrationRepository.save(registration);
+        return true;
     }
 
     @Override
-    public void acceptRegistration(long registrationId) {
+    public boolean acceptRegistration(long userId, long registrationId) {
         Registration registration = registrationRepository.findById(registrationId).get();
+
+        if (registration.getLecture().getUser().getId() != userId) {
+            return false;
+        }
 
         registration.setStatus(RegistrationStatus.valueOf("ACCEPTED"));
         registrationRepository.save(registration);
+
+        return true;
     }
 
     @Override
-    public void deleteRegistration(long registrationId) {
-        registrationRepository.deleteById(registrationId);
-    }
-
-    @Override
-    public boolean isAcceptedRegistration(long registrationId) {
+    public boolean deleteRegistration(long userId, long registrationId) {
         Registration registration = registrationRepository.findById(registrationId).get();
 
-        return registration.getStatus().equals("ACCEPTED");
+        if (registration.getLecture().getUser().getId() != userId) {
+            return false;
+        }
+
+        registrationRepository.deleteById(registrationId);
+        return true;
     }
+
 }
