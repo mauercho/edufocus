@@ -36,11 +36,14 @@
 
 .author {
   font-size: 14px;
-  font-weight: 400;
   line-height: 1.4;
+  font-weight: 400;
   color: var(--text-color-secondary);
 }
 
 .content {
-  margin: 0 auto 20px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin: 0;
 }
