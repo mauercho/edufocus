@@ -1,13 +1,14 @@
 import styles from './ArticleDetailAnswer.module.css';
+import ReplyIcon from '/src/assets/icons/reply.svg?react';
 
 export default function ArticleDetailAnswer({ answer }) {
   return (
-    <div className={styles.answer}>
+    <section className={styles.answer}>
       <div className={styles.answerHeader}>
-        <div>--</div>
+        <ReplyIcon />
         <div className={styles.author}>선생님의 답변</div>
       </div>
-      <div className={styles.content}>{answer}</div>
-    </div>
+      <p className={styles.content}>{answer}</p>
+    </section>
   );
 }

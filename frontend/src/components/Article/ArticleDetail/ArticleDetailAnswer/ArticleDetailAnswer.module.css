@@ -1,4 +1,7 @@
 .answer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   border: 1px solid var(--border-color);
   border-radius: 16px;
@@ -8,20 +11,21 @@
 
 .answerHeader {
   display: flex;
-  flex-wrap: nowrap;
-}
-
-.content {
-  margin-top: 8px;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.4;
+  gap: 4px;
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
 }
 
 .author {
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 1.4;
-  color: var(--text-color-secondary);
-  margin-left: 4px;
+}
+
+.content {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--text-color);
 }

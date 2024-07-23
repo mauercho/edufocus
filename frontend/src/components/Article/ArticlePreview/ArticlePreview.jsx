@@ -1,19 +1,17 @@
 import { Link } from 'react-router-dom';
 import styles from './ArticlePreview.module.css';
+import RightIcon from '/src/assets/icons/right.svg?react';
 
 export default function ArticlePreview({ to, title, contents = [] }) {
-  // TODO: 아이콘 변경
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <Link
-          to={to}
-          className={styles.title}
-        >
-          {title}
-        </Link>
-        <Link to={to}>ICON</Link>
-      </div>
+      <Link
+        to={to}
+        className={styles.header}
+      >
+        <h2 className={styles.title}>{title}</h2>
+        <RightIcon />
+      </Link>
       <div className={styles.main}>
         {contents.map((content) => {
           return (
