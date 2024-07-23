@@ -16,6 +16,12 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
     }
   };
   // TODO: 입력 크기에 따라 반응형으로 textarea 크기 변경
+  const handleInput = (e) => {
+    setArticleContent(e.target.value);
+    // 높이를 자동으로 조정
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
 
   return (
     <div className={styles.createArticle}>
@@ -51,7 +57,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
             value={articleContent}
-            onChange={(e) => setArticleContent(e.target.value)}
+            onChange={handleInput}
           ></textarea>
         </div>
         <button
