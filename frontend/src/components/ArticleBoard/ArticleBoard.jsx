@@ -14,7 +14,7 @@ export default function ArticleBoard({ title, canCreate, children }) {
             to="write"
           >
             <EditIcon className={styles.icon} />
-            <div className={styles.buttonText}>글쓰기</div>
+            <span>글쓰기</span>
           </Link>
         )}
       </div>

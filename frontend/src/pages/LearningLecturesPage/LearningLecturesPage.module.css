@@ -21,10 +21,10 @@
   font-size: 16px;
   line-height: 1.4;
   font-weight: 400;
+  color: var(--text-color);
 }
 
 .thumbnail {
-  width: 286.66px;
   height: 220px;
   border-radius: 20px;
   background-color: var(--background-secondary);
