@@ -2,6 +2,7 @@
   width: 100%;
   background-color: var(--background);
   border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
   margin: 20px 0 40px;
 }
 
