@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './CreateArticle.module.css';
+import EditIcon from '/src/assets/icons/edit.svg?react';
+import BackIcon from '/src/assets/icons/back.svg?react';
 
-export default function CreateArticle({ topic, title, backPath = '/' }) {
+export default function CreateArticle({ topic, title }) {
   const navigate = useNavigate();
 
   const [articleTitle, setArticleTitle] = useState('');
@@ -12,23 +14,25 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
     e.preventDefault();
     // TODO: 글 작성 기능 연결
     if (articleTitle && articleContent) {
-      navigate(backPath);
+      navigate('..');
     }
   };
-  // TODO: 입력 크기에 따라 반응형으로 textarea 크기 변경
+  const handleInput = (e) => {
+    setArticleContent(e.target.value);
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
 
   return (
     <div className={styles.createArticle}>
-      <header>
-        <div>
-          <Link
-            to={backPath}
-            className={styles.backButton}
-          >
-            <div>-</div>
-            <div className={styles.backText}>{title}</div>
-          </Link>
-        </div>
+      <header className={styles.header}>
+        <Link
+          to={'..'}
+          className={styles.goBack}
+        >
+          <BackIcon />
+          <span>{title}</span>
+        </Link>
         <div className={styles.title}>{topic}</div>
       </header>
       <form
@@ -51,7 +55,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
             value={articleContent}
-            onChange={(e) => setArticleContent(e.target.value)}
+            onChange={handleInput}
           ></textarea>
         </div>
         <button
@@ -60,7 +64,7 @@ export default function CreateArticle({ topic, title, backPath = '/' }) {
           onClick={handleSubmit}
           disabled={!articleTitle || !articleContent}
         >
-          <div>i</div>
+          <EditIcon />
           <div>글 쓰기</div>
         </button>
       </form>
