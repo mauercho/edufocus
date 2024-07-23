@@ -1,8 +1,8 @@
+import EditIcon from '/src/assets/icons/edit.svg?react';
 import { Link } from 'react-router-dom';
 import styles from './ArticleBoard.module.css';
 
 export default function ArticleBoard({ title, canCreate, children }) {
-  // TODO : ㅁ 을 글쓰기 아이콘으로 변경
   return (
     <div className={styles.articleBoard}>
       <div className={styles.header}>
@@ -13,7 +13,7 @@ export default function ArticleBoard({ title, canCreate, children }) {
             className={styles.writeButton}
             to="write"
           >
-            <div>ㅁ</div>
+            <EditIcon className={styles.icon} />
             <div className={styles.buttonText}>글쓰기</div>
           </Link>
         )}

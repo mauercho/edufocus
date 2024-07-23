@@ -9,29 +9,34 @@
   padding: 0;
 }
 
-.backButton {
+.header {
   display: flex;
-  color: var(--text-color-secondary);
-  flex-wrap: nowrap;
-  line-height: 1.2;
-  font-weight: 400;
-  font-size: 20px;
-  padding-bottom: 8px;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
 }
 
-.backText {
-  padding-left: 4px;
+.goBack {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
 }
 
 .title {
   font-size: 32px;
   line-height: 1.2;
   font-weight: 800;
+  margin: 0;
 }
 
 .author {
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 1.4;
   color: var(--text-color-secondary);
 }

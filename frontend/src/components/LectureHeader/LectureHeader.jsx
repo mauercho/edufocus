@@ -1,4 +1,5 @@
 import styles from './LectureHeader.module.css';
+import PlayIcon from '/src/assets/icons/play.svg?react';
 
 export default function LectureHeader({ img, title, tutorImg, tutor, isLive = false }) {
   return (
@@ -26,7 +27,8 @@ export default function LectureHeader({ img, title, tutorImg, tutor, isLive = fa
                   type="button"
                   className={styles.liveButton}
                 >
-                  실시간 강의 입장하기
+                  <PlayIcon />
+                  <span>실시간 강의 입장하기</span>
                 </button>
               ) : null}
             </div>
