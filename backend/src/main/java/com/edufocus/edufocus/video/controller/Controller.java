@@ -30,6 +30,13 @@ public class Controller {
 		String roomName = params.get("roomName");
 		String participantName = params.get("participantName");
 
+		//
+		//
+		//
+		//
+		//
+		//
+
 		if (roomName == null || participantName == null) {
 			return ResponseEntity.badRequest().body(Map.of("errorMessage", "roomName and participantName are required"));
 		}
