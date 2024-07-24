@@ -11,11 +11,17 @@ import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Builder
 @Service
@@ -30,18 +36,33 @@ public class LectureServiceImpl implements LectureService {
     private final RegistrationRepository registrationRepository;
 
     @Override
-    public void createLecture(long userId, LectureCreateRequest lectureCreateRequest) {
+    public void createLecture(long userId, LectureCreateRequest lectureCreateRequest, MultipartFile image) throws IOException {
         User user = userRepository.findById(userId).get();
 
         Lecture lecture = new Lecture().builder()
                 .user(user)
                 .title(lectureCreateRequest.getTitle())
                 .description(lectureCreateRequest.getDescription())
-                .image(lectureCreateRequest.getImage())
                 .startDate(lectureCreateRequest.getStartDate())
                 .endDate(lectureCreateRequest.getEndDate())
                 .plan(lectureCreateRequest.getPlan())
                 .build();
+
+        if (image != null && !image.isEmpty()) {
+            String uid = UUID.randomUUID().toString();
+
+            String currentPath = "backend/src/main/resources/images/";
+            File checkPathFile = new File(currentPath);
+            if (!checkPathFile.exists()) {
+                checkPathFile.mkdirs();
+            }
+
+            File savingImage = new File(currentPath + uid + "_" + image.getOriginalFilename());
+            image.transferTo(savingImage.toPath());
+            String savePath = savingImage.toPath().toString();
+
+            lecture.setImage(savePath);
+        }
 
         lectureRepository.save(lecture);
     }
@@ -59,9 +80,6 @@ public class LectureServiceImpl implements LectureService {
         }
         if (lectureCreateRequest.getDescription() != null) {
             lecture.setDescription(lectureCreateRequest.getDescription());
-        }
-        if (lectureCreateRequest.getImage() != null) {
-            lecture.setImage(lectureCreateRequest.getImage());
         }
         if (lectureCreateRequest.getStartDate() != null) {
             lecture.setStartDate(lectureCreateRequest.getStartDate());

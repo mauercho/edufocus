@@ -5,6 +5,7 @@ import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
 import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
 import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Service
 public interface LectureService {
 
-    void createLecture(long userId, LectureCreateRequest lectureCreateRequest);
+    void createLecture(long userId, LectureCreateRequest lectureCreateRequest, MultipartFile image) throws Exception;
 
     boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest);
 

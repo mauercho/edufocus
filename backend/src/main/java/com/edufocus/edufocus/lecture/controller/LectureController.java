@@ -5,17 +5,19 @@ import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
 import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
 import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
 import com.edufocus.edufocus.lecture.service.LectureService;
-import com.edufocus.edufocus.user.model.entity.User;
-import com.edufocus.edufocus.user.model.service.UserService;
-import com.edufocus.edufocus.user.model.service.UserServiceImpl;
 import com.edufocus.edufocus.user.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/lecture")
@@ -26,8 +28,9 @@ public class LectureController {
     private final LectureService lectureService;
     private final JWTUtil jwtUtil;
 
-    @PostMapping
-    public ResponseEntity<?> createLecture(@RequestHeader("Authorization") String accessToken, @RequestBody LectureCreateRequest lectureCreateRequest) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createLecture(@RequestHeader("Authorization") String accessToken, @RequestPart LectureCreateRequest lectureCreateRequest
+            , @RequestPart(value = "image", required = false) MultipartFile image) throws Exception {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         Lecture lecture = lectureService.findLectureByTitle(lectureCreateRequest.getTitle());
@@ -36,7 +39,8 @@ public class LectureController {
             return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
         }
 
-        lectureService.createLecture(userId, lectureCreateRequest);
+        lectureService.createLecture(userId, lectureCreateRequest, image);
+
         String msg = new String("Lecture registered successfully");
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
