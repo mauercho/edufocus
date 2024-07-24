@@ -25,10 +25,12 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://i11a701.p.ssafy.io/", "http://localhost:5173", "http://localhost:4173")
                 .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
                         HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
                         HttpMethod.PATCH.name())
+                .allowCredentials(true)
+                .allowedHeaders("*")
                 .maxAge(1800); // Pre-flight Caching
     }
 
