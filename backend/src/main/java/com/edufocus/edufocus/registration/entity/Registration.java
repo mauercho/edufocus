@@ -3,12 +3,14 @@ package com.edufocus.edufocus.registration.entity;
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Registration {
 
     @Id

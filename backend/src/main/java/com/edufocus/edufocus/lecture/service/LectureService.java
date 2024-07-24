@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.lecture.service;
 
+import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
 import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
 import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
@@ -19,8 +20,9 @@ public interface LectureService {
 
     List<LectureSearchResponse> findAllLecture();
 
-    LectureDetailResponse findLectureById(long lectureId);
+    LectureDetailResponse findLectureById(Long userId, long lectureId);
 
     List<LectureSearchResponse> findMyLecture(long userId);
 
+    Lecture findLectureByTitle(String title);
 }

@@ -1,6 +1,8 @@
 package com.edufocus.edufocus.quiz.entity;
 
 import com.edufocus.edufocus.user.model.entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +21,7 @@ public class QuizSet {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Column
@@ -28,6 +31,7 @@ public class QuizSet {
     private String image;
 
     @OneToMany(mappedBy = "quizSet")
+    @JsonManagedReference
     private List<Quiz> quizzes =  new ArrayList<Quiz>();
 
     public void addQuiz(Quiz quiz) {

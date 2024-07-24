@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RegistrationService {
 
-    void createRegistration(Registration registration);
+    boolean createRegistration(long userId, long registrationId);
 
-    void acceptRegistration(long RegistrationId);
+    boolean acceptRegistration(long userId, long RegistrationId);
 
-    void deleteRegistration(long registrationId);
-
-    boolean isAcceptedRegistration(long registrationId);
+    boolean deleteRegistration(long userId, long registrationId);
 
 }
