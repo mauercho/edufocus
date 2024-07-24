@@ -1,6 +1,7 @@
 import { ClassCard } from '../../components/ClassCard';
 import { ClassGrid } from '../../components/ClassGrid';
 import { MaxWidthLayout } from '../../components/Layout';
+import { useLectures } from '../../hooks/api/useLectures';
 
 export default function StudentHomePage() {
   const { data: onGoingClasses } = {
@@ -11,16 +12,9 @@ export default function StudentHomePage() {
     ],
   };
 
-  const { data: allClasses } = {
-    data: [
-      { lecture_id: 1, title: '한국어' },
-      { lecture_id: 2, title: '영어' },
-      { lecture_id: 3, title: '일본어' },
-      { lecture_id: 4, title: '중국어' },
-      { lecture_id: 5, title: '프랑스어' },
-      { lecture_id: 6, title: '스페인어' },
-    ],
-  };
+  // const { data } = useLectures();
+  const { data } = useLectures();
+  const allClasses = data?.data;
 
   return (
     <MaxWidthLayout>
@@ -35,10 +29,10 @@ export default function StudentHomePage() {
         ))}
       </ClassGrid>
       <ClassGrid title="전체 강의">
-        {allClasses.map((lecture) => (
+        {allClasses?.map((lecture) => (
           <ClassCard
-            key={lecture.lecture_id}
-            path={`/class/${lecture.lecture_id}`}
+            key={lecture.id}
+            path={`/lecture/${lecture.id}/info`}
           >
             {lecture.title}
           </ClassCard>
