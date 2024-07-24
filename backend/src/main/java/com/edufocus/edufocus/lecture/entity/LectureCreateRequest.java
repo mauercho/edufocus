@@ -15,8 +15,6 @@ public class LectureCreateRequest {
 
     private String description;
 
-    private String image;
-
     private Date startDate;
 
     private Date endDate;
