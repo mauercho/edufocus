@@ -1,26 +1,42 @@
 import { AuthForm, InputBox } from '../../components/AuthForm';
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/api/useAuth';
 import styles from './LoginPage.module.css';
+import useBoundStore from '../../store';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const token = useBoundStore((state) => state.token);
+  const { login } = useAuth();
   const idRef = useRef('');
   const passwordRef = useRef('');
-  // linkProps : 버튼 아래 나오는 링크(회원가입 등)에 대한 props object
   const linkProps = {
     message: '아직 회원이 아니신가요?',
     path: '../register',
     title: '회원가입',
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    // TODO: 로그인 POST 기능 추가
-    console.log('로그인', idRef.current.value, passwordRef.current.value);
+    const id = idRef.current.value;
+    const password = passwordRef.current.value;
+
+    login(id, password).then(() => {
+      navigate('/', { replace: true });
+    });
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate, token]);
+
   return (
     <div className={styles.wrapper}>
       <AuthForm
-        submitFunction={handleSubmit}
+        onSubmit={handleSubmit}
         title="로그인"
         buttonText="로그인"
         linkProps={linkProps}

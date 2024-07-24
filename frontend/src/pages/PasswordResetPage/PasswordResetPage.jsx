@@ -7,7 +7,8 @@ export default function PasswordResetPage() {
   const [sendEmail, setSendEmail] = useState(false);
   const emailRef = useRef('');
   const buttonText = useRef('비밀번호 찾기');
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // TODO: 비밀번호 찾기 POST 기능 추가
     console.log('비밀번호 찾기', emailRef.current.value);
     // delay
@@ -34,7 +35,7 @@ export default function PasswordResetPage() {
   ) : (
     <div className={styles.wrapper}>
       <AuthForm
-        submitFunction={handleSubmit}
+        onSubmit={handleSubmit}
         title="비밀번호 찾기"
         buttonText={buttonText.current}
       >
