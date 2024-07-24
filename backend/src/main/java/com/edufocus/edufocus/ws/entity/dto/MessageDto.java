@@ -7,5 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageDto {
-    int channelId;
+    long lectureId;
+    long userId;
+    String name;
+    String content;
 }

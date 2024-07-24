@@ -56,8 +56,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void createBoard(long userId, RequestBoardDto requestBoardDto) {
-        User user = userRepository.findById(userId).orElseThrow();
-        Lecture lecture = lectureRepository.findById(requestBoardDto.getLectureId()).orElseThrow(IllegalArgumentException::new);
+        User user = userRepository.getReferenceById(userId);
+        Lecture lecture = lectureRepository.getReferenceById(requestBoardDto.getLectureId());
 
         Board board = Board.builder()
                 .title(requestBoardDto.getTitle())
@@ -83,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void deleteBoard(long boardId) {
-        Board board = boardRepository.findById(boardId).orElseThrow(IllegalArgumentException::new);
+        Board board = boardRepository.getReferenceById(boardId);
 
         boardRepository.delete(board);
     }
@@ -97,8 +97,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void createComment(long userId, long boardId, RequestCommentDto requestCommentDto) {
-       User user = userRepository.findById(userId).orElseThrow(IllegalArgumentException::new);
-       Board board = boardRepository.findById(boardId).orElseThrow(IllegalArgumentException::new);
+       User user = userRepository.getReferenceById(userId);
+       Board board = boardRepository.getReferenceById(boardId);
 
        Comment comment = Comment.builder()
                .content(requestCommentDto.getContent())
@@ -122,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void deleteComment(long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(NoSuchElementException::new);
+        Comment comment = commentRepository.getReferenceById(commentId);
 
         commentRepository.delete(comment);
     }

@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HelloDto {
-    long channelId;
+    long lectureId;
     String name;
 }

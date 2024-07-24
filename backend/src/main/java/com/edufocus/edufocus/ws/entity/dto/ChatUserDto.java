@@ -1,6 +1,14 @@
 package com.edufocus.edufocus.ws.entity.dto;
 
-public class ResponseChatUserDto {
-    int userId;
-    int name;
+
+import lombok.*;
+
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ChatUserDto {
+    long userId;
+    long lectureId;
+    String name;
 }
