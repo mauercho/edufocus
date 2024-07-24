@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,14 +50,14 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public ResponseBoardDetailDto findBoardDetail(long boardId) {
         return boardRepository.findById(boardId)
-                .orElseThrow()
+                .orElseThrow(NoSuchElementException::new)
                 .makeDetailDto();
     }
 
     @Transactional
     public void createBoard(long userId, RequestBoardDto requestBoardDto) {
-        User user = userRepository.findById(userId).orElseThrow();
-        Lecture lecture = lectureRepository.findById(requestBoardDto.getLectureId()).get();
+        User user = userRepository.getReferenceById(userId);
+        Lecture lecture = lectureRepository.getReferenceById(requestBoardDto.getLectureId());
 
         Board board = Board.builder()
                 .title(requestBoardDto.getTitle())
@@ -71,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void updateBoard(long boardId, RequestBoardUpdateDto requestBoardUpdateDto) {
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardRepository.findById(boardId).orElseThrow(IllegalArgumentException::new);
 
         board.setTitle(requestBoardUpdateDto.getTitle());
         board.setContent(requestBoardUpdateDto.getContent());
@@ -82,7 +83,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void deleteBoard(long boardId) {
-        Board board = boardRepository.findById(boardId).get();
+        Board board = boardRepository.getReferenceById(boardId);
 
         boardRepository.delete(board);
     }
@@ -96,8 +97,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void createComment(long userId, long boardId, RequestCommentDto requestCommentDto) {
-       User user = userRepository.findById(userId).get();
-       Board board = boardRepository.findById(boardId).get();
+       User user = userRepository.getReferenceById(userId);
+       Board board = boardRepository.getReferenceById(boardId);
 
        Comment comment = Comment.builder()
                .content(requestCommentDto.getContent())
@@ -112,7 +113,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void updateComment(long commentId, RequestCommentDto requestCommentDto) {
-        Comment comment = commentRepository.findById(commentId).get();
+        Comment comment = commentRepository.findById(commentId).orElseThrow(IllegalArgumentException::new);
 
         comment.setContent(requestCommentDto.getContent());
 
@@ -121,7 +122,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void deleteComment(long commentId) {
-        Comment comment = commentRepository.findById(commentId).get();
+        Comment comment = commentRepository.getReferenceById(commentId);
 
         commentRepository.delete(comment);
     }
