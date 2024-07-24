@@ -4,7 +4,10 @@ import useBoundStore from '../../store';
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 1000,
-  headers: { 'X-Custom-Header': 'foobar' },
+  headers: {
+    'Content-type': 'application/json;charset=utf-8',
+    'Access-Control-Allow-Origin': import.meta.env.VITE_ORIGIN,
+  },
 });
 
 instance.interceptors.request.use((config) => {

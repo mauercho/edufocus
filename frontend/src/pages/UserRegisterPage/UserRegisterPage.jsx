@@ -1,6 +1,8 @@
 import styles from './UserRegisterPage.module.css';
 import { useRef, useState } from 'react';
 import { AuthForm, InputBox } from '../../components/AuthForm';
+import instance from '../../utils/axios/instance';
+import { API_URL } from '../../constants';
 
 export default function UserRegisterPage() {
   const idRef = useRef();
@@ -11,13 +13,25 @@ export default function UserRegisterPage() {
 
   const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // TODO: 회원가입 POST 기능 추가
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      setPasswordMatch(false);
-    } else {
-      setPasswordMatch(true);
+    const isPWMatch = passwordRef.current.value === passwordConfirmRef.current.value;
+
+    setPasswordMatch(isPWMatch);
+    if (!isPWMatch) {
+      return;
     }
+
+    const userData = {
+      userId: idRef.current.value,
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    const response = await instance.post(`${API_URL}/user/join`, userData);
+    console.log(response);
   };
 
   const linkProps = {
@@ -29,7 +43,7 @@ export default function UserRegisterPage() {
   return (
     <div className={styles.wrapper}>
       <AuthForm
-        submitFunction={handleSubmit}
+        onSubmit={handleSubmit}
         title="회원가입"
         buttonText="회원가입"
         linkProps={linkProps}

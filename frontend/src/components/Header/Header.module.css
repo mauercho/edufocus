@@ -8,6 +8,7 @@
   height: 64px;
   background-color: var(--background);
   border-bottom: 1px solid var(--border-color);
+  z-index: 9999;
 }
 
 .nav {

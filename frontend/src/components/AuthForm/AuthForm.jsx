@@ -1,15 +1,10 @@
 import styles from './AuthForm.module.css';
 import { Link } from 'react-router-dom';
 
-export default function AuthForm({ children, title, buttonText, linkProps = null, submitFunction }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submitFunction();
-  };
-
+export default function AuthForm({ children, title, buttonText, linkProps = null, onSubmit }) {
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       className={styles.loginForm}
     >
       <span className={styles.loginText}>{title}</span>
