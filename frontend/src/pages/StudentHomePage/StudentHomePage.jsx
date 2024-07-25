@@ -12,7 +12,6 @@ export default function StudentHomePage() {
     ],
   };
 
-  // const { data } = useLectures();
   const { data } = useLectures();
   const allClasses = data?.data;
 
