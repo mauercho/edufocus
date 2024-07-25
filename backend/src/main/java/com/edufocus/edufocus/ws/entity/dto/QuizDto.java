@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuizDto {
-    int lectureId;
-    int userId;
-    int quizSetId;
+    long userId;
+    long quizSetId;
 }
