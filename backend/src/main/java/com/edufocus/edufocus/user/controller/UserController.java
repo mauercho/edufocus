@@ -65,10 +65,8 @@ public class UserController {
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(loginUser.getId()));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(loginUser.getId()));
 
-                // 발급받은 refresh token 을 DB에 저장.
                 userService.saveRefreshToken(loginUser.getId(), refreshToken);
 
-                // JSON 으로 token 전달.
                 System.out.println(accessToken);
                 resultMap.put("access-token", accessToken);
               //  resultMap.put("refresh-token", refreshToken);
@@ -82,7 +80,7 @@ public class UserController {
 
                 response.addCookie(refreshCookie);
 
-                // 쿠키저장
+                // 쿠키저장f
                 status = HttpStatus.CREATED;
             } else {
                 resultMap.put("message", "아이디 또는 패스워드를 확인해 주세요.");
