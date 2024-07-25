@@ -32,7 +32,7 @@ export default function LectureInfoPage() {
           </div>
         </main>
         <aside>
-          {/* TODO: 수업시간 제거 또는 데이터 수정 */}
+          {/* TODO: 수업시간 데이터 수정 */}
           <ClassInfo
             classTerm={`${startDate} ~ ${endDate}`}
             classTime={lectureData.classTime}
