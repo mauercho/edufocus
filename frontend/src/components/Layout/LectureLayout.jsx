@@ -1,18 +1,15 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import LectureHeader from '../LectureHeader/LectureHeader';
 import { SideBar, SideLink, SideItem } from '../SideBar';
 import MaxWidthLayout from './MaxWidthLayout';
 import { Suspense } from 'react';
 import useBoundStore from '../../store';
+import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 
 export default function LectureLayout() {
-  const { data: lecture } = {
-    data: {
-      title: '정보처리기사 실기 완전정복',
-      tutor: '박정민',
-      isLive: true,
-    },
-  };
+  const { lectureId } = useParams();
+  const { data } = useLectureInfo(lectureId);
+  const lecture = data?.data;
 
   const userType = useBoundStore((state) => state.userType);
 
@@ -20,8 +17,9 @@ export default function LectureLayout() {
     <>
       <LectureHeader
         title={lecture.title}
-        tutor={lecture.tutor}
-        isLive={lecture.isLive}
+        tutor={lecture.teacherName}
+        // TODO: isLive를 받아올 수단 추가
+        isLive={true}
       />
       <MaxWidthLayout hasSideBar>
         <aside>
