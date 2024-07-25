@@ -15,9 +15,7 @@ public class QuizCreateRequest {
 
     private String answer;
 
-    private boolean isSingle;
-
-    private String image;
+    private String quizType;
 
     private String choice1;
 

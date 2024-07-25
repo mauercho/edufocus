@@ -17,7 +17,6 @@ public class QuizSetServiceImpl implements QuizSetService {
     private final QuizSetRepository quizSetRepository;
 
     private final UserRepository userRepository;
-    private final QuizRepository quizRepository;
 
 
     @Override
@@ -29,7 +28,6 @@ public class QuizSetServiceImpl implements QuizSetService {
         quizSet.setUser(user);
 
         quizSet.setTitle(setCreateRequest.getTitle());
-        quizSet.setImage(setCreateRequest.getImage());
 
         return quizSetRepository.save(quizSet);
     }

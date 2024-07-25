@@ -3,13 +3,12 @@ package com.edufocus.edufocus.quiz.service;
 import com.edufocus.edufocus.quiz.entity.Quiz;
 import com.edufocus.edufocus.quiz.entity.QuizCreateRequest;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
+import com.edufocus.edufocus.quiz.entity.QuizType;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -28,11 +27,11 @@ public class QuizServiceImpl implements QuizService {
                 .title(quizCreateRequest.getTitle())
                 .description(quizCreateRequest.getDescription())
                 .answer(quizCreateRequest.getAnswer())
-                .image(quizCreateRequest.getImage())
+                .quizType(QuizType.valueOf(quizCreateRequest.getQuizType()))
                 .quizSet(quizSet)
                 .build();
 
-        if (!quiz.isSingle()) {
+        if (!quiz.getQuizType().equals(QuizType.MULTIPLE)) {
             quiz.setChoice1(quizCreateRequest.getChoice1());
             quiz.setChoice2(quizCreateRequest.getChoice2());
             quiz.setChoice3(quizCreateRequest.getChoice3());
