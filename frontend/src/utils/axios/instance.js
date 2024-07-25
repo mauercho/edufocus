@@ -8,6 +8,7 @@ const instance = axios.create({
     'Content-type': 'application/json;charset=utf-8',
     'Access-Control-Allow-Origin': import.meta.env.VITE_ORIGIN,
   },
+  withCredentials: true,
 });
 
 instance.interceptors.request.use((config) => {
