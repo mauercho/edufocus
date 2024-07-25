@@ -7,7 +7,7 @@ export default function LearningLectureDetailPage() {
   const { lectureId } = useParams();
   const { data: noticesData } = useNotices(lectureId);
   const notices = noticesData?.data;
-  // TODO: QnA 훅 작성 후 사용
+  // TODO: QnA 훅 작성 후 사용 및 3개까지만 slice 추가
   const { data: questions } = {
     data: [
       { id: 2, title: 'Question1', sub: '7-12 오전 11:40:57' },
