@@ -16,10 +16,14 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
+import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
 import java.util.List;
 
@@ -38,34 +42,36 @@ public class ChatController {
         this.jwtUtil = jwtUtil;
     }
 
-//    @GetMapping("/chat/enter/{lectureId}")
-//    public ResponseEntity<?> enter(@PathVariable long lectureId){
-//        List<ChatUserDto> chatUsers = chatService.findChatUsers(lectureId);
-//
-//        return new ResponseEntity<>(chatUsers, HttpStatus.OK);
-//    }
+    @GetMapping("/chat/enter/{lectureId}")
+    public ResponseEntity<?> enter(@PathVariable long lectureId){
+        List<ChatUserDto> chatUsers = chatService.findChatUsers(lectureId);
+
+        return new ResponseEntity<>(chatUsers, HttpStatus.OK);
+    }
 
 
-//    @MessageMapping("/hello/{channelId}")
-//    @SendTo("/sub/channel/{channelId}")
-//    public ChatUserDto hello(@DestinationVariable long channelId, SimpMessageHeaderAccessor simpMessageHeaderAccessor, @Header("Authorization") String token){
-//        String sessionId = simpMessageHeaderAccessor.getSessionId();
-//
-//        System.out.println("session" + sessionId);
-//
-//        long userId = Long.parseLong(jwtUtil.getUserId(token));
-//
-//        chatService.saveChatUserInfo(userId, channelId, sessionId);
-//
-//        return chatService.getChatUserInfo(userId);
-//    }
+    @MessageMapping("/hello/{channelId}")
+    @SendTo("/topic/{channelId}")
+    public ChatUserDto hello(@DestinationVariable long channelId, SimpMessageHeaderAccessor simpMessageHeaderAccessor, @Header("Authorization") String token){
+        String sessionId = simpMessageHeaderAccessor.getSessionId();
+
+        System.out.println("session" + sessionId);
+
+        System.out.println("가냐?????"+token);
+
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+        chatService.saveChatUserInfo(userId, channelId, sessionId);
+
+        return chatService.getChatUserInfo(userId);
+    }
 
     @MessageMapping("/message/{lectureId}")
-    @SendTo("/sub/channel/{lectureId}")
+    @SendTo("/topic/{lectureId}")
     public MessageDto sendMessage(@DestinationVariable long lectureId, MessageDto messageDto){return messageDto;}
 
     @MessageMapping("/quiz/{lectureId}")
-    @SendTo("/sub/channel/{lectureId}")
+    @SendTo("/topic/{lectureId}")
     public QuizDto quizStart(@DestinationVariable long lectureId, QuizDto quizDto){
         return quizDto;
     }
@@ -88,5 +94,6 @@ public class ChatController {
 //        chatService.deleteChatUserInfo(chatUserDto.getUserId());
 //        simpMessageSendingOperations.convertAndSend("/sub/channel/" + chatUserDto.getLectureId(), chatUserDto);
 //    }
+
 }
 
