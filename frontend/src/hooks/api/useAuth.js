@@ -11,10 +11,13 @@ export function useAuth() {
       userId,
       password,
     };
+
     return instance
       .post(`${API_URL}/user/login`, formData)
-      .then(({ data }) => data['access-token'])
-      .then((accessToken) => {
+      .then(({ data, config }) => {
+        const { 'access-token': accessToken } = data;
+
+        config.headers.Authorization = `${accessToken}`;
         setToken(accessToken);
         // TODO: userType 구분 추가
         setUserType('student');
