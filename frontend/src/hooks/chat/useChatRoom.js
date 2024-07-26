@@ -9,6 +9,7 @@ export default function useChatRoom(roomId) {
   const [messages, setMessages] = useState([]);
   const userName = useBoundStore((state) => state.userName) ?? '익명';
   const inputRef = useRef(null);
+  const chatListRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +35,7 @@ export default function useChatRoom(roomId) {
       client.subscribe(`/sub/channel/${roomId}`, (response) => {
         const data = JSON.parse(response.body);
         const { content: message, name } = data;
+
         setMessages((prev) => [...prev, { id: prev.length, text: message, isMine: USER_ID === data.userId, name }]);
       });
     };
@@ -44,9 +46,16 @@ export default function useChatRoom(roomId) {
     };
   }, [client, roomId]);
 
+  useEffect(() => {
+    if (chatListRef.current.scrollHeight - chatListRef.current.scrollTop - chatListRef.current.clientHeight < 200) {
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return {
     messages,
     inputRef,
     handleSubmit,
+    chatListRef,
   };
 }

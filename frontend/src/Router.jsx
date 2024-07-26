@@ -6,9 +6,9 @@ import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
 import LearningLecturesPage from './pages/LearningLecturesPage/LearningLecturesPage';
-import ChatRoom from './components/ChatRoom/ChatRoom';
-import { MaxWidthLayout } from './components/Layout';
 
+const LiveLayout = lazy(async () => await import('./components/Layout/LiveLayout'));
+const LivePage = lazy(async () => await import('./pages/LivePage'));
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
 const NoticeListPage = lazy(async () => await import('./pages/NoticeListPage'));
@@ -26,6 +26,16 @@ const PasswordChangePage = lazy(async () => await import('./pages/PasswordChange
 
 const router = createBrowserRouter([
   {
+    path: 'live/:roomId',
+    element: <LiveLayout />,
+    children: [
+      {
+        index: true,
+        element: <LivePage />,
+      },
+    ],
+  },
+  {
     path: '',
     element: <PageLayout />,
     errorElement: <NotFoundPage />,
@@ -37,17 +47,6 @@ const router = createBrowserRouter([
       {
         path: 'lecture/:lectureId/info',
         element: <LectureInfoPage />,
-      },
-      {
-        // TODO: 채팅 분리
-        path: 'chat/:lectureId',
-        element: (
-          <MaxWidthLayout>
-            <main>
-              <ChatRoom />
-            </main>
-          </MaxWidthLayout>
-        ),
       },
       {
         path: 'lecture/:lectureId',

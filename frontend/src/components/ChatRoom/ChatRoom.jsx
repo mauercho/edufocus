@@ -4,13 +4,16 @@ import SendIcon from '/src/assets/icons/send.svg?react';
 import useChatRoom from '../../hooks/chat/useChatRoom';
 
 export default function ChatRoom() {
-  const { lectureId } = useParams();
-  const { messages, handleSubmit, inputRef } = useChatRoom(lectureId);
+  const { roomId } = useParams();
+  const { messages, handleSubmit, inputRef, chatListRef } = useChatRoom(roomId);
 
   return (
     <section className={styles.room}>
       <h2 className={styles.title}>채팅</h2>
-      <ol className={styles.messageList}>
+      <ol
+        className={styles.messageList}
+        ref={chatListRef}
+      >
         {messages.map((message) => (
           <li
             key={message.id}
