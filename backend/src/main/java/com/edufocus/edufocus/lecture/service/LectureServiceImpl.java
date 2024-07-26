@@ -43,9 +43,10 @@ public class LectureServiceImpl implements LectureService {
                 .user(user)
                 .title(lectureCreateRequest.getTitle())
                 .description(lectureCreateRequest.getDescription())
+                .plan(lectureCreateRequest.getPlan())
                 .startDate(lectureCreateRequest.getStartDate())
                 .endDate(lectureCreateRequest.getEndDate())
-                .plan(lectureCreateRequest.getPlan())
+                .time(lectureCreateRequest.getTime())
                 .build();
 
         if (image != null && !image.isEmpty()) {
@@ -81,14 +82,17 @@ public class LectureServiceImpl implements LectureService {
         if (lectureCreateRequest.getDescription() != null) {
             lecture.setDescription(lectureCreateRequest.getDescription());
         }
+        if (lectureCreateRequest.getPlan() != null) {
+            lecture.setPlan(lectureCreateRequest.getPlan());
+        }
         if (lectureCreateRequest.getStartDate() != null) {
             lecture.setStartDate(lectureCreateRequest.getStartDate());
         }
         if (lectureCreateRequest.getEndDate() != null) {
             lecture.setEndDate(lectureCreateRequest.getEndDate());
         }
-        if (lectureCreateRequest.getPlan() != null) {
-            lecture.setPlan(lectureCreateRequest.getPlan());
+        if (lectureCreateRequest.getTime() != null) {
+            lecture.setTime(lectureCreateRequest.getTime());
         }
 
         lectureRepository.save(lecture);
@@ -167,10 +171,11 @@ public class LectureServiceImpl implements LectureService {
                 .id(lecture.get().getId())
                 .title(lecture.get().getTitle())
                 .description(lecture.get().getDescription())
+                .plan(lecture.get().getPlan())
                 .image(lecture.get().getImage())
                 .startDate(lecture.get().getStartDate())
                 .endDate(lecture.get().getEndDate())
-                .plan(lecture.get().getPlan())
+                .time(lecture.get().getTime())
                 .online(lecture.get().isOnline())
                 .teacherName(lecture.get().getUser().getName())
                 .status(userStatus)

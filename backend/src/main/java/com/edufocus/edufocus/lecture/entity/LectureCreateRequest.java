@@ -15,10 +15,12 @@ public class LectureCreateRequest {
 
     private String description;
 
+    private String plan;
+
     private Date startDate;
 
     private Date endDate;
 
-    private String plan;
+    private String time;
 
 }
