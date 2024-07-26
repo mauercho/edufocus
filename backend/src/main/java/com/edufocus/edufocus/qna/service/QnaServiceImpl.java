@@ -80,8 +80,22 @@ qnaRepository.deleteById(id);
     }
 
     @Override
-    public Qna getQna(Long id) {
-        return null;
+    public QnaResponseDto getQna(Long id) {
+        Optional<Qna> qna;
+        try {
+
+            qna= qnaRepository.findById(id);
+
+
+        } catch (Exception e) {
+
+            throw new RuntimeException("Qna 없음 " + id, e);
+        }
+
+
+
+            return QnaResponseDto.toEntity(qna.get());
+
     }
 
     @Override
