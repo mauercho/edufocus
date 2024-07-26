@@ -11,5 +11,5 @@ public interface UserService {
        User userInfo(Long id) throws Exception;
     void sendEamail(User user) throws Exception;
      void userCheck(Long id) throws  Exception;
-
+     String getUserName(Long id) throws Exception;
 }

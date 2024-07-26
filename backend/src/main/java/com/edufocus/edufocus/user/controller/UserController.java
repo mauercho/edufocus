@@ -50,11 +50,14 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
 
-        String name= user.getName();
-        resultMap.put("name",name);
+
+
         try {
             User loginUser = userService.login(user);
             if (loginUser != null) {
+
+                String name = loginUser.getName();
+                resultMap.put("name",name);
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(loginUser.getId()));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(loginUser.getId()));
 
