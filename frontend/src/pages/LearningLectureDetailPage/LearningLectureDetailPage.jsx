@@ -2,19 +2,16 @@ import ArticlePreview from '../../components/Article/ArticlePreview/ArticlePrevi
 import styles from './LearningLectureDetailPage.module.css';
 import { useNotices } from '../../hooks/api/useNotices';
 import { useParams } from 'react-router-dom';
+import { useQnas } from '../../hooks/api/useQnas';
 
 export default function LearningLectureDetailPage() {
   const { lectureId } = useParams();
   const { data: noticesData } = useNotices(lectureId);
   const notices = noticesData?.data;
+  const { data: qnasData } = useQnas(lectureId);
+  const questions = qnasData?.data;
   // TODO: QnA 훅 작성 후 사용 및 3개까지만 slice 추가
-  const { data: questions } = {
-    data: [
-      { id: 2, title: 'Question1', sub: '7-12 오전 11:40:57' },
-      { id: 3, title: 'Question2', sub: '7-12 오전 11:40:57' },
-      { id: 4, title: '헷갈리는게 있어요', sub: '7-15 오전 11:40:57' },
-    ],
-  };
+
   return (
     <section className={styles.previews}>
       <ArticlePreview
