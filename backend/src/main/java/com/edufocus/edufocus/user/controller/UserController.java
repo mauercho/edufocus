@@ -41,17 +41,7 @@ public class UserController {
         return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
 
     }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<User> login(@RequestBody User user) {
-//        try {
-//            User loggedInUser = userService.login(user);
-//            return ResponseEntity.ok(loggedInUser);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
- //   }
+
 
     @Operation(summary = "로그인", description = "아이디와 비밀번호를 이용하여 로그인 처리.")
     @PostMapping("/login")
@@ -59,6 +49,9 @@ public class UserController {
             @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user,   HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
+
+        String name= user.getName();
+        resultMap.put("name",name);
         try {
             User loginUser = userService.login(user);
             if (loginUser != null) {
@@ -69,9 +62,9 @@ public class UserController {
 
                 System.out.println(accessToken);
                 resultMap.put("access-token", accessToken);
-              //  resultMap.put("refresh-token", refreshToken);
 
-                // 쿠키 저장
+
+
                 Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
                 refreshCookie.setPath("/");
                 refreshCookie.setHttpOnly(true);
@@ -80,7 +73,7 @@ public class UserController {
 
                 response.addCookie(refreshCookie);
 
-                // 쿠키저장f
+
                 status = HttpStatus.CREATED;
             } else {
                 resultMap.put("message", "아이디 또는 패스워드를 확인해 주세요.");
@@ -98,12 +91,9 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getInfo(
             @PathVariable("userId") @Parameter(description = "인증할 회원의 아이디.", required = true) Long userId,
             HttpServletRequest request) {
-		//logger.debug("userId : {} ", userId);
         String id = String.valueOf(userId);
 
-        System.out.println("!>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(id);
-        System.out.println(id.getClass().getName());
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
         if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
