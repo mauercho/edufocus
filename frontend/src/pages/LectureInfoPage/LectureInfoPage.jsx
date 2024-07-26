@@ -32,10 +32,9 @@ export default function LectureInfoPage() {
           </div>
         </main>
         <aside>
-          {/* TODO: 수업시간 데이터 수정 */}
           <ClassInfo
             classTerm={`${startDate} ~ ${endDate}`}
-            classTime={lectureData.classTime}
+            classTime={lectureData.time}
           />
         </aside>
       </MaxWidthLayout>
