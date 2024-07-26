@@ -12,10 +12,10 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const accessToken = useBoundStore.getState().accessToken;
+  const accessToken = useBoundStore.getState().token;
 
   if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    config.headers.Authorization = `${accessToken}`;
   }
 
   return config;
@@ -34,8 +34,8 @@ instance.interceptors.response.use(
     return instance.post(REFRESH_API_URL).then((response) => {
       const { accessToken } = response.data;
 
-      useBoundStore.setState({ accessToken });
-      error.config.headers.Authorization = `Bearer ${accessToken}`;
+      useBoundStore.setState({ token: accessToken });
+      error.config.headers.Authorization = `${accessToken}`;
       return instance(error.config);
     });
   }
