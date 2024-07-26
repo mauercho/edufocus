@@ -1,12 +1,17 @@
 package com.edufocus.edufocus.quiz.entity;
 
+import com.edufocus.edufocus.user.model.entity.UserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Quiz {
 
     @Id
@@ -15,6 +20,7 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "quizset_id")
+    @JsonBackReference
     private QuizSet quizSet;
 
     @Column
@@ -26,8 +32,8 @@ public class Quiz {
     @Column
     private String answer;
 
-    @Column (name = "is_single")
-    private boolean isSingle;
+    @Enumerated(EnumType.STRING)
+    private QuizType quizType;
 
     @Column
     private String image;

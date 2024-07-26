@@ -3,19 +3,20 @@ package com.edufocus.edufocus.lecture.entity;
 
 import com.edufocus.edufocus.user.model.entity.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Lecture {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
@@ -29,6 +30,9 @@ public class Lecture {
     @Lob
     private String description;
 
+    @Lob
+    private String plan;
+
     @Column
     private String image;
 
@@ -40,8 +44,8 @@ public class Lecture {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @Lob
-    private String plan;
+    @Column
+    private String time;
 
     @Column
     private boolean online;

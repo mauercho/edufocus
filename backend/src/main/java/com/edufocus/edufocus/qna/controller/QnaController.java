@@ -1,6 +1,8 @@
 package com.edufocus.edufocus.qna.controller;
 
 import com.edufocus.edufocus.qna.entity.Qna;
+import com.edufocus.edufocus.qna.entity.QnaRequestDto;
+import com.edufocus.edufocus.qna.entity.QnaResponseDto;
 import com.edufocus.edufocus.qna.service.QnaService;
 import com.edufocus.edufocus.user.util.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,28 +23,71 @@ import java.util.List;
 public class QnaController {
     private final QnaService qnaService;
     private final JWTUtil jwtUtil;
+    private static int PAGE_SIZE=10;
 
-    @PostMapping
-    public ResponseEntity<Qna> createQna(@RequestBody Qna qna , HttpServletRequest request) {
+
+    @PostMapping("/{lecture_id}")
+    public ResponseEntity<QnaResponseDto> createQna(@PathVariable("lecture_id") Long lecture_id, @RequestBody QnaRequestDto qnaRequestDto , HttpServletRequest request) {
 
 
         try{
             String token = request.getHeader("Authorization");
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
 
-            qnaService.createQna(userId,qna);
-            return new ResponseEntity<>(qna, HttpStatus.CREATED);
+           QnaResponseDto qnaResponseDto= qnaService.createQna(userId,qnaRequestDto,lecture_id);
+            return new ResponseEntity<>( qnaResponseDto,HttpStatus.CREATED);
 
         }catch (Exception e){
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping({"/answer/create/{qna_id}"})
+    public ResponseEntity<QnaResponseDto> createAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto)
+    {
+        try {
+            QnaResponseDto responseDto = qnaService.createAnswer(qna_id,qnaRequestDto);
+            return new ResponseEntity<>(responseDto,HttpStatus.ACCEPTED);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PutMapping({"/answer/update/{qna_id}"})
+    public ResponseEntity<QnaResponseDto> updateAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto)
+    {
+        try {
+            QnaResponseDto responseDto = qnaService.updateAnswer(qna_id,qnaRequestDto);
+            return new ResponseEntity<>(responseDto,HttpStatus.ACCEPTED);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping("/answer/delete/{qna_id}")
+    public ResponseEntity<QnaResponseDto> deleteAnswer(@PathVariable("qna_id") Long qna_id)
+    {
+        try {
+             qnaService.deleteAnswer(qna_id);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<Qna> updateQna(@PathVariable Long id, @RequestBody Qna qna) {
+    public ResponseEntity<QnaResponseDto> updateQna(@PathVariable Long id, @RequestBody QnaRequestDto qnaRequestDto) {
 
         try{
-             qnaService.updateQna(id,qna);
-            return new ResponseEntity<>(qna, HttpStatus.ACCEPTED);
+           QnaResponseDto qnaResponseDto=  qnaService.updateQna(id,qnaRequestDto);
+            return new ResponseEntity<>(qnaResponseDto, HttpStatus.ACCEPTED);
 
         }catch (Exception e)
         {
@@ -61,9 +106,9 @@ public class QnaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Qna> getQna(@PathVariable Long id) {
+    public ResponseEntity<QnaResponseDto> getQna(@PathVariable Long id) {
         try{
-           Qna findQna= qnaService.getQna(id);
+            QnaResponseDto findQna= qnaService.getQna(id);
             return new ResponseEntity<>(findQna, HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {
@@ -72,15 +117,12 @@ public class QnaController {
     }
 
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<Qna>> getAllQna(@PathVariable Long id) {
+    public ResponseEntity<List<QnaResponseDto>> getAllQna(@PathVariable Long id) {
         try {
 
-            System.out.print("@@@@@@@@@@@@@@@@@@@@@@@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            List<Qna> qnaList= qnaService.getAllQnasByLecture(id);
-            for(Qna qna:qnaList)
-            {
-                System.out.print(qna.toString());
-            }
+
+            List<QnaResponseDto> qnaList= qnaService.getAllQnasByLecture(id,PAGE_SIZE);
+
             return new ResponseEntity<>(qnaList, HttpStatus.ACCEPTED);
         } catch (SQLException e) {
             throw new RuntimeException(e);

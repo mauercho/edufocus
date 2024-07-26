@@ -13,6 +13,4 @@ public class SetCreateRequest {
 
     private String title;
 
-    private String image;
-
 }

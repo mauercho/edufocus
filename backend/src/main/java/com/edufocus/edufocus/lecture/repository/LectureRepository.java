@@ -10,8 +10,11 @@ import java.util.List;
 
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
-    Lecture findByTitle(@Param("title") String title);
+    Lecture findByTitle(String title);
 
-    List<Lecture> findAllByUserId(@Param("userId") Long userId);
+    List<Lecture> findAllByUserId(Long userId);
 
+    List<Lecture> findLecturesByUserId(Long userId);
+
+    Lecture findByIdAndUserId(long id, long userId);
 }

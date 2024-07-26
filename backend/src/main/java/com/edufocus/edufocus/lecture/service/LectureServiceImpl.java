@@ -1,21 +1,27 @@
 package com.edufocus.edufocus.lecture.service;
 
-import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.lecture.entity.LectureCreateRequest;
-import com.edufocus.edufocus.lecture.entity.LectureSearchResponse;
-import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
+import com.edufocus.edufocus.lecture.entity.*;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
+import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
 import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Builder
 @Service
@@ -30,28 +36,79 @@ public class LectureServiceImpl implements LectureService {
     private final RegistrationRepository registrationRepository;
 
     @Override
-    public void createLecture(long userId, LectureCreateRequest lectureCreateRequest) {
-
+    public void createLecture(long userId, LectureCreateRequest lectureCreateRequest, MultipartFile image) throws IOException {
         User user = userRepository.findById(userId).get();
 
-        Lecture lecture = new Lecture();
-        lecture.setUser(user);
+        Lecture lecture = new Lecture().builder()
+                .user(user)
+                .title(lectureCreateRequest.getTitle())
+                .description(lectureCreateRequest.getDescription())
+                .plan(lectureCreateRequest.getPlan())
+                .startDate(lectureCreateRequest.getStartDate())
+                .endDate(lectureCreateRequest.getEndDate())
+                .time(lectureCreateRequest.getTime())
+                .build();
 
-        lecture.setTitle(lectureCreateRequest.getTitle());
-        lecture.setDescription(lectureCreateRequest.getDescription());
-        lecture.setImage(lectureCreateRequest.getImage());
-        lecture.setStartDate(lectureCreateRequest.getStartDate());
-        lecture.setEndDate(lectureCreateRequest.getEndDate());
-        lecture.setPlan(lectureCreateRequest.getPlan());
+        if (image != null && !image.isEmpty()) {
+            String uid = UUID.randomUUID().toString();
+
+            String currentPath = "backend/src/main/resources/images/";
+            File checkPathFile = new File(currentPath);
+            if (!checkPathFile.exists()) {
+                checkPathFile.mkdirs();
+            }
+
+            File savingImage = new File(currentPath + uid + "_" + image.getOriginalFilename());
+            image.transferTo(savingImage.toPath());
+            String savePath = savingImage.toPath().toString();
+
+            lecture.setImage(savePath);
+        }
 
         lectureRepository.save(lecture);
     }
 
     @Override
-    public boolean deleteLecture(long userId, long lectureId) {
+    public boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest) {
         Lecture lecture = lectureRepository.findById(lectureId).get();
 
         if (lecture.getUser().getId() != userId) {
+            return false;
+        }
+
+        if (lectureCreateRequest.getTitle() != null) {
+            lecture.setTitle(lectureCreateRequest.getTitle());
+        }
+        if (lectureCreateRequest.getDescription() != null) {
+            lecture.setDescription(lectureCreateRequest.getDescription());
+        }
+        if (lectureCreateRequest.getPlan() != null) {
+            lecture.setPlan(lectureCreateRequest.getPlan());
+        }
+        if (lectureCreateRequest.getStartDate() != null) {
+            lecture.setStartDate(lectureCreateRequest.getStartDate());
+        }
+        if (lectureCreateRequest.getEndDate() != null) {
+            lecture.setEndDate(lectureCreateRequest.getEndDate());
+        }
+        if (lectureCreateRequest.getTime() != null) {
+            lecture.setTime(lectureCreateRequest.getTime());
+        }
+
+        lectureRepository.save(lecture);
+        return true;
+    }
+
+    @Override
+    public boolean deleteLecture(long userId, long lectureId) {
+        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
+
+        if (lecture.isEmpty()) {
+            return false;
+        }
+        lecture = Optional.of(lecture.get());
+
+        if (lecture.get().getUser().getId() != userId) {
             return false;
         }
 
@@ -77,24 +134,51 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureDetailResponse findLectureById(long lectureId) {
+    public LectureDetailResponse findLectureById(Long userId, long lectureId) {
+        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
 
-        Lecture lecture = lectureRepository.findById(lectureId).get();
-
-        if (lecture == null) {
+        if (lecture.isEmpty()) {
             return null;
+        }
+        lecture = Optional.of(lecture.get());
+
+        String userStatus;
+        if (userId == null) {
+            userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
+        } else {
+            User user = userRepository.findById(userId).get();
+
+            if (user.getRole() == UserRole.ADMIN) {
+                if (lecture.get().getUser().getId() == user.getId()) {
+                    userStatus = String.valueOf(UserStatus.MANAGED_BY_ME);
+                } else {
+                    userStatus = String.valueOf(UserStatus.MANAGED_BY_OTHERS);
+                }
+            } else {
+                Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
+
+                if (registration == null) {
+                    userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
+                } else if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
+                    userStatus = String.valueOf(UserStatus.ENROLLED);
+                } else {
+                    userStatus = String.valueOf(UserStatus.PENDING);
+                }
+            }
         }
 
         LectureDetailResponse lectureDetailResponse = new LectureDetailResponse().builder()
-                .id(lecture.getId())
-                .title(lecture.getTitle())
-                .description(lecture.getDescription())
-                .image(lecture.getImage())
-                .startDate(lecture.getStartDate())
-                .endDate(lecture.getEndDate())
-                .plan(lecture.getPlan())
-                .online(lecture.isOnline())
-                .teacherName(lecture.getUser().getName())
+                .id(lecture.get().getId())
+                .title(lecture.get().getTitle())
+                .description(lecture.get().getDescription())
+                .plan(lecture.get().getPlan())
+                .image(lecture.get().getImage())
+                .startDate(lecture.get().getStartDate())
+                .endDate(lecture.get().getEndDate())
+                .time(lecture.get().getTime())
+                .online(lecture.get().isOnline())
+                .teacherName(lecture.get().getUser().getName())
+                .status(userStatus)
                 .build();
 
         return lectureDetailResponse;
@@ -105,9 +189,8 @@ public class LectureServiceImpl implements LectureService {
 
         List<LectureSearchResponse> myLectureList = new ArrayList<>();
 
-        if (user.getRole().equals("ADMIN")) {
-            List<Lecture> lectureList = lectureRepository.findAllByUserId(userId);
-
+        if (user.getRole() == UserRole.ADMIN) {
+            List<Lecture> lectureList = lectureRepository.findLecturesByUserId(userId);
             for (Lecture lecture : lectureList) {
                 LectureSearchResponse lectureSearchResponse = new LectureSearchResponse().builder()
                         .id(lecture.getId())
@@ -134,4 +217,8 @@ public class LectureServiceImpl implements LectureService {
         return myLectureList;
     }
 
+    @Override
+    public Lecture findLectureByTitle(String title) {
+        return lectureRepository.findByTitle(title);
+    }
 }

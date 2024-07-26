@@ -34,18 +34,14 @@ public class UserController {
         userService.join(user);
         return ResponseEntity.ok("User registered successfully");
     }
+    @PostMapping("/findpassword/{user_id}")
+    public ResponseEntity<String> findpassword(@PathVariable("user_id") Long user_id) throws Exception {
 
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<User> login(@RequestBody User user) {
-//        try {
-//            User loggedInUser = userService.login(user);
-//            return ResponseEntity.ok(loggedInUser);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
- //   }
+        userService.userCheck(user_id);
+        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+
+    }
+
 
     @Operation(summary = "로그인", description = "아이디와 비밀번호를 이용하여 로그인 처리.")
     @PostMapping("/login")
@@ -53,30 +49,34 @@ public class UserController {
             @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user,   HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
+
+
+
         try {
             User loginUser = userService.login(user);
             if (loginUser != null) {
+
+                String name = loginUser.getName();
+                resultMap.put("name",name);
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(loginUser.getId()));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(loginUser.getId()));
 
-                // 발급받은 refresh token 을 DB에 저장.
                 userService.saveRefreshToken(loginUser.getId(), refreshToken);
 
-                // JSON 으로 token 전달.
                 System.out.println(accessToken);
                 resultMap.put("access-token", accessToken);
-              //  resultMap.put("refresh-token", refreshToken);
 
-                // 쿠키 저장
+
+
                 Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
                 refreshCookie.setPath("/");
                 refreshCookie.setHttpOnly(true);
-                refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
+               // refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
                 // refreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
 
                 response.addCookie(refreshCookie);
 
-                // 쿠키저장
+
                 status = HttpStatus.CREATED;
             } else {
                 resultMap.put("message", "아이디 또는 패스워드를 확인해 주세요.");
@@ -94,12 +94,9 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getInfo(
             @PathVariable("userId") @Parameter(description = "인증할 회원의 아이디.", required = true) Long userId,
             HttpServletRequest request) {
-		//logger.debug("userId : {} ", userId);
         String id = String.valueOf(userId);
 
-        System.out.println("!>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(id);
-        System.out.println(id.getClass().getName());
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
         if (jwtUtil.checkToken(request.getHeader("Authorization"))) {

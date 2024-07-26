@@ -18,6 +18,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     public WebConfiguration(JWTInterceptor jwtInterceptor) {
         super();
+
         this.jwtInterceptor = jwtInterceptor;
     }
 
@@ -25,10 +26,12 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://i11a701.p.ssafy.io/", "http://localhost:5173", "http://localhost:4173")
                 .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
                         HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
                         HttpMethod.PATCH.name())
+                .allowCredentials(true)
+                .allowedHeaders("*")
                 .maxAge(1800); // Pre-flight Caching
     }
 
@@ -37,5 +40,13 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/assets/img/");
         registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
     }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(jwtInterceptor)
 
+                .addPathPatterns("/**") // 모든 경로에 대해 인터셉터 적용
+                .excludePathPatterns("/v3/api-docs/**","/swagger-resources/**","/webjars/**","/swagger-ui/**","/auth/**", "/board/**", "/user/**","/lecture/**","/qna/**", "/quiz/**"); // 인증 없이 접근 가능한 경로 설정
+
+    ///v3/api-docs/**, /swagger-resources/**, /webjars/**
+    }
 }

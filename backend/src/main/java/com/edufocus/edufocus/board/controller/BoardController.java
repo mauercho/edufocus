@@ -30,22 +30,18 @@ public class BoardController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> searchBoards(
+    public ResponseEntity<List<ResponseBoardSummaryDto>> searchBoards(
             @RequestParam(value = "category", required = false, defaultValue = "announcement") String category,
-            @RequestParam(value = "lectureId", required = true) long lectureId,
+            @RequestParam(value = "lectureId") long lectureId,
             @RequestParam(value = "pageNo", required = false, defaultValue = "0") int pageNo
     ){
         List<ResponseBoardSummaryDto> boardSummaries = boardService.findBoards(pageNo, category, lectureId);
-
-        if(boardSummaries.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
 
         return new ResponseEntity<>(boardSummaries, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{boardId}")
-    public ResponseEntity<?> getBoardDetail(
+    public ResponseEntity<ResponseBoardDetailDto> getBoardDetail(
             @PathVariable int boardId
     ){
         ResponseBoardDetailDto responseBoardDetailDto = boardService.findBoardDetail(boardId);
@@ -87,7 +83,7 @@ public class BoardController {
     }
 
     @GetMapping(value = "/comment/{boardId}")
-    public ResponseEntity<?> getComments(
+    public ResponseEntity<List<ResponseCommentDto>> getComments(
             @PathVariable int boardId
     ){
         List<ResponseCommentDto> comments = boardService.findComments(boardId);
@@ -126,5 +122,11 @@ public class BoardController {
         boardService.deleteComment(commentId);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @ExceptionHandler()
+    public ResponseEntity<?> NoContentException(Exception exception){
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

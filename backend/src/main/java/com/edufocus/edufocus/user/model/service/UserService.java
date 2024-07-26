@@ -9,4 +9,7 @@ public interface UserService {
       String getRefreshToken(Long id) throws Exception;
       void deleteRefreshToken(Long id) throws Exception;
        User userInfo(Long id) throws Exception;
+    void sendEamail(User user) throws Exception;
+     void userCheck(Long id) throws  Exception;
+     String getUserName(Long id) throws Exception;
 }
