@@ -1,22 +1,13 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './CreateArticle.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import BackIcon from '/src/assets/icons/back.svg?react';
 
-export default function CreateArticle({ topic, title }) {
-  const navigate = useNavigate();
-
+export default function CreateArticle({ topic, title, onSubmit }) {
   const [articleTitle, setArticleTitle] = useState('');
   const [articleContent, setArticleContent] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: 글 작성 기능 연결
-    if (articleTitle && articleContent) {
-      navigate('..');
-    }
-  };
   const handleInput = (e) => {
     setArticleContent(e.target.value);
     e.target.style.height = 'auto';
@@ -37,7 +28,7 @@ export default function CreateArticle({ topic, title }) {
       </header>
       <form
         className={styles.formWrapper}
-        onSubmit={handleSubmit}
+        onSubmit={(e) => onSubmit(e, articleTitle, articleContent)}
       >
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>제목</label>
@@ -61,7 +52,7 @@ export default function CreateArticle({ topic, title }) {
         <button
           type="button"
           className={styles.button}
-          onClick={handleSubmit}
+          onClick={(e) => onSubmit(e, articleTitle, articleContent)}
           disabled={!articleTitle || !articleContent}
         >
           <EditIcon />
