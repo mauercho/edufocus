@@ -1,15 +1,12 @@
 import { ArticleLink } from '../../components/ArticleLink';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
+import { useParams } from 'react-router-dom';
+import { useQnas } from '../../hooks/api/useQnas';
 
 export default function QuestionListPage() {
-  const { data: questions } = {
-    data: [
-      { id: 2, title: 'Question1', sub: '7-12 오전 11:40:57' },
-      { id: 3, title: 'Question2', sub: '7-12 오전 11:40:57' },
-      { id: 4, title: '헷갈리는게 있어요', sub: '7-15 오전 11:40:57' },
-      { id: 5, title: '궁금궁금', sub: '7-15 오전 11:40:57' },
-    ],
-  };
+  const { lectureId } = useParams();
+  const { data } = useQnas(lectureId);
+  const questions = data?.data;
 
   return (
     <ArticleBoard
@@ -18,9 +15,9 @@ export default function QuestionListPage() {
     >
       {questions.map((question) => (
         <ArticleLink
-          key={`${question.title}${question.sub}`}
+          key={`${question.title}${question.createtAt}`}
           title={question.title}
-          sub={question.sub}
+          sub={`${new Date(question.createtAt).toLocaleDateString()} ${new Date(question.createtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
           to={`${question.id}`}
         />
       ))}
