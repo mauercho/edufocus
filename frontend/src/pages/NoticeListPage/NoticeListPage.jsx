@@ -13,7 +13,7 @@ export default function NoticeListPage() {
       title="공지사항"
       canCreate={false}
     >
-      {notices?.map?.((notice) => (
+      {notices?.map((notice) => (
         <ArticleLink
           key={`${notice.id}`}
           title={notice.title}
