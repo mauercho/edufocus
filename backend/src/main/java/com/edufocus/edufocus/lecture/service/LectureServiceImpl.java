@@ -222,4 +222,28 @@ public class LectureServiceImpl implements LectureService {
     public Lecture findLectureByTitle(String title) {
         return lectureRepository.findByTitle(title);
     }
+
+    @Override
+    public void changeState(Long id) {
+
+        Optional<Lecture> lecture = lectureRepository.findById(id);
+
+        Lecture l;
+        if(lecture.isPresent())
+        {
+            l = lecture.get();
+
+            System.out.println(l.isOnline());
+            l.setOnline(true);
+            System.out.println(l.isOnline());
+
+
+        }else {
+
+            throw new RuntimeException("Lecture not found with id: " + id);
+        }
+        lectureRepository.save(l);
+    }
+
+
 }
