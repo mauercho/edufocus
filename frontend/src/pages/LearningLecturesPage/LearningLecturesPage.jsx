@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useMyLectures } from '../../hooks/api/useMyLectures';
 
 export default function LearningLecturesPage() {
-  const { data: myLectures } = useMyLectures();
-  const onGoingClasses = myLectures?.data ?? [];
+  const { data } = useMyLectures();
+  const onGoingClasses = data?.data ?? [];
 
   return (
     <section>
