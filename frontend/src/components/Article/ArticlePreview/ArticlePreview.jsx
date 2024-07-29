@@ -13,7 +13,7 @@ export default function ArticlePreview({ to, title, contents = [] }) {
         <RightIcon />
       </Link>
       <div className={styles.main}>
-        {contents.map((content) => {
+        {contents.map?.((content) => {
           return (
             <Link
               to={`${to}/${content.id}`}

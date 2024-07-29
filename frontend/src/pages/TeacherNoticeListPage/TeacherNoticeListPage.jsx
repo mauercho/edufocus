@@ -16,7 +16,7 @@ export default function TeacherNoticeListPage() {
       title="공지사항"
       canCreate={true}
     >
-      {notices.map((notice) => {
+      {notices.map?.((notice) => {
         if (notice.sub && notice.title) {
           return (
             <ArticleLink

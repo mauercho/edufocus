@@ -14,7 +14,7 @@ export default function StudentListPage() {
 
   return (
     <ArticleBoard title="수강생 관리">
-      {students.map((student) => {
+      {students.map?.((student) => {
         return (
           <ArticleLink
             key={`${student.name}${student.sub}`}

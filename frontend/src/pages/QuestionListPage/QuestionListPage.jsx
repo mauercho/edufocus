@@ -13,7 +13,7 @@ export default function QuestionListPage() {
       title="Q&A"
       canCreate={true}
     >
-      {questions.map((question) => (
+      {questions.map?.((question) => (
         <ArticleLink
           key={`${question.title}${question.createtAt}`}
           title={question.title}

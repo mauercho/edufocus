@@ -14,7 +14,7 @@ export default function ChatRoom() {
         className={styles.messageList}
         ref={chatListRef}
       >
-        {messages.map((message) => (
+        {messages.map?.((message) => (
           <li
             key={message.id}
             className={message.isMine ? styles.my : styles.your}

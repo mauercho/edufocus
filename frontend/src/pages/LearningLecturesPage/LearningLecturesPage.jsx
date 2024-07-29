@@ -14,7 +14,7 @@ export default function LearningLecturesPage() {
     <section>
       <h2 className={styles.title}>수강중인 강의</h2>
       <div className={styles.grid}>
-        {onGoingClasses.map((lecture) => (
+        {onGoingClasses.map?.((lecture) => (
           <Link
             key={lecture.lecture_id}
             to={`/lecture/${lecture.lecture_id}`}
