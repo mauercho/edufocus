@@ -21,11 +21,12 @@ import org.springframework.web.bind.annotation.*;
 
 import livekit.LivekitWebhook.WebhookEvent;
 
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/video")
 @Slf4j
 @RequiredArgsConstructor
+
 public class Controller {
 	private final JWTUtil jwtUtil;
 	private final UserService userService;
