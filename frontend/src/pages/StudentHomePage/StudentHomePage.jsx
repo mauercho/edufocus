@@ -2,26 +2,23 @@ import { ClassCard } from '../../components/ClassCard';
 import { ClassGrid } from '../../components/ClassGrid';
 import { MaxWidthLayout } from '../../components/Layout';
 import { useLectures } from '../../hooks/api/useLectures';
+import { useMyLectures } from '../../hooks/api/useMyLectures';
 
 export default function StudentHomePage() {
-  const { data: onGoingClasses } = {
-    data: [
-      { lecture_id: 1, title: '한국어' },
-      { lecture_id: 2, title: '영어' },
-      { lecture_id: 3, title: '일본어' },
-    ],
-  };
+  const { data: myLectures } = useMyLectures();
+  const onGoingClasses = myLectures?.data ?? [];
 
-  const { data } = useLectures();
-  const allClasses = data?.data ?? [];
+  const { data: allLectures } = useLectures();
+  const allClasses = allLectures?.data ?? [];
 
+  // TODO: 전체 강의 안에 수강중인 강의가 나옴
   return (
     <MaxWidthLayout>
       <ClassGrid title="수강중인 강의">
         {onGoingClasses.map?.((lecture) => (
           <ClassCard
-            key={lecture.lecture_id}
-            path={`/lecture/${lecture.lecture_id}`}
+            key={lecture.id}
+            path={`/lecture/${lecture.id}`}
           >
             {lecture.title}
           </ClassCard>
