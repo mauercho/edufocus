@@ -26,11 +26,9 @@ public class RegistrationController {
         Long lectureId = map.get("lectureId");
 
         if (!registrationServiceImpl.createRegistration(userId, lectureId)) {
-            String msg = new String("Duplicated Registration");
-            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        String msg = new String("registration successful");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

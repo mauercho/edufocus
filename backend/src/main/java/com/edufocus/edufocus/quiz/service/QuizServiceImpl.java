@@ -1,42 +1,49 @@
 package com.edufocus.edufocus.quiz.service;
 
-import com.edufocus.edufocus.quiz.entity.Quiz;
-import com.edufocus.edufocus.quiz.entity.QuizCreateRequest;
-import com.edufocus.edufocus.quiz.entity.QuizSet;
-import com.edufocus.edufocus.quiz.entity.QuizType;
+import com.edufocus.edufocus.quiz.entity.*;
+import com.edufocus.edufocus.quiz.repository.ChoiceRepository;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService {
+
+    private final ChoiceRepository choiceRepository;
 
     private final QuizRepository quizRepository;
 
     private final QuizSetRepository quizSetRepository;
 
     @Override
-    public void createQuiz(long quizSetId, QuizCreateRequest quizCreateRequest) {
-        QuizSet quizSet = quizSetRepository.findById(quizSetId).get();
-
+    public void createQuiz(QuizSet quizSet, QuizCreateRequest quizCreateRequest) {
         Quiz quiz = new Quiz().builder()
-                .title(quizCreateRequest.getTitle())
-                .description(quizCreateRequest.getDescription())
-                .answer(quizCreateRequest.getAnswer())
-                .quizType(QuizType.valueOf(quizCreateRequest.getQuizType()))
                 .quizSet(quizSet)
+                .question(quizCreateRequest.getQuestion())
+                .answer(quizCreateRequest.getAnswer())
                 .build();
 
-        if (!quiz.getQuizType().equals(QuizType.MULTIPLE)) {
-            quiz.setChoice1(quizCreateRequest.getChoice1());
-            quiz.setChoice2(quizCreateRequest.getChoice2());
-            quiz.setChoice3(quizCreateRequest.getChoice3());
-            quiz.setChoice4(quizCreateRequest.getChoice4());
+        List<Choice> choices = new ArrayList<>();
+
+        for (ChoiceCreateRequest choiceCreateRequest : quizCreateRequest.getChoices()) {
+            Choice choice = new Choice().builder()
+                    .quiz(quiz)
+                    .num(choiceCreateRequest.getNum())
+                    .content(choiceCreateRequest.getContent())
+                    .build();
+            choices.add(choice);
+            choiceRepository.save(choice);
         }
+
+        quiz.setChoices(choices);
 
         quizRepository.save(quiz);
     }

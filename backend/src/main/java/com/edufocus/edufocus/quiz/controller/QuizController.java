@@ -33,28 +33,10 @@ public class QuizController {
             , @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
-        String title = quizSetCreateRequest.getTitle();
-        SetCreateRequest setCreateRequest = new SetCreateRequest(userId, title);
-
-        QuizSet quizSet = quizSetService.createQuizSet(setCreateRequest);
-        if (image != null && !image.isEmpty()) {
-            String uid = UUID.randomUUID().toString();
-
-            String currentPath = "backend/src/main/resources/images/";
-            File checkPathFile = new File(currentPath);
-            if (!checkPathFile.exists()) {
-                checkPathFile.mkdirs();
-            }
-
-            File savingImage = new File(currentPath + uid + "_" + image.getOriginalFilename());
-            image.transferTo(savingImage.toPath());
-            String savePath = savingImage.toPath().toString();
-
-            quizSet.setImage(savePath);
-        }
+        QuizSet quizSet = quizSetService.createQuizSet(userId, quizSetCreateRequest.getTitle());
 
         for (QuizCreateRequest quizCreateRequest : quizSetCreateRequest.getQuizzes()) {
-            quizService.createQuiz(quizSet.getId(), quizCreateRequest);
+            quizService.createQuiz(quizSet, quizCreateRequest);
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -62,7 +44,7 @@ public class QuizController {
 
     @GetMapping("/{quizsetId}")
     public ResponseEntity<?> getQuizzes(@PathVariable Long quizsetId) {
-        QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
+        QuizSetResponse quizSet = quizSetService.findQuizSetResponse(quizsetId);
 
         return new ResponseEntity<>(quizSet, HttpStatus.OK);
     }
