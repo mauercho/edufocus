@@ -3,14 +3,27 @@ import ClassInfo from '../../components/ClassInfo/ClassInfo';
 import { MaxWidthLayout } from '../../components/Layout';
 import LectureHeader from '../../components/LectureHeader/LectureHeader';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useLectureRegister } from '../../hooks/api/useLectureRegister';
 
 export default function LectureInfoPage() {
+  const navigate = useNavigate();
   const { lectureId } = useParams();
   const { data } = useLectureInfo(lectureId);
   const lectureData = data?.data;
   const startDate = new Date(lectureData.startDate).toLocaleDateString();
   const endDate = new Date(lectureData.endDate).toLocaleDateString();
+
+  const { lectureRegister } = useLectureRegister();
+  const handleSubmit = () => {
+    lectureRegister(lectureId)
+      .then(() => {
+        navigate(`/lecture/${lectureId}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -35,6 +48,7 @@ export default function LectureInfoPage() {
           <ClassInfo
             classTerm={`${startDate} ~ ${endDate}`}
             classTime={lectureData.time}
+            onSubmit={handleSubmit}
           />
         </aside>
       </MaxWidthLayout>

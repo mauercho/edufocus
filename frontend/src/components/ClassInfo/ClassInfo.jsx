@@ -1,6 +1,6 @@
 import styles from './ClassInfo.module.css';
 
-export default function ClassInfo({ classTerm, classTime }) {
+export default function ClassInfo({ classTerm, classTime, onSubmit }) {
   return (
     <div className={styles.classInfo}>
       <div className={styles.title}>수업정보</div>
@@ -14,7 +14,12 @@ export default function ClassInfo({ classTerm, classTime }) {
           <div className={styles.content}>{classTime}</div>
         </div>
       </div>
-      <button className={styles.button}>수강신청</button>
+      <button
+        onClick={onSubmit}
+        className={styles.button}
+      >
+        수강신청
+      </button>
     </div>
   );
 }
