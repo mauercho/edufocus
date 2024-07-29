@@ -1,5 +1,5 @@
 import { CreateArticle } from '../../components/Article';
-import { useQnaWrite } from '../../hooks/api/useQuestionWrite';
+import { useQnaWrite } from '../../hooks/api/useQnAWrite';
 import { useParams, useNavigate } from 'react-router-dom';
 
 export default function CreateQuestionPage() {

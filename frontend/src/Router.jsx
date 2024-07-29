@@ -13,6 +13,7 @@ const LectureLayout = lazy(async () => await import('./components/Layout/Lecture
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
 const NoticeListPage = lazy(async () => await import('./pages/NoticeListPage'));
 const NoticeDetailPage = lazy(async () => await import('./pages/NoticeDetailPage'));
+const NoticeEditPage = lazy(async () => await import('./pages/NoticeEditPage'));
 const LectureInfoPage = lazy(async () => await import('./pages/LectureInfoPage'));
 const QuestionListPage = lazy(async () => await import('./pages/QuestionListPage'));
 const QuestionDetailPage = lazy(async () => await import('./pages/QuestionDetailPage'));
@@ -65,7 +66,16 @@ const router = createBrowserRouter([
               },
               {
                 path: ':noticeId',
-                element: <NoticeDetailPage />,
+                children: [
+                  {
+                    index: true,
+                    element: <NoticeDetailPage />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <NoticeEditPage />,
+                  },
+                ],
               },
               {
                 path: 'write',

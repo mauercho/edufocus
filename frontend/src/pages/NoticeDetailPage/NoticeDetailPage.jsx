@@ -7,6 +7,7 @@ export default function NoticeDetailPage() {
   const noticeId = params.noticeId;
   const { data } = useNoticeDetail(noticeId);
   const notice = data?.data;
+  // TODO: 수정 버튼 추가(여기에 또는 ArticleDetail에)
 
   return (
     <ArticleDetail
