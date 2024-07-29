@@ -11,8 +11,13 @@ export default function NoticeWritePage() {
   const handleSubmit = async (e, title, content) => {
     e.preventDefault();
 
-    const response = await noticeWrite(lectureId, title, content);
-    console.log('response : ', response);
+    await noticeWrite({
+      lectureId: Number(lectureId),
+      title,
+      category: 'announcement',
+      content,
+    });
+
     navigate('..');
   };
   return (
