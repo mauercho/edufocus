@@ -1,14 +1,10 @@
 import styles from './LearningLecturesPage.module.css';
 import { Link } from 'react-router-dom';
+import { useMyLectures } from '../../hooks/api/useMyLectures';
 
 export default function LearningLecturesPage() {
-  const { data: onGoingClasses } = {
-    data: [
-      { lecture_id: 1, title: '한국어' },
-      { lecture_id: 2, title: '영어' },
-      { lecture_id: 3, title: '일본어' },
-    ],
-  };
+  const { data: myLectures } = useMyLectures();
+  const onGoingClasses = myLectures?.data ?? [];
 
   return (
     <section>
