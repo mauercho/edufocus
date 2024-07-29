@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.registration.service;
 
 import com.edufocus.edufocus.registration.entity.Registration;
+import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,4 +13,5 @@ public interface RegistrationService {
 
     boolean deleteRegistration(long userId, long registrationId);
 
+    RegistrationStatus isOnline(Long userId , Long lectureId);
 }

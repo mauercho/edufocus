@@ -62,4 +62,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         return true;
     }
 
+    @Override
+    public RegistrationStatus isOnline(Long userId, Long lectureId) {
+
+        Registration registration = registrationRepository.findByUserIdAndLectureId(userId,lectureId);
+        return registration.getStatus();
+    }
+
 }
