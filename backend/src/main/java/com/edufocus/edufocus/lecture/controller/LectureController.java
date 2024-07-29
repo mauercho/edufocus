@@ -35,14 +35,12 @@ public class LectureController {
 
         Lecture lecture = lectureService.findLectureByTitle(lectureCreateRequest.getTitle());
         if (lecture != null) {
-            String msg = new String("Duplicated Lecture");
-            return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         lectureService.createLecture(userId, lectureCreateRequest, image);
 
-        String msg = new String("Lecture registered successfully");
-        return new ResponseEntity<>(msg, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{lectureId}")
@@ -50,11 +48,9 @@ public class LectureController {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         if (!lectureService.updateLecture(userId, lectureId, lectureCreateRequest)) {
-            String msg = new String("Can't update Lecture");
-            return new ResponseEntity<>(msg, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String msg = new String("Lecture updated successfully");
-        return new ResponseEntity<>(msg, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -63,8 +59,7 @@ public class LectureController {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         if (!lectureService.deleteLecture(userId, lectureId)) {
-            String msg = new String("Can't delete Lecture");
-            return new ResponseEntity<>(msg, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -75,8 +70,7 @@ public class LectureController {
         List<LectureSearchResponse> lectures = lectureService.findAllLecture();
 
         if (lectures.isEmpty()) {
-            String msg = new String("No lectures found");
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(lectures, HttpStatus.OK);
@@ -93,8 +87,7 @@ public class LectureController {
         LectureDetailResponse lectureDetailResponse = lectureService.findLectureById(userId, lectureId);
 
         if (lectureDetailResponse == null) {
-            String msg = new String("Can't find Lecture");
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
 
@@ -104,8 +97,7 @@ public class LectureController {
     @GetMapping("/mylecture")
     public ResponseEntity<?> findMyLecture(@RequestHeader(value = "Authorization", required = false) String accessToken) {
         if (accessToken == null) {
-            String msg = new String("Not logged in");
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
@@ -113,8 +105,7 @@ public class LectureController {
         List<LectureSearchResponse> myLectures = lectureService.findMyLecture(userId);
 
         if (myLectures.isEmpty()) {
-            String msg = new String("No lectures found");
-            return new ResponseEntity<>(msg, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(myLectures, HttpStatus.OK);

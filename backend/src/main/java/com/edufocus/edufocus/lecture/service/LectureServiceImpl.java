@@ -119,6 +119,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public List<LectureSearchResponse> findAllLecture() {
         List<Lecture> lectureList = lectureRepository.findAll();
+        System.out.println(lectureList.size());
 
         List<LectureSearchResponse> lectureSearchResponseList = new ArrayList<>();
         for (Lecture lecture : lectureList) {
