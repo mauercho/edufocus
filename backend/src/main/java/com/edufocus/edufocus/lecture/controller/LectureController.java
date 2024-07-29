@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/lecture")
@@ -69,10 +66,6 @@ public class LectureController {
     public ResponseEntity<?> findAllLecture() {
         List<LectureSearchResponse> lectures = lectureService.findAllLecture();
 
-        if (lectures.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
         return new ResponseEntity<>(lectures, HttpStatus.OK);
     }
 
@@ -83,13 +76,7 @@ public class LectureController {
         if (accessToken != null) {
             userId = Long.parseLong(jwtUtil.getUserId(accessToken));
         }
-
         LectureDetailResponse lectureDetailResponse = lectureService.findLectureById(userId, lectureId);
-
-        if (lectureDetailResponse == null) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
 
         return new ResponseEntity<>(lectureDetailResponse, HttpStatus.OK);
     }
@@ -103,10 +90,6 @@ public class LectureController {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         List<LectureSearchResponse> myLectures = lectureService.findMyLecture(userId);
-
-        if (myLectures.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
 
         return new ResponseEntity<>(myLectures, HttpStatus.OK);
     }
