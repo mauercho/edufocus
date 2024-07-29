@@ -99,10 +99,10 @@ public class Controller {
 		LectureDetailResponse lecture= lectureService.findLectureById(userId,id);
 
 
-		RegistrationStatus registrationStatus = registrationService.isOnline(userId,id);
+		//RegistrationStatus registrationStatus = registrationService.isOnline(userId,id);
 
-		if(registrationStatus==RegistrationStatus.ACCEPTED)
-		{
+//		if(registrationStatus==RegistrationStatus.ACCEPTED)
+//		{
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
 
@@ -112,16 +112,16 @@ public class Controller {
 			token.setIdentity(participantName);
 			token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
-			videoSertvice.startOnline(userId,id);
+			//videoSertvice.startOnline(userId,id);
 
 
 
 			return ResponseEntity.ok(Map.of("token", token.toJwt()));
-		}
-		else{
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("errorMessage", "Not accepted"));
-
-		}
+//		}
+//		else{
+//			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("errorMessage", "Not accepted"));
+//
+//		}
 
 
 
