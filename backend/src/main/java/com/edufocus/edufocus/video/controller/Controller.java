@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import livekit.LivekitWebhook.WebhookEvent;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/video")
 @Slf4j
@@ -66,6 +66,8 @@ public class Controller {
 	public ResponseEntity<Map<String, String>> startLecture(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
 
 		String userToken = request.getHeader("Authorization");
+		log.info("userToekn : ",  userToken);
+
 
 		Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
 		LectureDetailResponse lecture= lectureService.findLectureById(userId,id);
