@@ -13,12 +13,12 @@ export default function StudentHomePage() {
   };
 
   const { data } = useLectures();
-  const allClasses = data?.data;
+  const allClasses = data?.data ?? [];
 
   return (
     <MaxWidthLayout>
       <ClassGrid title="수강중인 강의">
-        {onGoingClasses.map((lecture) => (
+        {onGoingClasses.map?.((lecture) => (
           <ClassCard
             key={lecture.lecture_id}
             path={`/lecture/${lecture.lecture_id}`}
@@ -28,7 +28,7 @@ export default function StudentHomePage() {
         ))}
       </ClassGrid>
       <ClassGrid title="전체 강의">
-        {allClasses?.map((lecture) => (
+        {allClasses.map?.((lecture) => (
           <ClassCard
             key={lecture.id}
             path={`/lecture/${lecture.id}/info`}
