@@ -12,4 +12,7 @@ public interface UserService {
     void sendEamail(User user) throws Exception;
      void userCheck(Long id) throws  Exception;
      String getUserName(Long id) throws Exception;
+    void changeuInfo(Long id) throws Exception;
+    void changePassword(Long id) throws Exception;
+
 }
