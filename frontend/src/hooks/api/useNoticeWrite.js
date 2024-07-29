@@ -9,7 +9,6 @@ export function useNoticeWrite() {
       category: 'announcement',
       content,
     };
-    console.log(newNotice);
     return instance.post(`${API_URL}/board`, newNotice);
   };
 
