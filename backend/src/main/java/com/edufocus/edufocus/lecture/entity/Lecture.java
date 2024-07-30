@@ -47,7 +47,7 @@ public class Lecture {
     @Column
     private String time;
 
-    @Column
+    @Column(columnDefinition = "boolean default false")
     private boolean online;
 
 }

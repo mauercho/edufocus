@@ -26,4 +26,6 @@ public interface LectureService {
     List<LectureSearchResponse> findMyLecture(long userId);
 
     Lecture findLectureByTitle(String title);
+
+    void changeState(Long lectureId);
 }
