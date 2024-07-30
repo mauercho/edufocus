@@ -18,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 @Service
@@ -119,7 +116,6 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public List<LectureSearchResponse> findAllLecture() {
         List<Lecture> lectureList = lectureRepository.findAll();
-        System.out.println(lectureList.size());
 
         List<LectureSearchResponse> lectureSearchResponseList = new ArrayList<>();
         for (Lecture lecture : lectureList) {
@@ -137,11 +133,9 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public LectureDetailResponse findLectureById(Long userId, long lectureId) {
         Optional<Lecture> lecture = lectureRepository.findById(lectureId);
-
         if (lecture.isEmpty()) {
             return null;
         }
-        lecture = Optional.of(lecture.get());
 
         String userStatus;
         if (userId == null) {
