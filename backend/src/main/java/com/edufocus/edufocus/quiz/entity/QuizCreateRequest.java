@@ -4,24 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizCreateRequest {
 
-    private String title;
-
-    private String description;
+    private String question;
 
     private String answer;
 
-    private String quizType;
-
-    private String choice1;
-
-    private String choice2;
-
-    private String choice3;
-
-    private String choice4;
+    private List<ChoiceCreateRequest> choices;
 }
