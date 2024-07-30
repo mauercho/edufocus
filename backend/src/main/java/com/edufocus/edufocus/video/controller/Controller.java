@@ -7,6 +7,9 @@ import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
 import com.edufocus.edufocus.lecture.service.LectureService;
 import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.service.RegistrationService;
+import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.UserRole;
+import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;
 import com.edufocus.edufocus.video.service.VideoSertvice;
@@ -33,6 +36,7 @@ public class Controller {
 	private final LectureService lectureService;
 	private final VideoSertvice videoSertvice;
 	private final RegistrationService registrationService;
+	private final UserRepository userRepository;
 	@Value("${livekit.api.key}")
 	private String LIVEKIT_API_KEY;
 
@@ -70,39 +74,13 @@ public class Controller {
 
 
 		Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
-		LectureDetailResponse lecture= lectureService.findLectureById(userId,id);
-
-		String roomName = lecture.getTitle();
-		String participantName = userService.getUserName(userId);
+		User findUser= userRepository.findById(userId).orElse(null);
 
 
-		AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-		token.setName(participantName);
-		token.setIdentity(participantName);
-		token.addGrants(new RoomJoin(true), new RoomName(roomName),new RoomCreate(true));
-
-		videoSertvice.startOnline(userId,id);
+	 	if(findUser.getRole()==UserRole.ADMIN) {
+			LectureDetailResponse lecture = lectureService.findLectureById(userId, id);
 
 
-
-
-		return ResponseEntity.ok(Map.of("token", token.toJwt()));
-	}
-
-
-	@PostMapping(value = "/joinroom/{lecture_id}")
-	public ResponseEntity<Map<String, String>> joinRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
-
-		String userToken = request.getHeader("Authorization");
-
-		Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
-		LectureDetailResponse lecture= lectureService.findLectureById(userId,id);
-
-
-		//RegistrationStatus registrationStatus = registrationService.isOnline(userId,id);
-
-//		if(registrationStatus==RegistrationStatus.ACCEPTED)
-//		{
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
 
@@ -110,22 +88,78 @@ public class Controller {
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 			token.setName(participantName);
 			token.setIdentity(participantName);
-			token.addGrants(new RoomJoin(true), new RoomName(roomName));
+			token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
 
-			//videoSertvice.startOnline(userId,id);
-
+			videoSertvice.startOnline(userId, id);
 
 
 			return ResponseEntity.ok(Map.of("token", token.toJwt()));
-//		}
-//		else{
-//			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("errorMessage", "Not accepted"));
-//
-//		}
+
+		}
+		 else if(findUser.getRole()==UserRole.STUDENT)
+		{
+			LectureDetailResponse lecture = lectureService.findLectureById(userId, id);
+
+
+			String roomName = lecture.getTitle();
+			String participantName = userService.getUserName(userId);
+
+
+			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+			token.setName(participantName);
+			token.setIdentity(participantName);
+			token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
+
+			videoSertvice.startOnline(userId, id);
+
+
+			return ResponseEntity.ok(Map.of("token", token.toJwt()));
+		}
+
+
+		return ResponseEntity.ok(Map.of("token", null));
 
 
 
 	}
+
+
+//	@PostMapping(value = "/joinroom/{lecture_id}")
+//	public ResponseEntity<Map<String, String>> joinRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
+//
+////		String userToken = request.getHeader("Authorization");
+////
+////		Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
+////		LectureDetailResponse lecture= lectureService.findLectureById(userId,id);
+////
+////
+////		//RegistrationStatus registrationStatus = registrationService.isOnline(userId,id);
+////
+//////		if(registrationStatus==RegistrationStatus.ACCEPTED)
+//////		{
+////			String roomName = lecture.getTitle();
+////			String participantName = userService.getUserName(userId);
+////
+////
+////			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+////			token.setName(participantName);
+////			token.setIdentity(participantName);
+////			token.addGrants(new RoomJoin(true), new RoomName(roomName));
+////
+////			//videoSertvice.startOnline(userId,id);
+////
+////
+////
+////			return ResponseEntity.ok(Map.of("token", token.toJwt()));
+//////		}
+//////		else{
+//////			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("errorMessage", "Not accepted"));
+//////
+//////		}
+////
+//
+//
+//	}
 
 	@PostMapping(value = "/livekit/webhook", consumes = "application/webhook+json")
 	public ResponseEntity<String> receiveWebhook(@RequestHeader("Authorization") String authHeader, @RequestBody String body) {
