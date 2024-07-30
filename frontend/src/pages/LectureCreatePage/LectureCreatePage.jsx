@@ -39,12 +39,11 @@ export default function LectureCreatePage() {
       </div>
       <div className={styles.inputField}>
         <label className={styles.label}>설명</label>
-        <input
-          className={styles.input}
+        <textarea
           ref={description}
-          type="text"
+          className={styles.textarea}
           placeholder="강의에 대한 설명을 입력하세요"
-        />
+        ></textarea>
       </div>
       <div className={styles.inputField}>
         <label className={styles.label}>강의 계획</label>
