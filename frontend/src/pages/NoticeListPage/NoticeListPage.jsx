@@ -2,16 +2,18 @@ import { ArticleLink } from '../../components/ArticleLink';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { useNotices } from '../../hooks/api/useNotices';
 import { useParams } from 'react-router-dom';
+import useBoundStore from '../../store';
 
 export default function NoticeListPage() {
   const { lectureId } = useParams();
   const { data } = useNotices(lectureId);
   const notices = data?.data;
+  const userType = useBoundStore((state) => state.userType);
 
   return (
     <ArticleBoard
       title="공지사항"
-      canCreate={false}
+      canCreate={userType === 'teacher'}
     >
       {notices.map?.((notice) => (
         <ArticleLink
