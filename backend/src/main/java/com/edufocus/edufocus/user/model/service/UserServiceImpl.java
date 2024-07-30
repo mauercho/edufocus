@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     public void sendEamail(User user) throws Exception {
         MailDto mailDto = createMailAndChargePassword(user);
 
-        System.out.println("이메일 전송 완료");
+
         SimpleMailMessage message = new SimpleMailMessage();
 
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         message.setFrom("passfinder111@gmail.com");
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getMessage());
-        System.out.println("!!!!!!!!!!!!!!!!!!" + message);
+
 
         mailSender.send(message);
 
@@ -101,9 +101,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(dto);
 
         MemberChangeDto memberChangeDto = new MemberChangeDto(user.getId(), str);
-        System.out.println(memberChangeDto);
         userRepository.updatePassword(memberChangeDto.getId(), memberChangeDto.getPassword());
-        System.out.println();
 
         return dto;
     }
@@ -115,8 +113,7 @@ public class UserServiceImpl implements UserService {
 
 
         if (user == null) {
-            System.out.println("불가");
-            throw new RuntimeException("유효하지 않은 아이디입니다. 다시 입력하세요");
+            throw new UserException("유효하지 않은 아이디입니다. 다시 입력하세요");
 
         } else {
 
