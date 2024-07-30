@@ -1,5 +1,7 @@
 package com.edufocus.edufocus.user.controller;
 
+import com.edufocus.edufocus.user.model.entity.InfoDto;
+import com.edufocus.edufocus.user.model.entity.PasswordDto;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;
@@ -42,7 +44,30 @@ public class UserController {
 
     }
 
+    @PutMapping("/updateinfo/{id}")
+    public ResponseEntity<String> updateUserInfo(
+            @PathVariable("id") Long id,
+            @RequestBody InfoDto infoDto) {
+        try {
+            userService.changeuInfo(infoDto, id);
+            return ResponseEntity.ok("User info updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
+    // 비밀번호 변경
+    @PutMapping("/updatepassword/{id}")
+    public ResponseEntity<String> updatePassword(
+            @PathVariable("id") Long id,
+            @RequestBody PasswordDto passwordDto) {
+        try {
+            userService.changePassword(passwordDto, id);
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     @Operation(summary = "로그인", description = "아이디와 비밀번호를 이용하여 로그인 처리.")
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(
