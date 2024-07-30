@@ -12,8 +12,8 @@ export default function LearningLecturesPage() {
       <div className={styles.grid}>
         {onGoingClasses.map?.((lecture) => (
           <Link
-            key={lecture.lecture_id}
-            to={`/lecture/${lecture.lecture_id}`}
+            key={lecture.id}
+            to={`/lecture/${lecture.id}`}
             className={styles.card}
           >
             <div className={styles.thumbnail} />

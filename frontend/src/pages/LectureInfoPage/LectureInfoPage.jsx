@@ -5,6 +5,7 @@ import LectureHeader from '../../components/LectureHeader/LectureHeader';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLectureRegister } from '../../hooks/api/useLectureRegister';
+import useBoundStore from '../../store';
 
 export default function LectureInfoPage() {
   const navigate = useNavigate();
@@ -13,9 +14,15 @@ export default function LectureInfoPage() {
   const lectureData = data?.data;
   const startDate = new Date(lectureData.startDate).toLocaleDateString();
   const endDate = new Date(lectureData.endDate).toLocaleDateString();
+  const userType = useBoundStore((state) => state.userType);
 
   const { lectureRegister } = useLectureRegister();
   const handleSubmit = () => {
+    if (userType === null) {
+      window.alert('로그인이 필요한 서비스입니다.');
+      navigate('/auth/login');
+    }
+
     lectureRegister(lectureId)
       .then(() => {
         navigate(`/lecture/${lectureId}`);

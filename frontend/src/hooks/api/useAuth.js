@@ -15,12 +15,15 @@ export function useAuth() {
     return instance
       .post(`${API_URL}/user/login`, formData)
       .then(({ data, config }) => {
-        const { 'access-token': accessToken } = data;
-
+        const { role: role, 'access-token': accessToken } = data;
         config.headers.Authorization = `${accessToken}`;
         setToken(accessToken);
-        // TODO: userType 구분 추가
-        setUserType('student');
+
+        if (role === 'ADMIN') {
+          setUserType('teacher');
+        } else if (role === 'STUDENT') {
+          setUserType('student');
+        }
       })
       .catch((e) => {
         alert('아이디 또는 비밀번호를 다시 확인해주세요.');
@@ -28,5 +31,18 @@ export function useAuth() {
       });
   };
 
-  return { login };
+  const userRegister = (role, userId, name, email, password, onError = () => {}) => {
+    const userData = {
+      role,
+      userId,
+      name,
+      email,
+      password,
+    };
+    return instance.post(`${API_URL}/user/join`, userData).catch((e) => {
+      onError(e);
+    });
+  };
+
+  return { login, userRegister };
 }

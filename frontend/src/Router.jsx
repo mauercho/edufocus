@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
-import LearningLecturesPage from './pages/LearningLecturesPage/LearningLecturesPage';
 
 const LiveLayout = lazy(async () => await import('./components/Layout/LiveLayout'));
 const LivePage = lazy(async () => await import('./pages/LivePage'));
@@ -24,6 +23,7 @@ const UserRegisterPage = lazy(async () => await import('./pages/UserRegisterPage
 const PasswordResetPage = lazy(async () => await import('./pages/PasswordResetPage'));
 const MyInfoChangePage = lazy(async () => await import('./pages/MyInfoChangePage'));
 const PasswordChangePage = lazy(async () => await import('./pages/PasswordChangePage'));
+const LearningLecturesPage = lazy(async () => await import('./pages/LearningLecturesPage'));
 
 const router = createBrowserRouter([
   {

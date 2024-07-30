@@ -1,17 +1,22 @@
 import styles from './UserRegisterPage.module.css';
 import { useRef, useState } from 'react';
 import { AuthForm, InputBox } from '../../components/AuthForm';
-import instance from '../../utils/axios/instance';
-import { API_URL } from '../../constants';
+import { useAuth } from '../../hooks/api/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserRegisterPage() {
+  const navigate = useNavigate();
+
   const idRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
 
+  const [userType, setUserType] = useState('STUDENT');
   const [passwordMatch, setPasswordMatch] = useState(true);
+
+  const { userRegister } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,16 +27,16 @@ export default function UserRegisterPage() {
     if (!isPWMatch) {
       return;
     }
-
-    const userData = {
-      userId: idRef.current.value,
-      name: nameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
-
-    const response = await instance.post(`${API_URL}/user/join`, userData);
-    console.log(response);
+    userRegister(
+      userType,
+      idRef.current.value,
+      nameRef.current.value,
+      emailRef.current.value,
+      passwordRef.current.value
+    ).then((response) => {
+      console.log(response);
+      navigate('../login');
+    });
   };
 
   const linkProps = {
@@ -48,6 +53,22 @@ export default function UserRegisterPage() {
         buttonText="회원가입"
         linkProps={linkProps}
       >
+        <div className={styles.typeWrapper}>
+          <button
+            type="button"
+            className={`${styles.typeButton} ${userType === 'STUDENT' && styles.active}`}
+            onClick={() => setUserType('STUDENT')}
+          >
+            학생
+          </button>
+          <button
+            type="button"
+            className={`${styles.typeButton} ${userType === 'ADMIN' && styles.active}`}
+            onClick={() => setUserType('ADMIN')}
+          >
+            강사
+          </button>
+        </div>
         <InputBox
           title="ID"
           type="text"
