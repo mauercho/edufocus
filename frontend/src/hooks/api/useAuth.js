@@ -16,7 +16,6 @@ export function useAuth() {
       .post(`${API_URL}/user/login`, formData)
       .then(({ data, config }) => {
         const { 'access-token': accessToken } = data;
-
         config.headers.Authorization = `${accessToken}`;
         setToken(accessToken);
         // TODO: userType 구분 추가
@@ -28,5 +27,18 @@ export function useAuth() {
       });
   };
 
-  return { login };
+  const userRegister = (role, userId, name, email, password, onError = () => {}) => {
+    const userData = {
+      role,
+      userId,
+      name,
+      email,
+      password,
+    };
+    return instance.post(`${API_URL}/user/join`, userData).catch((e) => {
+      onError(e);
+    });
+  };
+
+  return { login, userRegister };
 }
