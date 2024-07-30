@@ -33,7 +33,7 @@ public class Quiz {
     @Column
     private String answer;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Choice> choices;
 
