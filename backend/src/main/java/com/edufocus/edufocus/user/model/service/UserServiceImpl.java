@@ -26,7 +26,10 @@ public class UserServiceImpl implements UserService {
     private final JavaMailSender mailSender;
 
 
-    public void join(User user) {
+    public void join(User user)
+    {
+        System.out.println(user.getRole().getClass());
+
         userRepository.save(user);
     }
 

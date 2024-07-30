@@ -86,9 +86,12 @@ public class UserController {
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(loginUser.getId()));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(loginUser.getId()));
 
+
                 userService.saveRefreshToken(loginUser.getId(), refreshToken);
 
-                System.out.println(accessToken);
+
+
+                resultMap.put("role",loginUser.getRole());
                 resultMap.put("access-token", accessToken);
 
 
