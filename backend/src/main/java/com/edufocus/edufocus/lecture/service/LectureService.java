@@ -28,5 +28,8 @@ public interface LectureService {
     Lecture findLectureByTitle(String title);
 
     void changeState(Long lectureId);
+
     boolean getState(Long lectureId);
+
+    boolean checkTeacher(Long userId, Long lectureId);
 }
