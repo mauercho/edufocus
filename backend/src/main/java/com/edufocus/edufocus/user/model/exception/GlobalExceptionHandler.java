@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UnAuthorizedException.class)
-    public ResponseEntity<String> handleUnAuthorizedException(UnAuthorizedException e) {
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> handleUnAuthorizedException(InvalidTokenException e) {
 
 
 

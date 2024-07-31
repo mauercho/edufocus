@@ -95,7 +95,7 @@ public class JWTUtil {
         }
         catch (Exception e) {
             log.error("Failed to get user ID from token: {}", e.getMessage());
-            throw new UnAuthorizedException();
+            throw new InvalidTokenException();
         }
     }
 }
