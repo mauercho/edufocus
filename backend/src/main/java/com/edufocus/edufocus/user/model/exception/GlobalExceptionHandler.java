@@ -19,8 +19,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ExpriedTokenException.class)
     public ResponseEntity<String> handleInvalidTokenException(ExpriedTokenException e) {
-        // 로그 남기기 (선택 사항)
-        // log.error("Invalid token", e);
 
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }

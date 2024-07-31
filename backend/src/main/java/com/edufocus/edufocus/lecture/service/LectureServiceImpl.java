@@ -239,5 +239,13 @@ public class LectureServiceImpl implements LectureService {
         lectureRepository.save(l);
     }
 
+    @Override
+    public boolean getState(Long lectureId) {
+
+        Lecture lecture= lectureRepository.findById(lectureId).orElse(null);
+        return lecture.isOnline();
+
+    }
+
 
 }
