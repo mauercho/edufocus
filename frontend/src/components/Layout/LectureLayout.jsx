@@ -10,7 +10,7 @@ export default function LectureLayout() {
   const { lectureId } = useParams();
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
-
+  console.log(lecture);
   const userType = useBoundStore((state) => state.userType);
 
   return (
@@ -18,6 +18,7 @@ export default function LectureLayout() {
       <LectureHeader
         title={lecture.title}
         tutor={lecture.teacherName}
+        img={lecture.image}
         // TODO: isLive를 받아올 수단 추가
         isLive={true}
       />

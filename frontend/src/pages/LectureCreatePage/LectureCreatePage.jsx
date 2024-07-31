@@ -1,26 +1,42 @@
 import styles from './LectureCreatePage.module.css';
 import { useRef } from 'react';
+import { useLectureCreate } from '../../hooks/api/useLectureCreate';
 
 export default function LectureCreatePage() {
-  // TODO: 디자인 후 적용
-  const title = useRef('');
-  const description = useRef('');
-  const plan = useRef('');
-  const startDate = useRef('');
-  const endDate = useRef('');
-  const time = useRef('');
+  // TODO: 디자인 필요
+  const titleRef = useRef('');
+  const descriptionRef = useRef('');
+  const planRef = useRef('');
+  const startDateRef = useRef('');
+  const endDateRef = useRef('');
+  const timeRef = useRef(null);
+  const imageFileRef = useRef('');
 
-  const handleSubmit = (e) => {
+  const { lectureCreate } = useLectureCreate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = {
-      title: title.current.value,
-      description: description.current.value,
-      plan: plan.current.value,
-      startDate: startDate.current.value,
-      endDate: endDate.current.value,
-      time: time.current.value,
+
+    const lectureObject = {
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      plan: planRef.current.value,
+      startDate: new Date(startDateRef.current.value).toISOString(),
+      endDate: new Date(endDateRef.current.value).toISOString(),
+      time: timeRef.current.value,
     };
-    console.log(payload);
+
+    const formData = new FormData();
+
+    formData.append('lectureCreateRequest', new Blob([JSON.stringify(lectureObject)], { type: 'application/json' }));
+
+    const imageFile = imageFileRef.current.files[0] ?? null;
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    const response = await lectureCreate(formData);
+    console.log(response?.data);
   };
 
   return (
@@ -32,7 +48,7 @@ export default function LectureCreatePage() {
         <label className={styles.label}>강의명</label>
         <input
           className={styles.input}
-          ref={title}
+          ref={titleRef}
           type="text"
           placeholder="강의명을 입력하세요"
         />
@@ -40,7 +56,7 @@ export default function LectureCreatePage() {
       <div className={styles.inputField}>
         <label className={styles.label}>설명</label>
         <textarea
-          ref={description}
+          ref={descriptionRef}
           className={styles.textarea}
           placeholder="강의에 대한 설명을 입력하세요"
         ></textarea>
@@ -48,7 +64,7 @@ export default function LectureCreatePage() {
       <div className={styles.inputField}>
         <label className={styles.label}>강의 계획</label>
         <textarea
-          ref={plan}
+          ref={planRef}
           className={styles.textarea}
           placeholder="강의 계획을 입력하세요"
         ></textarea>
@@ -57,12 +73,12 @@ export default function LectureCreatePage() {
         <label className={styles.label}>강의 기간</label>
         <input
           className={styles.input}
-          ref={startDate}
+          ref={startDateRef}
           type="date"
         />
         <input
           className={styles.input}
-          ref={endDate}
+          ref={endDateRef}
           type="date"
         />
       </div>
@@ -70,10 +86,18 @@ export default function LectureCreatePage() {
         <label className={styles.label}>수업 시간</label>
         <input
           type="text"
-          ref={time}
-          className={styles.textarea}
-          placeholder="계획된 수업시간을 입력하세요"
+          ref={timeRef}
+          className={styles.input}
+          placeholder="실제 강의 진행 시간을 입력하세요"
         ></input>
+      </div>
+      <div className={styles.inputField}>
+        <label className={styles.label}>수업 이미지</label>
+        <input
+          type="file"
+          ref={imageFileRef}
+          accept=""
+        />
       </div>
       <button
         type="submit"
