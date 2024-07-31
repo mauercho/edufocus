@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.video.controller;
 
 import java.util.Map;
+import java.util.Random;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
@@ -95,7 +96,12 @@ public class Controller {
 		Lecture lecture= lectureRepository.findById(id).orElse(null);
 
 
+		Random random = new Random();
 
+
+		int randomNumber = 100 + random.nextInt(9000);
+
+		String randStr = String.valueOf(randomNumber);
 
 
 		if(findUser.getRole()==UserRole.ADMIN ){//&& lecture.isOnline() ) {
@@ -107,8 +113,8 @@ public class Controller {
 
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setName(participantName);
-			token.setIdentity(participantName);
+			token.setName(participantName+randStr);
+			token.setIdentity(participantName+randStr);
 			token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
 
 			videoSertvice.startOnline(userId, id);
@@ -126,8 +132,8 @@ public class Controller {
 
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setName(participantName);
-			token.setIdentity(participantName);
+			token.setName(participantName+randStr);
+			token.setIdentity(participantName+randStr);
 			token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
 
