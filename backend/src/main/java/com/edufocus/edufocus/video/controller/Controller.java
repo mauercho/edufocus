@@ -98,7 +98,7 @@ public class Controller {
 
 
 
-		if(findUser.getRole()==UserRole.ADMIN && lecture.isOnline() ) {
+		if(findUser.getRole()==UserRole.ADMIN ){//&& lecture.isOnline() ) {
 
 
 
@@ -117,7 +117,7 @@ public class Controller {
 			return ResponseEntity.ok(Map.of("token", token.toJwt()));
 
 		}
-		else if(findUser.getRole()==UserRole.STUDENT  && lecture.isOnline() )
+		else if(findUser.getRole()==UserRole.STUDENT )// && lecture.isOnline() )
 		{
 
 
