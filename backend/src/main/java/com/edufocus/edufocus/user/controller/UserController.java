@@ -35,6 +35,8 @@ public class UserController {
     public ResponseEntity<String> join(@RequestBody User user) throws Exception {
 
 
+        System.out.println("@@@@@");
+        log.info("@@@@@@@@@@@@@@@@");
         userService.join(user);
         return ResponseEntity.ok("User registered successfully");
     }
