@@ -48,12 +48,14 @@ public class UserController {
 
     }
 
-    @PutMapping("/updateinfo/{id}")
+    @PutMapping("/updateinfo")
     public ResponseEntity<String> updateUserInfo(
-            @PathVariable("id") Long id,
-            @RequestBody InfoDto infoDto) {
+
+            @RequestBody InfoDto infoDto, HttpServletRequest request) {
         try {
-            userService.changeuInfo(infoDto, id);
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+            userService.changeuInfo(infoDto, userId);
             return ResponseEntity.ok("User info updated successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -61,12 +63,15 @@ public class UserController {
     }
 
     // 비밀번호 변경
-    @PutMapping("/updatepassword/{id}")
+    @PutMapping("/updatepassword")
     public ResponseEntity<String> updatePassword(
-            @PathVariable("id") Long id,
-            @RequestBody PasswordDto passwordDto) {
+
+            @RequestBody PasswordDto passwordDto, HttpServletRequest request) {
         try {
-            userService.changePassword(passwordDto, id);
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+            userService.changePassword(passwordDto, userId);
             return ResponseEntity.ok("Password changed successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
