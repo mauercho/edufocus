@@ -239,6 +239,14 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    public boolean getState(Long lectureId) {
+
+        Lecture lecture= lectureRepository.findById(lectureId).orElse(null);
+        return lecture.isOnline();
+
+    }
+
+    @Override
     public boolean checkTeacher(Long userId, Long lectureId) {
         Optional<Lecture> lecture = lectureRepository.findById(lectureId);
 

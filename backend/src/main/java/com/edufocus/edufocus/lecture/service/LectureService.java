@@ -29,5 +29,7 @@ public interface LectureService {
 
     void changeState(Long lectureId);
 
+    boolean getState(Long lectureId);
+
     boolean checkTeacher(Long userId, Long lectureId);
 }

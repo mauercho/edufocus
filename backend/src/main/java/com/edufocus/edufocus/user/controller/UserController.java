@@ -3,6 +3,8 @@ package com.edufocus.edufocus.user.controller;
 import com.edufocus.edufocus.user.model.entity.InfoDto;
 import com.edufocus.edufocus.user.model.entity.PasswordDto;
 import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.exception.ExpriedTokenException;
+import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -258,7 +260,15 @@ public class UserController {
     }
 
 
+    @ExceptionHandler(ExpriedTokenException.class)
+    public ResponseEntity<?> handleExpiredTokenException(){
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
+    }
+    @ExceptionHandler(UnAuthorizedException.class)
+    public ResponseEntity<?> handleUnauthorizedException(){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
 
 
