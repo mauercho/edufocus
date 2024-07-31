@@ -66,8 +66,7 @@ public class QnaServiceImpl implements QnaService{
         findQna.setTitle(qnaRequestDto.getTitle());
         findQna.setContent(qnaRequestDto.getContent());
 
-            qnaRepository.save(findQna);
-
+        qnaRepository.save(findQna);
 
             return QnaResponseDto.toEntity(findQna);
 

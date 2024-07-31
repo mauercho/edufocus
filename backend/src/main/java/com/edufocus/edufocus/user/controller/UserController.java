@@ -102,8 +102,12 @@ public class UserController {
                 refreshCookie.setPath("/");
                 refreshCookie.setHttpOnly(true);
                // refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
-                // refreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
+                //r/efreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
+                //refreshCookie.setSameSite("None"); // Cross-Origin 요청에 대해 모두 전송
+                String cookieHeader = String.format("refresh-token=%s; Path=/; HttpOnly; Secure; SameSite=None", refreshToken);
+                response.setHeader("Set-Cookie", cookieHeader);
 
+              //  refreshCookie.setSameSite("None"); // Cross-Origin 요청에 대해 모두 전송
                 response.addCookie(refreshCookie);
 
 
