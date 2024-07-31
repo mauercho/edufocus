@@ -26,7 +26,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins("https://i11a701.p.ssafy.io/", "http://localhost:5173", "http://localhost:4173","http://localhost:5080","http://192.168.*:5173")
+                .allowedOriginPatterns("https://i11a701.p.ssafy.io/", "http://localhost:5173", "http://localhost:4173","http://localhost:5080","http://192.168.*.*:5173")
                 .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
                         HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
                         HttpMethod.PATCH.name())

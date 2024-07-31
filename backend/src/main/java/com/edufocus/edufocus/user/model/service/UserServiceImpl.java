@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     public void join(User user)
     {
         System.out.println(user.getRole().getClass());
+        user.setPassword(PasswordUtils.hashPassword(user.getPassword()));
 
         userRepository.save(user);
     }
@@ -37,26 +38,15 @@ public class UserServiceImpl implements UserService {
     public User login(User user) throws SQLException {
         Optional<User> findUser = userRepository.findByUserId(user.getUserId());
 
-
         if (findUser.isEmpty()) {
-            throw new UserException("없는 유저");
-
+            throw new UserException("User does not exist");
         }
 
-
-        if (findUser.isPresent()) {
-
-            User find = findUser.get();
-            if (find.getPassword().equals(user.getPassword())) {
-                return find;
-            } else {
-                throw new UserException("비밀번호 틀림");
-
-            }
+        User find = findUser.get();
+        if (PasswordUtils.checkPassword(user.getPassword(), find.getPassword())) {
+            return find;
         } else {
-            throw new UserException("없는 유저");
-
-
+            throw new UserException("Incorrect password");
         }
 
     }
@@ -158,7 +148,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception("User not found");
         }
 
-        if (!user.getPassword().equals(passwordDto.getCurrentPassword())) {
+        if (!PasswordUtils.checkPassword(passwordDto.getCurrentPassword(), user.getPassword())) {
             throw new Exception("Current password is incorrect");
         } else {
             if (!passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
@@ -166,7 +156,8 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        user.setPassword(passwordDto.getNewPassword());
+        // Hash the new password before saving
+        user.setPassword(PasswordUtils.hashPassword(passwordDto.getNewPassword()));
         userRepository.save(user);
     }
     public String getTempPassword() {
