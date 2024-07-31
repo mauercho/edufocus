@@ -223,8 +223,7 @@ public class LectureServiceImpl implements LectureService {
         Optional<Lecture> lecture = lectureRepository.findById(id);
 
         Lecture l;
-        if(lecture.isPresent())
-        {
+        if (lecture.isPresent()) {
             l = lecture.get();
 
             System.out.println(l.isOnline());
@@ -232,12 +231,18 @@ public class LectureServiceImpl implements LectureService {
             System.out.println(l.isOnline());
 
 
-        }else {
+        } else {
 
             throw new RuntimeException("Lecture not found with id: " + id);
         }
         lectureRepository.save(l);
     }
 
+    @Override
+    public boolean checkTeacher(Long userId, Long lectureId) {
+        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
+
+        return lecture.isPresent() && lecture.get().getUser().getId() == userId;
+    }
 
 }
