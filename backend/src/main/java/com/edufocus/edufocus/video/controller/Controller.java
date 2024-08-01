@@ -110,9 +110,6 @@ public class Controller {
 
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
-			System.out.println(participantName);
-
-			System.out.println(participantName+randStr);
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 			token.setName(participantName+randStr);
 			token.setIdentity(participantName+randStr);
