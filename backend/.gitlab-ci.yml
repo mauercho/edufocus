@@ -1,0 +1,23 @@
+deploy-to-server:
+  stage: deploy
+  only:
+    - backend
+  before_script:
+    - echo 'start deployment'
+    - whoami
+  script:
+    - cd /home/ubuntu/gitlab_runner/
+    - git pull origin backend
+    - cd backend
+#    - kill $(lsof -t -i:8000)
+    - ./gradlew build
+  #    - cd /home/ubuntu/s03p12a112/backend/target/
+#    - setsid nohup java -jar backend-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+#    - cd /home/ubuntu/s03p12a112/frontend/
+#    - sudo npm install
+#    - sudo npm run build
+#    - sudo service nginx restart
+  after_script:
+    - echo 'deployment is done'
+  tags:
+    - edu

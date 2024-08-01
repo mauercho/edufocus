@@ -21,7 +21,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
         this.jwtInterceptor = jwtInterceptor;
     }
-
+//
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
