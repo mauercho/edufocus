@@ -5,12 +5,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function CreateQuestionPage() {
   const navigate = useNavigate();
   const { lectureId } = useParams();
-  const { questionWrite } = useQnaWrite();
+  const { qnaWrite } = useQnaWrite();
 
   const handleSubmit = async (e, title, content) => {
     e.preventDefault();
 
-    await questionWrite(lectureId, title, content);
+    await qnaWrite(lectureId, title, content);
     navigate('..');
   };
   return (
