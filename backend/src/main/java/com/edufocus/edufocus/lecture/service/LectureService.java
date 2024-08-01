@@ -21,6 +21,8 @@ public interface LectureService {
 
     List<LectureSearchResponse> findAllLecture();
 
+    String getUserStatus(Long userId, Lecture lecture);
+    
     LectureDetailResponse findLectureById(Long userId, long lectureId);
 
     List<LectureSearchResponse> findMyLecture(long userId);

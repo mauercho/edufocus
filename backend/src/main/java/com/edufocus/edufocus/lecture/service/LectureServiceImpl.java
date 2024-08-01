@@ -134,55 +134,58 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureDetailResponse findLectureById(Long userId, long lectureId) {
-        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
-        if (lecture.isEmpty()) {
-            return null;
-        }
-
-        String userStatus;
+    public String getUserStatus(Long userId, Lecture lecture) {
         if (userId == null) {
-            userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
-        } else {
-            User user = userRepository.findById(userId).get();
-
-            if (user.getRole() == UserRole.ADMIN) {
-                if (lecture.get().getUser().getId() == user.getId()) {
-                    userStatus = String.valueOf(UserStatus.MANAGED_BY_ME);
-                } else {
-                    userStatus = String.valueOf(UserStatus.MANAGED_BY_OTHERS);
-                }
-            } else {
-                Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
-
-                if (registration == null) {
-                    userStatus = String.valueOf(UserStatus.NOT_ENROLLED);
-                } else if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
-                    userStatus = String.valueOf(UserStatus.ENROLLED);
-                } else {
-                    userStatus = String.valueOf(UserStatus.PENDING);
-                }
-            }
+            return String.valueOf(UserStatus.NOT_ENROLLED);
         }
+
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+        UserRole userRole = user.getRole();
+
+        if (userRole == UserRole.ADMIN) {
+            if (lecture.getUser() == user) {
+                return String.valueOf(UserStatus.MANAGED_BY_ME);
+            }
+            return String.valueOf(UserStatus.MANAGED_BY_OTHERS);
+        }
+
+        Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lecture.getId());
+
+        if (registration == null) {
+            return String.valueOf(UserStatus.NOT_ENROLLED);
+        }
+
+        if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
+            return String.valueOf(UserStatus.ENROLLED);
+        }
+
+        return String.valueOf(UserStatus.PENDING);
+    }
+
+    @Override
+    public LectureDetailResponse findLectureById(Long userId, long lectureId) {
+        Lecture lecture = lectureRepository.findById(lectureId).orElseThrow(NoSuchElementException::new);
+
+        String userStatus = getUserStatus(userId, lecture);
 
         return LectureDetailResponse.builder()
-                .id(lecture.get().getId())
-                .title(lecture.get().getTitle())
-                .description(lecture.get().getDescription())
-                .plan(lecture.get().getPlan())
-                .image(lecture.get().getImage())
-                .startDate(lecture.get().getStartDate())
-                .endDate(lecture.get().getEndDate())
-                .time(lecture.get().getTime())
-                .online(lecture.get().isOnline())
-                .teacherName(lecture.get().getUser().getName())
+                .id(lecture.getId())
+                .title(lecture.getTitle())
+                .description(lecture.getDescription())
+                .plan(lecture.getPlan())
+                .image(lecture.getImage())
+                .startDate(lecture.getStartDate())
+                .endDate(lecture.getEndDate())
+                .time(lecture.getTime())
+                .online(lecture.isOnline())
+                .teacherName(lecture.getUser().getName())
                 .status(userStatus)
                 .build();
 
     }
 
     public List<LectureSearchResponse> findMyLecture(long userId) {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
 
         List<LectureSearchResponse> myLectureList = new ArrayList<>();
 
