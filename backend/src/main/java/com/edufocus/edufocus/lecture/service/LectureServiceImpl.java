@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.lecture.service;
 
+import com.edufocus.edufocus.global.properties.ImagePathProperties;
 import com.edufocus.edufocus.lecture.entity.*;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
@@ -9,22 +10,21 @@ import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.entity.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
-@Builder
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
+
+    private final ImagePathProperties imagePathProperties;
 
     private final LectureRepository lectureRepository;
 
@@ -34,9 +34,9 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public void createLecture(long userId, LectureCreateRequest lectureCreateRequest, MultipartFile image) throws IOException {
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).orElse(null);
 
-        Lecture lecture = new Lecture().builder()
+        Lecture lecture = Lecture.builder()
                 .user(user)
                 .title(lectureCreateRequest.getTitle())
                 .description(lectureCreateRequest.getDescription())
@@ -49,13 +49,14 @@ public class LectureServiceImpl implements LectureService {
         if (image != null && !image.isEmpty()) {
             String uid = UUID.randomUUID().toString();
 
-            String currentPath = "backend/src/main/resources/images/";
-            File checkPathFile = new File(currentPath);
+            String imagePath = imagePathProperties.getPath();
+
+            File checkPathFile = new File(imagePath);
             if (!checkPathFile.exists()) {
                 checkPathFile.mkdirs();
             }
 
-            File savingImage = new File(currentPath + uid + "_" + image.getOriginalFilename());
+            File savingImage = new File(imagePath + "/" + uid + "_" + image.getOriginalFilename());
             image.transferTo(savingImage.toPath());
             String savePath = savingImage.toPath().toString();
 
@@ -67,11 +68,13 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public boolean updateLecture(long userId, long lectureId, LectureCreateRequest lectureCreateRequest) {
-        Lecture lecture = lectureRepository.findById(lectureId).get();
+        Optional<Lecture> findLecture = lectureRepository.findById(lectureId);
 
-        if (lecture.getUser().getId() != userId) {
+        if (findLecture.isEmpty() || findLecture.get().getUser().getId() != userId) {
             return false;
         }
+
+        Lecture lecture = findLecture.get();
 
         if (lectureCreateRequest.getTitle() != null) {
             lecture.setTitle(lectureCreateRequest.getTitle());
@@ -98,14 +101,14 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public boolean deleteLecture(long userId, long lectureId) {
-        Optional<Lecture> lecture = lectureRepository.findById(lectureId);
+        Optional<Lecture> findLecture = lectureRepository.findById(lectureId);
 
-        if (lecture.isEmpty()) {
+        if (findLecture.isEmpty()) {
             return false;
         }
-        lecture = Optional.of(lecture.get());
+        Lecture lecture = findLecture.get();
 
-        if (lecture.get().getUser().getId() != userId) {
+        if (lecture.getUser().getId() != userId) {
             return false;
         }
 
@@ -162,7 +165,7 @@ public class LectureServiceImpl implements LectureService {
             }
         }
 
-        LectureDetailResponse lectureDetailResponse = new LectureDetailResponse().builder()
+        return LectureDetailResponse.builder()
                 .id(lecture.get().getId())
                 .title(lecture.get().getTitle())
                 .description(lecture.get().getDescription())
@@ -176,7 +179,6 @@ public class LectureServiceImpl implements LectureService {
                 .status(userStatus)
                 .build();
 
-        return lectureDetailResponse;
     }
 
     public List<LectureSearchResponse> findMyLecture(long userId) {
@@ -187,7 +189,7 @@ public class LectureServiceImpl implements LectureService {
         if (user.getRole() == UserRole.ADMIN) {
             List<Lecture> lectureList = lectureRepository.findLecturesByUserId(userId);
             for (Lecture lecture : lectureList) {
-                LectureSearchResponse lectureSearchResponse = new LectureSearchResponse().builder()
+                LectureSearchResponse lectureSearchResponse = LectureSearchResponse.builder()
                         .id(lecture.getId())
                         .title(lecture.getTitle())
                         .image(lecture.getImage()).build();
@@ -200,7 +202,7 @@ public class LectureServiceImpl implements LectureService {
             for (Registration registration : registrationList) {
                 Lecture lecture = registration.getLecture();
 
-                LectureSearchResponse lectureSearchResponse = new LectureSearchResponse().builder()
+                LectureSearchResponse lectureSearchResponse = LectureSearchResponse.builder()
                         .id(lecture.getId())
                         .title(lecture.getTitle())
                         .image(lecture.getImage()).build();
@@ -241,7 +243,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public boolean getState(Long lectureId) {
 
-        Lecture lecture= lectureRepository.findById(lectureId).orElse(null);
+        Lecture lecture = lectureRepository.findById(lectureId).orElse(null);
         return lecture.isOnline();
 
     }
