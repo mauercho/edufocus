@@ -57,10 +57,9 @@ public class UserController {
 
     // 비밀번호 변경
     @PutMapping("/updatepassword")
-    public ResponseEntity<String> updatePassword(
-
-            @RequestBody PasswordDto passwordDto, HttpServletRequest request) {
-        try {
+    public ResponseEntity<String> updatePassword(@RequestBody PasswordDto passwordDto, HttpServletRequest request) {
+        try
+        {
             String token = request.getHeader("Authorization");
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
 

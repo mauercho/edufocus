@@ -224,19 +224,18 @@ public class LectureServiceImpl implements LectureService {
 
         Optional<Lecture> lecture = lectureRepository.findById(id);
 
-        Lecture l;
-        if (lecture.isPresent()) {
-            l = lecture.get();
 
-            System.out.println(l.isOnline());
-            l.setOnline(true);
-            System.out.println(l.isOnline());
-
-
-        } else {
-
+        if (!lecture.isPresent()) {
             throw new RuntimeException("Lecture not found with id: " + id);
+
         }
+
+            Lecture l;
+            l = lecture.get();
+            l.setOnline(true);
+
+
+
         lectureRepository.save(l);
     }
 
