@@ -25,6 +25,7 @@ const MyInfoChangePage = lazy(async () => await import('./pages/MyInfoChangePage
 const PasswordChangePage = lazy(async () => await import('./pages/PasswordChangePage'));
 const LearningLecturesPage = lazy(async () => await import('./pages/LearningLecturesPage'));
 const LectureCreatePage = lazy(async () => await import('./pages/LectureCreatePage'));
+const LectureEditPage = lazy(async () => await import('./pages/LectureEditPage'));
 
 const router = createBrowserRouter([
   {
@@ -55,12 +56,20 @@ const router = createBrowserRouter([
         element: <LectureInfoPage />,
       },
       {
+        path: 'lecture/:lectureId/edit',
+        element: <LectureEditPage />,
+      },
+      {
         path: 'lecture/:lectureId',
         element: <LectureLayout />,
         children: [
           {
             index: true,
             element: <LearningLectureDetailPage />,
+          },
+          {
+            path: 'edit',
+            element: <LectureEditPage />,
           },
           {
             path: 'notice',
