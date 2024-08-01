@@ -3,6 +3,7 @@ import MaxWidthLayout from '../../components/Layout/MaxWidthLayout';
 import SideBar from '../../components/SideBar/SideBar';
 import SideLink from '../../components/SideBar/SideLink';
 import { Suspense } from 'react';
+import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
 
 export default function MyPageLayout() {
   return (
@@ -22,7 +23,7 @@ export default function MyPageLayout() {
         </aside>
         <main>
           {/* TODO: 로딩 컴포넌트 추가 */}
-          <Suspense fallback={<div>loading</div>}>
+          <Suspense fallback={<LoadingIndicator full />}>
             <Outlet />
           </Suspense>
         </main>

@@ -5,8 +5,8 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
+import { LiveLayout } from './components/Layout';
 
-const LiveLayout = lazy(async () => await import('./components/Layout/LiveLayout'));
 const LivePage = lazy(async () => await import('./pages/LivePage'));
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
