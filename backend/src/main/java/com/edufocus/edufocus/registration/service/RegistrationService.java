@@ -18,5 +18,5 @@ public interface RegistrationService {
 
     List<RegistrationSearchResponse> searchRegistrations(Long LectureId);
 
-    RegistrationStatus isOnline(Long userId, Long lectureId);
+    RegistrationStatus getStatus(Long userId, Long lectureId);
 }
