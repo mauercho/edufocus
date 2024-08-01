@@ -14,7 +14,7 @@ public interface UserService {
     void sendEamail(User user) throws Exception;
      void userCheck(Long id) throws  Exception;
      String getUserName(Long id) throws Exception;
-    void changeuInfo(InfoDto infoDto,Long id) throws Exception;
+    void changeUserInfo(InfoDto infoDto,Long id) throws Exception;
     void changePassword(PasswordDto passwordDto,Long id) throws Exception;
 
 }
