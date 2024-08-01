@@ -87,11 +87,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         return responses;
     }
 
-    @Override
-    public RegistrationStatus getStatus(Long userId, Long lectureId) {
-
-        Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
-        return registration.getStatus();
-    }
+//    @Override
+//    public RegistrationStatus getStatus(Long userId, Long lectureId) {
+//
+//        Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
+//        return registration.getStatus();
+//    }
 
 }
