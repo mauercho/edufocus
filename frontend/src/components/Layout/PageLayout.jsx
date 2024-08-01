@@ -11,7 +11,7 @@ export default function PageLayout() {
       <Header />
       <div className={styles.body}>
         <div className={styles.contents}>
-          <Suspense fallback={<LoadingIndicator full />}>
+          <Suspense fallback={<LoadingIndicator fill />}>
             <Outlet />
           </Suspense>
         </div>
