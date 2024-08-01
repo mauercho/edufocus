@@ -74,7 +74,7 @@ public class JWTUtil {
                 System.out.println(token);
                 System.out.println(e.getMessage());
                 log.error("Unexpected error while validating token: {}", e.getMessage());
-                return false;
+            throw new InvalidTokenException();
         }
     }
 

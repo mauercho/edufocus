@@ -135,7 +135,6 @@ public class UserController {
         if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
             log.info("사용 가능한 토큰!!!");
             try {
-//				로그인 사용자 정보.
                 User member = userService.userInfo(userId);
                 resultMap.put("userInfo", member);
                 status = HttpStatus.OK;
@@ -153,12 +152,16 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
-    @GetMapping("/logout/{userId}")
+    @GetMapping("/logout")
 
-    public ResponseEntity<?> removeToken(@PathVariable ("userId") @Parameter(description = "로그아웃 할 회원의 아이디.", required = true) Long userId) {
+    public ResponseEntity<?> removeToken(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
         try {
+
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+
             userService.deleteRefreshToken(userId);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -174,13 +177,9 @@ public class UserController {
     public ResponseEntity<?> refreshToken(HttpServletRequest request,HttpServletResponse response)
             throws Exception {
 
-      //  System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@");
-      //  System.out.println(user.getUserId());
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
-
-       // String token = request.getHeader("refreshToken");
-
 
         Cookie[] cookies = request.getCookies();
         String token = null;
@@ -194,17 +193,12 @@ public class UserController {
             }
         }
         Long userId = Long.parseLong(jwtUtil.getUserId(token));
-    ///    System.out.println(userId);
-      ///  System.out.println("리프레쉬 토큰 (쿠키에서 받은거 "+token);
-      //  log.debug("token : {}, memberDto : {}", token, user);
-       // System.out.println(jwtUtil.checkToken(token));
+
         if (jwtUtil.checkToken(token)) {
 
-           // System.out.println(token);
-           // System.out.println(userService.getRefreshToken(userId));
-            //System.out.println("쿠키 토큰 , 디비 토큰 비교"+token.equals(userService.getRefreshToken(userId)));
+
             if (token.equals(userService.getRefreshToken(userId))) {
-                System.out.println("!!");
+
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(userId));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(userId));
 
@@ -213,9 +207,9 @@ public class UserController {
                 resultMap.put("access-token", accessToken);
 
 
-                // 바뀐 리프레시db저장
+
                 userService.saveRefreshToken(userId,refreshToken);
-                // 쿠키 저장
+
                 Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
                 refreshCookie.setPath("/");
                 refreshCookie.setHttpOnly(true);
