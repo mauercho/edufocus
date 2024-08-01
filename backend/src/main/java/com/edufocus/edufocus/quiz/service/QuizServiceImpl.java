@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.quiz.service;
 
+import com.edufocus.edufocus.global.properties.ImagePathProperties;
 import com.edufocus.edufocus.quiz.entity.*;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import jakarta.transaction.Transactional;
@@ -19,11 +20,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService {
 
+    private final ImagePathProperties imagePathProperties;
+
     private final QuizRepository quizRepository;
 
     @Override
     public void createQuiz(QuizSet quizSet, QuizCreateRequest quizCreateRequest, MultipartFile quizImage) throws IOException {
-        Quiz quiz = new Quiz().builder()
+        Quiz quiz = Quiz.builder()
                 .quizSet(quizSet)
                 .question(quizCreateRequest.getQuestion())
                 .answer(quizCreateRequest.getAnswer())
@@ -32,7 +35,7 @@ public class QuizServiceImpl implements QuizService {
         List<Choice> choices = new ArrayList<>();
 
         for (ChoiceCreateRequest choiceCreateRequest : quizCreateRequest.getChoices()) {
-            Choice choice = new Choice().builder()
+            Choice choice = Choice.builder()
                     .quiz(quiz)
                     .num(choiceCreateRequest.getNum())
                     .content(choiceCreateRequest.getContent())
@@ -45,13 +48,14 @@ public class QuizServiceImpl implements QuizService {
         if (quizImage != null && !quizImage.isEmpty()) {
             String uid = UUID.randomUUID().toString();
 
-            String currentPath = "backend/src/main/resources/images/quizzes/";
-            File checkPathFile = new File(currentPath);
+            String imagePath = imagePathProperties.getPath();
+
+            File checkPathFile = new File(imagePath);
             if (!checkPathFile.exists()) {
                 checkPathFile.mkdirs();
             }
 
-            File savingImage = new File(currentPath + uid + "_" + quizImage.getOriginalFilename());
+            File savingImage = new File(imagePath + "/" + uid + "_" + quizImage.getOriginalFilename());
             quizImage.transferTo(savingImage.toPath());
             String savePath = savingImage.toPath().toString();
 
