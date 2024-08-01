@@ -98,7 +98,7 @@ public class Controller {
 
 		Random random = new Random();
 
-
+		System.out.println();
 		int randomNumber = 100 + random.nextInt(9000);
 
 		String randStr = String.valueOf(randomNumber);
@@ -110,8 +110,9 @@ public class Controller {
 
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
+			System.out.println(participantName);
 
-
+			System.out.println(participantName+randStr);
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 			token.setName(participantName+randStr);
 			token.setIdentity(participantName+randStr);
@@ -129,7 +130,7 @@ public class Controller {
 
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
-
+			System.out.println(participantName);
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 			token.setName(participantName+randStr);
