@@ -14,7 +14,7 @@ public class Choice {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "QuizId")

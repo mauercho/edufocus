@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -22,12 +22,13 @@ public class QuizSetServiceImpl implements QuizSetService {
     private final UserRepository userRepository;
 
     @Override
-    public QuizSet createQuizSet(Long userId, String title) {
-        QuizSet quizSet = new QuizSet();
+    public QuizSet createQuizSet(long userId, String title) {
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
 
-        User user = userRepository.findById(userId).get();
-        quizSet.setUser(user);
-        quizSet.setTitle(title);
+        QuizSet quizSet = QuizSet.builder()
+                .user(user)
+                .title(title)
+                .build();
 
         return quizSetRepository.save(quizSet);
     }
@@ -38,10 +39,10 @@ public class QuizSetServiceImpl implements QuizSetService {
     }
 
     @Override
-    public boolean deleteQuizSet(Long userId, Long quizSetId) {
-        Optional<QuizSet> quizSet = quizSetRepository.findById(quizSetId);
+    public boolean deleteQuizSet(long userId, long quizSetId) {
+        QuizSet quizSet = quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
 
-        if (quizSet.isEmpty() || userId != quizSet.get().getUser().getId()) {
+        if (userId != quizSet.getUser().getId()) {
             return false;
         }
 
@@ -50,22 +51,17 @@ public class QuizSetServiceImpl implements QuizSetService {
     }
 
     @Override
-    public QuizSet findQuizSet(Long quizSetId) {
-        return quizSetRepository.findById(quizSetId).get();
+    public QuizSet findQuizSet(long quizSetId) {
+        return quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public QuizSetResponse findQuizSetResponse(Long quizSetId) {
-        Optional<QuizSet> quizSet = quizSetRepository.findById(quizSetId);
-
-        if (quizSet.isEmpty()) {
-            return null;
-        }
-
+    public QuizSetResponse findQuizSetResponse(long quizSetId) {
+        QuizSet quizSet = quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
 
         List<QuizResponse> quizResponses = new ArrayList<>();
-        for (Quiz quiz : quizSet.get().getQuizzes()) {
-            QuizResponse quizResponse = new QuizResponse().builder()
+        for (Quiz quiz : quizSet.getQuizzes()) {
+            QuizResponse quizResponse = QuizResponse.builder()
                     .question(quiz.getQuestion())
                     .image(quiz.getImage())
                     .choices(quiz.getChoices())
@@ -73,21 +69,20 @@ public class QuizSetServiceImpl implements QuizSetService {
             quizResponses.add(quizResponse);
         }
 
-        QuizSetResponse quizSetResponse = new QuizSetResponse().builder()
-                .title(quizSet.get().getTitle())
+        return QuizSetResponse.builder()
+                .title(quizSet.getTitle())
                 .quizzes(quizResponses)
                 .build();
 
-        return quizSetResponse;
     }
 
     @Override
-    public List<MyQuizSetResponse> findMyQuizSetResponses(Long userId) {
+    public List<MyQuizSetResponse> findMyQuizSetResponses(long userId) {
         List<QuizSet> quizSetList = quizSetRepository.findQuizSetsByUserId(userId);
 
         List<MyQuizSetResponse> myQuizSetResponses = new ArrayList<>();
         for (QuizSet quizSet : quizSetList) {
-            MyQuizSetResponse myQuizSetResponse = new MyQuizSetResponse().builder()
+            MyQuizSetResponse myQuizSetResponse = MyQuizSetResponse.builder()
                     .quizSetId(quizSet.getId())
                     .title(quizSet.getTitle())
                     .build();

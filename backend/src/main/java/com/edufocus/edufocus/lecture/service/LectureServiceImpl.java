@@ -46,7 +46,7 @@ public class LectureServiceImpl implements LectureService {
                 .time(lectureCreateRequest.getTime())
                 .build();
 
-        if (image != null && !image.isEmpty()) {
+        if (image != null) {
             String uid = UUID.randomUUID().toString();
 
             String imagePath = imagePathProperties.getPath();

@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class MyQuizSetResponse {
 
-    private Long quizSetId;
+    private long quizSetId;
 
     private String title;
 }
