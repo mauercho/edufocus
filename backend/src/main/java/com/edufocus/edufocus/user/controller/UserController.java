@@ -33,29 +33,22 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<String> join(@RequestBody User user) throws Exception {
-
-
-        System.out.println("@@@@@");
-        log.info("@@@@@@@@@@@@@@@@");
         userService.join(user);
         return ResponseEntity.ok("User registered successfully");
     }
     @PostMapping("/findpassword/{user_id}")
     public ResponseEntity<String> findpassword(@PathVariable("user_id") Long user_id) throws Exception {
-
         userService.userCheck(user_id);
         return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-
     }
 
     @PutMapping("/updateinfo")
     public ResponseEntity<String> updateUserInfo(
-
             @RequestBody InfoDto infoDto, HttpServletRequest request) {
         try {
             String token = request.getHeader("Authorization");
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
-            userService.changeuInfo(infoDto, userId);
+            userService.changeUserInfo(infoDto, userId);
             return ResponseEntity.ok("User info updated successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -80,44 +73,42 @@ public class UserController {
     @Operation(summary = "로그인", description = "아이디와 비밀번호를 이용하여 로그인 처리.")
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(
-            @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user,   HttpServletResponse response) {
+            @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user, HttpServletRequest request, HttpServletResponse response) {
+
+        String token = request.getHeader("Authorization");
+        if(jwtUtil.checkToken(token)){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
-
-
 
         try {
             User loginUser = userService.login(user);
             if (loginUser != null) {
 
-                String name = loginUser.getName();
-                resultMap.put("name",name);
+
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(loginUser.getId()));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(loginUser.getId()));
 
-
                 userService.saveRefreshToken(loginUser.getId(), refreshToken);
 
-
-
+                resultMap.put("name",loginUser.getName());
                 resultMap.put("role",loginUser.getRole());
                 resultMap.put("access-token", accessToken);
-
-
 
                 Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
                 refreshCookie.setPath("/");
                 refreshCookie.setHttpOnly(true);
-               refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
-                //r/efreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
+                refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
+                //refreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
                 //refreshCookie.setSameSite("None"); // Cross-Origin 요청에 대해 모두 전송
 
                 String cookieHeader = String.format("refresh-token=%s; Path=/; HttpOnly; Secure; SameSite=None", refreshToken);
                 response.setHeader("Set-Cookie", cookieHeader);
 
-              //  refreshCookie.setSameSite("None"); // Cross-Origin 요청에 대해 모두 전송
+                //  refreshCookie.setSameSite("None"); // Cross-Origin 요청에 대해 모두 전송
                 response.addCookie(refreshCookie);
-
 
                 status = HttpStatus.CREATED;
             } else {

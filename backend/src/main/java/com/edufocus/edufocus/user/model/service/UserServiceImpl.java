@@ -119,23 +119,16 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void changeuInfo(InfoDto infoDto, Long id) throws Exception {
+    public void changeUserInfo(InfoDto infoDto, Long id) throws Exception {
 
-        User user = userRepository.findById(id).orElse(null);
-
-        if (user == null) {
-            throw new Exception("User not found");
-        }
+        User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         if (infoDto.getName() != null)
-        {
             user.setName(infoDto.getName());
-        }
 
         if(infoDto.getEmail()!=null)
-        {
             user.setEmail(infoDto.getEmail());
-        }
+
         userRepository.save(user);
 }
 
