@@ -5,6 +5,7 @@ import MaxWidthLayout from './MaxWidthLayout';
 import { Suspense } from 'react';
 import useBoundStore from '../../store';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
+import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
 import { useLectureDelete } from '../../hooks/api/useLectureDelete';
 import { useNavigate } from 'react-router-dom';
 
@@ -81,7 +82,7 @@ export default function LectureLayout() {
           )}
         </aside>
         <main>
-          <Suspense fallback={<div>loading</div>}>
+          <Suspense fallback={<LoadingIndicator full />}>
             <Outlet />
           </Suspense>
         </main>
