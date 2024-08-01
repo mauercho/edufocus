@@ -4,8 +4,7 @@ import com.edufocus.edufocus.user.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +12,14 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuizSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -29,7 +31,7 @@ public class QuizSet {
 
     @OneToMany(mappedBy = "quizSet", orphanRemoval = true)
     @JsonManagedReference
-    private List<Quiz> quizzes = new ArrayList<Quiz>();
+    private List<Quiz> quizzes;
 
     public void addQuiz(Quiz quiz) {
         this.quizzes.add(quiz);

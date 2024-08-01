@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface QuizSetRepository extends JpaRepository<QuizSet, Long> {
 
-    List<QuizSet> findQuizSetsByUserId(Long userId);
+    List<QuizSet> findQuizSetsByUserId(long userId);
 }

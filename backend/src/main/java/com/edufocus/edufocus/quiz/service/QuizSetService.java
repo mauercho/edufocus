@@ -10,15 +10,15 @@ import java.util.List;
 @Service
 public interface QuizSetService {
 
-    QuizSet createQuizSet(Long userId, String title);
+    QuizSet createQuizSet(long userId, String title);
 
     void updateQuizSet(QuizSet quizSet);
 
-    boolean deleteQuizSet(Long userId, Long quizSetId);
+    boolean deleteQuizSet(long userId, long quizSetId);
 
-    QuizSet findQuizSet(Long quizSetId);
+    QuizSet findQuizSet(long quizSetId);
 
-    QuizSetResponse findQuizSetResponse(Long quizSetId);
+    QuizSetResponse findQuizSetResponse(long quizSetId);
 
-    List<MyQuizSetResponse> findMyQuizSetResponses(Long userId);
+    List<MyQuizSetResponse> findMyQuizSetResponses(long userId);
 }

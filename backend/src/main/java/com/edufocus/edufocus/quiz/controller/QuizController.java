@@ -30,7 +30,7 @@ public class QuizController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createQuizSet(@RequestHeader("Authorization") String accessToken, @RequestPart QuizSetCreateRequest quizSetCreateRequest
             , @RequestPart(value = "images", required = false) List<MultipartFile> images) throws IOException {
-        Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         QuizSet quizSet = quizSetService.createQuizSet(userId, quizSetCreateRequest.getTitle());
 
@@ -46,16 +46,12 @@ public class QuizController {
     public ResponseEntity<?> getQuizzes(@PathVariable Long quizsetId) {
         QuizSetResponse quizSet = quizSetService.findQuizSetResponse(quizsetId);
 
-        if (quizSet == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(quizSet, HttpStatus.OK);
     }
 
     @DeleteMapping("/{quizsetId}")
-    public ResponseEntity<?> deleteQuizSet(@RequestHeader("Authorization") String accessToken, @PathVariable Long quizsetId) {
-        Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+    public ResponseEntity<?> deleteQuizSet(@RequestHeader("Authorization") String accessToken, @PathVariable long quizsetId) {
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         if (!quizSetService.deleteQuizSet(userId, quizsetId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,7 +62,7 @@ public class QuizController {
 
     @GetMapping
     public ResponseEntity<?> getQuizSets(@RequestHeader("Authorization") String accessToken) {
-        Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         return new ResponseEntity<>(quizSetService.findMyQuizSetResponses(userId), HttpStatus.OK);
     }

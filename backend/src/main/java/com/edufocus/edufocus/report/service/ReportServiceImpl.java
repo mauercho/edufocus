@@ -55,7 +55,7 @@ public class ReportServiceImpl implements ReportService {
 
         for (Quiz quiz : quizList) {
             for (AnswerInput answerInput : answerInputList) {
-                if (quiz.getId().equals(answerInput.getAnswerinputID())) {
+                if (quiz.getId() == answerInput.getAnswerinputID()) {
 
                     if(quiz.getAnswer().equals(answerInput.getAnswer())) {
                         correctCount++;
