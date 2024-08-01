@@ -6,19 +6,36 @@ import { Suspense } from 'react';
 import useBoundStore from '../../store';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
+import { useLectureDelete } from '../../hooks/api/useLectureDelete';
+import { useNavigate } from 'react-router-dom';
 
 export default function LectureLayout() {
   const { lectureId } = useParams();
+  const navigate = useNavigate();
+
+  const { lectureDelete } = useLectureDelete();
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
-
   const userType = useBoundStore((state) => state.userType);
-
+  const handleDelete = () => {
+    lectureDelete(lectureId);
+    navigate('..');
+  };
+  const lectureData = {
+    title: lecture.title,
+    description: lecture.description,
+    plan: lecture.plan,
+    startDate: lecture.startDate,
+    endDate: lecture.endDate,
+    time: lecture.time,
+  };
+  console.log(lectureData);
   return (
     <>
       <LectureHeader
         title={lecture.title}
         tutor={lecture.teacherName}
+        img={lecture.image}
         // TODO: isLive를 받아올 수단 추가
         isLive={true}
       />
@@ -42,6 +59,13 @@ export default function LectureLayout() {
                 name="수강생"
                 sub="총 12명"
               />
+              <SideLink
+                to={'edit'}
+                state={lectureData}
+              >
+                강의 정보 수정
+              </SideLink>
+              <button onClick={handleDelete}>강의 삭제</button>
             </SideBar>
           )}
           {userType === 'student' && (

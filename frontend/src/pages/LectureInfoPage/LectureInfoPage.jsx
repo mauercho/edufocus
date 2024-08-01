@@ -15,7 +15,7 @@ export default function LectureInfoPage() {
   const startDate = new Date(lectureData.startDate).toLocaleDateString();
   const endDate = new Date(lectureData.endDate).toLocaleDateString();
   const userType = useBoundStore((state) => state.userType);
-
+  console.log(lectureData);
   const { lectureRegister } = useLectureRegister();
   const handleSubmit = () => {
     if (userType === null) {
@@ -37,7 +37,7 @@ export default function LectureInfoPage() {
       <LectureHeader
         title={lectureData.title}
         img={lectureData.image}
-        tutor={lectureData.teachername}
+        tutor={lectureData.teacherName}
         tutorImg={lectureData.tutorImg}
       />
       <MaxWidthLayout hasSideBar>

@@ -7,8 +7,6 @@ export default function QuestionDetailPage() {
   const qnaId = params.questionId;
   const { data } = useQnaDetail(qnaId);
   const qna = data?.data;
-  const answer = qna?.answer;
-  console.log(qna.author);
 
   return (
     <ArticleDetail
@@ -16,7 +14,7 @@ export default function QuestionDetailPage() {
       title={qna.title}
       author={qna.username}
       content={qna.content}
-      answer={answer}
+      answer={qna?.answer}
     />
   );
 }
