@@ -6,6 +6,6 @@ export default function LoadingIndicator({ fill = false }) {
       <div className={styles.indicator} />
     </div>
   ) : (
-    <div />
+    <div className={styles.indicator} />
   );
 }

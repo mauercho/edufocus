@@ -9,7 +9,7 @@ export default function LiveLayout() {
     <>
       <LiveHeader />
       <div className={styles.wrapper}>
-        <Suspense fallback={<LoadingIndicator full />}>
+        <Suspense fallback={<LoadingIndicator fill />}>
           <Outlet />
         </Suspense>
       </div>

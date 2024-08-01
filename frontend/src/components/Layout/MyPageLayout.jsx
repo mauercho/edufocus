@@ -22,8 +22,7 @@ export default function MyPageLayout() {
           </SideBar>
         </aside>
         <main>
-          {/* TODO: 로딩 컴포넌트 추가 */}
-          <Suspense fallback={<LoadingIndicator full />}>
+          <Suspense fallback={<LoadingIndicator fill />}>
             <Outlet />
           </Suspense>
         </main>

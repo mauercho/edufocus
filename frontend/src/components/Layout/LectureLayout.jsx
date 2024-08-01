@@ -82,7 +82,7 @@ export default function LectureLayout() {
           )}
         </aside>
         <main>
-          <Suspense fallback={<LoadingIndicator full />}>
+          <Suspense fallback={<LoadingIndicator fill />}>
             <Outlet />
           </Suspense>
         </main>
