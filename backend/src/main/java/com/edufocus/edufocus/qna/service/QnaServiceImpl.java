@@ -138,6 +138,9 @@ qnaRepository.deleteById(id);
     @Override
     public void deleteAnswer(Long id) throws SQLException {
 
-        qnaRepository.deleteById(id);
+        Qna findQna = qnaRepository.findById(id).orElse(null);
+        findQna.setAnswer(null);
+        qnaRepository.save(findQna);
+        
     }
 }
