@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
-    private final JavaMailSender mailSender;//private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     public void join(User user)
@@ -61,55 +60,9 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void sendEamail(User user) throws Exception {
-        MailDto mailDto = createMailAndChargePassword(user);
 
 
-        SimpleMailMessage message = new SimpleMailMessage();
 
-
-        message.setTo(mailDto.getAddress());
-        message.setFrom("passfinder111@gmail.com");
-        message.setSubject(mailDto.getTitle());
-        message.setText(mailDto.getMessage());
-
-
-        mailSender.send(message);
-
-
-    }
-
-    public MailDto createMailAndChargePassword(User user) throws SQLException {
-        String str = getTempPassword();
-        MailDto dto = new MailDto();
-        dto.setAddress(user.getEmail());
-        dto.setTitle(user.getUserId() + "님의 임시비밀번호 안내 이메일 입니다.");
-        dto.setMessage("안녕하세요. EduFoucs 입니다.  " + "\n" + "임시비밀번호 안내 관련 메일 입니다." + "\n[" + user.getName() + "]" + "님의 임시 비밀번호는 "
-                + str + " 입니다.");
-
-        System.out.println(dto);
-
-        MemberChangeDto memberChangeDto = new MemberChangeDto(user.getId(), str);
-        userRepository.updatePassword(memberChangeDto.getId(), memberChangeDto.getPassword());
-
-        return dto;
-    }
-
-    @Override
-    public void userCheck(Long id) throws Exception {
-
-        User user = userRepository.findById(id).orElse(null);
-
-
-        if (user == null) {
-            throw new UserException("유효하지 않은 아이디입니다. 다시 입력하세요");
-
-        } else {
-
-            sendEamail(user);
-        }
-    }
 
     @Override
     public String getUserName(Long id) throws Exception {

@@ -39,11 +39,11 @@ public class UserController {
         userService.join(user);
         return ResponseEntity.ok("User registered successfully");
     }
-    @PostMapping("/findpassword/{user_id}")
-    public ResponseEntity<String> findpassword(@PathVariable("user_id") Long user_id) throws Exception {
-        userService.userCheck(user_id);
-        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
-    }
+//    @PostMapping("/findpassword/{user_id}")
+//    public ResponseEntity<String> findpassword(@PathVariable("user_id") Long user_id) throws Exception {
+//        userService.userCheck(user_id);
+//        return ResponseEntity.ok("임시 비밀번호가 이메일로 전송되었습니다.");
+//    }
 
     @PutMapping("/updateinfo")
     public ResponseEntity<String> updateUserInfo(
