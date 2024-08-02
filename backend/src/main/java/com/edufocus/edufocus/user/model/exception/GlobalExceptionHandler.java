@@ -16,10 +16,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-
+    //
     @ExceptionHandler(ExpriedTokenException.class)
     public ResponseEntity<String> handleInvalidTokenException(ExpriedTokenException e) {
 
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(RefreshTokenExpiredException.class)
+    public ResponseEntity<String> handleInvalidTokenException(RefreshTokenExpiredException e) {
+
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
     }
 }

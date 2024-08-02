@@ -4,6 +4,7 @@ import com.edufocus.edufocus.user.model.entity.InfoDto;
 import com.edufocus.edufocus.user.model.entity.PasswordDto;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.exception.ExpriedTokenException;
+import com.edufocus.edufocus.user.model.exception.RefreshTokenExpiredException;
 import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;
@@ -76,7 +77,7 @@ public class UserController {
             @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user, HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Authorization");
-        if(jwtUtil.checkToken(token)){
+        if(jwtUtil.checkToken(token, false)){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -132,7 +133,7 @@ public class UserController {
 
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
-        if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
+        if (jwtUtil.checkToken(request.getHeader("Authorization"), false)) {
             log.info("사용 가능한 토큰!!!");
             try {
                 User member = userService.userInfo(userId);
@@ -144,7 +145,7 @@ public class UserController {
                 status = HttpStatus.INTERNAL_SERVER_ERROR;
             }
         } else {
-            System.out.println(jwtUtil.checkToken(request.getHeader("Authorization")));
+            System.out.println(jwtUtil.checkToken(request.getHeader("Authorization"), false));
             log.error("사용 불가능 토큰!!!");
             resultMap.put("message", "Unauthorized token");
             status = HttpStatus.UNAUTHORIZED;
@@ -166,7 +167,7 @@ public class UserController {
         } catch (Exception e) {
             log.error("로그아웃 실패 : {}", e);
             resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            status = HttpStatus.UNAUTHORIZED;
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
@@ -192,12 +193,16 @@ public class UserController {
             }
         }
         Long userId = Long.parseLong(jwtUtil.getUserId(token));
+        if(jwtUtil.isExpired(token)){
+            throw new RefreshTokenExpiredException();
+        }
 
-        if (jwtUtil.checkToken(token)) {
 
+        try {
+            if (token == null || jwtUtil.checkToken(token, true) || !token.equals(userService.getRefreshToken(userId))) {
+                throw new RefreshTokenExpiredException();
 
-            if (token.equals(userService.getRefreshToken(userId))) {
-
+            }
                 String accessToken = jwtUtil.createAccessToken(String.valueOf(userId));
                 String refreshToken = jwtUtil.createRefreshToken(String.valueOf(userId));
 
@@ -219,11 +224,10 @@ public class UserController {
                 System.out.println("바뀐 리프레쉬랑 지금꺼 비교 "+ refreshToken.equals(token));
                 resultMap.put("access-token", accessToken);
                 status = HttpStatus.CREATED;
-
-            }
-        } else {
+        } catch (Exception e) {
             log.debug("refresh token 도 사용 불가!!!!!!!");
-            status = HttpStatus.UNAUTHORIZED;
+            System.out.println("refresh token 도 사용 불가!!!!!!!");
+            status = HttpStatus.FORBIDDEN;
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
@@ -235,7 +239,7 @@ public class UserController {
         HttpStatus status = HttpStatus.ACCEPTED;
         String token = request.getHeader("Authorization");
 
-        if (jwtUtil.checkToken(token)) {
+        if (jwtUtil.checkToken(token, false)) {
             String userId = jwtUtil.getUserId(token);
             log.info("사용 가능한 토큰!!! userId: {}", userId);
             try {
