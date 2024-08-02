@@ -132,8 +132,9 @@ public class Controller {
 
 			videoSertvice.startOnline(userId, id);
 
+			System.out.println();
 
-			return ResponseEntity.ok(Map.of("joinroom token", token.toJwt()));
+			return ResponseEntity.ok(Map.of("token", token.toJwt()));
 
 		}
 		else if(findUser.getRole()==UserRole.STUDENT )// && lecture.isOnline() )
