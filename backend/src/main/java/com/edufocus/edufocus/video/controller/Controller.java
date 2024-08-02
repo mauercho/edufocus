@@ -14,7 +14,10 @@ import com.edufocus.edufocus.user.model.entity.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;
+import com.edufocus.edufocus.video.dto.IdentityData;
 import com.edufocus.edufocus.video.service.VideoSertvice;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.livekit.server.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +48,7 @@ public class Controller {
 
 	@Value("${livekit.api.secret}")
 	private String LIVEKIT_API_SECRET;
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
 	 * @param params JSON object with roomName and participantName
@@ -82,7 +86,9 @@ public class Controller {
 		return new ResponseEntity<>("방만들기 성공",HttpStatus.OK);
 
 	}
-
+	public static String serializeIdentityData(IdentityData identityData) throws JsonProcessingException, JsonProcessingException {
+		return objectMapper.writeValueAsString(identityData);
+	}
 
 	@PostMapping(value = "/joinroom/{lecture_id}")
 	public ResponseEntity<Map<String, String>> joinRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception
@@ -114,14 +120,20 @@ public class Controller {
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+			IdentityData identityData = new IdentityData(participantName, "강사");
+			String jsonIdentity = serializeIdentityData(identityData);
+
+
+
+			token.setIdentity(jsonIdentity);
 			token.setName(participantName);
-			token.setIdentity("강사"+randStr);
+
 			token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
 
 			videoSertvice.startOnline(userId, id);
 
 
-			return ResponseEntity.ok(Map.of("token", token.toJwt()));
+			return ResponseEntity.ok(Map.of("joinroom token", token.toJwt()));
 
 		}
 		else if(findUser.getRole()==UserRole.STUDENT )// && lecture.isOnline() )
@@ -133,8 +145,9 @@ public class Controller {
 			System.out.println(participantName);
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setName(participantName);
 			token.setIdentity("학생"+participantName+randStr);
+			token.setName(participantName);
+
 			token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
 
