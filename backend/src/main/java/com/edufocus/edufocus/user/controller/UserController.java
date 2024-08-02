@@ -26,6 +26,7 @@ import java.util.Map;
 @RequestMapping("/user")
 @Slf4j
 @RequiredArgsConstructor
+
 public class UserController {
 
     private final UserService userService;
@@ -152,7 +153,6 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-
     public ResponseEntity<?> removeToken(HttpServletRequest request) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
