@@ -15,7 +15,6 @@ instance.interceptors.request.use((config) => {
   const accessToken = useBoundStore.getState().token;
 
   if (accessToken) {
-    console.log(accessToken);
     config.headers.Authorization = `${accessToken}`;
   }
 
