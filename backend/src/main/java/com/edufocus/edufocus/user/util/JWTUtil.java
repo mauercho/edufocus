@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.edufocus.edufocus.user.model.exception.ExpriedTokenException;
 import com.edufocus.edufocus.user.model.exception.InvalidTokenException;
+import com.edufocus.edufocus.user.model.exception.RefreshTokenExpiredException;
 import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,29 +55,20 @@ public class JWTUtil {
 
     public boolean checkToken(String token) {
         try {
-                Jws<Claims> claims = Jwts.parserBuilder()
-                        .setSigningKey(generateKey())
-                        .build()
-                        .parseClaimsJws(token);
-                log.debug("claims: {}", claims);
-                return true;
-            } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException | SignatureException e) {
-                log.error("Token validation error: {}", e.getMessage());
-
-                return false;
-            }
-        catch ( ExpiredJwtException e)
-            {
-                throw new ExpriedTokenException();
-
-            }
-        catch (Exception e) {
-                System.out.println(token);
-                System.out.println(e.getMessage());
-                log.error("Unexpected error while validating token: {}", e.getMessage());
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(generateKey())
+                    .build()
+                    .parseClaimsJws(token);
+            log.debug("claims: {}", claims);
+            return true;
+        }
+        catch (ExpriedTokenException e) {
+            throw new ExpriedTokenException();
+        }catch (Exception e){
             throw new InvalidTokenException();
         }
     }
+
 
     public String getUserId(String authorization) {
         try {
