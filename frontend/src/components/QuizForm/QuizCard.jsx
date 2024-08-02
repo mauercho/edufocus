@@ -31,6 +31,7 @@ export default function QuizCard({ quiz, index, updateQuiz }) {
 
   return (
     <div className={styles.card}>
+      <label>질문</label>
       <input
         type="text"
         value={question}
@@ -40,6 +41,7 @@ export default function QuizCard({ quiz, index, updateQuiz }) {
         }}
         placeholder="질문 내용을 입력하세요"
       />
+      <label>정답</label>
       <input
         type="text"
         value={answer}
@@ -52,20 +54,25 @@ export default function QuizCard({ quiz, index, updateQuiz }) {
       <div>
         <span>Tip: 선택지를 넣지 않는다면 단답형 문제가 됩니다</span>
       </div>
-      <button
-        type="button"
-        onClick={handleAddChoice}
-      >
-        선택지 추가하기
-      </button>
-      <button
-        type="button"
-        onClick={handlePopChoice}
-      >
-        선택지 줄이기
-      </button>
+      <div className={styles.buttonsWrapper}>
+        <button
+          type="button"
+          onClick={handleAddChoice}
+          className={styles.button}
+        >
+          선택지 추가하기
+        </button>
+        <button
+          type="button"
+          onClick={handlePopChoice}
+          className={styles.removeButton}
+        >
+          선택지 줄이기
+        </button>
+      </div>
       {choices.map?.((choice, idx) => (
         <div key={idx}>
+          <label>선택지 {choice.num} : </label>
           <input
             type="text"
             value={choice.content}
