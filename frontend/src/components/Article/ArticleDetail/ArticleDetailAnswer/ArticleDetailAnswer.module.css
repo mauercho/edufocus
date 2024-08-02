@@ -29,3 +29,37 @@
   margin: 0;
   color: var(--text-color);
 }
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  align-self: end;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--error-color);
+  background-color: var(--error-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  align-self: end;
+  border-radius: 8px;
+  cursor: pointer;
+}

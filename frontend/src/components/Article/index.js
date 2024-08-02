@@ -3,3 +3,5 @@ export { default as ArticleDetailAnswer } from './ArticleDetail/ArticleDetailAns
 export { default as CreateArticle } from './CreateArticle/CreateArticle.jsx';
 export { default as ArticlePreview } from './ArticlePreview/ArticlePreview.jsx';
 export { default as EditArticle } from './EditArticle/EditArticle.jsx';
+export { default as EditQna } from './EditQna/EditQna.jsx';
+export { default as ArticleDetailAnswerInput } from './ArticleDetail/ArticleDetailAnswer/ArticleDetailAnswerInput.jsx';
