@@ -29,7 +29,7 @@ public class RegistrationController {
         Long lectureId = map.get("lectureId");
 
         if (!registrationService.createRegistration(userId, lectureId)) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
