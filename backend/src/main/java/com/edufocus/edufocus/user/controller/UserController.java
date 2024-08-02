@@ -78,9 +78,6 @@ public class UserController {
             @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user, HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Authorization");
-        if(jwtUtil.checkToken(token)){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
 
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
@@ -218,15 +215,6 @@ public class UserController {
     }
 
 
-    @ExceptionHandler(ExpriedTokenException.class)
-    public ResponseEntity<?> handleExpiredTokenException(){
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-    }
-    @ExceptionHandler(UnAuthorizedException.class)
-    public ResponseEntity<?> handleUnauthorizedException(){
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
 
 
 
