@@ -114,8 +114,8 @@ public class Controller {
 			String roomName = lecture.getTitle();
 			String participantName = userService.getUserName(userId);
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setName(participantName+randStr);
-			token.setIdentity(participantName+randStr);
+			token.setName(participantName);
+			token.setIdentity("강사"+randStr);
 			token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
 
 			videoSertvice.startOnline(userId, id);
@@ -133,8 +133,8 @@ public class Controller {
 			System.out.println(participantName);
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setName(participantName+randStr);
-			token.setIdentity(participantName+randStr);
+			token.setName(participantName);
+			token.setIdentity("학생"+participantName+randStr);
 			token.addGrants(new RoomJoin(true), new RoomName(roomName));
 
 
