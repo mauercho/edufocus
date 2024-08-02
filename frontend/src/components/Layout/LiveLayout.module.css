@@ -4,7 +4,7 @@
   align-items: stretch;
   width: 100vw;
   height: 100vh;
-  padding-top: 64px;
+  padding-top: 48px;
   box-sizing: border-box;
 
   & > main {

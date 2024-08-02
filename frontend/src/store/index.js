@@ -2,14 +2,17 @@ import { create } from 'zustand';
 import { userTypeSlice } from './userTypeSlice';
 import { tokenSlice } from './tokenSlice';
 import { userNameSlice } from './userNameSlice';
-import { liveSlice } from './liveSlice';
+import { persist } from 'zustand/middleware';
 
-const useBoundStore = create((...a) => ({
-  // TODO: persist 옵션 추가
-  ...userTypeSlice(...a),
-  ...tokenSlice(...a),
-  ...userNameSlice(...a),
-  ...liveSlice(...a),
-}));
+const useBoundStore = create(
+  persist(
+    (...a) => ({
+      ...userTypeSlice(...a),
+      ...tokenSlice(...a),
+      ...userNameSlice(...a),
+    }),
+    { name: 'bound-store' }
+  )
+);
 
 export default useBoundStore;
