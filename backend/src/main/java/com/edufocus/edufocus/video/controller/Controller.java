@@ -146,7 +146,13 @@ public class Controller {
 			System.out.println(participantName);
 
 			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-			token.setIdentity("학생"+participantName+randStr);
+
+			IdentityData identityData = new IdentityData(participantName, "강사");
+			String jsonIdentity = serializeIdentityData(identityData);
+
+
+
+			token.setIdentity(jsonIdentity);
 			token.setName(participantName);
 
 			token.addGrants(new RoomJoin(true), new RoomName(roomName));
