@@ -108,18 +108,21 @@ public class Controller {
 		Random random = new Random();
 
 		System.out.println();
-		int randomNumber = 100 + random.nextInt(9000);
+		int randomNumber = 10000 + random.nextInt(80000);
 
 		String randStr = String.valueOf(randomNumber);
+
+		String roomName = lecture.getTitle();
+		String participantName = userService.getUserName(userId);
+		System.out.println(participantName);
+
+		AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 
 
 		if(findUser.getRole()==UserRole.ADMIN ){//&& lecture.isOnline() ) {
 
 
 
-			String roomName = lecture.getTitle();
-			String participantName = userService.getUserName(userId);
-			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
 			IdentityData identityData = new IdentityData(participantName, "강사");
 			String jsonIdentity = serializeIdentityData(identityData);
 
@@ -141,13 +144,7 @@ public class Controller {
 		{
 
 
-			String roomName = lecture.getTitle();
-			String participantName = userService.getUserName(userId);
-			System.out.println(participantName);
-
-			AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-
-			IdentityData identityData = new IdentityData(participantName, "강사");
+			IdentityData identityData = new IdentityData(participantName, "학생");
 			String jsonIdentity = serializeIdentityData(identityData);
 
 
