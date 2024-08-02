@@ -68,7 +68,7 @@ public class QnaController {
         }
     }
 
-    @DeleteMapping("/answer/delete/{qna_id}")
+    @PostMapping("/answer/delete/{qna_id}")
     public ResponseEntity<QnaResponseDto> deleteAnswer(@PathVariable("qna_id") Long qna_id)
     {
         try {
