@@ -34,7 +34,11 @@ public class RegistrationServiceImpl implements RegistrationService {
             return false;
         }
 
-        Registration registration = new Registration().builder()
+        if (registrationRepository.findByUserIdAndLectureId(userId, lectureId) != null) {
+            return false;
+        }
+
+        Registration registration = Registration.builder()
                 .user(userRepository.findById(userId).get())
                 .lecture(lectureRepository.findById(lectureId).get())
                 .status(RegistrationStatus.WAITING)
@@ -76,7 +80,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         List<RegistrationSearchResponse> responses = new ArrayList<>();
         for (Registration registration : registrations) {
-            RegistrationSearchResponse response = new RegistrationSearchResponse().builder()
+            RegistrationSearchResponse response = RegistrationSearchResponse.builder()
                     .id(registration.getId())
                     .userName(registration.getUser().getName())
                     .build();
@@ -87,11 +91,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         return responses;
     }
 
-//    @Override
-//    public RegistrationStatus getStatus(Long userId, Long lectureId) {
-//
-//        Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
-//        return registration.getStatus();
-//    }
+    @Override
+    public RegistrationStatus getStatus(Long userId, Long lectureId) {
+
+        Registration registration = registrationRepository.findByUserIdAndLectureId(userId, lectureId);
+        return registration.getStatus();
+    }
 
 }
