@@ -55,38 +55,20 @@ public class JWTUtil {
 
     public boolean checkToken(String token) {
         try {
-                Jws<Claims> claims = Jwts.parserBuilder()
-                        .setSigningKey(generateKey())
-                        .build()
-                        .parseClaimsJws(token);
-                log.debug("claims: {}", claims);
-                return true;
-            } catch (MalformedJwtException | UnsupportedJwtException | IllegalArgumentException | SignatureException e) {
-                log.error("Token validation error: {}", e.getMessage());
-
-                return false;
-        }
-        catch (Exception e) {
-                System.out.println(token);
-                System.out.println(e.getMessage());
-                log.error("Unexpected error while validating token: {}", e.getMessage());
-            throw new InvalidTokenException();
-        }
-    }
-
-    public boolean isExpired(String token) {
-        try {
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(generateKey())
                     .build()
                     .parseClaimsJws(token);
-            return false;
-        }catch(ExpiredJwtException e){
+            log.debug("claims: {}", claims);
             return true;
-        }catch(Exception e){
+        }
+        catch (ExpriedTokenException e) {
+            throw new ExpriedTokenException();
+        }catch (Exception e){
             throw new InvalidTokenException();
         }
     }
+
 
     public String getUserId(String authorization) {
         try {

@@ -4,6 +4,7 @@ import com.edufocus.edufocus.user.model.entity.InfoDto;
 import com.edufocus.edufocus.user.model.entity.PasswordDto;
 import com.edufocus.edufocus.user.model.entity.User;
 import com.edufocus.edufocus.user.model.exception.ExpriedTokenException;
+import com.edufocus.edufocus.user.model.exception.InvalidTokenException;
 import com.edufocus.edufocus.user.model.exception.RefreshTokenExpiredException;
 import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
 import com.edufocus.edufocus.user.model.service.UserService;
@@ -77,7 +78,7 @@ public class UserController {
             @RequestBody @Parameter(description = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) User user, HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Authorization");
-        if(jwtUtil.checkToken(token, false)){
+        if(jwtUtil.checkToken(token)){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -123,35 +124,6 @@ public class UserController {
         return new ResponseEntity<>(resultMap, status);
     }
 
-    @Operation(summary = "회원인증", description = "회원 정보를 담은 Token 을 반환한다.")
-    @GetMapping("/auth/{userId}")
-    public ResponseEntity<Map<String, Object>> getInfo(
-            @PathVariable("userId") @Parameter(description = "인증할 회원의 아이디.", required = true) Long userId,
-            HttpServletRequest request) {
-        String id = String.valueOf(userId);
-
-
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = HttpStatus.ACCEPTED;
-        if (jwtUtil.checkToken(request.getHeader("Authorization"), false)) {
-            log.info("사용 가능한 토큰!!!");
-            try {
-                User member = userService.userInfo(userId);
-                resultMap.put("userInfo", member);
-                status = HttpStatus.OK;
-            } catch (Exception e) {
-                log.error("정보조회 실패 : {}", e);
-                resultMap.put("message", e.getMessage());
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
-            }
-        } else {
-            System.out.println(jwtUtil.checkToken(request.getHeader("Authorization"), false));
-            log.error("사용 불가능 토큰!!!");
-            resultMap.put("message", "Unauthorized token");
-            status = HttpStatus.UNAUTHORIZED;
-        }
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
-    }
 
     @PostMapping("/logout")
     public ResponseEntity<?> removeToken(HttpServletRequest request) {
@@ -176,14 +148,8 @@ public class UserController {
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(HttpServletRequest request,HttpServletResponse response)
             throws Exception {
-
-
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = HttpStatus.ACCEPTED;
-
         Cookie[] cookies = request.getCookies();
         String token = null;
-
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("refresh-token")) {
@@ -192,44 +158,36 @@ public class UserController {
                 }
             }
         }
+
+        try{
+            jwtUtil.checkToken(token);
+        }catch (Exception e){
+            throw new InvalidTokenException();
+        }
+
         Long userId = Long.parseLong(jwtUtil.getUserId(token));
-        if(jwtUtil.isExpired(token)){
-            throw new RefreshTokenExpiredException();
+
+        if (!token.equals(userService.getRefreshToken(userId))) {
+            throw new InvalidTokenException();
         }
 
 
-        try {
-            if (token == null || jwtUtil.checkToken(token, true) || !token.equals(userService.getRefreshToken(userId))) {
-                throw new RefreshTokenExpiredException();
-
-            }
-                String accessToken = jwtUtil.createAccessToken(String.valueOf(userId));
-                String refreshToken = jwtUtil.createRefreshToken(String.valueOf(userId));
-
-                log.debug("token : {}", accessToken);
-                log.debug("정상적으로 access token 재발급!!!");
-                resultMap.put("access-token", accessToken);
+        String accessToken = jwtUtil.createAccessToken(String.valueOf(userId));
+        String refreshToken = jwtUtil.createRefreshToken(String.valueOf(userId));
 
 
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("access-token", accessToken);
 
-                userService.saveRefreshToken(userId,refreshToken);
+        userService.saveRefreshToken(userId,refreshToken);
 
-                Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
-                refreshCookie.setPath("/");
-                refreshCookie.setHttpOnly(true);
-                refreshCookie.setSecure(true); // HTTPS에서만 전송되도록 설정
-                // refreshCookie.setSameSite(Cookie.SameSite.NONE); // Cross-Origin 요청에 대해 모두 전송
+        Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
+        refreshCookie.setPath("/");
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(true);
+        response.addCookie(refreshCookie);
 
-                response.addCookie(refreshCookie);
-                System.out.println("바뀐 리프레쉬랑 지금꺼 비교 "+ refreshToken.equals(token));
-                resultMap.put("access-token", accessToken);
-                status = HttpStatus.CREATED;
-        } catch (Exception e) {
-            log.debug("refresh token 도 사용 불가!!!!!!!");
-            System.out.println("refresh token 도 사용 불가!!!!!!!");
-            status = HttpStatus.FORBIDDEN;
-        }
-        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+        return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CREATED);
     }
 
     @Operation(summary = "회원 정보 조회", description = "토큰을 이용하여 회원 정보를 조회한다.")
@@ -239,7 +197,7 @@ public class UserController {
         HttpStatus status = HttpStatus.ACCEPTED;
         String token = request.getHeader("Authorization");
 
-        if (jwtUtil.checkToken(token, false)) {
+        if (jwtUtil.checkToken(token)) {
             String userId = jwtUtil.getUserId(token);
             log.info("사용 가능한 토큰!!! userId: {}", userId);
             try {

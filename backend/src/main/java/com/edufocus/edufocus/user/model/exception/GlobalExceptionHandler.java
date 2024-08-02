@@ -9,23 +9,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidTokenException.class)
-    public ResponseEntity<String> handleUnAuthorizedException(InvalidTokenException e) {
-
-
-
+    public ResponseEntity<String> handleInvalidTokenException(InvalidTokenException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     //
     @ExceptionHandler(ExpriedTokenException.class)
-    public ResponseEntity<String> handleInvalidTokenException(ExpriedTokenException e) {
-
+    public ResponseEntity<String> handleExpiredTokenException(ExpriedTokenException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(RefreshTokenExpiredException.class)
-    public ResponseEntity<String> handleInvalidTokenException(RefreshTokenExpiredException e) {
-
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
-    }
 }
