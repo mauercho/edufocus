@@ -141,6 +141,6 @@ qnaRepository.deleteById(id);
         Qna findQna = qnaRepository.findById(id).orElse(null);
         findQna.setAnswer(null);
         qnaRepository.save(findQna);
-        
+
     }
 }
