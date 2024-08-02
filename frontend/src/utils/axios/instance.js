@@ -6,7 +6,6 @@ const instance = axios.create({
   timeout: 1000,
   headers: {
     'Content-type': 'application/json;charset=utf-8',
-    'Access-Control-Allow-Origin': import.meta.env.VITE_ORIGIN,
   },
   withCredentials: true,
 });
@@ -28,16 +27,25 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // TODO: api url update
-    const REFRESH_API_URL = '/refresh-token';
+    const REFRESH_API_URL = '/user/refresh';
 
-    return instance.post(REFRESH_API_URL).then((response) => {
-      const { accessToken } = response.data;
+    return instance
+      .post(REFRESH_API_URL)
+      .then((response) => {
+        const { accessToken } = response.data;
 
-      useBoundStore.setState({ token: accessToken });
-      error.config.headers.Authorization = `${accessToken}`;
-      return instance(error.config);
-    });
+        console.log(accessToken);
+        useBoundStore.setState({ token: accessToken });
+        error.config.headers.Authorization = `${accessToken}`;
+        return instance(error.config);
+      })
+      .catch((error) => {
+        useBoundStore.setState({ token: null });
+        console.log(error);
+        console.log('---로그아웃----');
+        // TODO: redirect to home
+        return Promise.reject(error);
+      });
   }
 );
 

@@ -5,8 +5,8 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
+import { LiveLayout } from './components/Layout';
 
-const LiveLayout = lazy(async () => await import('./components/Layout/LiveLayout'));
 const LivePage = lazy(async () => await import('./pages/LivePage'));
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
@@ -26,6 +26,10 @@ const PasswordChangePage = lazy(async () => await import('./pages/PasswordChange
 const LearningLecturesPage = lazy(async () => await import('./pages/LearningLecturesPage'));
 const LectureCreatePage = lazy(async () => await import('./pages/LectureCreatePage'));
 const EditQuestionPage = lazy(async () => await import('./pages/EditQuestionPage'));
+const LectureEditPage = lazy(async () => await import('./pages/LectureEditPage'));
+const QuizsetListPage = lazy(async () => await import('./pages/QuizsetListPage'));
+const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage'));
+const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
 
 const router = createBrowserRouter([
   {
@@ -56,12 +60,20 @@ const router = createBrowserRouter([
         element: <LectureInfoPage />,
       },
       {
+        path: 'lecture/:lectureId/edit',
+        element: <LectureEditPage />,
+      },
+      {
         path: 'lecture/:lectureId',
         element: <LectureLayout />,
         children: [
           {
             index: true,
             element: <LearningLectureDetailPage />,
+          },
+          {
+            path: 'edit',
+            element: <LectureEditPage />,
           },
           {
             path: 'notice',
@@ -116,6 +128,23 @@ const router = createBrowserRouter([
               {
                 path: 'write',
                 element: <CreateQuestionPage />,
+              },
+            ],
+          },
+          {
+            path: 'quiz',
+            children: [
+              {
+                index: true,
+                element: <QuizsetListPage />,
+              },
+              {
+                path: 'write',
+                element: <QuizsetWritePage />,
+              },
+              {
+                path: ':quizsetId',
+                element: <QuizsetDetailPage />,
               },
             ],
           },

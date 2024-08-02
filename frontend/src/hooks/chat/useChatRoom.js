@@ -20,7 +20,7 @@ export default function useChatRoom(roomId) {
     }
 
     chatClient.publish({
-      destination: `/pub/message/${roomId}`,
+      destination: `/pub/chat.message.${roomId}`,
       body: JSON.stringify({
         userId: USER_ID,
         name: userName,
@@ -32,7 +32,7 @@ export default function useChatRoom(roomId) {
 
   useEffect(() => {
     client.onConnect = () => {
-      client.subscribe(`/sub/channel/${roomId}`, (response) => {
+      client.subscribe(`/exchange/chat.exchange/*.room.${roomId}`, (response) => {
         const data = JSON.parse(response.body);
         const { content: message, name } = data;
 
