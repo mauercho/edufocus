@@ -26,6 +26,9 @@ const PasswordChangePage = lazy(async () => await import('./pages/PasswordChange
 const LearningLecturesPage = lazy(async () => await import('./pages/LearningLecturesPage'));
 const LectureCreatePage = lazy(async () => await import('./pages/LectureCreatePage'));
 const LectureEditPage = lazy(async () => await import('./pages/LectureEditPage'));
+const QuizsetListPage = lazy(async () => await import('./pages/QuizsetListPage'));
+const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage'));
+const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
 
 const router = createBrowserRouter([
   {
@@ -111,6 +114,23 @@ const router = createBrowserRouter([
               {
                 path: 'write',
                 element: <CreateQuestionPage />,
+              },
+            ],
+          },
+          {
+            path: 'quiz',
+            children: [
+              {
+                index: true,
+                element: <QuizsetListPage />,
+              },
+              {
+                path: 'write',
+                element: <QuizsetWritePage />,
+              },
+              {
+                path: ':quizsetId',
+                element: <QuizsetDetailPage />,
               },
             ],
           },

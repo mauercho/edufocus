@@ -44,5 +44,16 @@ export function useAuth() {
     });
   };
 
-  return { login, userRegister };
+  const logout = () => {
+    return instance
+      .get(`${API_URL}/user/logout`)
+      .then((response) => {
+        console.log(response);
+        setUserType(null);
+        setToken(null);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  return { login, logout, userRegister };
 }
