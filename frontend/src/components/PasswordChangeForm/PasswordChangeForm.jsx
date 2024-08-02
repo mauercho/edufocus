@@ -1,13 +1,12 @@
 import { useState, useRef } from 'react';
 import styles from './PasswordChangeForm.module.css';
 
-export default function PasswordChangeForm() {
+export default function PasswordChangeForm({ onSubmit, onPwError = false }) {
   const [errorConfirmMessage, setErrorConfirmMessage] = useState(false);
   const [errorSameMessage, setErrorSameMessage] = useState(false);
   const currentPasswordRef = useRef('');
   const newPasswordRef = useRef('');
   const confirmPasswordRef = useRef('');
-  const userPassword = '1234';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,13 +14,15 @@ export default function PasswordChangeForm() {
     const newPassword = newPasswordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
 
-    if (currentPassword === userPassword) {
-      setErrorSameMessage(false);
-    } else {
-      setErrorSameMessage(true);
-    }
     if (newPassword === confirmPassword) {
       setErrorConfirmMessage(false);
+      onSubmit(currentPassword, newPassword, confirmPassword);
+
+      if (onPwError) {
+        setErrorSameMessage(true);
+      } else {
+        setErrorSameMessage(false);
+      }
     } else {
       setErrorConfirmMessage(true);
     }

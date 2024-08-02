@@ -55,5 +55,15 @@ export function useAuth() {
       .catch((e) => console.log(e));
   };
 
-  return { login, logout, userRegister };
+  const updatePassword = (currentPw, newPw, newPwCheck) => {
+    const passwordBody = {
+      currentPassword: currentPw,
+      newPassword: newPw,
+      newPasswordCheckL: newPwCheck,
+    };
+    console.log(passwordBody);
+    return instance.put(`${API_URL}/user/updatepassword`, passwordBody);
+  };
+
+  return { login, logout, userRegister, updatePassword };
 }

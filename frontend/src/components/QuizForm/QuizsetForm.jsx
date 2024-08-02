@@ -6,23 +6,30 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
 
 export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
-  // TODO: 디자인 만들기 및 스타일 적용
   const [title, setTitle] = useState('');
   const [quizzes, setQuizzes] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
+  const [images, setImages] = useState([]);
 
   const handleAddQuiz = () => {
     setQuizzes([...quizzes, { question: '', answer: '', choices: [] }]);
+    setImages([...images, null]);
   };
 
   const updateQuiz = (index, updatedQuiz) => {
-    const updatedQuizzes = quizzes.map((quiz, i) => (i === index ? updatedQuiz : quiz));
+    const updatedQuizzes = quizzes.map((quiz, idx) => (idx === index ? updatedQuiz : quiz));
     setQuizzes(updatedQuizzes);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    setImageFile(file);
+  const updateImage = (index, imageFile) => {
+    const updatedImages = images.map((img, idx) => (idx === index ? imageFile : img));
+    setImages(updatedImages);
+  };
+
+  const deleteQuiz = (index) => {
+    console.log(index);
+    setQuizzes(quizzes.filter((_, idx) => idx !== index));
+    setImages(images.filter((_, idx) => idx !== index));
+    console.log(quizzes);
   };
 
   return (
@@ -39,7 +46,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
       </header>
       <form
         className={styles.form}
-        onSubmit={(e) => onSubmit(e, title, quizzes, imageFile)}
+        onSubmit={(e) => onSubmit(e, title, quizzes, images)}
       >
         <input
           type="text"
@@ -53,6 +60,8 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
             quiz={quiz}
             index={index}
             updateQuiz={updateQuiz}
+            updateImage={updateImage}
+            deleteQuiz={deleteQuiz}
           />
         ))}
         <button
@@ -62,12 +71,6 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
         >
           퀴즈 추가하기
         </button>
-        <label>퀴즈 이미지</label>
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          onChange={handleFileChange}
-        />
         <button
           type="submit"
           className={styles.button}

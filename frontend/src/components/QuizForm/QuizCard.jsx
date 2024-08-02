@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './QuizCard.module.css';
 
-export default function QuizCard({ quiz, index, updateQuiz }) {
+export default function QuizCard({ quiz, index, updateQuiz, updateImage, deleteQuiz }) {
   const [question, setQuestion] = useState(quiz.question || '');
   const [answer, setAnswer] = useState(quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || []);
@@ -29,8 +29,17 @@ export default function QuizCard({ quiz, index, updateQuiz }) {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0] ?? null;
+    updateImage(index, file);
+  };
+
   return (
     <div className={styles.card}>
+      <div className={styles.header}>
+        <span>퀴즈 생성 카드</span>
+        <span onClick={() => deleteQuiz(index)}>X</span>
+      </div>
       <label>질문</label>
       <input
         type="text"
@@ -81,6 +90,12 @@ export default function QuizCard({ quiz, index, updateQuiz }) {
           />
         </div>
       ))}
+      <label>퀴즈 이미지</label>
+      <input
+        type="file"
+        accept=".png, .jpg, .jpeg"
+        onChange={handleFileChange}
+      />
     </div>
   );
 }
