@@ -88,6 +88,9 @@ public class Controller {
 	public ResponseEntity<Map<String, String>> joinRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception
 	{
 
+		// 방 조인할떄 고려해야할점
+		// 1. 신청됀 강의인지
+		// 2. 그 강의기 On인지
 		String userToken = request.getHeader("Authorization");
 
 
