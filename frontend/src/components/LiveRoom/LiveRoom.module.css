@@ -1,0 +1,27 @@
+.videoWrapper {
+  flex-grow: 0;
+  display: flex;
+  overflow-x: auto;
+  height: 80px;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+
+  & > audio {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--text-color-tertiary);
+    border-radius: 6px;
+  }
+}
+
+.myVideo {
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+}

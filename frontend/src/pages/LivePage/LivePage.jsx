@@ -1,14 +1,25 @@
-import useBoundStore from '../../store';
-import ChatRoom from '../../components/ChatRoom/ChatRoom';
+import { LiveRoom } from '../../components/LiveRoom';
+import { useParams } from 'react-router-dom';
+import useRoom from '../../hooks/live/useRoom';
+import { useEffect } from 'react';
 
 export default function LivePage() {
-  const liveTabStatus = useBoundStore((state) => state.liveTabStatus);
-  // const setLiveTabStatus = useBoundStore((state) => state.setLiveTabStatus);
+  const { roomId } = useParams();
+  const { room, joinRoom, localTrack, remoteTracks, mainTrack, leaveRoom } = useRoom(roomId);
+
+  useEffect(() => {
+    if (!room) {
+      joinRoom();
+    }
+  }, [joinRoom, room]);
 
   return (
-    <>
-      <main></main>
-      <aside>{liveTabStatus === 'chat' ? <ChatRoom /> : <div>Quiz</div>}</aside>
-    </>
+    <LiveRoom
+      room={room}
+      localTrack={localTrack}
+      remoteTracks={remoteTracks}
+      leaveRoom={leaveRoom}
+      mainTrack={mainTrack}
+    />
   );
 }
