@@ -8,37 +8,31 @@ import { Link } from 'react-router-dom';
 export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
   const [title, setTitle] = useState('');
   const [quizzes, setQuizzes] = useState([]);
-  const [images, setImages] = useState([]);
+  const [quizId, setQuizId] = useState(0); 
 
   const handleAddQuiz = () => {
-    setQuizzes([...quizzes, { question: '', answer: '', choices: [] }]);
-    setImages([...images, null]);
+    setQuizzes([
+      ...quizzes,
+      { id: quizId, question: '', answer: '', choices: [], imageFile: null },
+    ]);
+    setQuizId(quizId + 1);
   };
 
-  const updateQuiz = (index, updatedQuiz) => {
-    const updatedQuizzes = quizzes.map((quiz, idx) => (idx === index ? updatedQuiz : quiz));
+  const updateQuiz = (id, updatedQuiz) => {
+    const updatedQuizzes = quizzes.map((quiz) =>
+      quiz.id === id ? updatedQuiz : quiz
+    );
     setQuizzes(updatedQuizzes);
   };
 
-  const updateImage = (index, imageFile) => {
-    const updatedImages = images.map((img, idx) => (idx === index ? imageFile : img));
-    setImages(updatedImages);
-  };
-
-  const deleteQuiz = (index) => {
-    console.log(index);
-    setQuizzes(quizzes.filter((_, idx) => idx !== index));
-    setImages(images.filter((_, idx) => idx !== index));
-    console.log(quizzes);
+  const deleteQuiz = (id) => {
+    setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
   };
 
   return (
     <div className={styles.quizsetForm}>
       <header className={styles.header}>
-        <Link
-          to={to}
-          className={styles.goBack}
-        >
+        <Link to={to} className={styles.goBack}>
           <BackIcon />
           <span>{headerTitle}</span>
         </Link>
@@ -46,7 +40,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
       </header>
       <form
         className={styles.form}
-        onSubmit={(e) => onSubmit(e, title, quizzes, images)}
+        onSubmit={(e) => onSubmit(e, title, quizzes)}
       >
         <input
           type="text"
@@ -54,13 +48,11 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"
         />
-        {quizzes.map((quiz, index) => (
+        {quizzes.map((quiz) => (
           <QuizCard
-            key={index}
+            key={quiz.id}
             quiz={quiz}
-            index={index}
             updateQuiz={updateQuiz}
-            updateImage={updateImage}
             deleteQuiz={deleteQuiz}
           />
         ))}
@@ -71,10 +63,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
         >
           퀴즈 추가하기
         </button>
-        <button
-          type="submit"
-          className={styles.button}
-        >
+        <button type="submit" className={styles.button}>
           <EditIcon />
           <div>제출</div>
         </button>

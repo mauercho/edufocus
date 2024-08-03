@@ -13,26 +13,26 @@ export default function LectureLayout() {
   const { lectureId } = useParams();
   const navigate = useNavigate();
 
-  const { lectureDelete } = useLectureDelete();
-  const { data } = useLectureInfo(lectureId);
-  const lecture = data?.data;
-  const userType = useBoundStore((state) => state.userType);
-  const handleDelete = () => {
-    lectureDelete(lectureId);
-    navigate('..');
-  };
-  const lectureData = {
-    title: lecture.title,
-    description: lecture.description,
-    plan: lecture.plan,
-    startDate: lecture.startDate,
-    endDate: lecture.endDate,
-    time: lecture.time,
-  };
-  console.log(lectureData);
+  // const { lectureDelete } = useLectureDelete();
+  // const { data } = useLectureInfo(lectureId);
+  // const lecture = data?.data;
+  // const userType = useBoundStore((state) => state.userType);
+  // const handleDelete = () => {
+  //   lectureDelete(lectureId);
+  //   navigate('..');
+  // };
+  // const lectureData = {
+  //   title: lecture.title,
+  //   description: lecture.description,
+  //   plan: lecture.plan,
+  //   startDate: lecture.startDate,
+  //   endDate: lecture.endDate,
+  //   time: lecture.time,
+  // };
+  // console.log(lectureData);
   return (
     <>
-      <LectureHeader
+      {/* <LectureHeader
         title={lecture.title}
         tutor={lecture.teacherName}
         img={lecture.image}
@@ -80,13 +80,13 @@ export default function LectureLayout() {
               />
             </SideBar>
           )}
-        </aside>
+        </aside> */}
         <main>
           <Suspense fallback={<LoadingIndicator fill />}>
             <Outlet />
           </Suspense>
         </main>
-      </MaxWidthLayout>
+      {/* </MaxWidthLayout> */}
     </>
   );
 }
