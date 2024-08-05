@@ -30,7 +30,7 @@ public class QuizController {
     private final JWTUtil jwtUtil;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createQuizSet(@RequestHeader("Authorization") String accessToken, @RequestPart QuizSetCreateRequest quizSetCreateRequest
+    public ResponseEntity<?> createQuizSet(@RequestHeader("Authzation") String accessToken, @RequestPart QuizSetCreateRequest quizSetCreateRequest
             , @RequestPart(value = "images", required = false) List<MultipartFile> images) throws IOException {
         long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 

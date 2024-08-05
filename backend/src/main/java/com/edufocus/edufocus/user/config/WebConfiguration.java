@@ -21,13 +21,14 @@ public class WebConfiguration implements WebMvcConfigurer {
 
         this.jwtInterceptor = jwtInterceptor;
     }
-//
+
+    //
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOriginPatterns("https://i11a701.p.ssafy.io/","https://localhost:5173", "http://localhost:5173", "http://localhost:4173","http://localhost:5080","http://192.168.*.*:5173")
-                .allowedMethods("GET","POST",HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+                .allowedOriginPatterns("https://i11a701.p.ssafy.io/", "https://localhost:5173", "http://localhost:5173", "http://localhost:4173", "http://localhost:5080", "http://192.168.*.*:5173")
+                .allowedMethods("GET", "POST", HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
                         HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
                         HttpMethod.PATCH.name())
                 .allowCredentials(true)
@@ -41,10 +42,11 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/assets/img/");
         registry.addResourceHandler("/*.html**").addResourceLocations("classpath:/static/");
     }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**") // 모든 경로에 대해 인터셉터 적용
-                .excludePathPatterns("/v3/api-docs/**","/swagger-resources/**","/webjars/**","/swagger-ui/**","/auth/**", "/board/**", "/user/**","/lecture/**","/qna/**", "/quiz/**","/video/**","/registration/**"); // 인증 없이 접근 가능한 경로 설정
+                .excludePathPatterns("/v3/api-docs/**", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**", "/auth/**", "/board/**", "/user/**", "/lecture/**", "/qna/**", "/quiz/**", "/video/**", "/registration/**", "/report/**"); // 인증 없이 접근 가능한 경로 설정
     }
 }

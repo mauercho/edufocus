@@ -93,35 +93,8 @@ public class Controller {
             }
 
 
-        }
+        } else if (findUser.getRole() == UserRole.ADMIN) {//&& lecture.isOnline() ) {
 
-
-        return ResponseEntity.ok(Map.of("token", null));
-
-    }
-
-
-    @PostMapping(value = "/makeroom/{lecture_id}")
-    public ResponseEntity<Map<String, String>> makeRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
-        String userToken = request.getHeader("Authorization");
-
-
-        Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
-        User findUser = userRepository.findById(userId).orElse(null);
-        Lecture lecture = lectureRepository.findById(id).orElse(null);
-
-
-        String roomName = lecture.getTitle();
-        String participantName = userService.getUserName(userId);
-        System.out.println(participantName);
-
-        AccessToken token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
-
-
-        if (findUser.getRole() == UserRole.ADMIN) {//&& lecture.isOnline() ) {
-
-
-            videoSertvice.startOnline(userId, id);
 
             IdentityData identityData = new IdentityData(participantName, "강사");
             String jsonIdentity = serializeIdentityData(identityData);
@@ -137,8 +110,23 @@ public class Controller {
 
         }
 
-
         return ResponseEntity.ok(Map.of("token", null));
+
+    }
+
+
+    @PostMapping(value = "/makeroom/{lecture_id}")
+    public ResponseEntity<Map<String, String>> makeRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
+        String userToken = request.getHeader("Authorization");
+
+
+        Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
+
+
+        videoSertvice.startOnline(userId, id);
+
+
+        return ResponseEntity.ok(Map.of("token", " "));
 
     }
 
