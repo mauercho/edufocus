@@ -6,6 +6,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
 import LivePage from './pages/LivePage';
+import ErrorPage from './pages/ErrorPage';
 
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
@@ -33,13 +34,17 @@ const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage')
 
 const router = createBrowserRouter([
   {
+    path: '*',
+    element: <NotFoundPage />,
+  },
+  {
     path: 'live/:roomId',
     element: <LivePage />,
   },
   {
     path: '',
     element: <PageLayout />,
-    errorElement: <NotFoundPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
