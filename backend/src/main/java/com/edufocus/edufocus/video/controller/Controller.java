@@ -121,13 +121,16 @@ public class Controller {
     @PostMapping(value = "/makeroom/{lecture_id}")
     public ResponseEntity<Map<String, String>> makeRoom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
         String userToken = request.getHeader("Authorization");
-
-
         Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
 
+        User findUser = userRepository.findById(userId).orElse(null);
+        if (findUser.getRole() == UserRole.ADMIN) {
 
-        videoSertvice.startOnline(userId, id);
 
+            videoSertvice.startOnline(userId, id);
+
+
+        }
 
         return ResponseEntity.ok(Map.of("token", " "));
 

@@ -36,7 +36,7 @@ public class VideoServiceImpl implements VideoSertvice {
     public boolean isRoomAccessible(Long lectureId, Long userId) {
 
 
-        LectureDetailResponse lecture = lectureService.findLectureById(userId, userId);
+        LectureDetailResponse lecture = lectureService.findLectureById(userId, lectureId);
 
 
         RegistrationStatus registrationStatus = registrationService.getStatus(userId, lectureId);

@@ -237,9 +237,7 @@ public class LectureServiceImpl implements LectureService {
 
         Lecture l;
         l = lecture.get();
-        if (l.isOnline()) {
-            l.setOnline(false);
-        } else {
+        if (l.isOnline() == false) {
             l.setOnline(true);
         }
 
