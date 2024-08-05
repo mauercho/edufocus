@@ -5,9 +5,9 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
-import { LiveLayout } from './components/Layout';
+import LivePage from './pages/LivePage';
+import ErrorPage from './pages/ErrorPage';
 
-const LivePage = lazy(async () => await import('./pages/LivePage'));
 const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
 const NoticeListPage = lazy(async () => await import('./pages/NoticeListPage'));
@@ -31,22 +31,21 @@ const QuizsetListPage = lazy(async () => await import('./pages/QuizsetListPage')
 const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage'));
 const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
 const LectureEnrollPage = lazy(async () => await import('./pages/LectureEnrollPage'));
+const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage'));
 
 const router = createBrowserRouter([
   {
+    path: '*',
+    element: <NotFoundPage />,
+  },
+  {
     path: 'live/:roomId',
-    element: <LiveLayout />,
-    children: [
-      {
-        index: true,
-        element: <LivePage />,
-      },
-    ],
+    element: <LivePage />,
   },
   {
     path: '',
     element: <PageLayout />,
-    errorElement: <NotFoundPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -145,7 +144,16 @@ const router = createBrowserRouter([
               },
               {
                 path: ':quizsetId',
-                element: <QuizsetDetailPage />,
+                children: [
+                  {
+                    index: true,
+                    element: <QuizsetDetailPage />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <QuizsetEditPage />,
+                  },
+                ],
               },
             ],
           },

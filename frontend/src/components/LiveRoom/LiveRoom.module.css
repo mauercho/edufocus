@@ -1,67 +1,32 @@
-.main {
+.wrapper {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
 
-.videoWrapper {
-  flex: 0 0 auto;
-  display: flex;
-  overflow-x: auto;
-  height: 80px;
-  gap: 10px;
-  padding: 10px;
-  border-bottom: 1px solid var(--border-color);
-  box-sizing: border-box;
-
-  & > audio {
-    display: none;
-  }
-
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--text-color-tertiary);
-    border-radius: 6px;
-  }
-}
-
-.mainContent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-
-  & > video {
-    width: 100%;
-    height: calc(100vh - 208px);
-    object-fit: contain;
-    box-sizing: border-box;
-  }
-}
-
-.controlBar {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  border-top: 1px solid var(--border-color);
-  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-  & > button {
-    background-color: var(--background-color-secondary);
-    color: var(--text-color-primary);
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.title {
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+}
 
-    &:hover {
-      background-color: var(--background-color-tertiary);
-    }
-  }
+.roomInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 16px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
 }
