@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuizUpdateRequest {
 
-    private long id;
+    private Long id;
 
     private String question;
 

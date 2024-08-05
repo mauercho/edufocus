@@ -30,7 +30,7 @@ public class QuizController {
     private final JWTUtil jwtUtil;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createQuizSet(@RequestHeader("Authzation") String accessToken, @RequestPart QuizSetCreateRequest quizSetCreateRequest
+    public ResponseEntity<?> createQuizSet(@RequestHeader("Authorization") String accessToken, @RequestPart QuizSetCreateRequest quizSetCreateRequest
             , @RequestPart(value = "images", required = false) List<MultipartFile> images) throws IOException {
         long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
@@ -81,9 +81,19 @@ public class QuizController {
         }
         int imageIdx = 0;
         for (QuizUpdateRequest quizUpdateRequest : quizSetUpdateRequest.getQuizzes()) {
-            quizService.updateQuiz(quizUpdateRequest, images.get(imageIdx++));
+            if (quizUpdateRequest.getId() == null) {
+                QuizCreateRequest quizCreateRequest = QuizCreateRequest.builder()
+                        .question(quizUpdateRequest.getQuestion())
+                        .answer(quizUpdateRequest.getAnswer())
+                        .choices(quizUpdateRequest.getChoices())
+                        .build();
 
-            quizUpdatedCheckMap.put(quizUpdateRequest.getId(), true);
+                quizService.createQuiz(quizset, quizCreateRequest, images.get(imageIdx++));
+            } else {
+                quizService.updateQuiz(quizUpdateRequest, images.get(imageIdx++));
+
+                quizUpdatedCheckMap.put(quizUpdateRequest.getId(), true);
+            }
         }
 
         for (Long quizId : quizUpdatedCheckMap.keySet()) {
