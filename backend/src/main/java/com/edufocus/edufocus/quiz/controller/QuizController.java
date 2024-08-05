@@ -42,9 +42,21 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/{quizsetId}")
+    @GetMapping("/student/{quizsetId}")
     public ResponseEntity<?> getQuizzes(@PathVariable Long quizsetId) {
         QuizSetResponse quizSet = quizSetService.findQuizSetResponse(quizsetId);
+
+        return new ResponseEntity<>(quizSet, HttpStatus.OK);
+    }
+
+    @GetMapping("/teacher/{quizsetId}")
+    public ResponseEntity<?> getQuizzesIncludeAnswer(@RequestHeader("Authorization") String accessToken, @PathVariable Long quizsetId) {
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+
+        QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
+        if (quizSet.getUser().getId() != userId) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         return new ResponseEntity<>(quizSet, HttpStatus.OK);
     }
