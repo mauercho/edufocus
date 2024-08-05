@@ -6,6 +6,7 @@ import { useMyLectures } from '../../hooks/api/useMyLectures';
 export default function TeacherHomePage() {
   const { data: myLectures } = useMyLectures();
   const onGoingClasses = myLectures?.data ?? [];
+  console.log(onGoingClasses);
   // TODO: 새 강의 만들기 스타일 추가, 추가 기능 필요시 추가
   return (
     <MaxWidthLayout>
@@ -14,6 +15,7 @@ export default function TeacherHomePage() {
           <ClassCard
             key={lecture.id}
             path={`/lecture/${lecture.id}`}
+            img={lecture.image}
           >
             {lecture.title}
           </ClassCard>
