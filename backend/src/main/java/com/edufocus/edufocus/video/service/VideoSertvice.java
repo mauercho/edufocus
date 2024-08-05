@@ -10,4 +10,6 @@ public interface VideoSertvice {
 
     boolean isRoomAccessible(Long lectureId, Long userId);
 
+    boolean checkAdmin(Long userId, Long lectureId);
+
 }

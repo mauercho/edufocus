@@ -95,18 +95,21 @@ public class Controller {
 
         } else if (findUser.getRole() == UserRole.ADMIN) {//&& lecture.isOnline() ) {
 
-
-            IdentityData identityData = new IdentityData(participantName, "강사");
-            String jsonIdentity = serializeIdentityData(identityData);
-
-
-            token.setIdentity(jsonIdentity);
-            token.setName(participantName);
-
-            token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
+            // 자신의 강의인지 확인하기
+            if (videoSertvice.checkAdmin(userId, id)) {
+                IdentityData identityData = new IdentityData(participantName, "강사");
+                String jsonIdentity = serializeIdentityData(identityData);
 
 
-            return ResponseEntity.ok(Map.of("token", token.toJwt()));
+                token.setIdentity(jsonIdentity);
+                token.setName(participantName);
+
+                token.addGrants(new RoomJoin(true), new RoomName(roomName), new RoomCreate(true));
+
+
+                return ResponseEntity.ok(Map.of("token", token.toJwt()));
+            }
+
 
         }
 
