@@ -17,8 +17,8 @@ export default function LectureLayout() {
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
   const userType = useBoundStore((state) => state.userType);
-  const handleDelete = () => {
-    lectureDelete(lectureId);
+  const handleDelete = async () => {
+    await lectureDelete(lectureId);
     navigate('..');
   };
   const lectureData = {
@@ -29,7 +29,7 @@ export default function LectureLayout() {
     endDate: lecture.endDate,
     time: lecture.time,
   };
-  console.log(lectureData);
+
   return (
     <>
       <LectureHeader
