@@ -115,7 +115,10 @@ export default function LiveRoom() {
                 </FocusLayoutContainer>
               </div>
             )}
-            <ControlBar controls={{ chat: false, leave: false, screenShare: role === '강사' }} />
+            <ControlBar
+              variation="minimal"
+              controls={{ chat: false, leave: true, screenShare: role === '강사' }}
+            />
           </div>
           <ChatRoom />
         </LayoutContextProvider>
