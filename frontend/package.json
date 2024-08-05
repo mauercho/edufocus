@@ -13,6 +13,8 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@livekit/components-react": "^2.4.3",
+    "@livekit/components-styles": "^1.0.12",
     "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.49.2",
     "axios": "^1.7.2",

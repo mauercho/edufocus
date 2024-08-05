@@ -47,9 +47,7 @@ export default function useChatRoom(roomId) {
   }, [client, roomId]);
 
   useEffect(() => {
-    if (chatListRef.current.scrollHeight - chatListRef.current.scrollTop - chatListRef.current.clientHeight < 200) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
+    chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
   }, [messages]);
 
   return {

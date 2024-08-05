@@ -1,15 +1,11 @@
 import styles from './InfoEditForm.module.css';
 import { useState } from 'react';
 
-export default function InfoEditForm({ onSubmit }) {
+export default function InfoEditForm() {
   const [username, setUsername] = useState('');
   const [useremail, setUseremail] = useState('');
-
   return (
-    <form
-      onSubmit={(e) => onSubmit(e, username, useremail)}
-      className={styles.infoEditForm}
-    >
+    <form className={styles.infoEditForm}>
       <p className={styles.textHeading}>이름 변경</p>
       <div className={styles.inputBox}>
         <label

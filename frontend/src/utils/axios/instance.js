@@ -3,7 +3,6 @@ import useBoundStore from '../../store';
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 1000,
   headers: {
     'Content-type': 'application/json;charset=utf-8',
   },
@@ -12,6 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
   const accessToken = useBoundStore.getState().token;
+
   console.log(accessToken);
   if (accessToken) {
     config.headers.Authorization = `${accessToken}`;
@@ -23,7 +23,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status !== 401) {
+    if (error.response.status !== 401 || error.request.responseURL.includes('/user/refresh')) {
       return Promise.reject(error);
     }
 
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
         return instance(error.config);
       })
       .catch((error) => {
-        useBoundStore.setState({ token: null });
+        useBoundStore.setState({ token: null, userType: null });
         console.log(error);
         console.log('---로그아웃----');
         // TODO: redirect to home
