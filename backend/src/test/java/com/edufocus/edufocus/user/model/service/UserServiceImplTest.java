@@ -1,8 +1,8 @@
 //package com.edufocus.edufocus.user.model.service;
 //
-//import com.edufocus.edufocus.user.model.entity.PasswordDto;
-//import com.edufocus.edufocus.user.model.entity.User;
-//import com.edufocus.edufocus.user.model.entity.UserRole;
+//import com.edufocus.edufocus.user.model.entity.dto.PasswordDto;
+//import com.edufocus.edufocus.user.model.entity.vo.User;
+//import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 //import com.edufocus.edufocus.user.model.exception.UserException;
 //import com.edufocus.edufocus.user.model.repository.UserRepository;
 //import org.junit.jupiter.api.BeforeEach;

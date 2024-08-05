@@ -79,7 +79,7 @@ public class JWTUtil {
             Map<String, Object> value = claims.getBody();
             log.info("value : {}", value);
             return (String) value.get("id");
-        }catch ( ExpiredJwtException e)
+        }catch (ExpiredJwtException e)
         {
             System.out.println("expired token");
             throw new ExpriedTokenException();

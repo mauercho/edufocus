@@ -2,7 +2,7 @@ package com.edufocus.edufocus.board.entity.vo;
 
 
 import com.edufocus.edufocus.board.entity.dto.ResponseCommentDto;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

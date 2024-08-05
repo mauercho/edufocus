@@ -8,7 +8,7 @@ import com.edufocus.edufocus.board.repository.BoardRepository;
 import com.edufocus.edufocus.board.repository.CommentRepository;
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void updateBoard(long boardId, RequestBoardUpdateDto requestBoardUpdateDto) {
-        Board board = boardRepository.findById(boardId).orElseThrow(IllegalArgumentException::new);
+        Board board = boardRepository.getReferenceById(boardId);
 
         board.setTitle(requestBoardUpdateDto.getTitle());
         board.setContent(requestBoardUpdateDto.getContent());
@@ -113,7 +113,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public void updateComment(long commentId, RequestCommentDto requestCommentDto) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(IllegalArgumentException::new);
+        Comment comment = commentRepository.getReferenceById(commentId);
 
         comment.setContent(requestCommentDto.getContent());
 

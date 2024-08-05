@@ -2,7 +2,7 @@ package com.edufocus.edufocus.quiz.service;
 
 import com.edufocus.edufocus.quiz.entity.*;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
