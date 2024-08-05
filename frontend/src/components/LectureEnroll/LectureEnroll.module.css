@@ -1,0 +1,13 @@
+.enrollLink {
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  transition: background-color 0.25s;
+}
+
+.enrollLink:hover {
+  background-color: var(--background-secondary);
+}

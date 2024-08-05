@@ -52,6 +52,7 @@ export default function LectureLayout() {
             <SideLink to={'qna'}>Q&A</SideLink>
             <SideLink to={'file'}>수업자료</SideLink>
             <SideLink to={'quiz'}>퀴즈</SideLink>
+            {userType === 'teacher' && <SideLink to={'enroll'}>수강신청관리</SideLink>}
           </SideBar>
           {userType === 'teacher' && (
             <SideBar title="수업 정보">
