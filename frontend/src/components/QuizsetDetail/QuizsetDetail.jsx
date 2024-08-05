@@ -2,7 +2,7 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
 import styles from './QuizsetDetail.module.css';
 
-export default function QuizsetDetail({ topic, title, quizzes = [], onDelete }) {
+export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, onEdit }) {
   return (
     <div className={styles.quizsetDetail}>
       <header className={styles.header}>
@@ -34,6 +34,12 @@ export default function QuizsetDetail({ topic, title, quizzes = [], onDelete }) 
         onClick={onDelete}
       >
         퀴즈셋 삭제
+      </button>
+      <button
+        type="button"
+        onClick={onEdit}
+      >
+        퀴즈셋 수정
       </button>
     </div>
   );

@@ -1,38 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import QuizCard from './QuizCard';
 import styles from './QuizsetForm.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
 
-export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
+export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialValue = null }) {
   const [title, setTitle] = useState('');
   const [quizzes, setQuizzes] = useState([]);
-  const [quizId, setQuizId] = useState(0); 
+  const [quizId, setQuizId] = useState(0);
+
+  useEffect(() => {
+    if (initialValue) {
+      setTitle(initialValue.title || '');
+      setQuizzes(initialValue.quizzes || []);
+      setQuizId(initialValue.quizzes ? initialValue.quizzes[initialValue.quizzes.length - 1].id + 1 : 0);
+      console.log(initialValue.quizzes.length);
+    }
+  }, [initialValue]);
 
   const handleAddQuiz = () => {
-    setQuizzes([
-      ...quizzes,
-      { id: quizId, question: '', answer: '', choices: [], imageFile: null },
-    ]);
+    console.log(quizzes);
+    setQuizzes([...quizzes, { id: quizId, question: '', answer: '', choices: [], image: null }]);
     setQuizId(quizId + 1);
   };
 
   const updateQuiz = (id, updatedQuiz) => {
-    const updatedQuizzes = quizzes.map((quiz) =>
-      quiz.id === id ? updatedQuiz : quiz
-    );
+    console.log(quizzes);
+    const updatedQuizzes = quizzes.map((quiz) => (quiz.id === id ? updatedQuiz : quiz));
     setQuizzes(updatedQuizzes);
   };
 
   const deleteQuiz = (id) => {
+    console.log(quizzes);
     setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
   };
 
   return (
     <div className={styles.quizsetForm}>
       <header className={styles.header}>
-        <Link to={to} className={styles.goBack}>
+        <Link
+          to={to}
+          className={styles.goBack}
+        >
           <BackIcon />
           <span>{headerTitle}</span>
         </Link>
@@ -63,7 +73,10 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
         >
           퀴즈 추가하기
         </button>
-        <button type="submit" className={styles.button}>
+        <button
+          type="submit"
+          className={styles.button}
+        >
           <EditIcon />
           <div>제출</div>
         </button>
