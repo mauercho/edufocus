@@ -30,6 +30,7 @@ const LectureEditPage = lazy(async () => await import('./pages/LectureEditPage')
 const QuizsetListPage = lazy(async () => await import('./pages/QuizsetListPage'));
 const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage'));
 const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
+const LectureEnrollPage = lazy(async () => await import('./pages/LectureEnrollPage'));
 const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage'));
 
 const router = createBrowserRouter([
@@ -155,6 +156,10 @@ const router = createBrowserRouter([
                 ],
               },
             ],
+          },
+          {
+            path: 'enroll',
+            element: <LectureEnrollPage />,
           },
         ],
       },

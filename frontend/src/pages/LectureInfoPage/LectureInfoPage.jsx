@@ -25,7 +25,9 @@ export default function LectureInfoPage() {
 
     lectureRegister(lectureId)
       .then(() => {
-        navigate(`/lecture/${lectureId}`);
+        // navigate(`/lecture/${lectureId}`);
+        window.alert('강사가 수강신청 수락시 수업이 시작됩니다.');
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
