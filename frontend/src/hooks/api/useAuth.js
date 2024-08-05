@@ -59,5 +59,23 @@ export function useAuth() {
       });
   };
 
-  return { login, logout, userRegister };
+  const updateInfo = (name, email) => {
+    const infoBody = {
+      name,
+      email,
+    };
+    return instance.put(`${API_URL}/user/updateinfo`, infoBody);
+  };
+
+  const updatePassword = (currentPw, newPw, newPwCheck) => {
+    const passwordBody = {
+      currentPassword: currentPw,
+      newPassword: newPw,
+      newPasswordCheck: newPwCheck,
+    };
+    console.log(passwordBody);
+    return instance.put(`${API_URL}/user/updatepassword`, passwordBody);
+  };
+
+  return { login, logout, userRegister, updateInfo, updatePassword };
 }

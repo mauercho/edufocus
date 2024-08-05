@@ -6,32 +6,33 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
 
 export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
-  // TODO: 디자인 만들기 및 스타일 적용
   const [title, setTitle] = useState('');
   const [quizzes, setQuizzes] = useState([]);
-  const [imageFile, setImageFile] = useState(null);
+  const [quizId, setQuizId] = useState(0); 
 
   const handleAddQuiz = () => {
-    setQuizzes([...quizzes, { question: '', answer: '', choices: [] }]);
+    setQuizzes([
+      ...quizzes,
+      { id: quizId, question: '', answer: '', choices: [], imageFile: null },
+    ]);
+    setQuizId(quizId + 1);
   };
 
-  const updateQuiz = (index, updatedQuiz) => {
-    const updatedQuizzes = quizzes.map((quiz, i) => (i === index ? updatedQuiz : quiz));
+  const updateQuiz = (id, updatedQuiz) => {
+    const updatedQuizzes = quizzes.map((quiz) =>
+      quiz.id === id ? updatedQuiz : quiz
+    );
     setQuizzes(updatedQuizzes);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    setImageFile(file);
+  const deleteQuiz = (id) => {
+    setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
   };
 
   return (
     <div className={styles.quizsetForm}>
       <header className={styles.header}>
-        <Link
-          to={to}
-          className={styles.goBack}
-        >
+        <Link to={to} className={styles.goBack}>
           <BackIcon />
           <span>{headerTitle}</span>
         </Link>
@@ -39,7 +40,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
       </header>
       <form
         className={styles.form}
-        onSubmit={(e) => onSubmit(e, title, quizzes, imageFile)}
+        onSubmit={(e) => onSubmit(e, title, quizzes)}
       >
         <input
           type="text"
@@ -47,12 +48,12 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"
         />
-        {quizzes.map((quiz, index) => (
+        {quizzes.map((quiz) => (
           <QuizCard
-            key={index}
+            key={quiz.id}
             quiz={quiz}
-            index={index}
             updateQuiz={updateQuiz}
+            deleteQuiz={deleteQuiz}
           />
         ))}
         <button
@@ -62,16 +63,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit }) {
         >
           퀴즈 추가하기
         </button>
-        <label>퀴즈 이미지</label>
-        <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          onChange={handleFileChange}
-        />
-        <button
-          type="submit"
-          className={styles.button}
-        >
+        <button type="submit" className={styles.button}>
           <EditIcon />
           <div>제출</div>
         </button>

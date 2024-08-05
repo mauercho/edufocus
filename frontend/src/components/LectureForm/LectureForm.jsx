@@ -4,7 +4,7 @@ import styles from './LectureForm.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import BackIcon from '/src/assets/icons/back.svg?react';
 
-export default function LectureForm({ title, topic, to, initialValues = {}, onSubmit, onCreate = false }) {
+export default function LectureForm({ title, topic, to = '..', initialValues = {}, onSubmit, onCreate = false }) {
   // TODO: 디자인 필요, 필요시 useState로 수정하고 버튼 비활성화 기능 추가
   const titleRef = useRef('');
   const descriptionRef = useRef('');
