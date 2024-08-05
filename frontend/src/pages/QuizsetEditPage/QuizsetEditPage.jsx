@@ -9,17 +9,21 @@ export default function QuizsetEditPage() {
   const location = useLocation();
   const initialValue = location.state.initialValue;
   const { quizsetEdit } = useQuizsetEdit();
-
+  console.log(initialValue);
   const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
-    console.log(quizzes);
 
     const images = [];
     const quizContents = [];
     quizzes.forEach((quiz) => {
       const { image, ...quizData } = quiz;
       images.push(image);
-      quizContents.push(quizData);
+      if (quizData.id > initialValue.quizzes[initialValue.quizzes.length - 1].id) {
+        const { question, answer, choices } = quizData;
+        quizContents.push({ question, answer, choices });
+      } else {
+        quizContents.push(quizData);
+      }
     });
 
     const quizsetObject = {
@@ -27,7 +31,6 @@ export default function QuizsetEditPage() {
       title,
       quizzes: quizContents,
     };
-    console.log(quizsetObject);
     const formData = new FormData();
     formData.append('quizSetUpdateRequest', new Blob([JSON.stringify(quizsetObject)], { type: 'application/json' }));
 
