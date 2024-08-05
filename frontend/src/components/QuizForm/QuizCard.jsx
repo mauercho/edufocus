@@ -5,14 +5,12 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   const [question, setQuestion] = useState(quiz.question || '');
   const [answer, setAnswer] = useState(quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || []);
-  const [imageFile, setImageFile] = useState(quiz.imageFile || null);
+  const [image, setImage] = useState(quiz.image || null);
 
   const handleChoiceChange = (num, content) => {
-    const updatedChoices = choices.map((choice) =>
-      choice.num === num ? { ...choice, content } : choice
-    );
+    const updatedChoices = choices.map((choice) => (choice.num === num ? { ...choice, content } : choice));
     setChoices(updatedChoices);
-    updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, imageFile });
+    updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, image });
   };
 
   const handleAddChoice = () => {
@@ -20,7 +18,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
       const newChoice = { num: choices.length + 1, content: '' };
       const updatedChoices = [...choices, newChoice];
       setChoices(updatedChoices);
-      updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, imageFile });
+      updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, image });
     }
   };
 
@@ -28,14 +26,14 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     if (choices.length > 0) {
       const updatedChoices = choices.slice(0, -1);
       setChoices(updatedChoices);
-      updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, imageFile });
+      updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, image });
     }
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0] ?? null;
-    setImageFile(file);
-    updateQuiz(quiz.id, { ...quiz, question, answer, choices, imageFile: file });
+    setImage(file);
+    updateQuiz(quiz.id, { ...quiz, question, answer, choices, image: file });
   };
 
   return (
@@ -50,7 +48,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         value={question}
         onChange={(e) => {
           setQuestion(e.target.value);
-          updateQuiz(quiz.id, { ...quiz, question: e.target.value, answer, choices, imageFile });
+          updateQuiz(quiz.id, { ...quiz, question: e.target.value, answer, choices, image });
         }}
         placeholder="질문 내용을 입력하세요"
       />
@@ -60,7 +58,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         value={answer}
         onChange={(e) => {
           setAnswer(e.target.value);
-          updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, imageFile });
+          updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });
         }}
         placeholder="정답을 입력하세요"
       />
@@ -68,10 +66,18 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         <span>Tip: 선택지를 넣지 않는다면 단답형 문제가 됩니다</span>
       </div>
       <div className={styles.buttonsWrapper}>
-        <button type="button" onClick={handleAddChoice} className={styles.button}>
+        <button
+          type="button"
+          onClick={handleAddChoice}
+          className={styles.button}
+        >
           선택지 추가하기
         </button>
-        <button type="button" onClick={handlePopChoice} className={styles.removeButton}>
+        <button
+          type="button"
+          onClick={handlePopChoice}
+          className={styles.removeButton}
+        >
           선택지 줄이기
         </button>
       </div>
@@ -87,7 +93,11 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         </div>
       ))}
       <label>퀴즈 이미지</label>
-      <input type="file" accept=".png, .jpg, .jpeg" onChange={handleFileChange} />
+      <input
+        type="file"
+        accept=".png, .jpg, .jpeg"
+        onChange={handleFileChange}
+      />
     </div>
   );
 }

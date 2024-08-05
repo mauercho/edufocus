@@ -14,8 +14,8 @@ export default function QuizsetWritePage() {
     const quizContents = [];
 
     quizzes.forEach((quiz) => {
-      const { imageFile, ...quizData } = quiz;
-      images.push(imageFile);
+      const { image, ...quizData } = quiz;
+      images.push(image);
       quizContents.push(quizData);
     });
 
