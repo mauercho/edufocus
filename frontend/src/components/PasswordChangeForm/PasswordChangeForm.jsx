@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import styles from './PasswordChangeForm.module.css';
 
 export default function PasswordChangeForm({ onSubmit, onPwError = false }) {
+  // TODO: onPwError(현재 비밀번호와 같음) 시 응답을 받아 표시
   const [errorConfirmMessage, setErrorConfirmMessage] = useState(false);
   const [errorSameMessage, setErrorSameMessage] = useState(false);
   const currentPasswordRef = useRef('');
