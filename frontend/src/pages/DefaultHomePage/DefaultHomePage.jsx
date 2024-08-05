@@ -6,6 +6,7 @@ import { useLectures } from '../../hooks/api/useLectures';
 export default function StudentHomePage() {
   const { data: allLectures } = useLectures();
   const allClasses = allLectures?.data ?? [];
+  console.log(allClasses);
 
   return (
     <MaxWidthLayout>
@@ -14,6 +15,7 @@ export default function StudentHomePage() {
           <ClassCard
             key={lecture.id}
             path={`/lecture/${lecture.id}/info`}
+            img={lecture.image}
           >
             {lecture.title}
           </ClassCard>

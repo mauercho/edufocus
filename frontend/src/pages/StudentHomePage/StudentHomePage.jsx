@@ -19,6 +19,7 @@ export default function StudentHomePage() {
           <ClassCard
             key={lecture.id}
             path={`/lecture/${lecture.id}`}
+            img={lecture.image}
           >
             {lecture.title}
           </ClassCard>
@@ -29,6 +30,7 @@ export default function StudentHomePage() {
           <ClassCard
             key={lecture.id}
             path={`/lecture/${lecture.id}/info`}
+            img={lecture.image}
           >
             {lecture.title}
           </ClassCard>
