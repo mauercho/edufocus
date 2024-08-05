@@ -47,8 +47,7 @@ export function useAuth() {
   const logout = () => {
     return instance
       .post(`${API_URL}/user/logout`)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         setUserType(null);
         setToken(null);
       })
