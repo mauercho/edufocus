@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/quiz")
@@ -42,11 +44,55 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/{quizsetId}")
+    @GetMapping("/student/{quizsetId}")
     public ResponseEntity<?> getQuizzes(@PathVariable Long quizsetId) {
         QuizSetResponse quizSet = quizSetService.findQuizSetResponse(quizsetId);
 
         return new ResponseEntity<>(quizSet, HttpStatus.OK);
+    }
+
+    @GetMapping("/teacher/{quizsetId}")
+    public ResponseEntity<?> getQuizzesIncludeAnswer(@RequestHeader("Authorization") String accessToken, @PathVariable Long quizsetId) {
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+
+        QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
+        if (quizSet.getUser().getId() != userId) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(quizSet, HttpStatus.OK);
+    }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateQuizSet(@RequestHeader("Authorization") String accessToken, @RequestPart QuizSetUpdateRequest quizSetUpdateRequest
+            , @RequestPart(value = "images", required = false) List<MultipartFile> images) throws IOException {
+        long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
+
+        QuizSet quizset = quizSetService.findQuizSet(quizSetUpdateRequest.getId());
+        if (userId != quizset.getUser().getId()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        quizSetService.updateQuizSet(quizSetUpdateRequest.getId(), quizSetUpdateRequest.getTitle());
+
+        Map<Long, Boolean> quizUpdatedCheckMap = new HashMap<>();
+        for (Quiz quiz : quizset.getQuizzes()) {
+            quizUpdatedCheckMap.put(quiz.getId(), false);
+        }
+        int imageIdx = 0;
+        for (QuizUpdateRequest quizUpdateRequest : quizSetUpdateRequest.getQuizzes()) {
+            quizService.updateQuiz(quizUpdateRequest, images.get(imageIdx++));
+
+            quizUpdatedCheckMap.put(quizUpdateRequest.getId(), true);
+        }
+
+        for (Long quizId : quizUpdatedCheckMap.keySet()) {
+            if (!quizUpdatedCheckMap.get(quizId)) {
+                quizService.removeQuiz(quizId);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{quizsetId}")

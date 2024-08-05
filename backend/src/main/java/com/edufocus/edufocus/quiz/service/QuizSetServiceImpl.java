@@ -34,8 +34,11 @@ public class QuizSetServiceImpl implements QuizSetService {
     }
 
     @Override
-    public void updateQuizSet(QuizSet quizSet) {
+    public void updateQuizSet(long quizSetId, String title) {
+        QuizSet quizSet = quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
 
+        quizSet.setTitle(title);
+        quizSetRepository.save(quizSet);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface QuizSetService {
 
     QuizSet createQuizSet(long userId, String title);
 
-    void updateQuizSet(QuizSet quizSet);
+    void updateQuizSet(long quizSetId, String title);
 
     boolean deleteQuizSet(long userId, long quizSetId);
 
