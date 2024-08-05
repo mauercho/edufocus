@@ -8,12 +8,6 @@
   gap: 8px;
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .buttonsWrapper {
   display: flex;
   flex-direction: row;

@@ -1,25 +1,11 @@
 import { useQuizsetDetail } from '../../hooks/api/useQuizsetDetail';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { QuizsetDetail } from '../../components/QuizsetDetail';
-import { useQuizsetDelete } from '../../hooks/api/useQuizsetDelete';
 
-export default function QuizsetDetailPage() {
-  const navigate = useNavigate();
-  const { quizsetId } = useParams();
-  const { quizsetDelete } = useQuizsetDelete();
-  const { data } = useQuizsetDetail(quizsetId);
-  const quizset = data.data;
+export default function QuizsetListPage() {
+  const { lectureId } = useParams();
+  const { data } = useQuizsetDetail(lectureId);
+  const quizset = data?.data ?? [];
   console.log(quizset);
-  const handleDelete = async () => {
-    await quizsetDelete(quizsetId);
-    navigate('..');
-  };
-  return (
-    <QuizsetDetail
-      topic={'퀴즈 목록'}
-      title={quizset.title}
-      quizzes={quizset.quizzes}
-      onDelete={handleDelete}
-    />
-  );
+  return <QuizsetDetail title={quizset.title} />;
 }

@@ -17,12 +17,13 @@ export default function LectureCreatePage() {
   };
 
   return (
-    <LectureForm
-      title={'강의 홈'}
-      topic={'강의 생성'}
-      to={'..'}
-      onSubmit={handleSubmit}
-      onCreate={true}
-    />
+    <div>
+      <h1>강의 생성</h1>
+      <LectureForm
+        title={'강의 생성'}
+        onSubmit={handleSubmit}
+        onCreate={true}
+      />
+    </div>
   );
 }
