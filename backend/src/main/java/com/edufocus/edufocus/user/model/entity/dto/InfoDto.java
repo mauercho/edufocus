@@ -1,4 +1,4 @@
-package com.edufocus.edufocus.user.model.entity;
+package com.edufocus.edufocus.user.model.entity.dto;
 
 import lombok.Getter;
 import lombok.Setter;

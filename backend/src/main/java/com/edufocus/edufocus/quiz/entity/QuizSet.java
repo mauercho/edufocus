@@ -1,12 +1,11 @@
 package com.edufocus.edufocus.quiz.entity;
 
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

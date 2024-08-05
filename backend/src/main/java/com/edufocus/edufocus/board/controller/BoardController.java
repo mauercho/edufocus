@@ -129,7 +129,7 @@ public class BoardController {
 
 
     @ExceptionHandler()
-    public ResponseEntity<?> NoContentException(Exception exception){
+    public ResponseEntity<?> NoContentException(Exception e){
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

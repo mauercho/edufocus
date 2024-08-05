@@ -1,7 +1,7 @@
 package com.edufocus.edufocus.ws.entity.vo;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.ws.entity.dto.ChatUserDto;
 import jakarta.persistence.*;
 import lombok.*;
