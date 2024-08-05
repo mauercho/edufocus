@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './ClassCard.module.css';
 import CompassIcon from '/src/assets/icons/compass.svg?react';
 
-export default function ClassCard({ img, path, children }) {
+export default function ClassCard({ path, children }) {
   return (
     <Link
       to={path}

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import styles from './QuizCard.module.css';
 
 export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
+  // TODO: 카드 디자인 완성 및 이쁘게 바꾸기
   const [question, setQuestion] = useState(quiz.question || '');
   const [answer, setAnswer] = useState(quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || []);
   const [image, setImage] = useState(quiz.image || null);
+  const [imagePreview, setImagePreview] = useState(quiz.image || null);
 
   const handleChoiceChange = (num, content) => {
     const updatedChoices = choices.map((choice) => (choice.num === num ? { ...choice, content } : choice));
@@ -34,15 +36,38 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     const file = e.target.files[0] ?? null;
     setImage(file);
     updateQuiz(quiz.id, { ...quiz, question, answer, choices, image: file });
+
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.onloadend = () => {
+        setImagePreview(fileReader.result);
+      };
+      fileReader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
   };
 
   return (
     <div className={styles.card}>
       <div className={styles.header}>
         <span>퀴즈 생성 카드</span>
-        <span onClick={() => deleteQuiz(quiz.id)}>X</span> {/* id를 기반으로 삭제 */}
+        <button onClick={() => deleteQuiz(quiz.id)}>X</button>
       </div>
-      <label>질문</label>
+      <label>퀴즈 이미지</label>
+      <input
+        type="file"
+        accept=".png, .jpg, .jpeg"
+        onChange={handleFileChange}
+      />
+      {imagePreview && (
+        <img
+          src={imagePreview}
+          alt="Preview"
+          className={styles.imagePreview}
+        />
+      )}
+      <label className={styles.label}>질문</label>
       <input
         type="text"
         value={question}
@@ -50,9 +75,10 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           setQuestion(e.target.value);
           updateQuiz(quiz.id, { ...quiz, question: e.target.value, answer, choices, image });
         }}
+        className={styles.input}
         placeholder="질문 내용을 입력하세요"
       />
-      <label>정답</label>
+      <label className={styles.label}>정답</label>
       <input
         type="text"
         value={answer}
@@ -60,6 +86,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           setAnswer(e.target.value);
           updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });
         }}
+        className={styles.input}
         placeholder="정답을 입력하세요"
       />
       <div>
@@ -69,14 +96,14 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         <button
           type="button"
           onClick={handleAddChoice}
-          className={styles.button}
+          className={`${styles.button} ${styles.add}`}
         >
           선택지 추가하기
         </button>
         <button
           type="button"
           onClick={handlePopChoice}
-          className={styles.removeButton}
+          className={`${styles.button} ${styles.remove}`}
         >
           선택지 줄이기
         </button>
@@ -92,12 +119,6 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           />
         </div>
       ))}
-      <label>퀴즈 이미지</label>
-      <input
-        type="file"
-        accept=".png, .jpg, .jpeg"
-        onChange={handleFileChange}
-      />
     </div>
   );
 }

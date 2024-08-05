@@ -8,15 +8,15 @@ export default function QuizsetWritePage() {
 
   const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
-    console.log(quizzes);
 
     const images = [];
     const quizContents = [];
 
     quizzes.forEach((quiz) => {
-      const { image, ...quizData } = quiz;
+      // eslint-disable-next-line no-unused-vars
+      const { image, question, answer, choices } = quiz;
       images.push(image);
-      quizContents.push(quizData);
+      quizContents.push({ question, answer, choices });
     });
 
     const quizsetObject = {

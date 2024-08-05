@@ -52,33 +52,37 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         className={styles.form}
         onSubmit={(e) => onSubmit(e, title, quizzes)}
       >
+        <label className={styles.label}>퀴즈셋 제목</label>
         <input
+          className={styles.input}
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"
         />
-        {quizzes.map((quiz) => (
-          <QuizCard
-            key={quiz.id}
-            quiz={quiz}
-            updateQuiz={updateQuiz}
-            deleteQuiz={deleteQuiz}
-          />
-        ))}
-        <button
-          type="button"
-          onClick={handleAddQuiz}
-          className={styles.button}
-        >
-          퀴즈 추가하기
-        </button>
+        <div className={styles.grid}>
+          {quizzes.map((quiz) => (
+            <QuizCard
+              key={quiz.id}
+              quiz={quiz}
+              updateQuiz={updateQuiz}
+              deleteQuiz={deleteQuiz}
+            />
+          ))}
+          <button
+            type="button"
+            onClick={handleAddQuiz}
+            className={`${styles.button} ${styles.add}`}
+          >
+            퀴즈 추가하기
+          </button>
+        </div>
         <button
           type="submit"
-          className={styles.button}
+          className={styles.createButton}
         >
-          <EditIcon />
-          <div>제출</div>
+          <EditIcon className={styles.edit} />
+          <div>퀴즈 생성하기</div>
         </button>
       </form>
     </div>

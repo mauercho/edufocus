@@ -1,7 +1,7 @@
 .card {
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 16px 12px;
   width: 400px;
   display: flex;
   flex-direction: column;
@@ -14,20 +14,46 @@
   justify-content: space-between;
 }
 
+.label {
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.imagePreview {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.input {
+  padding: 14px;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.input::placeholder {
+  color: var(--text-color-tertiary);
+}
+
 .buttonsWrapper {
   display: flex;
   flex-direction: row;
   gap: 8px;
 }
 
-.removeButton {
+.button {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  border: 1px solid var(--accent-color);
-  background-color: var(--accent-color);
-  color: var(--on-primary);
-  stroke: var(--on-primary);
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
@@ -36,18 +62,16 @@
   cursor: pointer;
 }
 
-.button {
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
+.add {
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);
   color: var(--on-primary);
   stroke: var(--on-primary);
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 700;
-  align-self: end;
-  border-radius: 8px;
-  cursor: pointer;
+}
+
+.remove {
+  border: 1px solid var(--blue100);
+  background-color: var(--blue100);
+  color: var(--info-color);
+  stroke: var(--info-color);
 }
