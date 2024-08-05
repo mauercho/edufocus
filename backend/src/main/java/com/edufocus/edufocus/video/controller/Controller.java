@@ -88,7 +88,7 @@ public class Controller {
 
                 return ResponseEntity.ok(Map.of("token", token.toJwt()));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("error", "방에 들어갈 수 없습니다."));
             }
 
@@ -108,6 +108,8 @@ public class Controller {
 
 
                 return ResponseEntity.ok(Map.of("token", token.toJwt()));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "자신의 강의가 아닙니다."));
             }
 
 
@@ -124,11 +126,14 @@ public class Controller {
         Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
 
         User findUser = userRepository.findById(userId).orElse(null);
-        if (findUser.getRole() == UserRole.ADMIN) {
+        if (findUser.getRole() == UserRole.ADMIN && videoSertvice.checkAdmin(userId, id)) {
 
 
             videoSertvice.startOnline(userId, id);
 
+
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "들어갈수없는 계정입니다"));
 
         }
 
@@ -146,7 +151,7 @@ public class Controller {
         if (findUser.getRole() == UserRole.ADMIN) {
 
 
-            videoSertvice.startOnline(userId, id);
+            videoSertvice.stopOnline(userId, id);
 
 
         }
