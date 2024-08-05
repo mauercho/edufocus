@@ -11,7 +11,7 @@ import com.edufocus.edufocus.report.entity.dto.AnswerInput;
 import com.edufocus.edufocus.report.entity.vo.Report;
 import com.edufocus.edufocus.report.entity.dto.ReportRequset;
 import com.edufocus.edufocus.report.repository.ReportRepository;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

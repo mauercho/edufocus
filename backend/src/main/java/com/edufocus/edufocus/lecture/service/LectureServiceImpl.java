@@ -6,8 +6,8 @@ import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
 import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
-import com.edufocus.edufocus.user.model.entity.User;
-import com.edufocus.edufocus.user.model.entity.UserRole;
+import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -235,8 +235,14 @@ public class LectureServiceImpl implements LectureService {
 
             Lecture l;
             l = lecture.get();
-            l.setOnline(true);
-
+            if(l.isOnline())
+            {
+                l.setOnline(false);
+            }
+            else
+            {
+                l.setOnline(true);
+            }
 
 
         lectureRepository.save(l);

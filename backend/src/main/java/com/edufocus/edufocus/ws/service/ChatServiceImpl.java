@@ -3,7 +3,7 @@ package com.edufocus.edufocus.ws.service;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.ws.entity.dto.ChatUserDto;
 import com.edufocus.edufocus.ws.entity.vo.ChatUser;

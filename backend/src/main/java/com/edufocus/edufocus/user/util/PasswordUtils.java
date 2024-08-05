@@ -1,4 +1,4 @@
-package com.edufocus.edufocus.user.model.entity;
+package com.edufocus.edufocus.user.util;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class PasswordUtils {
