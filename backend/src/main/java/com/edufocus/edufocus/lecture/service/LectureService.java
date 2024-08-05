@@ -22,14 +22,16 @@ public interface LectureService {
     List<LectureSearchResponse> findAllLecture();
 
     String getUserStatus(Long userId, Lecture lecture);
-    
+
     LectureDetailResponse findLectureById(Long userId, long lectureId);
 
     List<LectureSearchResponse> findMyLecture(long userId);
 
     Lecture findLectureByTitle(String title);
 
-    void changeState(Long lectureId);
+    void startClass(Long lectureId);
+
+    void stopClass(Long lectureId);
 
     boolean getState(Long lectureId);
 

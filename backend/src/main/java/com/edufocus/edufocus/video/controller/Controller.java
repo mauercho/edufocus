@@ -136,6 +136,26 @@ public class Controller {
 
     }
 
+
+    @PostMapping(value = "/deleteroom/{lecture_id}")
+    public ResponseEntity<Map<String, String>> deleteRooom(@PathVariable("lecture_id") Long id, HttpServletRequest request) throws Exception {
+        String userToken = request.getHeader("Authorization");
+        Long userId = Long.parseLong(jwtUtil.getUserId(userToken));
+
+        User findUser = userRepository.findById(userId).orElse(null);
+        if (findUser.getRole() == UserRole.ADMIN) {
+
+
+            videoSertvice.startOnline(userId, id);
+
+
+        }
+
+        return ResponseEntity.ok(Map.of("token", " "));
+
+    }
+
+
     @PostMapping(value = "/livekit/webhook", consumes = "application/webhook+json")
     public ResponseEntity<String> receiveWebhook(@RequestHeader("Authorization") String authHeader, @RequestBody String body) {
         WebhookReceiver webhookReceiver = new WebhookReceiver(LIVEKIT_API_KEY, LIVEKIT_API_SECRET);

@@ -225,7 +225,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public void changeState(Long id) {
+    public void startClass(Long id) {
 
         Optional<Lecture> lecture = lectureRepository.findById(id);
 
@@ -239,6 +239,26 @@ public class LectureServiceImpl implements LectureService {
         l = lecture.get();
         if (l.isOnline() == false) {
             l.setOnline(true);
+        }
+
+
+        lectureRepository.save(l);
+    }
+
+    @Override
+    public void stopClass(Long id) {
+        Optional<Lecture> lecture = lectureRepository.findById(id);
+
+
+        if (!lecture.isPresent()) {
+            throw new RuntimeException("Lecture not found with id: " + id);
+
+        }
+
+        Lecture l;
+        l = lecture.get();
+        if (l.isOnline()) {
+            l.setOnline(false);
         }
 
 
