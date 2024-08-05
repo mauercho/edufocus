@@ -19,4 +19,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<String> handleUserException(UserException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);//수정해야함
+    }
 }

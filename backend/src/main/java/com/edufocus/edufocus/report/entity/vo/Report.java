@@ -1,7 +1,7 @@
 package com.edufocus.edufocus.report.entity.vo;
 
 import com.edufocus.edufocus.quiz.entity.QuizSet;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import jakarta.persistence.*;
 import lombok.*;
 

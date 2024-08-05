@@ -4,13 +4,11 @@ import java.util.Map;
 import java.util.Random;
 
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.lecture.entity.LectureDetailResponse;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.lecture.service.LectureService;
-import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.service.RegistrationService;
-import com.edufocus.edufocus.user.model.entity.User;
-import com.edufocus.edufocus.user.model.entity.UserRole;
+import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.model.service.UserService;
 import com.edufocus.edufocus.user.util.JWTUtil;

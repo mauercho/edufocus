@@ -1,21 +1,14 @@
-package com.edufocus.edufocus.user.model.entity;
+package com.edufocus.edufocus.user.model.entity.vo;
 
-import com.edufocus.edufocus.qna.entity.Qna;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

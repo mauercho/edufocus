@@ -4,7 +4,7 @@ package com.edufocus.edufocus.board.entity.vo;
 import com.edufocus.edufocus.board.entity.dto.ResponseBoardDetailDto;
 import com.edufocus.edufocus.board.entity.dto.ResponseBoardSummaryDto;
 import com.edufocus.edufocus.lecture.entity.Lecture;
-import com.edufocus.edufocus.user.model.entity.User;
+import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity

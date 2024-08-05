@@ -1,13 +1,12 @@
 package com.edufocus.edufocus.registration.service;
 
-import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.registration.entity.Registration;
 import com.edufocus.edufocus.registration.entity.RegistrationSearchResponse;
 import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
-import com.edufocus.edufocus.user.model.entity.User;
-import com.edufocus.edufocus.user.model.entity.UserRole;
+import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
