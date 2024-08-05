@@ -8,7 +8,7 @@ export default function ClassCard({ img, path, children }) {
       className={styles.card}
     >
       <img
-        src={'img'}
+        src={img}
         alt="강의 이미지"
         className={styles.thumbnail}
       />
