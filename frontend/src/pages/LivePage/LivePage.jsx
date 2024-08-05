@@ -6,6 +6,7 @@ import instance from '../../utils/axios/instance';
 import { API_URL, ROOM_URL } from '../../constants';
 import useBoundStore from '../../store';
 import '@livekit/components-styles';
+import LoadingIndicator from '../../components/LoadingIndicator.jsx/LoadingIndicator';
 
 export default function LivePage() {
   const { roomId } = useParams();
@@ -26,16 +27,16 @@ export default function LivePage() {
     }
   }, [generateToken, liveToken]);
 
-  return (
-    liveToken && (
-      <LiveKitRoom
-        token={liveToken}
-        serverUrl={ROOM_URL}
-        connect={true}
-        data-lk-theme="default"
-      >
-        <LiveRoom />
-      </LiveKitRoom>
-    )
+  return liveToken ? (
+    <LiveKitRoom
+      token={liveToken}
+      serverUrl={ROOM_URL}
+      connect={true}
+      data-lk-theme="default"
+    >
+      <LiveRoom />
+    </LiveKitRoom>
+  ) : (
+    <LoadingIndicator fill />
   );
 }

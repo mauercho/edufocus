@@ -1,3 +1,4 @@
+import styles from './LiveRoom.module.css';
 import { isEqualTrackRef, isTrackReference } from '@livekit/components-core';
 import {
   CarouselLayout,
@@ -11,7 +12,9 @@ import {
   RoomAudioRenderer,
   useCreateLayoutContext,
   usePinnedTracks,
+  useRoomInfo,
   useTracks,
+  useParticipants,
 } from '@livekit/components-react';
 import { RoomEvent, Track } from 'livekit-client';
 import { useEffect, useRef } from 'react';
@@ -19,6 +22,10 @@ import ChatRoom from '../ChatRoom/ChatRoom';
 
 export default function LiveRoom() {
   const lastAutoFocusedScreenShareTrack = useRef(null);
+
+  // get livekit identity
+  const room = useRoomInfo();
+  const participants = useParticipants();
 
   const tracks = useTracks(
     [
@@ -69,31 +76,40 @@ export default function LiveRoom() {
   ]);
 
   return (
-    <div className="lk-video-conference">
-      <LayoutContextProvider value={layoutContext}>
-        <div className="lk-video-conference-inner">
-          {!focusTrack ? (
-            <div className="lk-grid-layout-wrapper">
-              <GridLayout tracks={tracks}>
-                <ParticipantTile />
-              </GridLayout>
-            </div>
-          ) : (
-            <div className="lk-focus-layout-wrapper">
-              <FocusLayoutContainer>
-                <CarouselLayout tracks={carouselTracks}>
-                  <ParticipantTile />
-                </CarouselLayout>
-                {focusTrack && <FocusLayout trackRef={focusTrack} />}
-              </FocusLayoutContainer>
-            </div>
-          )}
-          <ControlBar controls={{ chat: false, leave: false }} />
+    <div className={styles.wrapper}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>{room.name}</h1>
+        <div className={styles.roomInfo}>
+          <span>참가자</span>
+          <span>{participants.length}명</span>
         </div>
-        <ChatRoom />
-      </LayoutContextProvider>
-      <RoomAudioRenderer />
-      <ConnectionStateToast />
+      </header>
+      <div className="lk-video-conference">
+        <LayoutContextProvider value={layoutContext}>
+          <div className="lk-video-conference-inner">
+            {!focusTrack ? (
+              <div className="lk-grid-layout-wrapper">
+                <GridLayout tracks={tracks}>
+                  <ParticipantTile />
+                </GridLayout>
+              </div>
+            ) : (
+              <div className="lk-focus-layout-wrapper">
+                <FocusLayoutContainer>
+                  <CarouselLayout tracks={carouselTracks}>
+                    <ParticipantTile />
+                  </CarouselLayout>
+                  {focusTrack && <FocusLayout trackRef={focusTrack} />}
+                </FocusLayoutContainer>
+              </div>
+            )}
+            <ControlBar controls={{ chat: false, leave: false }} />
+          </div>
+          <ChatRoom />
+        </LayoutContextProvider>
+        <RoomAudioRenderer />
+        <ConnectionStateToast />
+      </div>
     </div>
   );
 }
