@@ -24,12 +24,12 @@ public class VideoServiceImpl implements VideoSertvice {
     @Override
     public void startOnline(Long userId, Long lectureId) throws SQLException {
 
-        lectureService.changeState(lectureId);
+        lectureService.startClass(lectureId);
     }
 
     @Override
     public void stopOnline(Long userId, Long lectureId) throws SQLException {
-        lectureService.changeState(lectureId);
+        lectureService.startClass(lectureId);
     }
 
     @Override
