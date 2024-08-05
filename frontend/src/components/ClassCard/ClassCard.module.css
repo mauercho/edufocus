@@ -9,9 +9,13 @@
 }
 
 .thumbnail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 295px;
   height: 220px;
   border-radius: 20px;
   background-color: var(--background-secondary);
+  stroke: var(--text-color);
   box-sizing: border-box;
 }

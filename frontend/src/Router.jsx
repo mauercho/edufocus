@@ -7,8 +7,8 @@ import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
 import LivePage from './pages/LivePage';
 import ErrorPage from './pages/ErrorPage';
+import { LectureLayout } from './components/Layout';
 
-const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
 const NoticeListPage = lazy(async () => await import('./pages/NoticeListPage'));
 const NoticeDetailPage = lazy(async () => await import('./pages/NoticeDetailPage'));
@@ -30,6 +30,7 @@ const LectureEditPage = lazy(async () => await import('./pages/LectureEditPage')
 const QuizsetListPage = lazy(async () => await import('./pages/QuizsetListPage'));
 const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage'));
 const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
+const LectureEnrollPage = lazy(async () => await import('./pages/LectureEnrollPage'));
 const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage'));
 
 const router = createBrowserRouter([
@@ -155,6 +156,10 @@ const router = createBrowserRouter([
                 ],
               },
             ],
+          },
+          {
+            path: 'enroll',
+            element: <LectureEnrollPage />,
           },
         ],
       },

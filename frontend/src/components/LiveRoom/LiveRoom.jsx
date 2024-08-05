@@ -15,17 +15,19 @@ import {
   useRoomInfo,
   useTracks,
   useParticipants,
+  useLocalParticipant,
 } from '@livekit/components-react';
 import { RoomEvent, Track } from 'livekit-client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ChatRoom from '../ChatRoom/ChatRoom';
 
 export default function LiveRoom() {
   const lastAutoFocusedScreenShareTrack = useRef(null);
+  const [role, setRole] = useState(null);
 
-  // get livekit identity
   const room = useRoomInfo();
   const participants = useParticipants();
+  const { localParticipant } = useLocalParticipant();
 
   const tracks = useTracks(
     [
@@ -42,6 +44,16 @@ export default function LiveRoom() {
 
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
+
+  useEffect(() => {
+    try {
+      const role = JSON.parse(localParticipant.identity).role;
+
+      setRole(role);
+    } catch (_) {
+      return;
+    }
+  }, [localParticipant.identity]);
 
   useEffect(() => {
     if (
@@ -103,7 +115,10 @@ export default function LiveRoom() {
                 </FocusLayoutContainer>
               </div>
             )}
-            <ControlBar controls={{ chat: false, leave: false }} />
+            <ControlBar
+              variation="minimal"
+              controls={{ chat: false, leave: true, screenShare: role === '강사' }}
+            />
           </div>
           <ChatRoom />
         </LayoutContextProvider>

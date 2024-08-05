@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './ClassCard.module.css';
+import CompassIcon from '/src/assets/icons/compass.svg?react';
 
 export default function ClassCard({ path, children }) {
   return (
@@ -7,7 +8,17 @@ export default function ClassCard({ path, children }) {
       to={path}
       className={styles.card}
     >
-      <div className={styles.thumbnail} />
+      {img ? (
+        <img
+          src={img}
+          alt="강의 이미지"
+          className={styles.thumbnail}
+        />
+      ) : (
+        <div className={styles.thumbnail}>
+          <CompassIcon />
+        </div>
+      )}
       <div>{children}</div>
     </Link>
   );
