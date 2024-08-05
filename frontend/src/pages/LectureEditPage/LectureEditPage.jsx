@@ -21,14 +21,12 @@ export default function LecutreEditPage() {
   };
 
   return (
-    <div>
-      <LectureForm
-        initialValues={initialData}
-        onSubmit={handleSubmit}
-        title={'강의 홈'}
-        topic={'강의 수정'}
-        to={'..'}
-      />
-    </div>
+    <LectureForm
+      initialValues={initialData}
+      onSubmit={handleSubmit}
+      title={'강의 홈'}
+      topic={'강의 수정'}
+      to={'..'}
+    />
   );
 }
