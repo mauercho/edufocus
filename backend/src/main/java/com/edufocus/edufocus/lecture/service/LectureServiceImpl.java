@@ -235,8 +235,14 @@ public class LectureServiceImpl implements LectureService {
 
             Lecture l;
             l = lecture.get();
-            l.setOnline(true);
-
+            if(l.isOnline())
+            {
+                l.setOnline(false);
+            }
+            else
+            {
+                l.setOnline(true);
+            }
 
 
         lectureRepository.save(l);
