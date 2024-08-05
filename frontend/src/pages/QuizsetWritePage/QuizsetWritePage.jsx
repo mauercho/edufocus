@@ -1,26 +1,44 @@
 import { QuizsetForm } from '../../components/QuizForm';
 import { useQuizsetWrite } from '../../hooks/api/useQuizsetWrite';
+import { useNavigate } from 'react-router-dom';
 
 export default function QuizsetWritePage() {
-  // TODO: lecture에서 이미지 전송 성공 후 해당 방법으로 이미지 파일 입력
+  const navigate = useNavigate();
   const { quizsetWrite } = useQuizsetWrite();
-  const handleSubmit = async (e, title, quizzes, imageFile = null) => {
+
+  const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
+    console.log(quizzes);
+
+    const images = [];
+    const quizContents = [];
+
+    quizzes.forEach((quiz) => {
+      const { imageFile, ...quizData } = quiz;
+      images.push(imageFile);
+      quizContents.push(quizData);
+    });
+
     const quizsetObject = {
       title,
-      quizzes,
+      quizzes: quizContents,
     };
-    console.log(quizsetObject);
-    console.log(imageFile);
 
     const formData = new FormData();
     formData.append('quizSetCreateRequest', new Blob([JSON.stringify(quizsetObject)], { type: 'application/json' }));
-    if (imageFile) {
-      formData.append('image', imageFile);
-    }
-    const response = await quizsetWrite(formData);
-    console.log(response);
+
+    images.forEach((imageFile) => {
+      if (imageFile) {
+        formData.append('images', imageFile);
+      } else {
+        formData.append('images', new Blob([''], { type: 'image/jpg' }));
+      }
+    });
+
+    await quizsetWrite(formData);
+    navigate('..');
   };
+
   return (
     <QuizsetForm
       onSubmit={handleSubmit}
