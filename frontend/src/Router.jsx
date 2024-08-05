@@ -7,8 +7,8 @@ import { lazy } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
 import LivePage from './pages/LivePage';
 import ErrorPage from './pages/ErrorPage';
+import { LectureLayout } from './components/Layout';
 
-const LectureLayout = lazy(async () => await import('./components/Layout/LectureLayout'));
 const LearningLectureDetailPage = lazy(async () => await import('./pages/LearningLectureDetailPage'));
 const NoticeListPage = lazy(async () => await import('./pages/NoticeListPage'));
 const NoticeDetailPage = lazy(async () => await import('./pages/NoticeDetailPage'));

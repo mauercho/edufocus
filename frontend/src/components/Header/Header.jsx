@@ -33,7 +33,12 @@ export default function Header() {
             <Link to={'/'}>수강중인 강의</Link>
           </li>
           <li>
-            <Link to={'/live/1'}>live</Link>
+            <Link
+              to={'/live/1'}
+              target="_blank"
+            >
+              live
+            </Link>
           </li>
         </ul>
         <ul className={styles.group}>

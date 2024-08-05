@@ -11,9 +11,10 @@ export default function LivePage() {
   const { roomId } = useParams();
   const [liveToken, setLiveToken] = useState(null);
   const generateToken = useCallback(async () => {
-    await instance.post(`${API_URL}/video/makeroom/${roomId}`);
+    await instance.post(`${API_URL}/video/makeroom/${roomId}`).catch(() => {});
     const { data } = await instance.post(`${API_URL}/video/joinroom/${roomId}`).catch(() => {
       alert('방에 입장할 수 없습니다.');
+      window.close();
     });
 
     return data.token;
@@ -33,6 +34,7 @@ export default function LivePage() {
       data-lk-theme="default"
       onDisconnected={() => {
         instance.post(`${API_URL}/video/deleteroom/${roomId}`).catch(() => {});
+        window.close();
       }}
     >
       <LiveRoom />
