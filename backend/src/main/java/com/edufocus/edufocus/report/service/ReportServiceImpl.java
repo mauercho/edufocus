@@ -41,41 +41,39 @@ public class ReportServiceImpl implements ReportService {
 
 
         QuizSet quizSet = quizSetService.findQuizSet(reportRequset.getQuizsetId());
-
+        System.out.println(quizSet.toString());
         List<Quiz> quizList = quizSet.getQuizzes();
         List<AnswerInput> answerInputList = reportRequset.getAnswerInputList();
 
         Report report = new Report();
 
         Long reportNum = report.getId();
-        int allCount= quizList.size();
-        int correctCount =0 ;
+        int allCount = quizList.size();
+        int correctCount = 0;
 
-        User testuser= userRepository.findById(reportRequset.getUserId()).orElse(null);
+        User testuser = userRepository.findById(reportRequset.getUserId()).orElse(null);
 
         for (Quiz quiz : quizList) {
             for (AnswerInput answerInput : answerInputList) {
                 if (quiz.getId() == answerInput.getAnswerinputID()) {
 
-                    if(quiz.getAnswer().equals(answerInput.getAnswer())) {
+                    if (quiz.getAnswer().equals(answerInput.getAnswer())) {
                         correctCount++;
 
                         Answer answer = Answer.builder()
-                                        .userAnswer(answerInput.getAnswer())
+                                .userAnswer(answerInput.getAnswer())
                                 .isCorrect(true)
                                 .report(report)
                                 .quiz(quiz)
                                 .build();
 
-                    }
-                    else{
+                    } else {
                         Answer answer = Answer.builder()
                                 .userAnswer(answerInput.getAnswer())
                                 .isCorrect(false)
                                 .report(report)
                                 .quiz(quiz)
                                 .build();
-
 
 
                     }
@@ -86,11 +84,11 @@ public class ReportServiceImpl implements ReportService {
         }
 
         report = Report.builder()
-                        .user(testuser)
-                                .quizSet(quizSet)
-                                        .allCount(allCount)
-                                                .correctCount(correctCount)
-                                                        .testAt(new Date()).build();
+                .user(testuser)
+                .quizSet(quizSet)
+                .allCount(allCount)
+                .correctCount(correctCount)
+                .testAt(new Date()).build();
         ReportResponse reportResponse = ReportResponse.builder()
                 .quizesetId(quizSet.getId())
                 .userId(testuser.getId())
