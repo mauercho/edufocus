@@ -205,12 +205,14 @@ public class LectureServiceImpl implements LectureService {
             for (Registration registration : registrationList) {
                 Lecture lecture = registration.getLecture();
 
-                LectureSearchResponse lectureSearchResponse = LectureSearchResponse.builder()
-                        .id(lecture.getId())
-                        .title(lecture.getTitle())
-                        .image(lecture.getImage()).build();
+                if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
+                    LectureSearchResponse lectureSearchResponse = LectureSearchResponse.builder()
+                            .id(lecture.getId())
+                            .title(lecture.getTitle())
+                            .image(lecture.getImage()).build();
 
-                myLectureList.add(lectureSearchResponse);
+                    myLectureList.add(lectureSearchResponse);
+                }
             }
         }
 
@@ -233,16 +235,13 @@ public class LectureServiceImpl implements LectureService {
 
         }
 
-            Lecture l;
-            l = lecture.get();
-            if(l.isOnline())
-            {
-                l.setOnline(false);
-            }
-            else
-            {
-                l.setOnline(true);
-            }
+        Lecture l;
+        l = lecture.get();
+        if (l.isOnline()) {
+            l.setOnline(false);
+        } else {
+            l.setOnline(true);
+        }
 
 
         lectureRepository.save(l);
