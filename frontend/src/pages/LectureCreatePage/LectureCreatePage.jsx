@@ -1,7 +1,9 @@
 import { LectureForm } from '../../components/LectureForm';
 import { useLectureCreate } from '../../hooks/api/useLectureCreate';
+import { useNavigate } from 'react-router-dom';
 
 export default function LectureCreatePage() {
+  const navigate = useNavigate();
   const { lectureCreate } = useLectureCreate();
 
   const handleSubmit = async (lectureObject, imageFile) => {
@@ -12,8 +14,9 @@ export default function LectureCreatePage() {
       formData.append('image', imageFile);
     }
 
-    const response = await lectureCreate(formData);
-    console.log(response?.data);
+    await lectureCreate(formData).then(() => {
+      navigate('..');
+    });
   };
 
   return (
