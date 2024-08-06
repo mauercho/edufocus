@@ -52,7 +52,7 @@ export default function QuizSet({ quizSetId, finish }) {
           return 0;
         }
 
-        if (prev + 1 === quizList.length) {
+        if (prev === quizList.length) {
           submit(answers.current);
           return Infinity;
         }
