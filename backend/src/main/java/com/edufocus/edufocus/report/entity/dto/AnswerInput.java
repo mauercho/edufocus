@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public class AnswerInput {
 
-    Long answerinputID;
+
     String answer;
+
 
 }

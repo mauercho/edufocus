@@ -32,9 +32,9 @@ public class UserController {
     private final JWTUtil jwtUtil;
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody RequestJoinDto requestJoinDto){
+    public ResponseEntity<String> join(@RequestBody RequestJoinDto requestJoinDto) {
 
-        if(userService.isUserIdExist(requestJoinDto.getUserId()))
+        if (userService.isUserIdExist(requestJoinDto.getUserId()))
             return new ResponseEntity<>("아이디가 중복 됐습니다.", HttpStatus.CONFLICT);
 
         userService.join(requestJoinDto);
@@ -83,8 +83,8 @@ public class UserController {
 
         userService.saveRefreshToken(loginUser.getId(), refreshToken);
 
-        resultMap.put("name",loginUser.getName());
-        resultMap.put("role",loginUser.getRole());
+        resultMap.put("name", loginUser.getName());
+        resultMap.put("role", loginUser.getRole());
         resultMap.put("access-token", accessToken);
 
         setCookies(response, refreshToken);
@@ -108,7 +108,7 @@ public class UserController {
 
     @Operation(summary = "Access Token 재발급", description = "만료된 access token 을 재발급 받는다.")
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request,HttpServletResponse response) {
+    public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         String token = null;
         if (cookies != null) {
@@ -120,9 +120,9 @@ public class UserController {
             }
         }
 
-        try{
+        try {
             jwtUtil.checkToken(token);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new InvalidTokenException();
         }
 
@@ -140,7 +140,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("access-token", accessToken);
 
-        userService.saveRefreshToken(userId,refreshToken);
+        userService.saveRefreshToken(userId, refreshToken);
 
         setCookies(response, refreshToken);
 
@@ -175,7 +175,7 @@ public class UserController {
     }
 
 
-    private void setCookies(HttpServletResponse response, String refreshToken){
+    private void setCookies(HttpServletResponse response, String refreshToken) {
         Cookie refreshCookie = new Cookie("refresh-token", refreshToken);
         refreshCookie.setPath("/");
         refreshCookie.setHttpOnly(true);
