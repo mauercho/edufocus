@@ -22,7 +22,7 @@ export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, on
           <div key={index}>
             <div>질문 : {quiz.question}</div>
             <img
-              src={quiz.image}
+              src={`${import.meta.env.VITE_STATIC_URL}${quiz.image}`}
               alt="강의 이미지"
             />
             <div>정답 : {quiz.answer}</div>

@@ -12,7 +12,7 @@ export default function LectureHeader({ img, title, tutorImg, tutor, isLive = fa
       <header className={styles.header}>
         {img ? (
           <img
-            src={img}
+            src={`${import.meta.env.VITE_STATIC_URL}${img}`}
             alt="강의 이미지"
             className={styles.thumbnail}
           />
