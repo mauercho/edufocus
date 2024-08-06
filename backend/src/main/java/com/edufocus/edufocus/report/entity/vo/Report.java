@@ -23,13 +23,13 @@ public class Report {
     private int allCount;
     private int correctCount;
     private Date testAt;
-
+    private Long lectureId;
     @ManyToOne
-    @JoinColumn(name= "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name= "quizset_id")
+    @JoinColumn(name = "quizset_id")
     private QuizSet quizSet;
 
 }
