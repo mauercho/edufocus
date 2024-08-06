@@ -23,6 +23,7 @@ export default function NoticeDetailPage() {
       title={notice.title}
       content={notice.content}
       onDelete={handleDelete}
+      isQna={false}
     />
   );
 }
