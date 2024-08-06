@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './PasswordChangeForm.module.css';
 
 export default function PasswordChangeForm({ onSubmit, pwError = false }) {
-  // TODO:
   const [errorConfirmMessage, setErrorConfirmMessage] = useState(false);
   const [errorSameMessage, setErrorSameMessage] = useState(false);
   const currentPasswordRef = useRef('');

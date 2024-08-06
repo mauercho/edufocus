@@ -11,7 +11,6 @@ export default function StudentHomePage() {
   const { data: allLectures } = useLectures();
   const allClasses = allLectures?.data ?? [];
 
-  // TODO: 전체 강의 안에 수강중인 강의가 나옴
   return (
     <MaxWidthLayout>
       <ClassGrid title="수강중인 강의">
