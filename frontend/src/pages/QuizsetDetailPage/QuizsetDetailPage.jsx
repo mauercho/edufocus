@@ -1,4 +1,4 @@
-import { useQuizsetDetail } from '../../hooks/api/useQuizsetDetail';
+import { useQuizsetDetail } from '../../hooks/api/useTeacherQuizsetDetail';
 import { useParams, useNavigate } from 'react-router-dom';
 import { QuizsetDetail } from '../../components/QuizsetDetail';
 import { useQuizsetDelete } from '../../hooks/api/useQuizsetDelete';
