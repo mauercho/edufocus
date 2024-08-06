@@ -1,6 +1,6 @@
 import styles from './ClassInfo.module.css';
 
-export default function ClassInfo({ classTerm, classTime, onSubmit }) {
+export default function ClassInfo({ classTerm, classTime, onPending = false, onSubmit }) {
   return (
     <div className={styles.classInfo}>
       <div className={styles.title}>수업정보</div>
@@ -17,8 +17,9 @@ export default function ClassInfo({ classTerm, classTime, onSubmit }) {
       <button
         onClick={onSubmit}
         className={styles.button}
+        disabled={onPending}
       >
-        수강신청
+        {onPending ? '수강신청 중' : '수강신청'}
       </button>
     </div>
   );

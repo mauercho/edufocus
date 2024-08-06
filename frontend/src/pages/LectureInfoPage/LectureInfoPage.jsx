@@ -16,6 +16,7 @@ export default function LectureInfoPage() {
   const endDate = new Date(lectureData.endDate).toLocaleDateString();
   const userType = useBoundStore((state) => state.userType);
   console.log(lectureData);
+  const onPending = lectureData.status === 'PENDING' ? true : false;
   const { lectureRegister } = useLectureRegister();
   const handleSubmit = () => {
     if (userType === null) {
@@ -58,6 +59,7 @@ export default function LectureInfoPage() {
             classTerm={`${startDate} ~ ${endDate}`}
             classTime={lectureData.time}
             onSubmit={handleSubmit}
+            onPending={onPending}
           />
         </aside>
       </MaxWidthLayout>
