@@ -55,3 +55,12 @@
   display: flex;
   justify-content: end;
 }
+
+.buttonBox:disabled,
+.buttonBox[disabled] {
+  border-color: var(--border-color);
+  background-color: var(--background-tertiary);
+  color: var(--text-color-tertiary);
+  cursor: not-allowed;
+  stroke: var(--text-color-tertiary);
+}

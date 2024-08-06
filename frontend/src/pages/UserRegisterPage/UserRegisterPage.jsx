@@ -20,7 +20,6 @@ export default function UserRegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: 회원가입 POST 기능 추가
     const isPWMatch = passwordRef.current.value === passwordConfirmRef.current.value;
 
     setPasswordMatch(isPWMatch);

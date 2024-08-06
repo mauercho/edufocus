@@ -1,9 +1,14 @@
 import styles from './InfoEditForm.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function InfoEditForm({ onSubmit }) {
-  const [username, setUsername] = useState('');
-  const [useremail, setUseremail] = useState('');
+export default function InfoEditForm({ name, email, onSubmit }) {
+  const [username, setUsername] = useState(name);
+  const [useremail, setUseremail] = useState(email);
+
+  useEffect(() => {
+    setUsername(name);
+    setUseremail(email);
+  }, [name, email]);
 
   return (
     <form
@@ -46,7 +51,12 @@ export default function InfoEditForm({ onSubmit }) {
           required
         />
       </div>
-      <button className={styles.buttonBox}>내 정보 수정</button>
+      <button
+        disabled={(!username && !useremail) || (username == name && useremail == email)}
+        className={styles.buttonBox}
+      >
+        내 정보 수정
+      </button>
     </form>
   );
 }
