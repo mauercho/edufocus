@@ -6,7 +6,7 @@ import ArticleDetailAnswerInput from './ArticleDetailAnswer/ArticleDetailAnswerI
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import { useState, useEffect } from 'react';
 
-export default function ArticleDetail({ topic, title, author = null, content, answer = null, onDelete }) {
+export default function ArticleDetail({ topic, title, author = null, content, answer = null, onDelete, isQna = true }) {
   const [submittedAnswer, setSubmittedAnswer] = useState(answer);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -65,18 +65,19 @@ export default function ArticleDetail({ topic, title, author = null, content, an
         <p className={styles.content}>{content}</p>
       </div>
       {/* TODO: 이 부분에서 answer 만든다음 뒤로가기로 나갔다가 돌아오면 0.1초 정도 input 칸이 보였다가 answer 로 바뀜. 수정필요 */}
-      {submittedAnswer && !isEditing ? (
-        <ArticleDetailAnswer
-          answer={submittedAnswer}
-          onEditClick={handleEditClick}
-          onDeleteSubmit={handleDeleteSubmit}
-        />
-      ) : (
-        <ArticleDetailAnswerInput
-          onSubmit={handleAnswerSubmit}
-          initialAnswer={submittedAnswer}
-        />
-      )}
+      {isQna &&
+        (submittedAnswer && !isEditing ? (
+          <ArticleDetailAnswer
+            answer={submittedAnswer}
+            onEditClick={handleEditClick}
+            onDeleteSubmit={handleDeleteSubmit}
+          />
+        ) : (
+          <ArticleDetailAnswerInput
+            onSubmit={handleAnswerSubmit}
+            initialAnswer={submittedAnswer}
+          />
+        ))}
     </div>
   );
 }
