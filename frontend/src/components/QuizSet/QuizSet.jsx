@@ -1,16 +1,16 @@
 import styles from './QuizSet.module.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useQuizsetDetail } from '../../hooks/api/useQuizsetDetail';
 import Quiz from '../Quiz/Quiz';
 import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
 import instance from '../../utils/axios/instance';
 import { API_URL } from '../../constants';
+import { useStudentQuizsetDetail } from '../../hooks/api/useStudentQuizsetDetail';
 
 export default function QuizSet({ quizSetId, finish }) {
   const { roomId } = useParams();
   const [step, setStep] = useState(null);
-  const { data } = useQuizsetDetail(quizSetId);
+  const { data } = useStudentQuizsetDetail(quizSetId);
   const quizSetData = data?.data;
   const quizList = quizSetData.quizzes;
   const answers = useRef(Array(quizList.length).fill(null));
@@ -52,8 +52,9 @@ export default function QuizSet({ quizSetId, finish }) {
           return 0;
         }
 
-        if (prev === quizList.length) {
+        if (prev + 1 === quizList.length) {
           submit(answers.current);
+        } else if (prev === quizList.length) {
           return Infinity;
         }
 
