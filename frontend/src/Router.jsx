@@ -32,6 +32,7 @@ const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage
 const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
 const LectureEnrollPage = lazy(async () => await import('./pages/LectureEnrollPage'));
 const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage'));
+const PasswordResetAuthPage = lazy(async () => await import('./pages/PasswordResetAuthPage'));
 
 const router = createBrowserRouter([
   {
@@ -177,6 +178,10 @@ const router = createBrowserRouter([
           {
             path: 'password-reset',
             element: <PasswordResetPage />,
+          },
+          {
+            path: 'resetAuth',
+            element: <PasswordResetAuthPage />,
           },
         ],
       },
