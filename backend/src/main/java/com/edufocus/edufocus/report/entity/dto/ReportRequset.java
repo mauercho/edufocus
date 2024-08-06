@@ -10,7 +10,7 @@ import java.util.List;
 public class ReportRequset {
 
 
-    List<AnswerInput> answerInputList;
+    List<String> answer;
 
 // [1,2,,3]
 //    List<answerDto> a

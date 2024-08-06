@@ -45,7 +45,7 @@ public class ReportServiceImpl implements ReportService {
 
         QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
         List<Quiz> quizList = quizSet.getQuizzes();
-        List<AnswerInput> answerInputList = reportRequset.getAnswerInputList();
+        List<String> answerInputList = reportRequset.getAnswer();
 
         List<Answer> answerList = new ArrayList<>();
 
@@ -56,19 +56,20 @@ public class ReportServiceImpl implements ReportService {
 
         for (int idx = 0; idx < answerInputList.size(); idx++) {
             Quiz quiz = quizList.get(idx);
-            AnswerInput inputAnswer = answerInputList.get(idx);
+            String inputAnswer = answerInputList.get(idx);
             Answer answer;
-            if (quiz.getAnswer().equals(inputAnswer.getAnswer())) {
+            //
+            if (quiz.getAnswer().equals(inputAnswer)) {
                 correctCount++;
                 answer = Answer.builder()
-                        .userAnswer(inputAnswer.getAnswer())
+                        .userAnswer(inputAnswer)
                         .isCorrect(true)
                         .report(null)
                         .quiz(quiz)
                         .build();
             } else {
                 answer = Answer.builder()
-                        .userAnswer(inputAnswer.getAnswer())
+                        .userAnswer(inputAnswer)
                         .isCorrect(false)
                         .report(null)
                         .quiz(quiz)
