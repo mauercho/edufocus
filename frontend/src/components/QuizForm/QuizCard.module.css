@@ -102,3 +102,10 @@
   color: var(--info-color);
   stroke: var(--info-color);
 }
+
+.cardRemove {
+  border: 1px solid var(--background-secondary);
+  background-color: var(--background-secondary);
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
+}

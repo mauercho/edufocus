@@ -53,7 +53,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
       <div className={styles.header}>
         <span className={styles.heading}>퀴즈 생성 카드</span>
         <button
-          className={`${styles.button} ${styles.remove}`}
+          className={`${styles.button} ${styles.cardRemove}`}
           onClick={() => deleteQuiz(quiz.id)}
         >
           X
