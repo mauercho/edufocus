@@ -32,6 +32,10 @@ const QuizsetWritePage = lazy(async () => await import('./pages/QuizsetWritePage
 const QuizsetDetailPage = lazy(async () => await import('./pages/QuizsetDetailPage'));
 const LectureEnrollPage = lazy(async () => await import('./pages/LectureEnrollPage'));
 const QuizsetEditPage = lazy(async () => await import('./pages/QuizsetEditPage'));
+const FreeboardListPage = lazy(async () => await import('./pages/FreeboardListPage'));
+const CreateFreeboardPage = lazy(async () => await import('./pages/CreateFreeboardPage'));
+const FreeboardDetailPage = lazy(async () => await import('./pages/FreeboardDetailPage'));
+const EditFreeboardPage = lazy(async () => await import('./pages/EditFreeboardPage'));
 
 const router = createBrowserRouter([
   {
@@ -122,12 +126,34 @@ const router = createBrowserRouter([
                 ],
               },
               {
-                path: ':questionId/edit',
-                element: <EditQuestionPage />,
+                path: 'write',
+                element: <CreateQuestionPage />,
+              },
+            ],
+          },
+          {
+            path: 'freeboard',
+            children: [
+              {
+                index: true,
+                element: <FreeboardListPage />,
+              },
+              {
+                path: ':freeboardId',
+                children: [
+                  {
+                    index: true,
+                    element: <FreeboardDetailPage />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <EditFreeboardPage />,
+                  },
+                ],
               },
               {
                 path: 'write',
-                element: <CreateQuestionPage />,
+                element: <CreateFreeboardPage />,
               },
             ],
           },
