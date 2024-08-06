@@ -10,7 +10,7 @@ export default function ClassCard({ img, path, children }) {
     >
       {img ? (
         <img
-          src={img}
+          src={`${import.meta.env.VITE_STATIC_URL}${img}`}
           alt="강의 이미지"
           className={styles.thumbnail}
         />
