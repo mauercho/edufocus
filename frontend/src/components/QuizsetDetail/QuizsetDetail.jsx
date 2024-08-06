@@ -21,11 +21,22 @@ export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, on
         {quizzes.map((quiz, index) => (
           <div key={index}>
             <div>질문 : {quiz.question}</div>
-            <img
-              src={`${import.meta.env.VITE_STATIC_URL}${quiz.image}`}
-              alt="강의 이미지"
-            />
+            {quiz.image && (
+              <img
+                src={`${import.meta.env.VITE_STATIC_URL}${quiz.image}`}
+                alt="강의 이미지"
+                className={styles.image}
+              />
+            )}
             <div>정답 : {quiz.answer}</div>
+            {quiz.choices != [] &&
+              quiz.choices.map?.((choice, choiceIndex) => (
+                <div key={choice.id}>
+                  <div>
+                    선택지 {choiceIndex + 1} : {choice.content}
+                  </div>
+                </div>
+              ))}
           </div>
         ))}
       </div>

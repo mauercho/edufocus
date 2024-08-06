@@ -7,8 +7,9 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   const [answer, setAnswer] = useState(quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || []);
   const [image, setImage] = useState(quiz.image || null);
-  const [imagePreview, setImagePreview] = useState(quiz.image || null);
-
+  const [imagePreview, setImagePreview] = useState(
+    quiz.image ? `${import.meta.env.VITE_STATIC_URL}${quiz.image}` : null
+  );
   const handleChoiceChange = (num, content) => {
     const updatedChoices = choices.map((choice) => (choice.num === num ? { ...choice, content } : choice));
     setChoices(updatedChoices);
@@ -36,7 +37,6 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     const file = e.target.files[0] ?? null;
     setImage(file);
     updateQuiz(quiz.id, { ...quiz, question, answer, choices, image: file });
-
     if (file) {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -59,10 +59,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           X
         </button>
       </div>
-      <label
-        htmlFor={`file-input-${quiz.id}`}
-        className={styles.imageLabel}
-      >
+      <label htmlFor={`file-input-${quiz.id}`}>
         {imagePreview ? (
           <img
             src={imagePreview}
@@ -71,7 +68,6 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           />
         ) : (
           <div className={styles.imagePreview}>
-            {/* <CompassIcon /> */}
             <div>이미지 업로드</div>
           </div>
         )}
