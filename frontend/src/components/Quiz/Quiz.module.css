@@ -1,0 +1,78 @@
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: show 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  & > h1 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  & > img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+  }
+}
+
+.choiceWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: show 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+  opacity: 0;
+}
+
+.choice {
+  display: flex;
+  gap: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color-tertiary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  & > .number {
+    font-weight: 700;
+  }
+
+  &.active {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+
+.input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color-tertiary);
+}

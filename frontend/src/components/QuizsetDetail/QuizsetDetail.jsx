@@ -1,6 +1,7 @@
 import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
 import styles from './QuizsetDetail.module.css';
+import { STATIC_URL } from '../../constants';
 
 export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, onEdit }) {
   return (
@@ -23,7 +24,7 @@ export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, on
             <div>질문 : {quiz.question}</div>
             {quiz.image && (
               <img
-                src={`${import.meta.env.VITE_STATIC_URL}${quiz.image}`}
+                src={`${STATIC_URL}${quiz.image}`}
                 alt="강의 이미지"
                 className={styles.image}
               />
