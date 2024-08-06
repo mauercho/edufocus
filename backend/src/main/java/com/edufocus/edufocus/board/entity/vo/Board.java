@@ -62,7 +62,7 @@ public class Board {
         return ResponseBoardSummaryDto.builder()
                 .id(id)
                 .title(title)
-                .name(user.getUserId())
+                .name(user.getName())
                 .createdAt(createdAt)
                 .build();
     }
