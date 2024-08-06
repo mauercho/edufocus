@@ -70,7 +70,7 @@ public class Board {
     public ResponseBoardDetailDto makeDetailDto(){
         return ResponseBoardDetailDto.builder()
                 .id(id)
-                .name(user.getEmail())
+                .name(user.getName())
                 .title(title)
                 .content(content)
                 .viewCount(viewCount)
