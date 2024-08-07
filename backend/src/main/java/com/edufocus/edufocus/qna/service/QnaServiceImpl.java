@@ -42,9 +42,7 @@ public class QnaServiceImpl implements QnaService {
 
 
         Qna qna = QnaRequestDto.toEntity(qnaRequestDto);
-        if (qna.getAnswer() != null || user.getRole() != UserRole.ADMIN) {
-            throw new RuntimeException();
-        }
+
         qna.setLecture(lecture);
         qna.setUser(user);
 
@@ -55,7 +53,15 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
-    public QnaResponseDto updateQna(Long id, QnaRequestDto qnaRequestDto) {
+    public QnaResponseDto updateQna(Long id, QnaRequestDto qnaRequestDto, Long userId) {
+
+        Qna qna = qnaRepository.findById(id).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (qna.getUser().getId() == userId) {
+            qnaRepository.delete(qna);
+        } else {
+            throw new RuntimeException();
+        }
 
 
         Qna findQna = qnaRepository.findById(id)
@@ -73,8 +79,16 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
-    public void deleteQna(Long id) {
-        qnaRepository.deleteById(id);
+    public void deleteQna(Long id, Long userId) {
+
+        Qna qna = qnaRepository.findById(id).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
+        if (qna.getUser().getId() == userId || user.getRole() == UserRole.ADMIN) {
+            qnaRepository.delete(qna);
+        } else {
+            throw new RuntimeException();
+        }
+
     }
 
     @Override
@@ -115,6 +129,9 @@ public class QnaServiceImpl implements QnaService {
         Qna findQna = qnaRepository.findById(id).orElse(null);
         findQna.setAnswer(qnaRequestDto.getAnswer());
 
+        if (findQna.getAnswer() != null) {
+            throw new RuntimeException();
+        }
         qnaRepository.save(findQna);
 
         return QnaResponseDto.toEntity(findQna);
@@ -126,6 +143,7 @@ public class QnaServiceImpl implements QnaService {
 
         Qna findQna = qnaRepository.findById(id).orElse(null);
         findQna.setAnswer(qnaRequestDto.getAnswer());
+
 
         qnaRepository.save(findQna);
 
