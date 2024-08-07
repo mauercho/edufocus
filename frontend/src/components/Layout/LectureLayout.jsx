@@ -1,3 +1,4 @@
+import styles from './LectureLayout.module.css';
 import { Outlet, useParams } from 'react-router-dom';
 import LectureHeader from '../LectureHeader/LectureHeader';
 import { SideBar, SideLink, SideItem } from '../SideBar';
@@ -17,9 +18,11 @@ export default function LectureLayout() {
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
   const userType = useBoundStore((state) => state.userType);
-  const handleDelete = async () => {
-    await lectureDelete(lectureId);
-    navigate('..');
+  const handleDelete = () => {
+    confirm('강의를 삭제할까요??') &&
+      lectureDelete(lectureId).then(() => {
+        navigate('..');
+      });
   };
   const lectureData = {
     title: lecture.title,
@@ -60,13 +63,19 @@ export default function LectureLayout() {
                 name="수강생"
                 sub="총 12명"
               />
+            </SideBar>
+          )}
+          {userType === 'teacher' && (
+            <SideBar title={'강의 정보 관리'}>
               <SideLink
                 to={'edit'}
                 state={lectureData}
               >
                 강의 정보 수정
               </SideLink>
-              <button onClick={handleDelete}>강의 삭제</button>
+              <li onClick={handleDelete}>
+                <span className={styles.delete}>강의 삭제</span>
+              </li>
             </SideBar>
           )}
           {userType === 'student' && (
