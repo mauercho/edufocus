@@ -16,6 +16,7 @@ export default function LectureLayout() {
   const { lectureDelete } = useLectureDelete();
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
+  console.log(lecture);
   const userType = useBoundStore((state) => state.userType);
   const handleDelete = async () => {
     await lectureDelete(lectureId);
@@ -36,8 +37,7 @@ export default function LectureLayout() {
         title={lecture.title}
         tutor={lecture.teacherName}
         img={lecture.image}
-        // TODO: isLive를 받아올 수단 추가
-        isLive={true}
+        isLive={lecture.online}
       />
       <MaxWidthLayout hasSideBar>
         <aside>

@@ -15,13 +15,16 @@ export default function UserRegisterPage() {
 
   const [userType, setUserType] = useState('STUDENT');
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [existingId, setExistingId] = useState(false);
+  const [existingEmail, setExistingEmail] = useState(false);
 
   const { userRegister } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isPWMatch = passwordRef.current.value === passwordConfirmRef.current.value;
-
+    setExistingId(false);
+    setExistingEmail(false);
     setPasswordMatch(isPWMatch);
     if (!isPWMatch) {
       return;
@@ -32,10 +35,18 @@ export default function UserRegisterPage() {
       nameRef.current.value,
       emailRef.current.value,
       passwordRef.current.value
-    ).then((response) => {
-      console.log(response);
-      navigate('../login');
-    });
+    )
+      .then(() => {
+        navigate('../login');
+      })
+      .catch((err) => {
+        if (err.response.data === '아이디가 중복 됐습니다.') {
+          setExistingId(true);
+        }
+        if (err.response.data === '이메일이 중복 됐습니다.') {
+          setExistingEmail(true);
+        }
+      });
   };
 
   const linkProps = {
@@ -73,7 +84,12 @@ export default function UserRegisterPage() {
           type="text"
           id="ID"
           ref={idRef}
-        />
+          hasError={existingId}
+        >
+          {existingId && (
+            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>이미 존재하는 아이디입니다</div>
+          )}
+        </InputBox>
         <InputBox
           title="이름"
           type="text"
@@ -85,7 +101,12 @@ export default function UserRegisterPage() {
           type="email"
           id="email"
           ref={emailRef}
-        />
+          hasError={existingEmail}
+        >
+          {existingEmail && (
+            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>이미 등록된 이메일입니다</div>
+          )}
+        </InputBox>
         <InputBox
           title="비밀번호"
           type="password"
