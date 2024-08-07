@@ -5,11 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    List<Report> findByUser_Id(Long userId);
+    List<Report> findByUserId(long userId);
 
-    List<Report> findByLectureId(Long lectureId);
+    List<Report> findByLectureId(long lectureId);
 
+    Report findByReportSetIdAndUserId(UUID reportSetId, long userId);
+
+    List<Report> findByReportSetId(UUID reportSetId);
+
+    List<Report> findByLectureIdAndUserId(long lectureId, long userId);
 }

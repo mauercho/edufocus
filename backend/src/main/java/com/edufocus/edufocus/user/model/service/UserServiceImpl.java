@@ -5,6 +5,7 @@ import com.edufocus.edufocus.user.model.entity.dto.InfoDto;
 import com.edufocus.edufocus.user.model.entity.dto.PasswordDto;
 import com.edufocus.edufocus.user.model.entity.dto.RequestJoinDto;
 import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.exception.UserException;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.util.PasswordUtils;
@@ -155,5 +156,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
+    @Override
+    public boolean isTeacher(long id){
+        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new).getRole() == UserRole.ADMIN;
+    }
 }

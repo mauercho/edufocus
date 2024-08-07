@@ -28,7 +28,7 @@ public class QuizSet {
     @Column
     private String title;
 
-    @OneToMany(mappedBy = "quizSet", orphanRemoval = true)
+    @OneToMany(mappedBy = "quizSet", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Quiz> quizzes;
 

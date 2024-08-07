@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ReportRequset {
+public class ReportRequest {
 
 
     List<String> answer;
