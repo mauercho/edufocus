@@ -31,7 +31,7 @@ public class MailController {
     @GetMapping("/verify")
     public ResponseEntity<?> verifyCode(@RequestParam String code, @RequestParam String email) {
         if (!mailService.verifyCode(code, email)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
