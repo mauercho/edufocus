@@ -11,4 +11,7 @@ public class ReportListResponseDto {
     private String title;
     private Date date;
     private Long reportId;
+    private String name;
+    private int allCount;
+    private int correctCount;
 }

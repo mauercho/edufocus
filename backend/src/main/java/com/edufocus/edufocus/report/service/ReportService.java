@@ -11,10 +11,11 @@ import java.util.List;
 
 @Service
 public interface ReportService {
-    ReportResponse grading(Long userId, Long quizesetId, ReportRequset reportRequset) throws SQLException;
+    ReportResponse grading(Long userId, Long quizesetId, ReportRequset reportRequset, Long lectureId) throws SQLException;
 
     ReportDetailResponseDto reportDetail(Long userId) throws SQLException;
 
     List<ReportListResponseDto> resultList(Long userId) throws SQLException;
 
+    List<ReportListResponseDto> studentResultList(Long lectureId) throws SQLException;
 }
