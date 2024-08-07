@@ -24,7 +24,6 @@ export default function LearningLectureDetailPage() {
         title="Q&A"
         contents={questions}
       />
-      <ArticlePreview title="커리큘럼" />
     </section>
   );
 }
