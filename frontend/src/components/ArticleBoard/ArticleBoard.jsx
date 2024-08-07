@@ -18,7 +18,9 @@ export default function ArticleBoard({ title, canCreate, children }) {
           </Link>
         )}
       </div>
-      <div className={styles.article}>{children}</div>
+      <div className={styles.article}>
+        {children ? children : <div className={styles.empty}>표시할 내용이 없습니다.</div>}
+      </div>
     </div>
   );
 }
