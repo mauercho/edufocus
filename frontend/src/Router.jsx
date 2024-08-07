@@ -64,10 +64,6 @@ const router = createBrowserRouter([
         element: <LectureInfoPage />,
       },
       {
-        path: 'lecture/:lectureId/edit',
-        element: <LectureEditPage />,
-      },
-      {
         path: 'lecture/:lectureId',
         element: <LectureLayout />,
         children: [

@@ -8,10 +8,10 @@ export default function EditQuestionPage() {
   const { freeboardEdit } = useFreeboardEdit();
   const location = useLocation();
 
-  const handleSubmit = async (e, title, content, answer) => {
+  const handleSubmit = async (e, title, content) => {
     e.preventDefault();
 
-    await freeboardEdit(freeboardId, title, content, answer);
+    await freeboardEdit(freeboardId, title, content);
     navigate('..');
   };
   return (
@@ -20,7 +20,6 @@ export default function EditQuestionPage() {
       title="자유게시판"
       prevTitle={location.state.title}
       prevContent={location.state.content}
-      prevAnswer={location.state.answer}
       onSubmit={handleSubmit}
     />
   );

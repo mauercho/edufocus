@@ -16,7 +16,7 @@ export default function CreateFreeboardPage() {
   return (
     <CreateArticle
       topic="질문하기"
-      title="Q&A"
+      title="자유게시판"
       onSubmit={handleSubmit}
     />
   );

@@ -1,0 +1,93 @@
+.freeboardDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  background-color: var(--background-default);
+  color: var(--text-color);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.headerInside {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+}
+
+.goBack {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
+}
+
+.title {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0;
+}
+
+.author {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--text-color-secondary);
+}
+
+.content {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.icon {
+  stroke: var(--text-color);
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--error-color);
+  background-color: var(--error-color);
+  color: var(--on-primary);
+  stroke: var(--error-color);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  align-self: end;
+  border-radius: 8px;
+  cursor: pointer;
+}

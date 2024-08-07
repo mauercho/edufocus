@@ -6,3 +6,4 @@ export { default as EditArticle } from './EditArticle/EditArticle.jsx';
 export { default as EditQna } from './EditQna/EditQna.jsx';
 export { default as ArticleDetailAnswerInput } from './ArticleDetail/ArticleDetailAnswer/ArticleDetailAnswerInput.jsx';
 export { default as EditFreeboard } from './EditFreeboard/EditFreeboard.jsx';
+export { default as FreeboardDetail } from './FreeboardDetail/FreeboardDetail.jsx';

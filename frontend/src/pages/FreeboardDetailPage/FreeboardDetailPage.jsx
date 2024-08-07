@@ -1,4 +1,4 @@
-import { ArticleDetail } from '../../components/Article';
+import { FreeboardDetail } from '../../components/Article';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFreeboardDetail } from '../../hooks/api/useFreeboardDetail';
 import { useFreeboardDelete } from '../../hooks/api/useFreeboardDelete';
@@ -15,11 +15,11 @@ export default function FreeboardDetailPage() {
     await freeboardDelete(freeboardId);
     navigate('..');
   };
-
   return (
-    <ArticleDetail
+    <FreeboardDetail
       topic="자유게시판"
       title={freeboard.title}
+      author={freeboard.name}
       content={freeboard.content}
       onDelete={handleDelete}
     />
