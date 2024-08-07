@@ -1,7 +1,6 @@
 package com.edufocus.edufocus.mail.service;
 
 import com.edufocus.edufocus.redis.util.RedisUtil;
-import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.model.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 @Service
@@ -31,10 +29,16 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendMail(String email) {
         String code = createRandomCode();
-        redisUtil.setDataExpire(code, email, 60 * 5L);
 
-        SimpleMailMessage mail = createEmail(email, "[EDUFOCUS] 비밀번호 찾기 안내", code);
-        //mailSender.send(mail);
+        if (redisUtil.exists(email)) {
+            redisUtil.deleteData(redisUtil.getData(email));
+        }
+
+        redisUtil.setDataExpire(code, email, 60 * 5L);
+        redisUtil.setDataExpire(email, code, 60 * 5L);
+
+//        SimpleMailMessage mail = createEmail(email, "[EDUFOCUS] 비밀번호 찾기 안내", code);
+//        mailSender.send(mail);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class MailServiceImpl implements MailService {
 
     private SimpleMailMessage createEmail(String to, String title, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("EDUFOCUS");
         message.setTo(to);
         message.setSubject(title);
         message.setText("인증번호 6자리입니다 : " + code);
