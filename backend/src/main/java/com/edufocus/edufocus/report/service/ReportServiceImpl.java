@@ -60,7 +60,6 @@ public class ReportServiceImpl implements ReportService {
             Quiz quiz = quizList.get(idx);
             String inputAnswer = answerInputList.get(idx);
             Answer answer;
-            //
             if (quiz.getAnswer().equals(inputAnswer)) {
                 correctCount++;
                 answer = Answer.builder()
@@ -182,6 +181,7 @@ public class ReportServiceImpl implements ReportService {
     public List<ReportListResponseDto> resultList(Long userId) throws SQLException {
 
         List<Report> reportList = reportRepository.findByUser_Id(userId);
+
 
         List<ReportListResponseDto> reportListResponseDtoList = new ArrayList<>();
 
