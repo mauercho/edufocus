@@ -3,8 +3,6 @@ import { chatClient } from '../../utils/chat/chatClient';
 import useBoundStore from '../../store';
 import { useQuizsets } from '../api/useQuizsets';
 
-const USER_ID = crypto.getRandomValues(new Uint32Array(1))[0];
-
 export default function useChatRoom(roomId) {
   const client = chatClient;
   const [messages, setMessages] = useState([]);
@@ -13,13 +11,12 @@ export default function useChatRoom(roomId) {
   const chatListRef = useRef(null);
   const { data: quizSetData } = useQuizsets();
   const quizSets = quizSetData?.data ?? [];
-  const [quizSetId, setQuizSetId] = useState(null);
+  const [quizSetInfo, setQuizSetInfo] = useState(null);
 
   const startQuiz = (quizSetId) => {
     chatClient.publish({
       destination: `/pub/chat.quiz.${roomId}`,
       body: JSON.stringify({
-        userId: USER_ID,
         quizSetId,
       }),
     });
@@ -36,7 +33,6 @@ export default function useChatRoom(roomId) {
     chatClient.publish({
       destination: `/pub/chat.message.${roomId}`,
       body: JSON.stringify({
-        userId: USER_ID,
         name: userName,
         content: text,
       }),
@@ -48,13 +44,13 @@ export default function useChatRoom(roomId) {
     client.onConnect = () => {
       client.subscribe(`/exchange/chat.exchange/*.room.${roomId}`, (response) => {
         const data = JSON.parse(response.body);
-        const { content: message, name, quizSetId } = data;
+        const { content: message, name, quizSetId, reportSetId } = data;
 
         if (quizSetId !== undefined) {
-          setQuizSetId(quizSetId);
+          setQuizSetInfo([quizSetId, reportSetId]);
           return;
         }
-        setMessages((prev) => [...prev, { id: prev.length, text: message, isMine: USER_ID === data.userId, name }]);
+        setMessages((prev) => [...prev, { id: prev.length, text: message, name }]);
       });
     };
     client.activate();
@@ -77,7 +73,7 @@ export default function useChatRoom(roomId) {
     chatListRef,
     startQuiz,
     quizSets,
-    quizSetId,
-    setQuizSetId,
+    quizSetInfo,
+    setQuizSetInfo,
   };
 }

@@ -69,7 +69,7 @@ export default function ChatRoom({ isTeacher, ...props }) {
     <>
       <div
         {...props}
-        className={`lk-chat ${wsChat.quizSetId ? styles.none : ''}`}
+        className={`lk-chat ${wsChat.quizSetInfo ? styles.none : ''}`}
       >
         <header className={styles.header}>
           <h2 className={styles.title}>채팅</h2>
@@ -131,15 +131,16 @@ export default function ChatRoom({ isTeacher, ...props }) {
           </button>
         </form>
       </div>
-      {wsChat.quizSetId && (
+      {wsChat.quizSetInfo && (
         <div className="lk-chat">
           <header className={styles.header}>
             <h2 className={styles.title}>퀴즈</h2>
           </header>
           <Suspense fallback={<></>}>
             <QuizSet
-              quizSetId={wsChat.quizSetId}
-              finish={() => wsChat.setQuizSetId(null)}
+              quizSetId={wsChat.quizSetInfo[0]}
+              reportSetId={wsChat.quizSetInfo[1]}
+              finish={() => wsChat.setQuizSetInfo(null)}
             />
           </Suspense>
         </div>
