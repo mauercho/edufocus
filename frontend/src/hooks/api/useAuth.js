@@ -6,29 +6,24 @@ export function useAuth() {
   const setToken = useBoundStore((state) => state.setToken);
   const setUserType = useBoundStore((state) => state.setUserType);
 
-  const login = (userId, password, onError = () => {}) => {
+  const login = (userId, password) => {
     const formData = {
       userId,
       password,
     };
 
-    return instance
-      .post(`${API_URL}/user/login`, formData)
-      .then(({ data, config }) => {
-        const { role: role, 'access-token': accessToken } = data;
-        config.headers.Authorization = `${accessToken}`;
-        setToken(accessToken);
+    return instance.post(`${API_URL}/user/login`, formData).then(({ data, config }) => {
+      const { role: role, 'access-token': accessToken } = data;
+      config.headers.Authorization = `${accessToken}`;
+      setToken(accessToken);
 
-        if (role === 'ADMIN') {
-          setUserType('teacher');
-        } else if (role === 'STUDENT') {
-          setUserType('student');
-        }
-      })
-      .catch((e) => {
-        alert('아이디 또는 비밀번호를 다시 확인해주세요.');
-        onError(e);
-      });
+      if (role === 'ADMIN') {
+        setUserType('teacher');
+      } else if (role === 'STUDENT') {
+        setUserType('student');
+      }
+      return accessToken;
+    });
   };
 
   const userRegister = (role, userId, name, email, password) => {

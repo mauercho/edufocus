@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styles from './ArticleDetail.module.css';
 import ArticleDetailAnswer from './ArticleDetailAnswer/ArticleDetailAnswer';
 import ArticleDetailAnswerInput from './ArticleDetailAnswer/ArticleDetailAnswerInput';
-import EditIcon from '/src/assets/icons/edit.svg?react';
 import { useState, useEffect } from 'react';
 
 export default function ArticleDetail({ topic, title, author = null, content, answer = null, onDelete, isQna = true }) {
@@ -44,22 +43,22 @@ export default function ArticleDetail({ topic, title, author = null, content, an
             {author && <span className={styles.author}>{author}</span>}
           </div>
         </div>
-        <Link
-          type="button"
-          className={styles.editButton}
-          to={'edit'}
-          state={{ title: title, content: content, answer: answer }}
-        >
-          <EditIcon className={styles.icon} />
-          <span>수정하기</span>
-        </Link>
-        <button
-          type="button"
-          className={styles.deleteButton}
-          onClick={onDelete}
-        >
-          삭제하기
-        </button>
+        <div className={styles.actionGroup}>
+          <Link
+            className={styles.edit}
+            to={'edit'}
+            state={{ title: title, content: content, answer: answer }}
+          >
+            수정
+          </Link>
+          <button
+            type="button"
+            className={styles.delete}
+            onClick={onDelete}
+          >
+            삭제
+          </button>
+        </div>
       </header>
       <div>
         <p className={styles.content}>{content}</p>

@@ -24,14 +24,15 @@ export default function QuestionListPage() {
       title="수강신청관리"
       canCreate={false}
     >
-      {lectures.map?.((lecture) => (
-        <LectureEnroll
-          key={`${lecture.id}`}
-          enrollid={lecture.id}
-          userName={lecture.userName}
-          onDelete={handleDelete}
-        />
-      ))}
+      {lectures.length &&
+        lectures.map?.((lecture) => (
+          <LectureEnroll
+            key={`${lecture.id}`}
+            enrollid={lecture.id}
+            userName={lecture.userName}
+            onDelete={handleDelete}
+          />
+        ))}
     </ArticleBoard>
   );
 }

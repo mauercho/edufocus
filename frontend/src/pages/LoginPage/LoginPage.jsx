@@ -22,9 +22,15 @@ export default function LoginPage() {
     const id = idRef.current.value;
     const password = passwordRef.current.value;
 
-    login(id, password).then(() => {
-      navigate('/', { replace: true });
-    });
+    login(id, password)
+      .then(() => {
+        navigate('/', { replace: true });
+      })
+      .catch(() => {
+        alert('아이디 또는 비밀번호를 다시 확인해주세요.');
+        passwordRef.current.value = '';
+        idRef.current.focus();
+      });
   };
 
   useEffect(() => {

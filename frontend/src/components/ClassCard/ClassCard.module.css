@@ -19,3 +19,7 @@
   stroke: var(--text-color);
   box-sizing: border-box;
 }
+
+img.thumbnail {
+  border: 1px solid var(--border-color);
+}
