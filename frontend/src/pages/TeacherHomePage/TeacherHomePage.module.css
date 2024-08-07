@@ -5,6 +5,8 @@
   align-items: center;
   gap: 20px;
   margin-bottom: 32px;
+  width: 295px;
+  height: 220px;
   background-color: var(--background);
   color: var(--text-color);
   stroke: var(--text-color);
@@ -18,4 +20,15 @@
   &:hover {
     background-color: var(--background-secondary);
   }
+}
+
+.msg {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  color: var(--text-color-tertiary);
+  font-size: 20px;
+  line-height: 1.2;
 }

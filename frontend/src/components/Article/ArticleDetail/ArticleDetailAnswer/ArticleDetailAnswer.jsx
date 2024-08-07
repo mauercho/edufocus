@@ -15,28 +15,29 @@ export default function ArticleDetailAnswer({ answer, onEditClick, onDeleteSubmi
   };
 
   return (
-    <>
-      <section className={styles.answer}>
-        <div className={styles.answerHeader}>
-          <ReplyIcon />
-          <div className={styles.author}>선생님의 답변</div>
+    <section className={styles.answer}>
+      <div className={styles.answerHeader}>
+        <div className={styles.author}>
+          <ReplyIcon /> <span>선생님의 답변</span>
         </div>
-        <p className={styles.content}>{answer}</p>
-        <button
-          type="button"
-          className={styles.deleteButton}
-          onClick={handleDeleteSubmit}
-        >
-          <div>삭제</div>
-        </button>
-        <button
-          type="button"
-          className={styles.editButton}
-          onClick={onEditClick}
-        >
-          수정
-        </button>
-      </section>
-    </>
+        <div className={styles.actionGroup}>
+          <button
+            type="button"
+            className={styles.edit}
+            onClick={onEditClick}
+          >
+            수정
+          </button>
+          <button
+            type="button"
+            className={styles.delete}
+            onClick={handleDeleteSubmit}
+          >
+            <div>삭제</div>
+          </button>
+        </div>
+      </div>
+      <p className={styles.content}>{answer}</p>
+    </section>
   );
 }

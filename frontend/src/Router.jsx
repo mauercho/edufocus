@@ -3,9 +3,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import PageLayout from './components/Layout/PageLayout';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
-import LivePage from './pages/LivePage';
+// import LivePage from './pages/LivePage';
 import ErrorPage from './pages/ErrorPage';
 import { LectureLayout } from './components/Layout';
 
@@ -38,6 +38,7 @@ const FreeboardDetailPage = lazy(async () => await import('./pages/FreeboardDeta
 const EditFreeboardPage = lazy(async () => await import('./pages/EditFreeboardPage'));
 const PasswordResetAuthPage = lazy(async () => await import('./pages/PasswordResetAuthPage'));
 const StudentReportPage = lazy(async () => await import('./pages/StudentReportPage'));
+const LivePage = lazy(async () => await import('./pages/LivePage'));
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'live/:roomId',
-    element: <LivePage />,
+    element: (
+      <Suspense fallback={<></>}>
+        <LivePage />
+      </Suspense>
+    ),
   },
   {
     path: '',

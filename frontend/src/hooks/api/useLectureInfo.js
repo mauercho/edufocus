@@ -4,7 +4,7 @@ import { API_URL } from '../../constants';
 
 export function useLectureInfo(lectureId) {
   return useSuspenseQuery({
-    queryKey: ['lecturelist', lectureId],
+    queryKey: ['lectureInfo', lectureId],
     queryFn: () => instance.get(`${API_URL}/lecture/${lectureId}`),
   });
 }

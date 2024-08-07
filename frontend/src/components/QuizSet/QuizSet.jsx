@@ -1,14 +1,13 @@
 import styles from './QuizSet.module.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Quiz from '../Quiz/Quiz';
-import { useParams } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
 import instance from '../../utils/axios/instance';
 import { API_URL } from '../../constants';
 import { useStudentQuizsetDetail } from '../../hooks/api/useStudentQuizsetDetail';
+import Countdown from '../Countdown/Countdown';
 
-export default function QuizSet({ quizSetId, finish }) {
-  const { roomId } = useParams();
+export default function QuizSet({ quizSetId, reportSetId, finish }) {
   const [step, setStep] = useState(null);
   const { data } = useStudentQuizsetDetail(quizSetId);
   const quizSetData = data?.data;
@@ -17,15 +16,17 @@ export default function QuizSet({ quizSetId, finish }) {
   const interval = useRef(null);
   const submit = useCallback(
     (data) => {
-      instance.post(`${API_URL}/report/submit/${roomId}/quizset/${quizSetId}`, data).catch(() => {});
+      const requestData = {
+        answer: data,
+      };
+      instance.post(`${API_URL}/report/submit/${reportSetId}/quizset/${quizSetId}`, requestData).catch(() => {});
     },
-    [quizSetId, roomId]
+    [quizSetId, reportSetId]
   );
   const QuizComponents = [
     ...quizList.map((quiz, index) => (
       <Quiz
         key={index}
-        step={index}
         answers={answers.current}
         setAnswers={(value) => {
           answers.current = answers.current.map((v, i) => (i === index ? value : v));
@@ -37,7 +38,10 @@ export default function QuizSet({ quizSetId, finish }) {
       key={Infinity}
       className={styles.message}
     >
-      퀴즈 종료
+      <div>
+        <div>퀴즈 종료!</div>
+        <div className={styles.subMsg}>답안을 전송하고 있어요</div>
+      </div>
     </div>,
   ];
 
@@ -60,7 +64,7 @@ export default function QuizSet({ quizSetId, finish }) {
 
         return prev + 1;
       });
-    }, 5000);
+    }, 10 * 1000);
 
     return () => {
       clearInterval(interval.current);
@@ -78,7 +82,9 @@ export default function QuizSet({ quizSetId, finish }) {
     <>
       {step === null ? (
         <div className={styles.message}>
-          <span>퀴즈를 시작합니다</span>
+          <span>
+            <Countdown seconds={10} />초 후 퀴즈를 시작합니다.
+          </span>
           <LoadingIndicator />
         </div>
       ) : (
