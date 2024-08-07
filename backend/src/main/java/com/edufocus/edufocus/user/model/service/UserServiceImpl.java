@@ -93,6 +93,8 @@ public class UserServiceImpl implements UserService {
 
         if (!PasswordUtils.checkPassword(passwordDto.getCurrentPassword(), user.getPassword())) {
             throw new UserException("Current password is incorrect");
+        } else if (passwordDto.getCurrentPassword().equals(passwordDto.getNewPassword())) {
+            throw new UserException("New password cannot be the same as the current password");
         } else {
             if (!passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
                 throw new UserException("New password confirmation does not match");

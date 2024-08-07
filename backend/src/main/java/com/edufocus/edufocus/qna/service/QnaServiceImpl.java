@@ -7,6 +7,7 @@ import com.edufocus.edufocus.qna.entity.QnaRequestDto;
 import com.edufocus.edufocus.qna.entity.QnaResponseDto;
 import com.edufocus.edufocus.qna.repository.QnaRepository;
 import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,11 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class QnaServiceImpl implements QnaService{
+public class QnaServiceImpl implements QnaService {
 
     private final QnaRepository qnaRepository;
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
-
 
 
     @Override
@@ -41,19 +41,21 @@ public class QnaServiceImpl implements QnaService{
         User user = userRepository.findById(id).orElse(null);
 
 
-
         Qna qna = QnaRequestDto.toEntity(qnaRequestDto);
+        if (qna.getAnswer() != null || user.getRole() != UserRole.ADMIN) {
+            throw new RuntimeException();
+        }
         qna.setLecture(lecture);
         qna.setUser(user);
 
         qna.setCreatedAt(new Date());
 
         qnaRepository.save(qna);
-    return QnaResponseDto.toEntity(qna);
+        return QnaResponseDto.toEntity(qna);
     }
 
     @Override
-    public QnaResponseDto  updateQna(Long id,QnaRequestDto qnaRequestDto) {
+    public QnaResponseDto updateQna(Long id, QnaRequestDto qnaRequestDto) {
 
 
         Qna findQna = qnaRepository.findById(id)
@@ -65,14 +67,14 @@ public class QnaServiceImpl implements QnaService{
 
         qnaRepository.save(findQna);
 
-            return QnaResponseDto.toEntity(findQna);
+        return QnaResponseDto.toEntity(findQna);
 
 
     }
 
     @Override
     public void deleteQna(Long id) {
-qnaRepository.deleteById(id);
+        qnaRepository.deleteById(id);
     }
 
     @Override
@@ -80,7 +82,7 @@ qnaRepository.deleteById(id);
         Optional<Qna> qna;
         try {
 
-            qna= qnaRepository.findById(id);
+            qna = qnaRepository.findById(id);
 
 
         } catch (Exception e) {
@@ -89,14 +91,12 @@ qnaRepository.deleteById(id);
         }
 
 
-
-            return QnaResponseDto.toEntity(qna.get());
+        return QnaResponseDto.toEntity(qna.get());
 
     }
 
     @Override
-    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId,int pageSize)
-    {
+    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int pageSize) {
 
         Pageable pageable = PageRequest.of(0, pageSize);
 
