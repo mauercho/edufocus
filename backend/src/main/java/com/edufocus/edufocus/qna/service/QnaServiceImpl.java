@@ -55,11 +55,13 @@ public class QnaServiceImpl implements QnaService {
     @Override
     public QnaResponseDto updateQna(Long id, QnaRequestDto qnaRequestDto, Long userId) {
 
+        System.out.println("userId:" + userId);
+
         Qna qna = qnaRepository.findById(id).orElse(null);
+        System.out.println("quesiton에 있는거: " + qna.getUser().getId());
         User user = userRepository.findById(userId).orElse(null);
-        if (qna.getUser().getId() == userId) {
-            qnaRepository.delete(qna);
-        } else {
+
+        if (qna.getUser().getId() != userId) {
             throw new RuntimeException();
         }
 
