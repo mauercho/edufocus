@@ -120,7 +120,7 @@ export default function LiveRoom() {
               controls={{ chat: false, leave: true, screenShare: role === '강사' }}
             />
           </div>
-          <ChatRoom />
+          <ChatRoom isTeacher={role === '강사'} />
         </LayoutContextProvider>
         <RoomAudioRenderer />
         <ConnectionStateToast />

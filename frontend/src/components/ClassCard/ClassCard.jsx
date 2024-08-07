@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './ClassCard.module.css';
 import CompassIcon from '/src/assets/icons/compass.svg?react';
+import { STATIC_URL } from '../../constants';
 
 export default function ClassCard({ img, path, children }) {
   return (
@@ -10,7 +11,7 @@ export default function ClassCard({ img, path, children }) {
     >
       {img ? (
         <img
-          src={`${import.meta.env.VITE_STATIC_URL}${img}`}
+          src={`${STATIC_URL}${img}`}
           alt="강의 이미지"
           className={styles.thumbnail}
         />

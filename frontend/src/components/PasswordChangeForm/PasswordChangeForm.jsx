@@ -1,13 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './PasswordChangeForm.module.css';
 
-export default function PasswordChangeForm({ onSubmit, onPwError = false }) {
-  // TODO: onPwError(현재 비밀번호와 같음) 시 응답을 받아 표시
+export default function PasswordChangeForm({ onSubmit, pwError = false }) {
   const [errorConfirmMessage, setErrorConfirmMessage] = useState(false);
   const [errorSameMessage, setErrorSameMessage] = useState(false);
   const currentPasswordRef = useRef('');
   const newPasswordRef = useRef('');
   const confirmPasswordRef = useRef('');
+
+  useEffect(() => {
+    setErrorSameMessage(pwError);
+  }, [pwError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,12 +21,6 @@ export default function PasswordChangeForm({ onSubmit, onPwError = false }) {
     if (newPassword === confirmPassword) {
       setErrorConfirmMessage(false);
       onSubmit(currentPassword, newPassword, confirmPassword);
-
-      if (onPwError) {
-        setErrorSameMessage(true);
-      } else {
-        setErrorSameMessage(false);
-      }
     } else {
       setErrorConfirmMessage(true);
     }

@@ -31,7 +31,7 @@ export function useAuth() {
       });
   };
 
-  const userRegister = (role, userId, name, email, password, onError = () => {}) => {
+  const userRegister = (role, userId, name, email, password) => {
     const userData = {
       role,
       userId,
@@ -39,9 +39,7 @@ export function useAuth() {
       email,
       password,
     };
-    return instance.post(`${API_URL}/user/join`, userData).catch((e) => {
-      onError(e);
-    });
+    return instance.post(`${API_URL}/user/join`, userData);
   };
 
   const logout = () => {

@@ -33,8 +33,14 @@ export default function LivePage() {
       connect={true}
       data-lk-theme="default"
       onDisconnected={() => {
-        instance.post(`${API_URL}/video/deleteroom/${roomId}`).catch(() => {});
-        window.close();
+        setTimeout(() => {
+          instance
+            .post(`${API_URL}/video/deleteroom/${roomId}`)
+            .catch(() => {})
+            .finally(() => {
+              window.close();
+            });
+        }, 500);
       }}
     >
       <LiveRoom />

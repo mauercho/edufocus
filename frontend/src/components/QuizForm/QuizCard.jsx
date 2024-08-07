@@ -7,8 +7,9 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   const [answer, setAnswer] = useState(quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || []);
   const [image, setImage] = useState(quiz.image || null);
-  const [imagePreview, setImagePreview] = useState(quiz.image || null);
-
+  const [imagePreview, setImagePreview] = useState(
+    quiz.image ? `${import.meta.env.VITE_STATIC_URL}${quiz.image}` : null
+  );
   const handleChoiceChange = (num, content) => {
     const updatedChoices = choices.map((choice) => (choice.num === num ? { ...choice, content } : choice));
     setChoices(updatedChoices);
@@ -36,7 +37,6 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     const file = e.target.files[0] ?? null;
     setImage(file);
     updateQuiz(quiz.id, { ...quiz, question, answer, choices, image: file });
-
     if (file) {
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -51,22 +51,34 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <span>퀴즈 생성 카드</span>
-        <button onClick={() => deleteQuiz(quiz.id)}>X</button>
+        <span className={styles.heading}>퀴즈 생성 카드</span>
+        <button
+          className={`${styles.button} ${styles.cardRemove}`}
+          onClick={() => deleteQuiz(quiz.id)}
+        >
+          X
+        </button>
       </div>
-      <label>퀴즈 이미지</label>
+      <label htmlFor={`file-input-${quiz.id}`}>
+        {imagePreview ? (
+          <img
+            src={imagePreview}
+            alt="Preview"
+            className={styles.imagePreview}
+          />
+        ) : (
+          <div className={styles.imagePreview}>
+            <div>이미지 업로드</div>
+          </div>
+        )}
+      </label>
       <input
+        id={`file-input-${quiz.id}`}
         type="file"
         accept=".png, .jpg, .jpeg"
         onChange={handleFileChange}
+        className={styles.hiddenInput}
       />
-      {imagePreview && (
-        <img
-          src={imagePreview}
-          alt="Preview"
-          className={styles.imagePreview}
-        />
-      )}
       <label className={styles.label}>질문</label>
       <input
         type="text"
@@ -109,9 +121,13 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         </button>
       </div>
       {choices.map?.((choice, idx) => (
-        <div key={idx}>
-          <label>선택지 {choice.num} : </label>
+        <div
+          className={styles.choiceDiv}
+          key={idx}
+        >
+          <label>선택지 {choice.num} </label>
           <input
+            className={`${styles.input} ${styles.choiceInput}`}
             type="text"
             value={choice.content}
             onChange={(e) => handleChoiceChange(choice.num, e.target.value)}

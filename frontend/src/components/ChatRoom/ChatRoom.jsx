@@ -1,11 +1,23 @@
 import styles from './ChatRoom.module.css';
 import SendIcon from '/src/assets/icons/send.svg?react';
-import { cloneElement, useEffect, useRef } from 'react';
+import { cloneElement, Suspense, useEffect, useRef, useState } from 'react';
 import { ChatEntry, useChat, useMaybeLayoutContext } from '@livekit/components-react';
+import { useParams } from 'react-router-dom';
+import useChatRoom from '../../hooks/chat/useChatRoom';
+import { createPortal } from 'react-dom';
+import { QuizModal } from '../QuizModal';
+import { QuizSet } from '../QuizSet';
 
-export default function ChatRoom({ ...props }) {
+export default function ChatRoom({ isTeacher, ...props }) {
+  const { roomId } = useParams();
+  const wsChat = useChatRoom(roomId);
   const chatInputRef = useRef(null);
   const ulRef = useRef(null);
+  const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
+
+  const openQuizModal = () => {
+    setIsQuizModalOpen(true);
+  };
 
   const { send, chatMessages, isSending } = useChat();
 
@@ -54,59 +66,94 @@ export default function ChatRoom({ ...props }) {
   }, [chatMessages, layoutContext, layoutContext.widget]);
 
   return (
-    <div
-      {...props}
-      className="lk-chat"
-    >
-      <h2 className={styles.title}>채팅</h2>
-
-      <ul
-        className="lk-list lk-chat-messages"
-        ref={ulRef}
+    <>
+      <div
+        {...props}
+        className={`lk-chat ${wsChat.quizSetId ? styles.none : ''}`}
       >
-        {props.children
-          ? chatMessages.map((msg, idx) =>
-              cloneElement(props.children, {
-                entry: msg,
-                key: msg.id ?? idx,
-              })
-            )
-          : chatMessages.map((msg, idx, allMsg) => {
-              const hideName = idx >= 1 && allMsg[idx - 1].from === msg.from;
-              const hideTimestamp = idx >= 1 && msg.timestamp - allMsg[idx - 1].timestamp < 60_000;
+        <header className={styles.header}>
+          <h2 className={styles.title}>채팅</h2>
+          {isTeacher && (
+            <button
+              className={styles.quizButton}
+              onClick={openQuizModal}
+            >
+              퀴즈 시작
+            </button>
+          )}
+        </header>
 
-              return (
-                <ChatEntry
-                  key={msg.id ?? idx}
-                  hideName={hideName}
-                  hideTimestamp={hideName === false ? false : hideTimestamp}
-                  entry={msg}
-                />
-              );
-            })}
-      </ul>
-      <form
-        className="lk-chat-form"
-        onSubmit={handleChatSubmit}
-      >
-        <input
-          className="lk-form-control lk-chat-form-input"
-          disabled={isSending}
-          ref={chatInputRef}
-          type="text"
-          placeholder="메시지"
-          onInput={(ev) => ev.stopPropagation()}
-          onKeyDown={(ev) => ev.stopPropagation()}
-          onKeyUp={(ev) => ev.stopPropagation()}
-        />
-        <button
-          type="submit"
-          className={`lk-button lk-chat-form-button ${styles.button}`}
-          disabled={isSending}
+        <ul
+          className="lk-list lk-chat-messages"
+          ref={ulRef}
         >
-          <SendIcon />
-        </button>
-      </form>
-    </div>
+          {props.children
+            ? chatMessages.map((msg, idx) =>
+                cloneElement(props.children, {
+                  entry: msg,
+                  key: msg.id ?? idx,
+                })
+              )
+            : chatMessages.map((msg, idx, allMsg) => {
+                const hideName = idx >= 1 && allMsg[idx - 1].from === msg.from;
+                const hideTimestamp = idx >= 1 && msg.timestamp - allMsg[idx - 1].timestamp < 60_000;
+
+                return (
+                  <ChatEntry
+                    key={msg.id ?? idx}
+                    hideName={hideName}
+                    hideTimestamp={hideName === false ? false : hideTimestamp}
+                    entry={msg}
+                  />
+                );
+              })}
+        </ul>
+        <form
+          className="lk-chat-form"
+          onSubmit={handleChatSubmit}
+        >
+          <input
+            className="lk-form-control lk-chat-form-input"
+            disabled={isSending}
+            ref={chatInputRef}
+            type="text"
+            placeholder="메시지"
+            onInput={(ev) => ev.stopPropagation()}
+            onKeyDown={(ev) => ev.stopPropagation()}
+            onKeyUp={(ev) => ev.stopPropagation()}
+          />
+          <button
+            type="submit"
+            className={`lk-button lk-chat-form-button ${styles.button}`}
+            disabled={isSending}
+          >
+            <SendIcon />
+          </button>
+        </form>
+      </div>
+      {wsChat.quizSetId && (
+        <div className="lk-chat">
+          <header className={styles.header}>
+            <h2 className={styles.title}>퀴즈</h2>
+          </header>
+          <Suspense fallback={<></>}>
+            <QuizSet
+              quizSetId={wsChat.quizSetId}
+              finish={() => wsChat.setQuizSetId(null)}
+            />
+          </Suspense>
+        </div>
+      )}
+
+      {isQuizModalOpen &&
+        createPortal(
+          <QuizModal
+            startQuiz={wsChat.startQuiz}
+            quizSets={wsChat.quizSets}
+            closeModal={() => setIsQuizModalOpen(false)}
+          />,
+          document.body
+        )}
+    </>
   );
 }

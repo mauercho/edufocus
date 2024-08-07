@@ -15,7 +15,7 @@ export default function LectureInfoPage() {
   const startDate = new Date(lectureData.startDate).toLocaleDateString();
   const endDate = new Date(lectureData.endDate).toLocaleDateString();
   const userType = useBoundStore((state) => state.userType);
-  console.log(lectureData);
+  const status = lectureData.status;
   const { lectureRegister } = useLectureRegister();
   const handleSubmit = () => {
     if (userType === null) {
@@ -23,15 +23,20 @@ export default function LectureInfoPage() {
       navigate('/auth/login');
     }
 
-    lectureRegister(lectureId)
-      .then(() => {
-        // navigate(`/lecture/${lectureId}`);
-        window.alert('강사가 수강신청 수락시 수업이 시작됩니다.');
-        navigate('/');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (status === 'ENROLLED') {
+      navigate(`/lecture/${lectureId}`);
+    }
+
+    if (status === 'NOT_ENROLLED') {
+      lectureRegister(lectureId)
+        .then(() => {
+          window.alert('강사가 수강신청 수락시 수업이 시작됩니다.');
+          navigate('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -58,6 +63,7 @@ export default function LectureInfoPage() {
             classTerm={`${startDate} ~ ${endDate}`}
             classTime={lectureData.time}
             onSubmit={handleSubmit}
+            status={status}
           />
         </aside>
       </MaxWidthLayout>

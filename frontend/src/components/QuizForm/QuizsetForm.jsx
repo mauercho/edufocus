@@ -69,19 +69,19 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
               deleteQuiz={deleteQuiz}
             />
           ))}
-          <button
+          <div
             type="button"
             onClick={handleAddQuiz}
-            className={`${styles.button} ${styles.add}`}
+            className={styles.addCard}
           >
-            퀴즈 추가하기
-          </button>
+            카드 추가
+          </div>
         </div>
         <button
           type="submit"
-          className={styles.createButton}
+          className={`${styles.button} ${styles.add} ${styles.create}`}
         >
-          <EditIcon className={styles.edit} />
+          <EditIcon />
           <div>퀴즈 생성하기</div>
         </button>
       </form>

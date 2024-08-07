@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { chatClient } from '../../utils/chat/chatClient';
 import useBoundStore from '../../store';
+import { useQuizsets } from '../api/useQuizsets';
 
 const USER_ID = crypto.getRandomValues(new Uint32Array(1))[0];
 
@@ -10,6 +11,19 @@ export default function useChatRoom(roomId) {
   const userName = useBoundStore((state) => state.userName) ?? '익명';
   const inputRef = useRef(null);
   const chatListRef = useRef(null);
+  const { data: quizSetData } = useQuizsets();
+  const quizSets = quizSetData?.data ?? [];
+  const [quizSetId, setQuizSetId] = useState(null);
+
+  const startQuiz = (quizSetId) => {
+    chatClient.publish({
+      destination: `/pub/chat.quiz.${roomId}`,
+      body: JSON.stringify({
+        userId: USER_ID,
+        quizSetId,
+      }),
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,8 +48,12 @@ export default function useChatRoom(roomId) {
     client.onConnect = () => {
       client.subscribe(`/exchange/chat.exchange/*.room.${roomId}`, (response) => {
         const data = JSON.parse(response.body);
-        const { content: message, name } = data;
+        const { content: message, name, quizSetId } = data;
 
+        if (quizSetId !== undefined) {
+          setQuizSetId(quizSetId);
+          return;
+        }
         setMessages((prev) => [...prev, { id: prev.length, text: message, isMine: USER_ID === data.userId, name }]);
       });
     };
@@ -47,7 +65,9 @@ export default function useChatRoom(roomId) {
   }, [client, roomId]);
 
   useEffect(() => {
-    chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    if (chatListRef.current) {
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    }
   }, [messages]);
 
   return {
@@ -55,5 +75,9 @@ export default function useChatRoom(roomId) {
     inputRef,
     handleSubmit,
     chatListRef,
+    startQuiz,
+    quizSets,
+    quizSetId,
+    setQuizSetId,
   };
 }

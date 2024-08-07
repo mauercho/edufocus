@@ -36,6 +36,7 @@ const FreeboardListPage = lazy(async () => await import('./pages/FreeboardListPa
 const CreateFreeboardPage = lazy(async () => await import('./pages/CreateFreeboardPage'));
 const FreeboardDetailPage = lazy(async () => await import('./pages/FreeboardDetailPage'));
 const EditFreeboardPage = lazy(async () => await import('./pages/EditFreeboardPage'));
+const PasswordResetAuthPage = lazy(async () => await import('./pages/PasswordResetAuthPage'));
 
 const router = createBrowserRouter([
   {
@@ -199,6 +200,10 @@ const router = createBrowserRouter([
           {
             path: 'password-reset',
             element: <PasswordResetPage />,
+          },
+          {
+            path: 'resetAuth',
+            element: <PasswordResetAuthPage />,
           },
         ],
       },
