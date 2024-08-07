@@ -37,6 +37,9 @@ public class UserController {
         if(userService.isUserIdExist(requestJoinDto.getUserId()))
             return new ResponseEntity<>("아이디가 중복 됐습니다.", HttpStatus.CONFLICT);
 
+        if(userService.isEmailExist(requestJoinDto.getEmail()))
+            return new ResponseEntity<>("이메일이 중복 됐습니다.", HttpStatus.CONFLICT);
+
         userService.join(requestJoinDto);
 
         return ResponseEntity.ok("User registered successfully");

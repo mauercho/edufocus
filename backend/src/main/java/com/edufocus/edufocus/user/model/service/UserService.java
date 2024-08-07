@@ -25,4 +25,6 @@ public interface UserService {
         void changePassword(PasswordDto passwordDto,Long id);
 
         boolean isUserIdExist(String userId);
+
+        boolean isEmailExist(String email);
 }
