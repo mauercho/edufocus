@@ -1,5 +1,6 @@
 package com.edufocus.edufocus.report.service;
 
+import com.edufocus.edufocus.quiz.entity.Choice;
 import com.edufocus.edufocus.quiz.entity.Quiz;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
@@ -15,6 +16,7 @@ import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -41,7 +43,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     @Override
-    public ReportResponse grading(Long userId, Long quizsetId, ReportRequset reportRequset) throws SQLException {
+    public ReportResponse grading(Long userId, Long quizsetId, ReportRequset reportRequset, Long lectureId) throws SQLException {
 
         QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
         List<Quiz> quizList = quizSet.getQuizzes();
@@ -85,6 +87,7 @@ public class ReportServiceImpl implements ReportService {
                 .allCount(allCount)
                 .correctCount(correctCount)
                 .testAt(new Date())
+                .lectureId(lectureId)
                 .build();
 
 
@@ -116,16 +119,49 @@ public class ReportServiceImpl implements ReportService {
 
         QuizSet quizSet = quizSetService.findQuizSet(report.getQuizSet().getId());
 
-        List<Quiz> correctQuiz = new ArrayList<>();
-        List<Quiz> incorrectQuiz = new ArrayList<>();
+        List<QuizDto> correctQuiz = new ArrayList<>();
+        List<QuizDto> incorrectQuiz = new ArrayList<>();
 
         List<Answer> myAnswer = answerRepository.findByReport_Id(report.getId());
 
         for (Answer answer : myAnswer) {
+            QuizDto quizDto;
+            Quiz quiz = quizRepository.findById(answer.getQuiz().getId()).orElse(null);
+
+            ArrayList<ChoiceDto> choiceDtos = new ArrayList<>();
+
+            for (Choice c : quiz.getChoices()) {
+                ChoiceDto choiceDto = null;
+                choiceDto = choiceDto.builder()
+                        .num(c.getNum())
+                        .content(c.getContent())
+                        .build();
+                choiceDtos.add(choiceDto);
+
+            }
             if (answer.isCorrect()) {
-                correctQuiz.add(quizRepository.findById(answer.getQuiz().getId()).orElse(null));
+
+                quizDto = QuizDto.builder()
+                        .id(quiz.getId())
+                        .question(quiz.getQuestion())
+                        .image(quiz.getImage())
+                        .question(quiz.getQuestion())
+                        .answer(quiz.getAnswer())
+                        .userAnswer(answer.getUserAnswer())
+                        .choices(choiceDtos)
+                        .build();
+                correctQuiz.add(quizDto);
             } else {
-                incorrectQuiz.add(quizRepository.findById(answer.getQuiz().getId()).orElse(null));
+                quizDto = QuizDto.builder()
+                        .id(quiz.getId())
+                        .question(quiz.getQuestion())
+                        .image(quiz.getImage())
+                        .question(quiz.getQuestion())
+                        .answer(quiz.getAnswer())
+                        .userAnswer(answer.getUserAnswer())
+                        .choices(choiceDtos)
+                        .build();
+                incorrectQuiz.add(quizDto);
 
             }
         }
@@ -141,50 +177,6 @@ public class ReportServiceImpl implements ReportService {
         return dto;
     }
 
-//    @Override
-//    public List<ReportResultResponseDto> result(Long userId) throws SQLException {
-//        List<Report> myReport = reportRepository.findByUser_Id(userId);
-//
-//
-//        List<ReportResultResponseDto> responseDtos = new ArrayList<>();
-//
-//        for (Report report : myReport) {
-//            int all = report.getAllCount();
-//            int correctCount = report.getCorrectCount();
-//            Long quizsetId = report.getQuizSet().getId();
-//            Date testAt = report.getTestAt();
-//
-//            List<Quiz> correctQuiz = new ArrayList<>();
-//            List<Quiz> incorrectQuiz = new ArrayList<>();
-//
-//            List<Answer> myAnswer = answerRepository.findByReport_Id(report.getId());
-//
-//            for (Answer answer : myAnswer) {
-//                if (answer.isCorrect()) {
-//                    correctQuiz.add(quizRepository.findById(answer.getQuiz().getId()).orElse(null));
-//                } else {
-//                    incorrectQuiz.add(quizRepository.findById(answer.getQuiz().getId()).orElse(null));
-//
-//                }
-//            }
-//
-//
-//            ReportResultResponseDto dto = ReportResultResponseDto.builder()
-//                    .reportId(report.getId())
-//                    .allCount(all)
-//                    .correctCount(correctCount)
-//                    .quizSetId(quizSetId)
-//                    .testAt(testAt)
-//                    .correctQuizzes(correctQuiz)
-//                    .incorrectQuizzes(incorrectQuiz)
-//                    .build();
-//
-//            responseDtos.add(dto);
-//        }
-//        // 틀린문제
-//        // 내가 체크한 번호
-//        // 정답 번호
-//    }
 
     @Override
     public List<ReportListResponseDto> resultList(Long userId) throws SQLException {
@@ -210,4 +202,30 @@ public class ReportServiceImpl implements ReportService {
 
     }
 
+    @Override
+    public List<ReportListResponseDto> studentResultList(Long lectureId) throws SQLException {
+
+        List<Report> reportList = reportRepository.findByLectureId(lectureId);
+
+        List<ReportListResponseDto> reportListResponseDtoList = new ArrayList<>();
+
+
+        for (Report report : reportList) {
+
+            System.out.println(report.toString());
+            QuizSet quizSet = quizSetService.findQuizSet(report.getQuizSet().getId());
+            ReportListResponseDto dto = ReportListResponseDto.builder()
+                    .title(quizSet.getTitle())
+                    .date(report.getTestAt())
+                    .reportId(report.getId())
+                    .allCount(report.getAllCount())
+                    .correctCount(report.getCorrectCount())
+                    .build();
+            reportListResponseDtoList.add(dto);
+
+        }
+
+        return reportListResponseDtoList;
+
+    }
 }
