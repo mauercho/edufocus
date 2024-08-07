@@ -93,4 +93,9 @@ public class LectureController {
 
         return new ResponseEntity<>(myLectures, HttpStatus.OK);
     }
+
+    @GetMapping("/isLive/{lectureId}")
+    public ResponseEntity<Boolean> checkIsLive(@PathVariable long lectureId) {
+        return new ResponseEntity<>(lectureService.getState(lectureId), HttpStatus.OK);
+    }
 }
