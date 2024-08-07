@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex: 1 0 0;
+}
+
+.LinksContainer {
+  flex: 1;
+}
+
+.reportCardContainer {
+  flex: 0 0 auto;
+}
