@@ -18,7 +18,7 @@ public class MailController {
 
     private final UserService userService;
 
-    @PostMapping("/sendCode")
+    @PostMapping("/sendcode")
     public ResponseEntity<?> sendMail(@RequestParam String email) {
         if (!userService.isEmailExist(email)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
