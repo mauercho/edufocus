@@ -2,21 +2,34 @@ import { AuthForm, InputBox } from '../../components/AuthForm';
 import { useRef, useState, useEffect } from 'react';
 import styles from './PasswordResetPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { usePasswordReset } from '../../hooks/api/usePasswordReset';
 
 export default function PasswordResetPage() {
   const navigate = useNavigate();
   const [time, setTime] = useState(5);
-  const [sendEmail, setSendEmail] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const emailRef = useRef('');
-  const buttonText = useRef('비밀번호 찾기');
-  const handleSubmit = (e) => {
+
+  const { sendEmail } = usePasswordReset();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('비밀번호 찾기', emailRef.current.value);
-    setSendEmail(true);
+    setNotFound(false);
+    await sendEmail(emailRef.current.value)
+      .then(() => {
+        setEmailSent(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.message === 'Request failed with status code 404') {
+          setNotFound(true);
+        }
+        return;
+      });
   };
 
   useEffect(() => {
-    if (!sendEmail) {
+    if (!emailSent) {
       return;
     }
     const timer = setInterval(() => {
@@ -24,7 +37,7 @@ export default function PasswordResetPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [sendEmail]);
+  }, [emailSent]);
 
   useEffect(() => {
     if (time === 0) {
@@ -32,9 +45,9 @@ export default function PasswordResetPage() {
     }
   }, [navigate, time]);
 
-  return sendEmail ? (
+  return emailSent ? (
     <section className={styles.loginGroup}>
-      <h1 className={styles.title}>비밀번호 찾기</h1>
+      <h1 className={styles.title}>인증번호 받기</h1>
       <p className={styles.text}>
         비밀번호 초기화 인증번호를 이메일로 보냈습니다.
         <br />
@@ -53,15 +66,18 @@ export default function PasswordResetPage() {
     <div className={styles.wrapper}>
       <AuthForm
         onSubmit={handleSubmit}
-        title="비밀번호 찾기"
-        buttonText={buttonText.current}
+        title="비밀번호 재설정"
+        buttonText="인증번호 받기"
       >
         <InputBox
           title="이메일"
           id="email"
           type="email"
           ref={emailRef}
-        />
+          hasError={notFound}
+        >
+          {notFound && <div>존재하지 않는 이메일입니다</div>}
+        </InputBox>
       </AuthForm>
     </div>
   );

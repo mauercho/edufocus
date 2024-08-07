@@ -1,0 +1,7 @@
+.delete {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--error-color);
+  cursor: pointer;
+}

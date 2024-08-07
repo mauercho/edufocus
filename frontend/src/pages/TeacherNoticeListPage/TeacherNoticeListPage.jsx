@@ -16,17 +16,18 @@ export default function TeacherNoticeListPage() {
       title="공지사항"
       canCreate={true}
     >
-      {notices.map?.((notice) => {
-        if (notice.sub && notice.title) {
-          return (
-            <ArticleLink
-              key={`${notice.title}${notice.sub}`}
-              title={notice.title}
-              sub={notice.sub}
-            />
-          );
-        }
-      })}
+      {notices.length &&
+        notices.map?.((notice) => {
+          if (notice.sub && notice.title) {
+            return (
+              <ArticleLink
+                key={`${notice.title}${notice.sub}`}
+                title={notice.title}
+                sub={notice.sub}
+              />
+            );
+          }
+        })}
     </ArticleBoard>
   );
 }

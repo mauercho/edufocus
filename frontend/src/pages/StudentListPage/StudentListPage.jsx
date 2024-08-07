@@ -14,16 +14,17 @@ export default function StudentListPage() {
 
   return (
     <ArticleBoard title="수강생 관리">
-      {students.map?.((student) => {
-        return (
-          <ArticleLink
-            key={`${student.name}${student.sub}`}
-            title={student.name}
-            sub={`퀴즈 점수: ${student.quizScore}`}
-            to={`${student.id}`}
-          />
-        );
-      })}
+      {students.length &&
+        students.map?.((student) => {
+          return (
+            <ArticleLink
+              key={`${student.name}${student.sub}`}
+              title={student.name}
+              sub={`퀴즈 점수: ${student.quizScore}`}
+              to={`${student.id}`}
+            />
+          );
+        })}
     </ArticleBoard>
   );
 }

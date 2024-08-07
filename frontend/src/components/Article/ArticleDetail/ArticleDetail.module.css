@@ -13,7 +13,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: end;
 }
 
 .headerInside {
@@ -60,34 +60,26 @@
   stroke: var(--text-color);
 }
 
-.editButton {
+.actionGroup {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background: var(--background);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 700;
+  align-items: end;
+  gap: 20px;
   color: var(--text-color);
+}
+
+.edit,
+.delete {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: var(--background);
+  color: var(--text-color-tertiary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.deleteButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border: 1px solid var(--error-color);
-  background-color: var(--error-color);
-  color: var(--on-primary);
-  stroke: var(--error-color);
-  font-size: 16px;
-  line-height: 1.4;
-  font-weight: 700;
-  align-self: end;
-  border-radius: 8px;
-  cursor: pointer;
+.delete {
+  color: var(--error-color);
 }

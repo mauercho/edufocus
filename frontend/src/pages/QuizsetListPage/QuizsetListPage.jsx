@@ -15,13 +15,14 @@ export default function QuizsetListPage() {
       title="퀴즈 목록"
       canCreate={true}
     >
-      {quizsets.map?.((quizset) => (
-        <ArticleLink
-          key={`${quizset.quizSetId}`}
-          title={quizset.title}
-          to={`${quizset.quizSetId}`}
-        />
-      ))}
+      {quizsets.length &&
+        quizsets.map?.((quizset) => (
+          <ArticleLink
+            key={`${quizset.quizSetId}`}
+            title={quizset.title}
+            to={`${quizset.quizSetId}`}
+          />
+        ))}
     </ArticleBoard>
   );
 }

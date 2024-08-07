@@ -3,6 +3,8 @@ import styles from './ArticlePreview.module.css';
 import RightIcon from '/src/assets/icons/right.svg?react';
 
 export default function ArticlePreview({ to, title, contents = [] }) {
+  const hasContents = contents.length > 0;
+
   return (
     <div className={styles.wrapper}>
       <Link
@@ -13,17 +15,21 @@ export default function ArticlePreview({ to, title, contents = [] }) {
         <RightIcon />
       </Link>
       <div className={styles.main}>
-        {contents.map?.((content) => {
-          return (
-            <Link
-              to={`${to}/${content.id}`}
-              key={content.id}
-              className={styles.content}
-            >
-              {content.title}
-            </Link>
-          );
-        })}
+        {hasContents ? (
+          contents.map?.((content) => {
+            return (
+              <Link
+                to={`${to}/${content.id}`}
+                key={content.id}
+                className={styles.content}
+              >
+                {content.title}
+              </Link>
+            );
+          })
+        ) : (
+          <div className={styles.empty}>아직 작성된 글이 없습니다.</div>
+        )}
       </div>
     </div>
   );

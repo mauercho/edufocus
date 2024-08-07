@@ -15,14 +15,15 @@ export default function QuestionListPage() {
       title="Q&A"
       canCreate={userType === 'student'}
     >
-      {questions.map?.((question) => (
-        <ArticleLink
-          key={`${question.title}${question.createtAt}`}
-          title={question.title}
-          sub={`${new Date(question.createtAt).toLocaleDateString()} ${new Date(question.createtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
-          to={`${question.id}`}
-        />
-      ))}
+      {questions.length &&
+        questions.map?.((question) => (
+          <ArticleLink
+            key={`${question.title}${question.createtAt}`}
+            title={question.title}
+            sub={`${new Date(question.createtAt).toLocaleDateString()} ${new Date(question.createtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
+            to={`${question.id}`}
+          />
+        ))}
     </ArticleBoard>
   );
 }

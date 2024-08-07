@@ -35,3 +35,13 @@
   line-height: 1.4;
   font-weight: 400;
 }
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  color: var(--text-color-tertiary);
+  font-size: 16px;
+  line-height: 1.2;
+}

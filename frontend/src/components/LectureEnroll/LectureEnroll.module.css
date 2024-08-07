@@ -1,13 +1,44 @@
 .enrollLink {
-  border-radius: 8px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
-  box-sizing: border-box;
+  align-items: center;
+  border-radius: 8px;
+  width: 100%;
   padding: 16px 20px;
-  transition: background-color 0.25s;
+  box-sizing: border-box;
 }
 
-.enrollLink:hover {
-  background-color: var(--background-secondary);
+.buttonWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.accept,
+.reject {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--background);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+
+  cursor: pointer;
+  transition:
+    border-color 0.1s,
+    color 0.1s;
+}
+
+.accept:hover {
+  border-color: var(--info-color);
+  color: var(--info-color);
+}
+
+.reject:hover {
+  border-color: var(--error-color);
+  color: var(--error-color);
 }
