@@ -1,20 +1,39 @@
 import { AuthForm, InputBox } from '../../components/AuthForm';
 import { useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './PasswordResetAuthPage.module.css';
+import { usePasswordReset } from '../../hooks/api/usePasswordReset';
 
 export default function PasswordResetPage() {
+  // TODO: 비밀번호 변경 기능확인 후 최종 완성
+  const location = useLocation();
+  const email = location.state;
+  const navigate = useNavigate();
+  const { verify, updatePassword } = usePasswordReset();
   const [sentAuthNum, setSentAuthNum] = useState(false);
   const authNumRef = useRef('');
   const passwordRef = useRef('');
   const passwordConfirmRef = useRef('');
 
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [authError, setAuthError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(authNumRef.current.value);
-    authNumRef.current.value = '';
-    setSentAuthNum(true);
+    setAuthError(false);
+    console.log(authNumRef.current.value, email);
+    verify(authNumRef.current.value, email)
+      .then((res) => {
+        console.log(res);
+        setSentAuthNum(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.message === 'Request failed with status code 404') {
+          setAuthError(true);
+        }
+        return;
+      });
   };
 
   const handlePost = async (e) => {
@@ -25,7 +44,9 @@ export default function PasswordResetPage() {
     if (!isPWMatch) {
       return;
     }
-    console.log(passwordRef.current.value, passwordConfirmRef.current.value);
+    updatePassword(passwordRef.current.value, email).then(() => {
+      navigate('/auth/login');
+    });
   };
 
   return sentAuthNum ? (
@@ -48,9 +69,7 @@ export default function PasswordResetPage() {
           ref={passwordConfirmRef}
           hasError={!passwordMatch}
         >
-          {!passwordMatch && (
-            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>비밀번호가 일치하지 않습니다</div>
-          )}
+          {!passwordMatch && <div>비밀번호가 일치하지 않습니다</div>}
         </InputBox>
       </AuthForm>
     </div>
@@ -66,7 +85,9 @@ export default function PasswordResetPage() {
           id="authNum"
           type="password"
           ref={authNumRef}
-        />
+        >
+          {authError && <div>잘못된 인증번호입니다</div>}
+        </InputBox>
       </AuthForm>
     </div>
   );

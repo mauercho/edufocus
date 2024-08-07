@@ -1,23 +1,31 @@
 import { AuthForm, InputBox } from '../../components/AuthForm';
 import { useRef, useState, useEffect } from 'react';
 import styles from './PasswordResetPage.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { usePasswordReset } from '../../hooks/api/usePasswordReset';
 
 export default function PasswordResetPage() {
-  const navigate = useNavigate();
-  const [time, setTime] = useState(5);
-  const [emailSent, setEmailSent] = useState(false);
+  const [emailSent, setEmailSent] = useState('');
   const [notFound, setNotFound] = useState(false);
   const emailRef = useRef('');
 
   const { sendEmail } = usePasswordReset();
+
+  useEffect(() => {
+    if (emailSent) {
+      console.log('Updated emailSent:', emailSent);
+    }
+  }, [emailSent]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setNotFound(false);
     await sendEmail(emailRef.current.value)
       .then(() => {
-        setEmailSent(true);
+        const email = emailRef.current.value;
+        console.log(email);
+        setEmailSent(email);
+        console.log(emailSent);
       })
       .catch((err) => {
         console.log(err);
@@ -28,23 +36,6 @@ export default function PasswordResetPage() {
       });
   };
 
-  useEffect(() => {
-    if (!emailSent) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setTime((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [emailSent]);
-
-  useEffect(() => {
-    if (time === 0) {
-      navigate('../resetAuth');
-    }
-  }, [navigate, time]);
-
   return emailSent ? (
     <section className={styles.loginGroup}>
       <h1 className={styles.title}>인증번호 받기</h1>
@@ -52,12 +43,11 @@ export default function PasswordResetPage() {
         비밀번호 초기화 인증번호를 이메일로 보냈습니다.
         <br />
         메일함을 확인해주세요.
-        <br />
-        <span className={styles.seconds}>{time}초</span> 후에 자동으로 인증번호 입력 페이지로 이동합니다.
       </p>
       <Link
         to={'../resetAuth'}
         className={styles.linkButton}
+        state={emailSent}
       >
         인증번호 입력하러 가기
       </Link>

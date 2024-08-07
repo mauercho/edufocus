@@ -8,19 +8,11 @@ export function usePasswordReset() {
   };
 
   const verify = (authNum, email) => {
-    const verifyBody = {
-      code: authNum,
-      email,
-    };
-    return instance.get(`${API_URL}/mail/verify`, verifyBody);
+    return instance.get(`${API_URL}/mail/verify?code=${authNum}&email=${email}`);
   };
 
-  const updatePassword = (newPw, newPwCheck) => {
-    const passwordBody = {
-      newPassword: newPw,
-      newPasswordCheck: newPwCheck,
-    };
-    return instance.put(`${API_URL}/user/updateforgottenpassword`, passwordBody);
+  const updatePassword = (newPassword, email) => {
+    return instance.put(`${API_URL}/user/updateforgottenpassword?email=${email}&newPassword=${newPassword}`);
   };
 
   return { sendEmail, verify, updatePassword };
