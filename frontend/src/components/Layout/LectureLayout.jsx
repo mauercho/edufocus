@@ -73,8 +73,13 @@ export default function LectureLayout() {
               >
                 강의 정보 수정
               </SideLink>
-              <li onClick={handleDelete}>
-                <span className={styles.delete}>강의 삭제</span>
+              <li>
+                <span
+                  onClick={handleDelete}
+                  className={styles.delete}
+                >
+                  강의 삭제
+                </span>
               </li>
             </SideBar>
           )}

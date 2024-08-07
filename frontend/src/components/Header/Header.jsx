@@ -27,12 +27,6 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link to={'/'}>전체 강의</Link>
-          </li>
-          <li>
-            <Link to={'/'}>수강중인 강의</Link>
-          </li>
-          <li>
             <Link
               to={'/live/1'}
               target="_blank"

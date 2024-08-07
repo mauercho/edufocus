@@ -167,6 +167,7 @@ body {
     sans-serif;
   margin: 0;
   padding: 0;
+  min-width: 1360px;
 }
 
 a {
