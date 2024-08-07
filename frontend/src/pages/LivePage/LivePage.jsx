@@ -1,6 +1,6 @@
 import { LiveRoom } from '../../components/LiveRoom';
 import { useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 import instance from '../../utils/axios/instance';
 import { API_URL, ROOM_URL } from '../../constants';
@@ -43,7 +43,9 @@ export default function LivePage() {
         }, 500);
       }}
     >
-      <LiveRoom />
+      <Suspense fallback={<LoadingIndicator fill />}>
+        <LiveRoom />
+      </Suspense>
     </LiveKitRoom>
   ) : (
     <LoadingIndicator fill />
