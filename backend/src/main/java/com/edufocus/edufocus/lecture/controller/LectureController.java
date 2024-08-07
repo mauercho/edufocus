@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -83,8 +84,9 @@ public class LectureController {
 
     @GetMapping("/mylecture")
     public ResponseEntity<?> findMyLecture(@RequestHeader(value = "Authorization", required = false) String accessToken) {
+
         if (accessToken == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         }
 
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
@@ -92,5 +94,10 @@ public class LectureController {
         List<LectureSearchResponse> myLectures = lectureService.findMyLecture(userId);
 
         return new ResponseEntity<>(myLectures, HttpStatus.OK);
+    }
+
+    @GetMapping("/isLive/{lectureId}")
+    public ResponseEntity<Boolean> checkIsLive(@PathVariable long lectureId) {
+        return new ResponseEntity<>(lectureService.getState(lectureId), HttpStatus.OK);
     }
 }

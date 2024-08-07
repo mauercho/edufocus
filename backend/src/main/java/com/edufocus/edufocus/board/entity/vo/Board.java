@@ -62,7 +62,7 @@ public class Board {
         return ResponseBoardSummaryDto.builder()
                 .id(id)
                 .title(title)
-                .name(user.getUserId())
+                .name(user.getName())
                 .createdAt(createdAt)
                 .build();
     }
@@ -70,7 +70,7 @@ public class Board {
     public ResponseBoardDetailDto makeDetailDto(){
         return ResponseBoardDetailDto.builder()
                 .id(id)
-                .name(user.getEmail())
+                .name(user.getName())
                 .title(title)
                 .content(content)
                 .viewCount(viewCount)

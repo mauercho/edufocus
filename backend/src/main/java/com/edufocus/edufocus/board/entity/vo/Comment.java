@@ -42,7 +42,7 @@ public class Comment {
     public ResponseCommentDto makeCommentDto() {
         return ResponseCommentDto.builder()
                 .id(id)
-                .name(user.getEmail())
+                .name(user.getName())
                 .content(content)
                 .createAt(createdAt)
                 .modifiedAt(modifiedAt)

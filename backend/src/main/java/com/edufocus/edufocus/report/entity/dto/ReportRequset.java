@@ -10,11 +10,9 @@ import java.util.List;
 public class ReportRequset {
 
 
-    private Long userId;
-    private Long quizsetId;
-    List<AnswerInput> answerInputList;
+    List<String> answer;
 
-
+// [1,2,,3]
 //    List<answerDto> a
 //    userID :
 //    quizSetId :
