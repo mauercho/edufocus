@@ -71,9 +71,9 @@ public class UserController {
 
     // 비밀번호 찾기를 통한 변경
     @PutMapping("/updateforgottenpassword")
-    public ResponseEntity<String> updatePassword(@RequestParam long userId,
+    public ResponseEntity<String> updatePassword(@RequestParam String email,
                                                  @RequestParam String newPassword) {
-        userService.changeForgottenPassword(userId, newPassword);
+        userService.changeForgottenPassword(email, newPassword);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

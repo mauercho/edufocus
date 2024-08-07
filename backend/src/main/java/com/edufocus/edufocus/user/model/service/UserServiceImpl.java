@@ -143,8 +143,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeForgottenPassword(Long id, String newPassword) {
-        User user = userRepository.findById(id).orElse(null);
+    public void changeForgottenPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
             throw new UserException("User not found");

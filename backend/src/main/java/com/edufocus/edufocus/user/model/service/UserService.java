@@ -28,5 +28,5 @@ public interface UserService {
 
     boolean isEmailExist(String email);
 
-    void changeForgottenPassword(Long id, String newPassword);
+    void changeForgottenPassword(String email, String newPassword);
 }
