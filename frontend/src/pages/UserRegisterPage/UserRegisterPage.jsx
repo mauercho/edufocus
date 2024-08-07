@@ -14,19 +14,16 @@ export default function UserRegisterPage() {
   const passwordConfirmRef = useRef();
 
   const [userType, setUserType] = useState('STUDENT');
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [existingId, setExistingId] = useState(false);
-  const [existingEmail, setExistingEmail] = useState(false);
+  const [error, setError] = useState('');
 
   const { userRegister } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isPWMatch = passwordRef.current.value === passwordConfirmRef.current.value;
-    setExistingId(false);
-    setExistingEmail(false);
-    setPasswordMatch(isPWMatch);
+    setError('');
     if (!isPWMatch) {
+      setError('pwNotMatch');
       return;
     }
     userRegister(
@@ -41,10 +38,10 @@ export default function UserRegisterPage() {
       })
       .catch((err) => {
         if (err.response.data === '아이디가 중복 됐습니다.') {
-          setExistingId(true);
+          setError('existingId');
         }
         if (err.response.data === '이메일이 중복 됐습니다.') {
-          setExistingEmail(true);
+          setError('existingEmail');
         }
       });
   };
@@ -84,11 +81,9 @@ export default function UserRegisterPage() {
           type="text"
           id="ID"
           ref={idRef}
-          hasError={existingId}
+          hasError={error === 'existingId'}
         >
-          {existingId && (
-            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>이미 존재하는 아이디입니다</div>
-          )}
+          {error === 'existingId' && <div>이미 존재하는 아이디입니다</div>}
         </InputBox>
         <InputBox
           title="이름"
@@ -101,11 +96,9 @@ export default function UserRegisterPage() {
           type="email"
           id="email"
           ref={emailRef}
-          hasError={existingEmail}
+          hasError={error === 'existingEmail'}
         >
-          {existingEmail && (
-            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>이미 등록된 이메일입니다</div>
-          )}
+          {error === 'existingEmail' && <div>이미 등록된 이메일입니다</div>}
         </InputBox>
         <InputBox
           title="비밀번호"
@@ -118,11 +111,9 @@ export default function UserRegisterPage() {
           type="password"
           id="passwordConfirm"
           ref={passwordConfirmRef}
-          hasError={!passwordMatch}
+          hasError={error === 'pwNotMatch'}
         >
-          {!passwordMatch && (
-            <div className={`${styles.textBodyStrong} ${styles.dangerColor}`}>비밀번호가 일치하지 않습니다</div>
-          )}
+          {error === 'pwNotMatch' && <div>비밀번호가 일치하지 않습니다</div>}
         </InputBox>
       </AuthForm>
     </div>
