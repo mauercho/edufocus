@@ -143,13 +143,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailExist(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-
-        return user.isPresent();
-    }
-
-    @Override
     public void changeForgottenPassword(Long id, String newPassword) {
         User user = userRepository.findById(id).orElse(null);
 
