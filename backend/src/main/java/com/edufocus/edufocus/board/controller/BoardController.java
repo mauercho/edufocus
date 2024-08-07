@@ -45,9 +45,13 @@ public class BoardController {
 
     @GetMapping(value = "/{boardId}")
     public ResponseEntity<ResponseBoardDetailDto> getBoardDetail(
-            @PathVariable int boardId
+            @PathVariable int boardId,
+            HttpServletRequest request
     ){
-        ResponseBoardDetailDto responseBoardDetailDto = boardService.findBoardDetail(boardId);
+        String token = request.getHeader("Authorization");
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+        ResponseBoardDetailDto responseBoardDetailDto = boardService.findBoardDetail(userId, boardId);
 
         return new ResponseEntity<>(responseBoardDetailDto, HttpStatus.OK);
     }
@@ -77,8 +81,7 @@ public class BoardController {
 
     @DeleteMapping(value = "/{boardId}")
     public ResponseEntity<?> deleteBoard(
-            @PathVariable int boardId,
-            HttpServletRequest request
+            @PathVariable int boardId
     ){
         boardService.deleteBoard(boardId);
 
@@ -87,9 +90,13 @@ public class BoardController {
 
     @GetMapping(value = "/comment/{boardId}")
     public ResponseEntity<List<ResponseCommentDto>> getComments(
-            @PathVariable int boardId
+            @PathVariable int boardId,
+            HttpServletRequest request
     ){
-        List<ResponseCommentDto> comments = boardService.findComments(boardId);
+        String token = request.getHeader("Authorization");
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+        List<ResponseCommentDto> comments = boardService.findComments(userId, boardId);
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
