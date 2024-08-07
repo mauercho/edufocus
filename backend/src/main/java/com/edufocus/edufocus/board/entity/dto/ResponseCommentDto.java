@@ -14,6 +14,7 @@ public class ResponseCommentDto {
     private long id;
     private String name;
     private String content;
+    private boolean isMine;
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
 }
