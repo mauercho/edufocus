@@ -17,6 +17,7 @@ export default function LectureLayout() {
   const { lectureDelete } = useLectureDelete();
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
+  console.log(lecture);
   const userType = useBoundStore((state) => state.userType);
   const handleDelete = () => {
     confirm('강의를 삭제할까요??') &&
@@ -39,8 +40,7 @@ export default function LectureLayout() {
         title={lecture.title}
         tutor={lecture.teacherName}
         img={lecture.image}
-        // TODO: isLive를 받아올 수단 추가
-        isLive={true}
+        isLive={lecture.online}
       />
       <MaxWidthLayout hasSideBar>
         <aside>
@@ -53,7 +53,7 @@ export default function LectureLayout() {
             </SideLink>
             <SideLink to={'notice'}>공지사항</SideLink>
             <SideLink to={'qna'}>Q&A</SideLink>
-            <SideLink to={'file'}>수업자료</SideLink>
+            <SideLink to={'freeboard'}>자유게시판</SideLink>
             <SideLink to={'quiz'}>퀴즈</SideLink>
             {userType === 'teacher' && <SideLink to={'enroll'}>수강신청관리</SideLink>}
           </SideBar>

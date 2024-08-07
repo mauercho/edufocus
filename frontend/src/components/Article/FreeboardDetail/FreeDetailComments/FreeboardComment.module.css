@@ -1,0 +1,97 @@
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+}
+
+.commentEdit {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.commentHeader {
+  display: flex;
+  gap: 4px;
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
+}
+
+.author {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.content {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  align-self: end;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--error-color);
+  background-color: var(--error-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  align-self: end;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
