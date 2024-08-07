@@ -71,6 +71,7 @@ public class QnaController {
             User findUser = userRepository.findById(userId).orElse(null);
 
             if (findUser.getRole() != UserRole.ADMIN) {
+                System.out.println("role 안맞음");
                 throw new RuntimeException("update 실패");
             }
 
@@ -88,6 +89,7 @@ public class QnaController {
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
             User findUser = userRepository.findById(userId).orElse(null);
 
+            System.out.println("delete answer");
             if (findUser.getRole() != UserRole.ADMIN) {
                 throw new RuntimeException();
             }

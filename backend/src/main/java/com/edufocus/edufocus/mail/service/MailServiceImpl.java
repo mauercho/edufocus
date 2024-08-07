@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService {
         redisUtil.setDataExpire(code, email, 60 * 5L);
 
         SimpleMailMessage mail = createEmail(email, "[EDUFOCUS] 비밀번호 찾기 안내", code);
-        mailSender.send(mail);
+        //mailSender.send(mail);
     }
 
     @Override
