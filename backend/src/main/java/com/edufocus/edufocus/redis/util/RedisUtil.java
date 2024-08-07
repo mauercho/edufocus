@@ -33,4 +33,8 @@ public class RedisUtil {
         stringRedisTemplate.delete(key);
     }
 
+    public boolean exists(String key) {
+        return stringRedisTemplate.hasKey(key);
+    }
+
 }
