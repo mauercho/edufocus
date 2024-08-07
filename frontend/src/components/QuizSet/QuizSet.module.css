@@ -40,5 +40,5 @@
   overflow: hidden;
   margin-top: 16px;
   transform-origin: left center;
-  animation: progress 5s linear infinite;
+  animation: progress 10s linear infinite;
 }

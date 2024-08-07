@@ -17,7 +17,10 @@ export default function QuizSet({ quizSetId, finish }) {
   const interval = useRef(null);
   const submit = useCallback(
     (data) => {
-      instance.post(`${API_URL}/report/submit/${roomId}/quizset/${quizSetId}`, data).catch(() => {});
+      const requestData = {
+        answer: data,
+      };
+      instance.post(`${API_URL}/report/submit/${roomId}/quizset/${quizSetId}`, requestData).catch(() => {});
     },
     [quizSetId, roomId]
   );
@@ -25,7 +28,6 @@ export default function QuizSet({ quizSetId, finish }) {
     ...quizList.map((quiz, index) => (
       <Quiz
         key={index}
-        step={index}
         answers={answers.current}
         setAnswers={(value) => {
           answers.current = answers.current.map((v, i) => (i === index ? value : v));
@@ -60,7 +62,7 @@ export default function QuizSet({ quizSetId, finish }) {
 
         return prev + 1;
       });
-    }, 5000);
+    }, 10 * 1000);
 
     return () => {
       clearInterval(interval.current);
@@ -78,7 +80,7 @@ export default function QuizSet({ quizSetId, finish }) {
     <>
       {step === null ? (
         <div className={styles.message}>
-          <span>퀴즈를 시작합니다</span>
+          <span>10초 후 퀴즈를 시작합니다.</span>
           <LoadingIndicator />
         </div>
       ) : (

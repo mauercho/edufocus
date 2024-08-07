@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { STATIC_URL } from '../../constants';
 import styles from './Quiz.module.css';
 
-export default function Quiz({ question, step, image, choices = [], setAnswers }) {
+export default function Quiz({ question, image, choices = [], setAnswers }) {
   const [answer, setAnswer] = useState(null);
   const isChoice = choices.length > 0;
 
@@ -37,9 +37,9 @@ export default function Quiz({ question, step, image, choices = [], setAnswers }
             type="text"
             autoFocus
             placeholder="답 입력"
-            onChange={(e) =>
-              setAnswers((prev) => prev.map((value, index) => (index === step ? e.target.value : value)))
-            }
+            onChange={(e) => {
+              setAnswers(e.target.value);
+            }}
             className={styles.input}
           />
         )}
