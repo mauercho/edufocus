@@ -1,0 +1,30 @@
+.comment {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+}

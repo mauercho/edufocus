@@ -50,7 +50,7 @@ export default function LectureLayout() {
             </SideLink>
             <SideLink to={'notice'}>공지사항</SideLink>
             <SideLink to={'qna'}>Q&A</SideLink>
-            <SideLink to={'file'}>수업자료</SideLink>
+            <SideLink to={'freeboard'}>자유게시판</SideLink>
             <SideLink to={'quiz'}>퀴즈</SideLink>
             {userType === 'teacher' && <SideLink to={'enroll'}>수강신청관리</SideLink>}
           </SideBar>
