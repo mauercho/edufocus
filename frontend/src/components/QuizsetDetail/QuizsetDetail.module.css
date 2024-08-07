@@ -42,3 +42,11 @@
   border-radius: 8px;
   background-color: var(--background-secondary);
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 440px);
+  gap: 20px;
+  justify-content: start;
+  margin-bottom: 40px;
+}
