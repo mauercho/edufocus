@@ -3,11 +3,11 @@ package com.edufocus.edufocus.user.model.service;
 
 import com.edufocus.edufocus.user.model.entity.dto.InfoDto;
 import com.edufocus.edufocus.user.model.entity.dto.PasswordDto;
-import com.edufocus.edufocus.user.util.PasswordUtils;
 import com.edufocus.edufocus.user.model.entity.dto.RequestJoinDto;
 import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.exception.UserException;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
+import com.edufocus.edufocus.user.util.PasswordUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
-    public void join(RequestJoinDto requestJoinDto)
-    {
+    public void join(RequestJoinDto requestJoinDto) {
         User user = User.builder()
                 .userId(requestJoinDto.getUserId())
                 .email(requestJoinDto.getEmail())
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User login(User user){
+    public User login(User user) {
         Optional<User> findUser = userRepository.findByUserId(user.getUserId());
 
         if (findUser.isEmpty()) {
@@ -63,32 +62,29 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
     @Override
-    public String getUserName(Long id){
+    public String getUserName(Long id) {
         return userRepository.findById(id).get().getName();
     }
 
 
     @Override
-    public void changeUserInfo(InfoDto infoDto, Long id){
+    public void changeUserInfo(InfoDto infoDto, Long id) {
 
         User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
         if (infoDto.getName() != null)
             user.setName(infoDto.getName());
 
-        if(infoDto.getEmail()!=null)
+        if (infoDto.getEmail() != null)
             user.setEmail(infoDto.getEmail());
 
         userRepository.save(user);
-}
+    }
 
 
     @Override
-    public void changePassword(PasswordDto passwordDto, Long id){
+    public void changePassword(PasswordDto passwordDto, Long id) {
         User user = userRepository.findById(id).orElse(null);
 
         if (user == null) {
@@ -114,30 +110,52 @@ public class UserServiceImpl implements UserService {
     }
 
     public String getTempPassword() {
-        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
                 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         String str = "";
 
         int idx = 0;
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             idx = (int) (charSet.length * Math.random());
             str += charSet[idx];
         }
         return str;
     }
+
     @Override
-    public void saveRefreshToken(Long id, String refreshToken){
+    public void saveRefreshToken(Long id, String refreshToken) {
         userRepository.saveRefreshToken(id, refreshToken);
     }
 
     @Override
-    public String getRefreshToken(Long id){
+    public String getRefreshToken(Long id) {
         return userRepository.getRefreshToken(id);
     }
 
     @Override
-    public void deleteRefreshToken(Long id){
+    public void deleteRefreshToken(Long id) {
         userRepository.deleteRefreshToken(id);
     }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+
+        return user.isPresent();
+    }
+
+    @Override
+    public void changeForgottenPassword(Long id, String newPassword) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            throw new UserException("User not found");
+        }
+
+        // Hash the new password before saving
+        user.setPassword(PasswordUtils.hashPassword(newPassword));
+        userRepository.save(user);
+    }
+
 
 }

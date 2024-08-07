@@ -47,6 +47,6 @@ public class WebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**") // 모든 경로에 대해 인터셉터 적용
-                .excludePathPatterns("/v3/api-docs/**", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**", "/auth/**", "/board/**", "/user/**", "/lecture/**", "/qna/**", "/quiz/**", "/video/**", "/registration/**", "/report/**"); // 인증 없이 접근 가능한 경로 설정
+                .excludePathPatterns("/v3/api-docs/**", "/swagger-resources/**", "/webjars/**", "/swagger-ui/**", "/auth/**", "/board/**", "/user/**", "/lecture/**", "/qna/**", "/quiz/**", "/video/**", "/registration/**", "/report/**", "/mail/**"); // 인증 없이 접근 가능한 경로 설정
     }
 }
