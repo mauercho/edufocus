@@ -71,7 +71,7 @@ public class QnaController {
             User findUser = userRepository.findById(userId).orElse(null);
 
             if (findUser.getRole() != UserRole.ADMIN) {
-                throw new RuntimeException();
+                throw new RuntimeException("update 실패");
             }
 
             QnaResponseDto responseDto = qnaService.updateAnswer(qna_id, qnaRequestDto);
