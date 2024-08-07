@@ -16,7 +16,7 @@ public class ResponseBoardDetailDto {
     private String name;
     private String title;
     private String content;
-    private int viewCount;
+    private boolean isMine;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }

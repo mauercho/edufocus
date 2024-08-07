@@ -48,10 +48,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Transactional
-    public ResponseBoardDetailDto findBoardDetail(long boardId) {
+    public ResponseBoardDetailDto findBoardDetail(long userId, long boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(NoSuchElementException::new)
-                .makeDetailDto();
+                .makeDetailDto(userId);
     }
 
     @Transactional
@@ -89,9 +89,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Transactional
-    public List<ResponseCommentDto> findComments(long boardId) {
+    public List<ResponseCommentDto> findComments(long userId, long boardId) {
         return  commentRepository.findByBoardId(boardId).stream()
-                .map(Comment::makeCommentDto)
+                .map((Comment c) -> c.makeCommentDto(userId))
                 .collect(Collectors.toList());
     }
 

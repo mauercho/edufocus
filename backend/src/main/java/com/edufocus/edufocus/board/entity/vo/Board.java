@@ -67,13 +67,13 @@ public class Board {
                 .build();
     }
 
-    public ResponseBoardDetailDto makeDetailDto(){
+    public ResponseBoardDetailDto makeDetailDto(long userId){
         return ResponseBoardDetailDto.builder()
                 .id(id)
                 .name(user.getName())
                 .title(title)
                 .content(content)
-                .viewCount(viewCount)
+                .isMine(user.getId() == userId)
                 .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
                 .build();

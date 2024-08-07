@@ -39,11 +39,12 @@ public class Comment {
     @JoinColumn(name = "board_id")
     Board board;
 
-    public ResponseCommentDto makeCommentDto() {
+    public ResponseCommentDto makeCommentDto(long userId) {
         return ResponseCommentDto.builder()
                 .id(id)
                 .name(user.getName())
                 .content(content)
+                .isMine(user.getId() == userId)
                 .createAt(createdAt)
                 .modifiedAt(modifiedAt)
                 .build();
