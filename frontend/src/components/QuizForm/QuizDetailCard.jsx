@@ -30,7 +30,7 @@ export default function QuizCard({ index, question, answer, image, choices }) {
           className={styles.choiceDiv}
           key={idx}
         >
-          <label>{choice.num} </label>
+          <label className={styles.numLabel}>{choice.num} </label>
           <div className={`${styles.input} ${styles.choiceInput}`}>{choice.content}</div>
         </div>
       ))}

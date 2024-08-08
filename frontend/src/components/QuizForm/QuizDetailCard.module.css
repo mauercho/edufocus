@@ -59,6 +59,11 @@
   gap: 8px;
 }
 
+.numLabel {
+  width: 40px;
+  text-align: end;
+}
+
 .choiceInput {
   flex-grow: 1;
   padding: 7px;
