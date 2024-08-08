@@ -61,7 +61,7 @@ export default function LectureLayout() {
             <SideLink to={'qna'}>Q&A</SideLink>
             <SideLink to={'freeboard'}>자유게시판</SideLink>
             {userType === 'student' && <SideLink to={'report'}>퀴즈 성적</SideLink>}
-            {userType === 'teacher' && <SideLink to={'quiz'}>퀴즈</SideLink>}
+            {userType === 'teacher' && <SideLink to={'quiz'}>퀴즈 만들기</SideLink>}
             {userType === 'teacher' && <SideLink to={'enroll'}>수강신청관리</SideLink>}
           </SideBar>
           {userType === 'teacher' && (
@@ -88,6 +88,7 @@ export default function LectureLayout() {
                   강의 삭제
                 </span>
               </li>
+              <SideLink to={'teacherReportsets'}>퀴즈 목록</SideLink>
             </SideBar>
           )}
           {userType === 'student' && (
