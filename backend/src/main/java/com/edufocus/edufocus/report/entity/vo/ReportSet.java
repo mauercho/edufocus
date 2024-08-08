@@ -3,11 +3,13 @@ package com.edufocus.edufocus.report.entity.vo;
 import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.report.entity.dto.ReportSetResponse;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 import java.time.LocalDateTime;
@@ -21,6 +23,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ReportSet {
     @Id
     @GeneratedValue(generator = "UUID")
