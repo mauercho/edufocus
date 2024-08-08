@@ -3,36 +3,56 @@ import LectureEnroll from '../../components/LectureEnroll/LectureEnroll';
 import { useParams } from 'react-router-dom';
 import { useLectureEnroll } from '../../hooks/api/useLectureEnroll';
 import { useState, useEffect } from 'react';
+import styles from './LectureEnrollPage.module.css';
 
-export default function QuestionListPage() {
+export default function LectureEnrollPage() {
   const { lectureId } = useParams();
   const { data } = useLectureEnroll(lectureId);
-  const [lectures, setLectures] = useState([]);
-
+  const [newStudents, setNewStudents] = useState([]);
+  const [students, setStudents] = useState([]);
+  console.log(data);
   useEffect(() => {
     if (data?.data) {
-      setLectures(data.data);
+      setNewStudents(data.data[1]);
+      setStudents(data.data[0]);
     }
   }, [data]);
 
+  const handleNewDelete = async (enrollId) => {
+    setNewStudents(newStudents.filter((student) => student.id !== enrollId));
+  };
+
   const handleDelete = async (enrollId) => {
-    setLectures(lectures.filter((lecture) => lecture.id !== enrollId));
+    setStudents(students.filter((student) => student.id !== enrollId));
   };
 
   return (
     <ArticleBoard
-      title="수강신청관리"
+      title="수강신청 관리"
       canCreate={false}
     >
-      {lectures.length &&
-        lectures.map?.((lecture) => (
+      {newStudents.length &&
+        newStudents.map?.((student) => (
           <LectureEnroll
-            key={`${lecture.id}`}
-            enrollid={lecture.id}
-            userName={lecture.userName}
-            onDelete={handleDelete}
+            key={`${student.id}`}
+            enrollid={student.id}
+            userName={student.userName}
+            onDelete={handleNewDelete}
+            enrolled={false}
           />
         ))}
+      <div>
+        <h3 className={styles.title}>전체 수강생 관리</h3>
+        {students.length &&
+          students.map?.((student) => (
+            <LectureEnroll
+              key={`${student.id}`}
+              enrollid={student.id}
+              userName={student.userName}
+              onDelete={handleDelete}
+            />
+          ))}
+      </div>
     </ArticleBoard>
   );
 }
