@@ -38,6 +38,7 @@ const FreeboardDetailPage = lazy(async () => await import('./pages/FreeboardDeta
 const EditFreeboardPage = lazy(async () => await import('./pages/EditFreeboardPage'));
 const PasswordResetAuthPage = lazy(async () => await import('./pages/PasswordResetAuthPage'));
 const StudentReportPage = lazy(async () => await import('./pages/StudentReportPage'));
+const StudentReportDetailPage = lazy(async () => await import('./pages/StudentReportDetailPage'));
 const LivePage = lazy(async () => await import('./pages/LivePage'));
 
 const router = createBrowserRouter([
@@ -82,10 +83,10 @@ const router = createBrowserRouter([
             path: 'report',
             element: <StudentReportPage />,
           },
-          // {
-          //   path: 'report/:reportId',
-          //   element:
-          // },
+          {
+            path: 'report/:reportId',
+            element: <StudentReportDetailPage />,
+          },
           {
             path: 'edit',
             element: <LectureEditPage />,
