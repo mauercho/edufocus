@@ -20,7 +20,7 @@ public class Qna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "qna_id")
+    @Column(name = "qna_id")
     private Long id;
 
 
@@ -32,7 +32,7 @@ public class Qna {
 
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @Column(name = "modified_at")
@@ -45,13 +45,12 @@ public class Qna {
 
     private String name;
     @ManyToOne
-    @JoinColumn(name= "id")
+    @JoinColumn(name = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name= "lecture_id")
+    @JoinColumn(name = "lecture_id")
     private Lecture lecture;
-
 
 
 }
