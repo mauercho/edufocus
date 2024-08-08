@@ -13,8 +13,7 @@ import java.util.List;
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
     List<Registration> findAllByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT r FROM Registration r WHERE r.lecture.id = :lectureId AND r.status = 'WAITING'")
-    List<Registration> findAllNotAcceptedByLectureId(@Param("lectureId") Long lectureId);
+    List<Registration> findAllByLectureId(Long lectureId);
 
     Registration findByUserIdAndLectureId(Long userId, Long lectureId);
 

@@ -16,7 +16,7 @@ public interface RegistrationService {
 
     boolean deleteRegistration(Long userId, Long registrationId);
 
-    List<RegistrationSearchResponse> searchRegistrations(Long LectureId);
+    List<RegistrationSearchResponse>[] searchRegistrations(Long LectureId);
 
     RegistrationStatus getStatus(Long userId, Long lectureId);
 }
