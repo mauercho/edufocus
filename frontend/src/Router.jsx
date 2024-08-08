@@ -40,6 +40,8 @@ const PasswordResetAuthPage = lazy(async () => await import('./pages/PasswordRes
 const StudentReportPage = lazy(async () => await import('./pages/StudentReportPage'));
 const StudentReportDetailPage = lazy(async () => await import('./pages/StudentReportDetailPage'));
 const LivePage = lazy(async () => await import('./pages/LivePage'));
+const TeacherReportsetPage = lazy(async () => await import('./pages/TeacherReportsetPage'));
+const TeacherReportsetDetailPage = lazy(async () => await import('./pages/TeacherReportsetDetailPage'));
 
 const router = createBrowserRouter([
   {
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
           {
             path: 'report/:reportId',
             element: <StudentReportDetailPage />,
+          },
+          {
+            path: 'teacherReportsets',
+            element: <TeacherReportsetPage />,
+          },
+          {
+            path: 'teacherReportsets/:reportsetId',
+            element: <TeacherReportsetDetailPage />,
           },
           {
             path: 'edit',
