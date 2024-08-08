@@ -9,7 +9,6 @@ export default function QuestionListPage() {
   const { data } = useQnas(lectureId);
   const questions = data?.data;
   const userType = useBoundStore((state) => state.userType);
-
   return (
     <ArticleBoard
       title="Q&A"

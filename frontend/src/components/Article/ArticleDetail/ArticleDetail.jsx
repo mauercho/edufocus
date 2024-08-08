@@ -55,7 +55,7 @@ export default function ArticleDetail({
           </div>
         </div>
         <div className={styles.actionGroup}>
-          {(isMine || userType === 'teacher') && (
+          {(isMine || (userType === 'teacher' && !isQna)) && (
             <>
               <Link
                 className={styles.edit}
@@ -85,12 +85,16 @@ export default function ArticleDetail({
             answer={submittedAnswer}
             onEditClick={handleEditClick}
             onDeleteSubmit={handleDeleteSubmit}
+            isTeacher={userType === 'teacher'}
           />
         ) : (
-          <ArticleDetailAnswerInput
-            onSubmit={handleAnswerSubmit}
-            initialAnswer={submittedAnswer}
-          />
+          userType === 'teacher' && (
+            <ArticleDetailAnswerInput
+              onSubmit={handleAnswerSubmit}
+              initialAnswer={submittedAnswer}
+              isEditing={isEditing}
+            />
+          )
         ))}
     </div>
   );
