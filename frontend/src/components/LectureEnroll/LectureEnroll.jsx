@@ -2,7 +2,7 @@ import styles from './LectureEnroll.module.css';
 import { useLectureEnrollCancel } from '../../hooks/api/useLectureEnrollCancel';
 import { useLectureEnrollAccept } from '../../hooks/api/useLectureEnrollAccept';
 
-export default function LectureEnroll({ userName, enrollid, onDelete }) {
+export default function LectureEnroll({ userName, enrollid, onDelete, enrolled = true }) {
   const { lectureEnrollCancel } = useLectureEnrollCancel();
   const { lectureEnrollAccept } = useLectureEnrollAccept();
 
@@ -28,12 +28,14 @@ export default function LectureEnroll({ userName, enrollid, onDelete }) {
     <div className={styles.enrollLink}>
       <span>{userName}</span>
       <div className={styles.buttonWrapper}>
-        <button
-          onClick={handleAccept}
-          className={styles.accept}
-        >
-          등록
-        </button>
+        {!enrolled && (
+          <button
+            onClick={handleAccept}
+            className={styles.accept}
+          >
+            등록
+          </button>
+        )}
         <button
           onClick={handleCancel}
           className={styles.reject}

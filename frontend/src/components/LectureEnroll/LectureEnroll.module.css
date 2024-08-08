@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+.enrollLink:hover {
+  background-color: var(--background-secondary);
+}
+
 .buttonWrapper {
   display: flex;
   gap: 8px;
