@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './QuizCard.module.css';
+import CloseIcon from '/src/assets/icons/close.svg?react';
+import PlusIcon from '/src/assets/icons/plus.svg?react';
 
 export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   // TODO: 카드 디자인 완성 및 이쁘게 바꾸기
@@ -53,10 +55,10 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
       <div className={styles.header}>
         <span className={styles.heading}>퀴즈 생성 카드</span>
         <button
-          className={`${styles.button} ${styles.cardRemove}`}
+          className={`${styles.cardRemove}`}
           onClick={() => deleteQuiz(quiz.id)}
         >
-          X
+          <CloseIcon />
         </button>
       </div>
       <label htmlFor={`file-input-${quiz.id}`}>
@@ -68,7 +70,8 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           />
         ) : (
           <div className={styles.imagePreview}>
-            <div>이미지 업로드</div>
+            <PlusIcon />
+            <span>퀴즈 이미지 추가</span>
           </div>
         )}
       </label>
@@ -112,13 +115,15 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         >
           선택지 추가하기
         </button>
-        <button
-          type="button"
-          onClick={handlePopChoice}
-          className={`${styles.button} ${styles.remove}`}
-        >
-          선택지 줄이기
-        </button>
+        {choices.length > 0 && (
+          <button
+            type="button"
+            onClick={handlePopChoice}
+            className={`${styles.button} ${styles.remove}`}
+          >
+            선택지 줄이기
+          </button>
+        )}
       </div>
       {choices.map?.((choice, idx) => (
         <div

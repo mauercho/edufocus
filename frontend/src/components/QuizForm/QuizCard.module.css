@@ -30,7 +30,10 @@
 
 .imagePreview {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  color: var(--text-color);
+  stroke: var(--text-color);
   align-items: center;
   width: 295px;
   height: 220px;
@@ -39,6 +42,7 @@
   background-color: var(--background-secondary);
   object-fit: contain;
   cursor: pointer;
+  gap: 10px;
 }
 
 .hiddenInput {
@@ -105,8 +109,10 @@
 }
 
 .cardRemove {
-  border: 1px solid var(--background-secondary);
-  background-color: var(--background-secondary);
-  color: var(--text-color-secondary);
-  stroke: var(--text-color-secondary);
+  border: 0;
+  background-color: var(--background);
+  color: var(--text-color);
+  stroke: var(--text-color);
+  cursor: pointer;
+  padding: 0;
 }

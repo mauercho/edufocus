@@ -76,11 +76,17 @@
   cursor: pointer;
   height: 592px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--background-secondary);
+  background-color: var(--background);
   stroke: var(--text-color);
   border-radius: 8px;
+  gap: 10px;
+}
+
+.addCard:hover {
+  background-color: var(--background-secondary);
 }
 
 .button {
