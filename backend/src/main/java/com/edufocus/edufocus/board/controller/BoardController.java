@@ -38,7 +38,7 @@ public class BoardController {
         List<ResponseBoardSummaryDto> boardSummaries = boardService.findBoards(pageNo, category, lectureId);
 
         if(boardSummaries.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(boardSummaries, HttpStatus.NO_CONTENT);
 
         return new ResponseEntity<>(boardSummaries, HttpStatus.OK);
     }
