@@ -41,6 +41,8 @@ public class Registration {
         return Report.builder()
                 .allCount(0)
                 .correctCount(-1)
+                .reportSet(reportSet)
+                .quizSet(quizSet)
                 .lectureId(lectureId)
                 .user(user)
                 .build();

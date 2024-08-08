@@ -18,5 +18,6 @@ public class QuizDto {
     private String image;
     private String answer;
     private String userAnswer;
+    private boolean isCollect;
     private List<ChoiceDto> choices;
 }

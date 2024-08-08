@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isTeacher(long id){
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new).getRole() == UserRole.ADMIN;
+    public boolean isTeacher(long userId){
+        return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new).getRole() == UserRole.ADMIN;
     }
 }
