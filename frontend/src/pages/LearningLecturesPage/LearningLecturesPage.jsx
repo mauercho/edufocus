@@ -1,6 +1,8 @@
 import styles from './LearningLecturesPage.module.css';
 import { Link } from 'react-router-dom';
 import { useMyLectures } from '../../hooks/api/useMyLectures';
+import CompassIcon from '/src/assets/icons/compass.svg?react';
+import { STATIC_URL } from '../../constants';
 
 export default function LearningLecturesPage() {
   const { data } = useMyLectures();
@@ -18,7 +20,17 @@ export default function LearningLecturesPage() {
               to={`/lecture/${lecture.id}`}
               className={styles.card}
             >
-              <div className={styles.thumbnail} />
+              {lecture.image ? (
+                <img
+                  src={`${STATIC_URL}${lecture.image}`}
+                  alt={lecture.title}
+                  className={styles.thumbnail}
+                />
+              ) : (
+                <div className={styles.thumbnail}>
+                  <CompassIcon />
+                </div>
+              )}
               <div>{lecture.title}</div>
             </Link>
           ))

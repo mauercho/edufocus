@@ -40,7 +40,9 @@
   height: 220px;
   margin: 10px auto;
   border-radius: 8px;
+  object-fit: contain;
   background-color: var(--background-secondary);
+  border: 1px solid var(--background-secondary);
 }
 
 .grid {

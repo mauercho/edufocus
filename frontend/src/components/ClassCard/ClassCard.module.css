@@ -12,14 +12,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 295px;
-  height: 220px;
+  width: 100%;
+  aspect-ratio: 4/3;
   border-radius: 20px;
   background-color: var(--background-secondary);
-  stroke: var(--text-color);
+  border: 1px solid var(--background-secondary);
+  object-fit: contain;
+  stroke: var(--text-color-secondary);
   box-sizing: border-box;
-}
-
-img.thumbnail {
-  border: 1px solid var(--border-color);
 }
