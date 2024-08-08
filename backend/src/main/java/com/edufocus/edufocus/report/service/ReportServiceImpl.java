@@ -54,17 +54,17 @@ public class ReportServiceImpl implements ReportService {
         for (int idx = 0; idx < answerInputList.size(); idx++) {
             Quiz quiz = quizList.get(idx);
             String inputAnswer = answerInputList.get(idx);
-            boolean isCollect;
+            boolean isCorrect;
             Answer answer;
             if (quiz.getAnswer().equals(inputAnswer)) {
                 correctCount++;
-                isCollect = true;
+                isCorrect = true;
             } else {
-                isCollect = false;
+                isCorrect = false;
             }
             answer = Answer.builder()
                     .userAnswer(inputAnswer)
-                    .isCorrect(isCollect)
+                    .isCorrect(isCorrect)
                     .report(report)
                     .quiz(quiz)
                     .build();
@@ -106,7 +106,7 @@ public class ReportServiceImpl implements ReportService {
                         .question(quiz.getQuestion())
                         .answer(quiz.getAnswer())
                         .userAnswer(answer.getUserAnswer())
-                        .isCollect(answer.isCorrect())
+                        .isCorrect(answer.isCorrect())
                         .choices(choiceDtos)
                         .build();
 
