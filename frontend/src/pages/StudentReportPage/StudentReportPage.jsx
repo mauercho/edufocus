@@ -3,10 +3,14 @@ import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { ReportCard } from '../../components/ReportCard';
 import styles from './StudentReportPage.module.css';
 import { useStudentReports } from '../../hooks/api/useStudentReports';
+import { useParams } from 'react-router-dom';
 
 export default function StudentReportPage() {
-  const { data } = useStudentReports();
-  // const reports = data?.data;
+  const { lectureId } = useParams();
+  const { data } = useStudentReports(lectureId);
+  console.log(data);
+  const reportss = data?.data;
+  console.log(reportss);
   const reports = [
     {
       reportId: 1,
