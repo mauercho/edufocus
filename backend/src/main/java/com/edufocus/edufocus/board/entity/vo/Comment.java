@@ -22,7 +22,8 @@ public class Comment {
     @Id
     @GeneratedValue
     private long id;
-    @Column
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column
