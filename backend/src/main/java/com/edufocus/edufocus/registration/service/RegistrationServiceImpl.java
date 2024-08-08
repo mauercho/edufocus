@@ -74,18 +74,25 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public List<RegistrationSearchResponse> searchRegistrations(Long lectureId) {
-        List<Registration> registrations = registrationRepository.findAllNotAcceptedByLectureId(lectureId);
+    public List<RegistrationSearchResponse>[] searchRegistrations(Long lectureId) {
+        List<Registration> registrations = registrationRepository.findAllByLectureId(lectureId);
 
-        List<RegistrationSearchResponse> responses = new ArrayList<>();
+        List<RegistrationSearchResponse>[] responses = new ArrayList[2];
+        responses[0] = new ArrayList<>();
+        responses[1] = new ArrayList<>();
         for (Registration registration : registrations) {
             RegistrationSearchResponse response = RegistrationSearchResponse.builder()
                     .id(registration.getId())
                     .userName(registration.getUser().getName())
                     .build();
 
-            responses.add(response);
+            if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
+                responses[0].add(response);
+            } else {
+                responses[1].add(response);
+            }
         }
+
 
         return responses;
     }
