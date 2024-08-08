@@ -49,17 +49,20 @@ public class QnaController {
     public ResponseEntity<QnaResponseDto> createAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto, HttpServletRequest request) {
         try {
             String token = request.getHeader("Authorization");
+            System.out.println(token);
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
             User findUser = userRepository.findById(userId).orElse(null);
 
             if (findUser.getRole() != UserRole.ADMIN) {
-                throw new RuntimeException();
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
             }
 
             QnaResponseDto responseDto = qnaService.createAnswer(qna_id, qnaRequestDto);
             return new ResponseEntity<>(responseDto, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
         }
     }
 
@@ -91,12 +94,12 @@ public class QnaController {
 
             System.out.println("delete answer");
             if (findUser.getRole() != UserRole.ADMIN) {
-                throw new RuntimeException();
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             qnaService.deleteAnswer(qna_id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -110,7 +113,7 @@ public class QnaController {
             return new ResponseEntity<>(qnaResponseDto, HttpStatus.ACCEPTED);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
