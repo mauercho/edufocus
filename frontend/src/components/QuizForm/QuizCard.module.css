@@ -37,6 +37,7 @@
   margin: 10px auto;
   border-radius: 8px;
   background-color: var(--background-secondary);
+  object-fit: contain;
   cursor: pointer;
 }
 
