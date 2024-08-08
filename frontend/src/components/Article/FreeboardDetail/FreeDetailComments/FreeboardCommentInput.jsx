@@ -1,5 +1,6 @@
 import styles from './FreeboardCommentInput.module.css';
 import { useState } from 'react';
+import SendIcon from '/src/assets/icons/send.svg?react';
 
 export default function FreeboardCommentInput({ onCommentSubmit }) {
   const [newComment, setNewComment] = useState('');
@@ -19,7 +20,7 @@ export default function FreeboardCommentInput({ onCommentSubmit }) {
         type="text"
         value={newComment}
         onChange={(e) => setNewComment(e.target.value)}
-        placeholder="답변 작성"
+        placeholder="댓글 작성하기"
         className={styles.input}
         required
       />
@@ -27,7 +28,7 @@ export default function FreeboardCommentInput({ onCommentSubmit }) {
         type="submit"
         className={styles.button}
       >
-        작성
+        <SendIcon />
       </button>
     </form>
   );

@@ -4,7 +4,9 @@ import { useCommentDelete } from '../../../../hooks/api/useCommentDelete';
 import { useState } from 'react';
 import { useCommentEdit } from '../../../../hooks/api/useCommentEdit';
 
-export default function FreeboardComment({ content, author, onDeleteSubmit, onEditSubmit, commentId }) {
+import SendIcon from '/src/assets/icons/send.svg?react';
+
+export default function FreeboardComment({ content, author, onDeleteSubmit, onEditSubmit, commentId, isMine }) {
   const [isEditing, setIsEditing] = useState(false);
   const { commentDelete } = useCommentDelete();
   const { commentEdit } = useCommentEdit();
@@ -40,7 +42,7 @@ export default function FreeboardComment({ content, author, onDeleteSubmit, onEd
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="답변 작성"
+            placeholder="댓글 수정하기"
             className={styles.input}
             required
           />
@@ -48,30 +50,38 @@ export default function FreeboardComment({ content, author, onDeleteSubmit, onEd
             type="submit"
             className={styles.button}
           >
-            작성
+            <SendIcon />
           </button>
         </form>
       ) : (
         <section className={styles.comment}>
           <div className={styles.commentHeader}>
-            <ReplyIcon />
-            <div className={styles.author}>{author}의 답변</div>
+            <div className={styles.title}>
+              <ReplyIcon />
+              <div className={styles.author}>{author}</div>
+            </div>
+
+            {isMine && (
+              <div className={styles.actionGroup}>
+                <button
+                  type="button"
+                  className={styles.edit}
+                  to={'edit'}
+                  onClick={onEditClick}
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  className={styles.delete}
+                  onClick={handleDeleteSubmit}
+                >
+                  삭제
+                </button>
+              </div>
+            )}
           </div>
           <p className={styles.content}>{content}</p>
-          <button
-            type="button"
-            className={styles.deleteButton}
-            onClick={handleDeleteSubmit}
-          >
-            <div>삭제</div>
-          </button>
-          <button
-            type="button"
-            className={styles.editButton}
-            onClick={onEditClick}
-          >
-            수정
-          </button>
         </section>
       )}
     </>

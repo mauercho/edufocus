@@ -75,9 +75,8 @@ export default function ArticleDetail({
           )}
         </div>
       </header>
-      <div>
-        <p className={styles.content}>{content}</p>
-      </div>
+      <p className={styles.content}>{content}</p>
+      <div></div>
       {/* TODO: 이 부분에서 answer 만든다음 뒤로가기로 나갔다가 돌아오면 0.1초 정도 input 칸이 보였다가 answer 로 바뀜. 수정필요 */}
       {isQna &&
         (submittedAnswer && !isEditing ? (
