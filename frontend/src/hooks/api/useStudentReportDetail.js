@@ -5,6 +5,6 @@ import { API_URL } from '../../constants';
 export function useStudentReportDetail(reportId) {
   return useSuspenseQuery({
     queryKey: ['studentreportdetail', reportId],
-    queryFn: () => instance.get(`${API_URL}/report/myreportdetail/${reportId}`),
+    queryFn: () => instance.get(`${API_URL}/report/reportDetail/${reportId}`),
   });
 }

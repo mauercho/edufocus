@@ -12,12 +12,6 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-}
-
-.headerInside {
-  display: flex;
   flex-direction: column;
   align-items: start;
   gap: 8px;
@@ -38,7 +32,6 @@
   font-size: 32px;
   line-height: 1.2;
   font-weight: 800;
-  margin: 0;
 }
 
 .author {
@@ -58,4 +51,12 @@
 
 .icon {
   stroke: var(--text-color);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 440px);
+  gap: 20px;
+  justify-content: start;
+  margin-bottom: 40px;
 }

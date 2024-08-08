@@ -1,37 +1,36 @@
 import { Link, useParams } from 'react-router-dom';
-import styles from './StudentReportDetailPage';
+import styles from './StudentReportDetailPage.module.css';
 import BackIcon from '/src/assets/icons/back.svg?react';
-import { useStudentReportDetail } from '../../hooks/api/useStudentReportDetail';
+// import { useStudentReportDetail } from '../../hooks/api/useStudentReportDetail';
+import { QuizDetailCard } from '../../components/QuizForm';
 
 export default function StudentReportDetailPage() {
   const { reportId } = useParams();
   console.log(reportId);
-  const { data } = useStudentReportDetail(reportId);
-  console.log(data);
+  // const report = useStudentReportDetail(reportId);
+  // console.log(report);
+  // TODO: API 연결 후 실제 동작 확인 및 QuizDetailCard에 Map 적용
 
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        <div className={styles.headerInside}>
-          <Link
-            to={'..'}
-            className={styles.goBack}
-          >
-            <BackIcon />
-            <span>퀴즈 성적</span>
-          </Link>
-          <div>
-            <h1 className={styles.title}>퀴즈명</h1>
-          </div>
-        </div>
+        <Link
+          to={'..'}
+          className={styles.goBack}
+        >
+          <BackIcon />
+          <span>퀴즈 목록</span>
+        </Link>
+        <div className={styles.title}>퀴즈명</div>
       </header>
-      <div>
-        <h3>맞은 퀴즈</h3>
-        <div></div>
-      </div>
-      <div>
-        <h3>틀린 퀴즈</h3>
-        <div></div>
+      <p>점수 : 70점 ( 7 / 10 )</p>
+      <div className={styles.grid}>
+        <QuizDetailCard
+          index={1}
+          question={'??'}
+          answer={'!!'}
+          choices={[]}
+        />
       </div>
     </div>
   );

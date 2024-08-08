@@ -36,12 +36,9 @@
   height: 220px;
   margin: 10px auto;
   border-radius: 8px;
+  object-fit: contain;
   background-color: var(--background-secondary);
-  cursor: pointer;
-}
-
-.hiddenInput {
-  display: none;
+  border: 1px solid var(--background-secondary);
 }
 
 .input {
@@ -60,6 +57,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+}
+
+.numLabel {
+  width: 40px;
+  text-align: right;
+  display: block;
 }
 
 .choiceInput {
