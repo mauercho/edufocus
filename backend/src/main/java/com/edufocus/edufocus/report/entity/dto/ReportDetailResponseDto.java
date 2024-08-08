@@ -4,6 +4,7 @@ import com.edufocus.edufocus.quiz.entity.Quiz;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ReportDetailResponseDto {
     private int allCount;
     private String title;
     private int correctCount;
-    private Date testAt;
+    private LocalDateTime testAt;
     private List<QuizDto> correctQuizzes;
     private List<QuizDto> incorrectQuizzes;
 

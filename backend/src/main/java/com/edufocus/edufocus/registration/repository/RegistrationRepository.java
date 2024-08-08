@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.registration.repository;
 
 import com.edufocus.edufocus.registration.entity.Registration;
+import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
     List<Registration> findAllNotAcceptedByLectureId(@Param("lectureId") Long lectureId);
 
     Registration findByUserIdAndLectureId(Long userId, Long lectureId);
+
+    List<Registration> findByLectureIdAndStatus(Long lectureId, RegistrationStatus status);
 }

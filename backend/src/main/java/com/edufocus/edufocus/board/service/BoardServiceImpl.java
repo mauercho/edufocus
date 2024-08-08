@@ -12,6 +12,7 @@ import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public List<ResponseBoardSummaryDto> findBoards(int pageNo, String category, long lectureId) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by("created_at").descending());
 
         List<Board> boards = boardRepository.findByLectureIdAndCategory(lectureId, category, pageable).getContent();
 
