@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEditing = false }) {
+import SendIcon from '/src/assets/icons/send.svg?react';
   const { answerWrite } = useAnswerWrite();
   const { answerEdit } = useAnswerEdit();
   const { questionId } = useParams();
@@ -26,19 +27,19 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEd
       onSubmit={handleSubmit}
       className={styles.answer}
     >
-      {/* TODO: 여기 css 부분은 내가 임의로 넣었음 */}
       <input
         type="text"
+        maxLength={255}
         value={newAnswer}
         onChange={(e) => setNewAnswer(e.target.value)}
-        placeholder="답변 작성"
+        placeholder="답변 작성하기"
         className={styles.input}
       />
       <button
         type="submit"
         className={styles.button}
       >
-        작성
+        <SendIcon />
       </button>
     </form>
   );

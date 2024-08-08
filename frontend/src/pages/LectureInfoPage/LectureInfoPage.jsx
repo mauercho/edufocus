@@ -47,7 +47,7 @@ export default function LectureInfoPage() {
         tutor={lectureData.teacherName}
         tutorImg={lectureData.tutorImg}
       />
-      <MaxWidthLayout hasSideBar>
+      <div className={styles.wrapper}>
         <main>
           <div className={styles.group}>
             <h2>수업소개</h2>
@@ -66,7 +66,7 @@ export default function LectureInfoPage() {
             status={status}
           />
         </aside>
-      </MaxWidthLayout>
+      </div>
     </>
   );
 }
