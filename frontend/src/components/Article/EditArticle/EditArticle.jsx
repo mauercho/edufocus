@@ -48,6 +48,7 @@ export default function EditArticle({ topic, title, prevTitle, prevContent, onSu
           <label className={styles.label}>제목</label>
           <input
             type="text"
+            maxLength={255}
             className={styles.titleInput}
             placeholder="제목을 입력하세요"
             value={articleTitle}

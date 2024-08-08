@@ -17,7 +17,6 @@ export default function LectureLayout() {
   const { lectureDelete } = useLectureDelete();
   const { data } = useLectureInfo(lectureId);
   const lecture = data?.data;
-  console.log(lecture);
   const userType = useBoundStore((state) => state.userType);
   const handleDelete = () => {
     confirm('강의를 삭제할까요??') &&

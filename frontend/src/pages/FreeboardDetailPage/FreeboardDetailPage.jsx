@@ -15,6 +15,7 @@ export default function FreeboardDetailPage() {
     await freeboardDelete(freeboardId);
     navigate('..');
   };
+
   return (
     <FreeboardDetail
       topic="자유게시판"
@@ -22,6 +23,7 @@ export default function FreeboardDetailPage() {
       author={freeboard.name}
       content={freeboard.content}
       onDelete={handleDelete}
+      isMine={freeboard.mine}
     />
   );
 }

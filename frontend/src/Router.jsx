@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { lazy, Suspense } from 'react';
 import MyPageLayout from './components/Layout/MyPageLayout';
-// import LivePage from './pages/LivePage';
 import ErrorPage from './pages/ErrorPage';
 import { LectureLayout } from './components/Layout';
 

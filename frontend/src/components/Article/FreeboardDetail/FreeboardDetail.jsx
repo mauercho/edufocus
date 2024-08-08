@@ -5,10 +5,9 @@ import FreeboardCommentInput from './FreeDetailComments/FreeboardCommentInput';
 import FreeboardComment from './FreeDetailComments/FreeboardComment';
 import { useComments } from '../../../hooks/api/useComments';
 import { useCommentWrite } from '../../../hooks/api/useCommentWrite';
-import EditIcon from '/src/assets/icons/edit.svg?react';
 import { useParams } from 'react-router-dom';
 
-export default function FreeboardDetail({ topic, title, author, content, onDelete }) {
+export default function FreeboardDetail({ topic, title, author, content, onDelete, isMine }) {
   const { freeboardId } = useParams();
   const { data, refetch } = useComments(freeboardId);
   const { commentWrite } = useCommentWrite();
@@ -16,14 +15,6 @@ export default function FreeboardDetail({ topic, title, author, content, onDelet
 
   const handleCommentSubmit = async (newComment) => {
     await commentWrite(freeboardId, newComment);
-    refetch();
-  };
-
-  const handleDeleteSubmit = () => {
-    refetch();
-  };
-
-  const handleEditSubmit = () => {
     refetch();
   };
 
@@ -43,22 +34,24 @@ export default function FreeboardDetail({ topic, title, author, content, onDelet
             {author && <span className={styles.author}>{author}</span>}
           </div>
         </div>
-        <Link
-          type="button"
-          className={styles.editButton}
-          to={'edit'}
-          state={{ title: title, content: content }}
-        >
-          <EditIcon className={styles.icon} />
-          <span>수정하기</span>
-        </Link>
-        <button
-          type="button"
-          className={styles.deleteButton}
-          onClick={onDelete}
-        >
-          삭제하기
-        </button>
+        {isMine && (
+          <div className={styles.actionGroup}>
+            <Link
+              to="edit"
+              className={styles.edit}
+              state={{ title: title, content: content }}
+            >
+              수정
+            </Link>
+            <button
+              type="button"
+              className={styles.delete}
+              onClick={onDelete}
+            >
+              <div>삭제</div>
+            </button>
+          </div>
+        )}
       </header>
       <div>
         <p className={styles.content}>{content}</p>
@@ -70,8 +63,9 @@ export default function FreeboardDetail({ topic, title, author, content, onDelet
             content={comment.content}
             author={comment.name}
             commentId={comment.id}
-            onDeleteSubmit={handleDeleteSubmit}
-            onEditSubmit={handleEditSubmit}
+            isMine={comment.mine}
+            onDeleteSubmit={refetch}
+            onEditSubmit={refetch}
           />
         ))}
       <FreeboardCommentInput onCommentSubmit={handleCommentSubmit} />

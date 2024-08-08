@@ -19,9 +19,9 @@ export default function QuizSet({ quizSetId, reportSetId, finish }) {
       const requestData = {
         answer: data,
       };
-      instance.post(`${API_URL}/report/submit/${reportSetId}/quizset/${quizSetId}`, requestData).catch(() => {});
+      instance.post(`${API_URL}/report/submit/quizSet/${reportSetId}`, requestData).catch(() => {});
     },
-    [quizSetId, reportSetId]
+    [reportSetId]
   );
   const QuizComponents = [
     ...quizList.map((quiz, index) => (
