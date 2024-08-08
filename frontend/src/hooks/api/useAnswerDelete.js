@@ -6,7 +6,7 @@ export function useAnswerDelete() {
     const newAnswer = {
       answer: null,
     };
-    return instance.post(`${API_URL}/qna/answer/create/${questionId}`, newAnswer);
+    return instance.post(`${API_URL}/qna/answer/delete/${questionId}`, newAnswer);
   };
 
   return { answerDelete };

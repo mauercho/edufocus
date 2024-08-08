@@ -16,7 +16,7 @@ export default function TeacherHomePage() {
         {onGoingClasses.map((lecture) => (
           <ClassCard
             key={lecture.id}
-            path={`/lecture/${lecture.id}`}
+            path={`/lecture/${lecture.id}/class`}
             img={lecture.image}
           >
             {lecture.title}

@@ -20,7 +20,7 @@ export default function StudentHomePage() {
           onGoingClasses.map?.((lecture) => (
             <ClassCard
               key={lecture.id}
-              path={`/lecture/${lecture.id}`}
+              path={`/lecture/${lecture.id}/class`}
               img={lecture.image}
             >
               {lecture.title}
@@ -34,7 +34,7 @@ export default function StudentHomePage() {
         {allClasses.map?.((lecture) => (
           <ClassCard
             key={lecture.id}
-            path={`/lecture/${lecture.id}/info`}
+            path={`/lecture/${lecture.id}`}
             img={lecture.image}
           >
             {lecture.title}

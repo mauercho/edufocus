@@ -3,7 +3,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import LectureHeader from '../LectureHeader/LectureHeader';
 import { SideBar, SideLink, SideItem } from '../SideBar';
 import MaxWidthLayout from './MaxWidthLayout';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import useBoundStore from '../../store';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
@@ -33,6 +33,12 @@ export default function LectureLayout() {
     endDate: lecture.endDate,
     time: lecture.time,
   };
+
+  useEffect(() => {
+    if (['NOT_ENROLLED', 'MANAGED_BY_OTHERS', 'PENDING'].includes(lecture.status)) {
+      navigate('..');
+    }
+  }, [lecture.status, navigate]);
 
   return (
     <>

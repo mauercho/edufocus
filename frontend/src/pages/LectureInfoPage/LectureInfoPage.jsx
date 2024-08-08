@@ -24,7 +24,7 @@ export default function LectureInfoPage() {
     }
 
     if (status === 'ENROLLED') {
-      navigate(`/lecture/${lectureId}`);
+      navigate(`/lecture/${lectureId}/class`);
     }
 
     if (status === 'NOT_ENROLLED') {

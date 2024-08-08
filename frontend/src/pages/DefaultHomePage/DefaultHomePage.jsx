@@ -14,7 +14,7 @@ export default function StudentHomePage() {
         {allClasses.map?.((lecture) => (
           <ClassCard
             key={lecture.id}
-            path={`/lecture/${lecture.id}/info`}
+            path={`/lecture/${lecture.id}`}
             img={lecture.image}
           >
             {lecture.title}

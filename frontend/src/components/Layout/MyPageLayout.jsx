@@ -4,8 +4,12 @@ import SideBar from '../../components/SideBar/SideBar';
 import SideLink from '../../components/SideBar/SideLink';
 import { Suspense } from 'react';
 import LoadingIndicator from '../LoadingIndicator.jsx/LoadingIndicator';
+import useBoundStore from '../../store';
 
 export default function MyPageLayout() {
+  const userType = useBoundStore((state) => state.userType);
+  const myLectureTitle = userType === 'student' ? '수강중인 강의' : '내 강의';
+
   return (
     <>
       <MaxWidthLayout hasSideBar>
@@ -15,7 +19,7 @@ export default function MyPageLayout() {
               to={''}
               end
             >
-              수강중인 강의
+              {myLectureTitle}
             </SideLink>
             <SideLink to={'edit'}>개인정보 변경</SideLink>
             <SideLink to={'changePw'}>비밀번호 변경</SideLink>

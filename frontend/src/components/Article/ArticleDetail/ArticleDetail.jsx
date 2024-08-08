@@ -4,10 +4,21 @@ import styles from './ArticleDetail.module.css';
 import ArticleDetailAnswer from './ArticleDetailAnswer/ArticleDetailAnswer';
 import ArticleDetailAnswerInput from './ArticleDetailAnswer/ArticleDetailAnswerInput';
 import { useState, useEffect } from 'react';
+import useBoundStore from '../../../store';
 
-export default function ArticleDetail({ topic, title, author = null, content, answer = null, onDelete, isQna = true }) {
+export default function ArticleDetail({
+  topic,
+  title,
+  author = null,
+  content,
+  answer = null,
+  onDelete,
+  isMine = false,
+  isQna = true,
+}) {
   const [submittedAnswer, setSubmittedAnswer] = useState(answer);
   const [isEditing, setIsEditing] = useState(false);
+  const userType = useBoundStore((state) => state.userType);
 
   useEffect(() => {
     setSubmittedAnswer(answer);
@@ -44,20 +55,24 @@ export default function ArticleDetail({ topic, title, author = null, content, an
           </div>
         </div>
         <div className={styles.actionGroup}>
-          <Link
-            className={styles.edit}
-            to={'edit'}
-            state={{ title: title, content: content, answer: answer }}
-          >
-            수정
-          </Link>
-          <button
-            type="button"
-            className={styles.delete}
-            onClick={onDelete}
-          >
-            삭제
-          </button>
+          {(isMine || userType === 'teacher') && (
+            <>
+              <Link
+                className={styles.edit}
+                to={'edit'}
+                state={{ title: title, content: content, answer: answer }}
+              >
+                수정
+              </Link>
+              <button
+                type="button"
+                className={styles.delete}
+                onClick={onDelete}
+              >
+                삭제
+              </button>
+            </>
+          )}
         </div>
       </header>
       <div>
