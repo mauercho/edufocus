@@ -3,6 +3,7 @@ import { STATIC_URL } from '../../constants';
 
 export default function QuizCard({ index, question, answer, image, choices }) {
   // TODO: 정답 / 오답 관련 표현 필요 시 추가
+  console.log(choices);
   return (
     <div className={styles.card}>
       <div className={styles.header}>
@@ -23,7 +24,7 @@ export default function QuizCard({ index, question, answer, image, choices }) {
       <div className={styles.input}>{question}</div>
       <label className={styles.label}>정답</label>
       <div className={styles.input}>{answer}</div>
-      <label className={styles.label}>선택지</label>
+      {choices.length > 0 && <label className={styles.label}>선택지</label>}
       {choices.map?.((choice, idx) => (
         <div
           className={styles.choiceDiv}
