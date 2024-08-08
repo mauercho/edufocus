@@ -75,13 +75,13 @@ public class QnaController {
 
             if (findUser.getRole() != UserRole.ADMIN) {
                 System.out.println("role 안맞음");
-                throw new RuntimeException("update 실패");
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
 
             QnaResponseDto responseDto = qnaService.updateAnswer(qna_id, qnaRequestDto);
             return new ResponseEntity<>(responseDto, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -126,7 +126,7 @@ public class QnaController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -137,7 +137,7 @@ public class QnaController {
             return new ResponseEntity<>(findQna, HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -150,7 +150,7 @@ public class QnaController {
 
             return new ResponseEntity<>(qnaList, HttpStatus.ACCEPTED);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 
         }
     }
