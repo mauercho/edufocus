@@ -4,7 +4,7 @@ import { API_URL } from '../../constants';
 
 export function useTeacherQuizsetDetail(id) {
   return useSuspenseQuery({
-    queryKey: ['quizset', id],
+    queryKey: ['teacherQuizsetDetail', id],
     queryFn: () => instance.get(`${API_URL}/quiz/teacher/${id}`),
   });
 }
