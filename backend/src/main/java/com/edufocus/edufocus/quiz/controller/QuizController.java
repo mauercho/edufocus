@@ -73,6 +73,10 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
+        if (quizset.isTested()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
         quizSetService.updateQuizSet(quizSetUpdateRequest.getId(), quizSetUpdateRequest.getTitle());
 
         Map<Long, Boolean> quizUpdatedCheckMap = new HashMap<>();
