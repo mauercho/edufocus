@@ -33,14 +33,12 @@ export default function LivePage() {
       connect={true}
       data-lk-theme="default"
       onDisconnected={() => {
-        setTimeout(() => {
-          instance
-            .post(`${API_URL}/video/deleteroom/${roomId}`)
-            .catch(() => {})
-            .finally(() => {
-              window.close();
-            });
-        }, 500);
+        instance
+          .post(`${API_URL}/video/deleteroom/${roomId}`)
+          .catch(() => {})
+          .finally(() => {
+            window.close();
+          });
       }}
     >
       <Suspense fallback={<LoadingIndicator fill />}>

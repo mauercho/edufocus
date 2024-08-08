@@ -16,16 +16,22 @@ import {
   useTracks,
   useParticipants,
   useLocalParticipant,
+  useRoomContext,
 } from '@livekit/components-react';
 import { RoomEvent, Track } from 'livekit-client';
 import { useEffect, useRef, useState } from 'react';
 import ChatRoom from '../ChatRoom/ChatRoom';
+import instance from '../../utils/axios/instance';
+import { API_URL } from '../../constants';
+import { useParams } from 'react-router-dom';
 
 export default function LiveRoom() {
+  const { roomId } = useParams();
   const lastAutoFocusedScreenShareTrack = useRef(null);
   const [role, setRole] = useState(null);
 
-  const room = useRoomInfo();
+  const { name: roomName } = useRoomInfo();
+  const room = useRoomContext();
   const participants = useParticipants();
   const { localParticipant } = useLocalParticipant();
 
@@ -87,10 +93,24 @@ export default function LiveRoom() {
     tracks,
   ]);
 
+  useEffect(() => {
+    const handleUnload = async () => {
+      if (room) {
+        await instance.post(`${API_URL}/video/deleteroom/${roomId}`);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
+  }, [room, roomId]);
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        <h1 className={styles.title}>{room.name}</h1>
+        <h1 className={styles.title}>{roomName}</h1>
         <div className={styles.roomInfo}>
           <span>참가자</span>
           <span>{participants.length}명</span>
