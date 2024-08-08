@@ -9,7 +9,8 @@ export default function QuizsetDetailPage() {
   const { quizsetDelete } = useQuizsetDelete();
   const { data } = useTeacherQuizsetDetail(quizsetId);
   const quizset = data.data;
-  console.log(quizset);
+  const tested = quizset.tested;
+  console.log(tested);
   const handleEdit = () => {
     navigate('edit', { state: { initialValue: quizset } });
   };
@@ -25,6 +26,7 @@ export default function QuizsetDetailPage() {
       quizzes={quizset.quizzes}
       onDelete={handleDelete}
       onEdit={handleEdit}
+      tested={tested}
     />
   );
 }

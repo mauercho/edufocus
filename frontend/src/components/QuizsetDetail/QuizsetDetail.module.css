@@ -12,9 +12,22 @@
 
 .header {
   display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.headerInside {
+  display: flex;
   flex-direction: column;
   align-items: start;
   gap: 8px;
+}
+
+.actionGroup {
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  color: var(--text-color);
 }
 
 .goBack {
@@ -51,4 +64,21 @@
   gap: 20px;
   justify-content: start;
   margin-bottom: 40px;
+}
+
+.edit,
+.delete {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: var(--background);
+  color: var(--text-color-tertiary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete {
+  color: var(--error-color);
 }
