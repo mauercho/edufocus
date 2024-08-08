@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom';
 import { useMyLectures } from '../../hooks/api/useMyLectures';
 import CompassIcon from '/src/assets/icons/compass.svg?react';
 import { STATIC_URL } from '../../constants';
+import useBoundStore from '../../store';
 
 export default function LearningLecturesPage() {
   const { data } = useMyLectures();
   const onGoingClasses = data?.data ?? [];
   const hasOnGoingClasses = onGoingClasses.length > 0;
+  const userType = useBoundStore((state) => state.userType);
+  const myLectureTitle = userType === 'student' ? '수강중인 강의' : '내 강의';
 
   return (
     <section>
-      <h2 className={styles.title}>수강중인 강의</h2>
+      <h2 className={styles.title}>{myLectureTitle}</h2>
       <div className={styles.grid}>
         {hasOnGoingClasses ? (
           onGoingClasses.map?.((lecture) => (
             <Link
               key={lecture.id}
-              to={`/lecture/${lecture.id}`}
+              to={`/lecture/${lecture.id}/class`}
               className={styles.card}
             >
               {lecture.image ? (

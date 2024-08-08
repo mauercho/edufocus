@@ -68,11 +68,11 @@ const router = createBrowserRouter([
         element: <LectureCreatePage />,
       },
       {
-        path: 'lecture/:lectureId/info',
+        path: 'lecture/:lectureId',
         element: <LectureInfoPage />,
       },
       {
-        path: 'lecture/:lectureId',
+        path: 'lecture/:lectureId/class',
         element: <LectureLayout />,
         children: [
           {

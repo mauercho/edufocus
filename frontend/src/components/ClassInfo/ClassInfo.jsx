@@ -15,15 +15,17 @@ export default function ClassInfo({ classTerm, classTime, status = 'NOT_ENROLLED
           <div className={styles.content}>{classTime}</div>
         </div>
       </div>
-      <button
-        onClick={onSubmit}
-        className={styles.button}
-        disabled={status === 'PENDING'}
-      >
-        {status === 'PENDING' && '수강신청 중'}
-        {status === 'ENROLLED' && '강의 상세페이지로 이동'}
-        {status === 'NOT_ENROLLED' && '수강신청'}
-      </button>
+      {status !== 'MANAGED_BY_OTHERS' && (
+        <button
+          onClick={onSubmit}
+          className={styles.button}
+          disabled={status === 'PENDING'}
+        >
+          {status === 'PENDING' && '수강신청 중'}
+          {status === 'ENROLLED' && '강의 상세페이지로 이동'}
+          {status === 'NOT_ENROLLED' && '수강신청'}
+        </button>
+      )}
     </div>
   );
 }
