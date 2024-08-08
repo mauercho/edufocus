@@ -10,7 +10,7 @@ export default function LectureEnrollPage() {
   const { data } = useLectureEnroll(lectureId);
   const [newStudents, setNewStudents] = useState([]);
   const [students, setStudents] = useState([]);
-  console.log(data);
+
   useEffect(() => {
     if (data?.data) {
       setNewStudents(data.data[1]);
@@ -31,7 +31,7 @@ export default function LectureEnrollPage() {
       title="수강신청 관리"
       canCreate={false}
     >
-      {newStudents.length &&
+      {newStudents.length > 0 ? (
         newStudents.map?.((student) => (
           <LectureEnroll
             key={`${student.id}`}
@@ -40,10 +40,13 @@ export default function LectureEnrollPage() {
             onDelete={handleNewDelete}
             enrolled={false}
           />
-        ))}
+        ))
+      ) : (
+        <div className={styles.emptyMessage}>수강 대기중인 학생이 없어요</div>
+      )}
       <div>
         <h3 className={styles.title}>전체 수강생 관리</h3>
-        {students.length &&
+        {students.length > 0 ? (
           students.map?.((student) => (
             <LectureEnroll
               key={`${student.id}`}
@@ -51,7 +54,10 @@ export default function LectureEnrollPage() {
               userName={student.userName}
               onDelete={handleDelete}
             />
-          ))}
+          ))
+        ) : (
+          <div className={styles.emptyMessage}>현재 수강생이 없어요</div>
+        )}
       </div>
     </ArticleBoard>
   );
