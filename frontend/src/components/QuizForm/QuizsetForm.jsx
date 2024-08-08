@@ -4,6 +4,7 @@ import styles from './QuizsetForm.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import BackIcon from '/src/assets/icons/back.svg?react';
 import { Link } from 'react-router-dom';
+import PlusIcon from '/src/assets/icons/plus.svg?react';
 
 export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialValue = null }) {
   const [title, setTitle] = useState('');
@@ -74,7 +75,8 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
             onClick={handleAddQuiz}
             className={styles.addCard}
           >
-            카드 추가
+            <PlusIcon />
+            <span>새 퀴즈 추가</span>
           </div>
         </div>
         <button
