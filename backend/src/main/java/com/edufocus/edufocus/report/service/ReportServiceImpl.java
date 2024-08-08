@@ -6,7 +6,6 @@ import com.edufocus.edufocus.quiz.entity.Quiz;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
-import com.edufocus.edufocus.quiz.service.QuizSetService;
 import com.edufocus.edufocus.registration.entity.Registration;
 import com.edufocus.edufocus.registration.entity.RegistrationStatus;
 import com.edufocus.edufocus.registration.repository.RegistrationRepository;
@@ -17,13 +16,10 @@ import com.edufocus.edufocus.report.entity.vo.ReportSet;
 import com.edufocus.edufocus.report.repository.AnswerRepository;
 import com.edufocus.edufocus.report.repository.ReportRepository;
 import com.edufocus.edufocus.report.repository.ReportSetRepository;
-import com.edufocus.edufocus.user.model.entity.vo.User;
-import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -78,7 +74,6 @@ public class ReportServiceImpl implements ReportService {
 
         report.setAllCount(quizList.size());
         report.setCorrectCount(correctCount);
-        report.setReportSet(reportSet);
 
         reportRepository.save(report);
 
@@ -92,62 +87,40 @@ public class ReportServiceImpl implements ReportService {
 
         QuizSet quizSet = quizSetRepository.findById(report.getQuizSet().getId()).orElseThrow(NoSuchElementException::new);
 
-        List<QuizDto> correctQuiz = new ArrayList<>();
-        List<QuizDto> incorrectQuiz = new ArrayList<>();
+        List<QuizDto> quizDtos = new ArrayList<>();
 
-        List<Answer> myAnswer = answerRepository.findByReport_Id(report.getId());
+        List<Answer> myAnswer = answerRepository.findByReportId(report.getId());
 
         for (Answer answer : myAnswer) {
-            QuizDto quizDto;
             Quiz quiz = quizRepository.findById(answer.getQuiz().getId()).orElse(null);
 
-            ArrayList<ChoiceDto> choiceDtos = new ArrayList<>();
+            List<ChoiceDto> choiceDtos = quiz.getChoices()
+                    .stream()
+                    .map(Choice::makeChoiceDto)
+                    .toList();
 
-            for (Choice c : quiz.getChoices()) {
-                ChoiceDto choiceDto = null;
-                choiceDto = choiceDto.builder()
-                        .num(c.getNum())
-                        .content(c.getContent())
-                        .build();
-                choiceDtos.add(choiceDto);
-
-            }
-            if (answer.isCorrect()) {
-
-                quizDto = QuizDto.builder()
+            QuizDto quizDto = QuizDto.builder()
                         .id(quiz.getId())
                         .question(quiz.getQuestion())
                         .image(quiz.getImage())
                         .question(quiz.getQuestion())
                         .answer(quiz.getAnswer())
                         .userAnswer(answer.getUserAnswer())
+                        .isCollect(answer.isCorrect())
                         .choices(choiceDtos)
                         .build();
-                correctQuiz.add(quizDto);
-            } else {
-                quizDto = QuizDto.builder()
-                        .id(quiz.getId())
-                        .question(quiz.getQuestion())
-                        .image(quiz.getImage())
-                        .question(quiz.getQuestion())
-                        .answer(quiz.getAnswer())
-                        .userAnswer(answer.getUserAnswer())
-                        .choices(choiceDtos)
-                        .build();
-                incorrectQuiz.add(quizDto);
 
-            }
+            quizDtos.add(quizDto);
         }
-        ReportDetailResponseDto dto = ReportDetailResponseDto.builder()
+
+
+        return ReportDetailResponseDto.builder()
                 .title(quizSet.getTitle())
                 .testAt(report.getTestAt())
                 .allCount(report.getAllCount())
                 .correctCount(report.getCorrectCount())
-                .correctQuizzes(correctQuiz)
-                .incorrectQuizzes(incorrectQuiz)
+                .quizzes(quizDtos)
                 .build();
-
-        return dto;
     }
 
     @Override
@@ -179,8 +152,6 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public UUID initReportSet(long lectureId, long quizSetId) {
-        List<Registration> registrations = registrationRepository.findByLectureIdAndStatus(lectureId, RegistrationStatus.ACCEPTED);
-
         ReportSet reportSet = ReportSet.builder()
                 .lecture(lectureRepository.getReferenceById(lectureId))
                 .quizSet(quizSetRepository.getReferenceById(quizSetId))
@@ -190,8 +161,9 @@ public class ReportServiceImpl implements ReportService {
 
         QuizSet quizSet = quizSetRepository.getReferenceById(quizSetId);
 
+        List<Registration> registrations = registrationRepository.findByLectureIdAndStatus(lectureId, RegistrationStatus.ACCEPTED);
+
         List<Report> reports = registrations.stream()
-                .filter(Registration::isAccepted)
                 .map((Registration registration)-> registration.makeReport(reportSet, quizSet, lectureId))
                 .toList();
 

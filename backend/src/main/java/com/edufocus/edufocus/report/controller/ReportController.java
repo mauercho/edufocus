@@ -55,12 +55,17 @@ public class ReportController {
         return new ResponseEntity<>(reportResponses, HttpStatus.OK);
     }
 
+
+
     @GetMapping("/reportDetail/{reportId}")
     public ResponseEntity<ReportDetailResponseDto> searchDetailReport(@PathVariable("reportId") long reportId){
         ReportDetailResponseDto detailReport = reportService.reportDetail(reportId);
 
         return new ResponseEntity<>(detailReport, HttpStatus.OK);
     }
+
+
+
 
     @GetMapping("/teacher/reportSet/{lectureId}")
     public ResponseEntity<List<ReportSetResponse>> searchReportSets(@PathVariable("lectureId") long lectureId){
