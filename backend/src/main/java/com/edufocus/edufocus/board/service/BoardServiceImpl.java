@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     public List<ResponseBoardSummaryDto> findBoards(int pageNo, String category, long lectureId) {
-        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by("created_at").descending());
+        Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE, Sort.by("id").descending());
 
         List<Board> boards = boardRepository.findByLectureIdAndCategory(lectureId, category, pageable).getContent();
 

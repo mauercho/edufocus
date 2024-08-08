@@ -57,17 +57,14 @@ public class QnaServiceImpl implements QnaService {
 
         System.out.println("userId:" + userId);
 
-        Qna qna = qnaRepository.findById(id).orElse(null);
-        System.out.println("quesiton에 있는거: " + qna.getUser().getId());
+        Qna findQna = qnaRepository.findById(id).orElse(null);
+        System.out.println("quesiton에 있는거: " + findQna.getUser().getId());
         User user = userRepository.findById(userId).orElse(null);
 
-        if (qna.getUser().getId() != userId) {
+        if (findQna.getUser().getId() != userId || user.getRole() != UserRole.STUDENT) {
             throw new RuntimeException();
         }
 
-
-        Qna findQna = qnaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("QnA not found"));
 
         findQna.setModifiedAt(new Date());
         findQna.setTitle(qnaRequestDto.getTitle());
@@ -129,11 +126,12 @@ public class QnaServiceImpl implements QnaService {
     public QnaResponseDto createAnswer(Long id, QnaRequestDto qnaRequestDto) throws SQLException {
 
         Qna findQna = qnaRepository.findById(id).orElse(null);
-        findQna.setAnswer(qnaRequestDto.getAnswer());
-
         if (findQna.getAnswer() != null) {
             throw new RuntimeException();
         }
+        findQna.setAnswer(qnaRequestDto.getAnswer());
+
+
         qnaRepository.save(findQna);
 
         return QnaResponseDto.toEntity(findQna);
