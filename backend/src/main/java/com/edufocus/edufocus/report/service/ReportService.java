@@ -20,4 +20,6 @@ public interface ReportService {
     List<ReportResponse> findReports(long lectureId, long userid);
 
     UUID initReportSet(long lectureId, long quizSetId);
+
+    void deleteReportSet(UUID reportSetId, long userId);
 }

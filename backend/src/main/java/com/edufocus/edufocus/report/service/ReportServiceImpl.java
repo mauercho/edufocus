@@ -172,4 +172,11 @@ public class ReportServiceImpl implements ReportService {
         return reportSet.getId();
 
     }
+
+    @Override
+    public void deleteReportSet(UUID reportSetId, long userId) {
+        ReportSet reportSet = reportSetRepository.findById(reportSetId).orElseThrow(NoSuchElementException::new);
+        if(reportSet.findUserId() == userId)
+            reportSetRepository.delete(reportSet);
+    }
 }

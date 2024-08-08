@@ -55,4 +55,8 @@ public class ReportSet {
                 .testAt(createAt)
                 .build();
     }
+
+    public long findUserId(){
+        return lecture.getUser().getId();
+    }
 }
