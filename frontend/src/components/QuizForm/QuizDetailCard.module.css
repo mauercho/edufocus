@@ -61,7 +61,8 @@
 
 .numLabel {
   width: 40px;
-  text-align: end;
+  text-align: right;
+  display: block;
 }
 
 .choiceInput {
