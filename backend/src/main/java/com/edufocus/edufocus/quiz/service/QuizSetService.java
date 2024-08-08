@@ -21,4 +21,6 @@ public interface QuizSetService {
     QuizSetResponse findQuizSetResponse(long quizSetId);
 
     List<MyQuizSetResponse> findMyQuizSetResponses(long userId);
+
+    void updateQuizSetTested(long quizSetId, long userId, boolean tested);
 }

@@ -3,6 +3,7 @@ package com.edufocus.edufocus.quiz.service;
 import com.edufocus.edufocus.quiz.entity.*;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
 import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.exception.UnAuthorizedException;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -95,6 +96,20 @@ public class QuizSetServiceImpl implements QuizSetService {
 
         return myQuizSetResponses;
 
+    }
+
+    @Override
+    public void updateQuizSetTested(long quizSetId, long userId, boolean tested) {
+        QuizSet quizSet = quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
+
+        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
+
+        if (quizSet.getUser().getId() != user.getId()) {
+            throw new UnAuthorizedException();
+        }
+
+        quizSet.setTested(true);
+        quizSetRepository.save(quizSet);
     }
 
 }

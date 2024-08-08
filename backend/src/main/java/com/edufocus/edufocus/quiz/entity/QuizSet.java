@@ -28,6 +28,9 @@ public class QuizSet {
     @Column
     private String title;
 
+    @Column
+    private boolean tested;
+
     @OneToMany(mappedBy = "quizSet", orphanRemoval = true)
     @JsonManagedReference
     private List<Quiz> quizzes;
