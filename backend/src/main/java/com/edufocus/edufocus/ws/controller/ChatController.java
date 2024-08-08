@@ -2,40 +2,25 @@ package com.edufocus.edufocus.ws.controller;
 
 
 import com.edufocus.edufocus.global.constant.RabbitMQConstant;
-import com.edufocus.edufocus.user.util.JWTUtil;
+import com.edufocus.edufocus.report.service.ReportService;
 import com.edufocus.edufocus.ws.entity.dto.MessageDto;
 import com.edufocus.edufocus.ws.entity.dto.QuizDto;
-import com.edufocus.edufocus.ws.entity.dto.ChatUserDto;
-import com.edufocus.edufocus.ws.service.ChatService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.context.event.EventListener;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.socket.messaging.SessionConnectedEvent;
-import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import org.springframework.web.socket.messaging.SessionSubscribeEvent;
-import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class ChatController {
 
     RabbitTemplate rabbitTemplate;
+    ReportService reportService;
 
-    public ChatController(RabbitTemplate rabbitTemplate){
+    public ChatController(RabbitTemplate rabbitTemplate, ReportService reportService){
         this.rabbitTemplate = rabbitTemplate;
+        this.reportService = reportService;
     }
 
     @MessageMapping("chat.message.{lectureId}")
@@ -47,6 +32,10 @@ public class ChatController {
 
     @MessageMapping("chat.quiz.{lectureId}")
     public void quizStart(@DestinationVariable long lectureId, QuizDto quizDto){
+        UUID reportSetId = reportService.initReportSet(lectureId, quizDto.getQuizSetId());
+
+        quizDto.setReportSetId(reportSetId);
+
         rabbitTemplate.convertAndSend(RabbitMQConstant.CHAT_EXCHANGE.getConstant(),
                 RabbitMQConstant.ROUTING_KEY_PREFIX.getConstant() + lectureId,
                 quizDto);

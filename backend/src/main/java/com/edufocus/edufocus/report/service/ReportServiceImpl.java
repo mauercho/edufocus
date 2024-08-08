@@ -1,122 +1,96 @@
 package com.edufocus.edufocus.report.service;
 
+import com.edufocus.edufocus.lecture.repository.LectureRepository;
 import com.edufocus.edufocus.quiz.entity.Choice;
 import com.edufocus.edufocus.quiz.entity.Quiz;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.quiz.repository.QuizRepository;
 import com.edufocus.edufocus.quiz.repository.QuizSetRepository;
-import com.edufocus.edufocus.quiz.service.QuizService;
 import com.edufocus.edufocus.quiz.service.QuizSetService;
+import com.edufocus.edufocus.registration.entity.Registration;
+import com.edufocus.edufocus.registration.entity.RegistrationStatus;
+import com.edufocus.edufocus.registration.repository.RegistrationRepository;
 import com.edufocus.edufocus.report.entity.dto.*;
 import com.edufocus.edufocus.report.entity.vo.Answer;
 import com.edufocus.edufocus.report.entity.vo.Report;
+import com.edufocus.edufocus.report.entity.vo.ReportSet;
 import com.edufocus.edufocus.report.repository.AnswerRepository;
 import com.edufocus.edufocus.report.repository.ReportRepository;
+import com.edufocus.edufocus.report.repository.ReportSetRepository;
 import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
-    private final QuizSetService quizSetService;
-    private final QuizService quizService;
-
     private final ReportRepository reportRepository;
     private final QuizRepository quizRepository;
-
-
+    private final RegistrationRepository registrationRepository;
     private final AnswerRepository answerRepository;
-    private final AnswerService answerService;
-    private final UserRepository userRepository;
+    private final ReportSetRepository reportSetRepository;
+    private final LectureRepository lectureRepository;
     private final QuizSetRepository quizSetRepository;
 
 
     @Override
-    public ReportResponse grading(Long userId, Long quizsetId, ReportRequset reportRequset, Long lectureId) throws SQLException {
+    public void grade(long userId, UUID reportSetId, ReportRequest reportRequest){
 
-        QuizSet quizSet = quizSetService.findQuizSet(quizsetId);
-        List<Quiz> quizList = quizSet.getQuizzes();
-        List<String> answerInputList = reportRequset.getAnswer();
+        ReportSet reportSet = reportSetRepository.findById(reportSetId).orElseThrow(NoSuchElementException::new);
+
+        Report report = reportRepository.findByReportSetIdAndUserId(reportSetId, userId);
+
+        List<Quiz> quizList = report.getQuizSet().getQuizzes();
+
+        List<String> answerInputList = reportRequest.getAnswer();
 
         List<Answer> answerList = new ArrayList<>();
 
-        int allCount = quizList.size();
         int correctCount = 0;
-
-        User testuser = userRepository.findById(userId).orElse(null);
 
         for (int idx = 0; idx < answerInputList.size(); idx++) {
             Quiz quiz = quizList.get(idx);
             String inputAnswer = answerInputList.get(idx);
+            boolean isCollect;
             Answer answer;
             if (quiz.getAnswer().equals(inputAnswer)) {
                 correctCount++;
-                answer = Answer.builder()
-                        .userAnswer(inputAnswer)
-                        .isCorrect(true)
-                        .report(null)
-                        .quiz(quiz)
-                        .build();
+                isCollect = true;
             } else {
-                answer = Answer.builder()
-                        .userAnswer(inputAnswer)
-                        .isCorrect(false)
-                        .report(null)
-                        .quiz(quiz)
-                        .build();
+                isCollect = false;
             }
+            answer = Answer.builder()
+                    .userAnswer(inputAnswer)
+                    .isCorrect(isCollect)
+                    .report(report)
+                    .quiz(quiz)
+                    .build();
             answerList.add(answer);
         }
 
 
-        Report report = Report.builder()
-                .user(testuser)
-                .quizSet(quizSet)
-                .allCount(allCount)
-                .correctCount(correctCount)
-                .testAt(new Date())
-                .lectureId(lectureId)
-                .build();
-
+        report.setAllCount(quizList.size());
+        report.setCorrectCount(correctCount);
+        report.setReportSet(reportSet);
 
         reportRepository.save(report);
 
-
-        for (Answer answer : answerList) {
-            answer.setReport(report);
-            answerRepository.save(answer);
-        }
-
-
-        ReportResponse reportResponse = ReportResponse.builder()
-                .quizesetId(quizSet.getId())
-                .userId(testuser.getId())
-                .title(quizSet.getTitle())
-                .allCount(allCount)
-                .correctCount(correctCount)
-                .testAt(new Date())
-                .build();
-
-        return reportResponse;
+        answerRepository.saveAll(answerList);
     }
 
     @Override
-    public ReportDetailResponseDto reportDetail(Long repordId) {
+    public ReportDetailResponseDto reportDetail(long reportId) {
 
-        Report report = reportRepository.findById(repordId).orElse(null);
+        Report report = reportRepository.findById(reportId).orElseThrow(NoSuchElementException::new);
 
-        QuizSet quizSet = quizSetService.findQuizSet(report.getQuizSet().getId());
+        QuizSet quizSet = quizSetRepository.findById(report.getQuizSet().getId()).orElseThrow(NoSuchElementException::new);
 
         List<QuizDto> correctQuiz = new ArrayList<>();
         List<QuizDto> incorrectQuiz = new ArrayList<>();
@@ -176,56 +150,54 @@ public class ReportServiceImpl implements ReportService {
         return dto;
     }
 
-
     @Override
-    public List<ReportListResponseDto> resultList(Long userId) throws SQLException {
+    public List<ReportSetResponse> findReportSets(long lectureId) {
+        List<ReportSet> reportSets = reportSetRepository.findByLectureId(lectureId);
 
-        List<Report> reportList = reportRepository.findByUser_Id(userId);
-
-
-        List<ReportListResponseDto> reportListResponseDtoList = new ArrayList<>();
-
-
-        for (Report report : reportList) {
-
-            QuizSet quizSet = quizSetService.findQuizSet(report.getQuizSet().getId());
-            ReportListResponseDto dto = ReportListResponseDto.builder()
-                    .title(quizSet.getTitle())  // Assuming QuizSet has a method getTitle()
-                    .date(report.getTestAt())
-                    .reportId(report.getId())// Assuming QuizSet has a method getDate()
-                    .build();
-            reportListResponseDtoList.add(dto);
-
-        }
-
-        return reportListResponseDtoList;
-
+        return reportSets.stream()
+                .map(ReportSet::makeReportSetResponse)
+                .toList();
     }
 
     @Override
-    public List<ReportListResponseDto> studentResultList(Long lectureId) throws SQLException {
+    public List<ReportResponse> findReports(UUID reportSetId) {
+        List<Report> reports = reportRepository.findByReportSetId(reportSetId);
 
-        List<Report> reportList = reportRepository.findByLectureId(lectureId);
+        return reports.stream()
+                .map(Report::makeReportResponse)
+                .toList();
+    }
 
-        List<ReportListResponseDto> reportListResponseDtoList = new ArrayList<>();
+    @Override
+    public List<ReportResponse> findReports(long lectureId, long userId) {
+        List<Report> reports = reportRepository.findByLectureIdAndUserId(lectureId, userId);
 
+        return reports.stream()
+                .map(Report::makeReportResponse)
+                .toList();
+    }
 
-        for (Report report : reportList) {
+    @Override
+    public UUID initReportSet(long lectureId, long quizSetId) {
+        List<Registration> registrations = registrationRepository.findByLectureIdAndStatus(lectureId, RegistrationStatus.ACCEPTED);
 
-            System.out.println(report.toString());
-            QuizSet quizSet = quizSetService.findQuizSet(report.getQuizSet().getId());
-            ReportListResponseDto dto = ReportListResponseDto.builder()
-                    .title(quizSet.getTitle())
-                    .date(report.getTestAt())
-                    .reportId(report.getId())
-                    .allCount(report.getAllCount())
-                    .correctCount(report.getCorrectCount())
-                    .build();
-            reportListResponseDtoList.add(dto);
+        ReportSet reportSet = ReportSet.builder()
+                .lecture(lectureRepository.getReferenceById(lectureId))
+                .quizSet(quizSetRepository.getReferenceById(quizSetId))
+                .build();
 
-        }
+        reportSetRepository.save(reportSet);
 
-        return reportListResponseDtoList;
+        QuizSet quizSet = quizSetRepository.getReferenceById(quizSetId);
+
+        List<Report> reports = registrations.stream()
+                .filter(Registration::isAccepted)
+                .map((Registration registration)-> registration.makeReport(reportSet, quizSet, lectureId))
+                .toList();
+
+        reportRepository.saveAll(reports);
+
+        return reportSet.getId();
 
     }
 }

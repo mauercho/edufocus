@@ -1,21 +1,23 @@
 package com.edufocus.edufocus.report.service;
 
-import com.edufocus.edufocus.report.entity.dto.ReportDetailResponseDto;
-import com.edufocus.edufocus.report.entity.dto.ReportListResponseDto;
-import com.edufocus.edufocus.report.entity.dto.ReportResponse;
-import com.edufocus.edufocus.report.entity.dto.ReportRequset;
+import com.edufocus.edufocus.report.entity.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface ReportService {
-    ReportResponse grading(Long userId, Long quizesetId, ReportRequset reportRequset, Long lectureId) throws SQLException;
+    void grade(long userId, UUID reportSetId, ReportRequest reportRequest);
 
-    ReportDetailResponseDto reportDetail(Long userId) throws SQLException;
+    ReportDetailResponseDto reportDetail(long userId);
 
-    List<ReportListResponseDto> resultList(Long userId) throws SQLException;
+    List<ReportSetResponse> findReportSets(long lectureId);
 
-    List<ReportListResponseDto> studentResultList(Long lectureId) throws SQLException;
+    List<ReportResponse> findReports(UUID reportSetId);
+
+    List<ReportResponse> findReports(long lectureId, long userid);
+
+    UUID initReportSet(long lectureId, long quizSetId);
 }

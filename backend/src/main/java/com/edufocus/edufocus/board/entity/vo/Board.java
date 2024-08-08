@@ -55,7 +55,7 @@ public class Board {
     private Lecture lecture;
 
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     public ResponseBoardSummaryDto makeSummaryDto(){
