@@ -94,6 +94,8 @@ public class UserServiceImpl implements UserService {
 
         if (!PasswordUtils.checkPassword(passwordDto.getCurrentPassword(), user.getPassword())) {
             throw new UserException("Current password is incorrect");
+        } else if (passwordDto.getCurrentPassword().equals(passwordDto.getNewPassword())) {
+            throw new UserException("New password cannot be the same as the current password");
         } else {
             if (!passwordDto.getNewPassword().equals(passwordDto.getNewPasswordCheck())) {
                 throw new UserException("New password confirmation does not match");
@@ -144,8 +146,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeForgottenPassword(Long id, String newPassword) {
-        User user = userRepository.findById(id).orElse(null);
+    public void changeForgottenPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
             throw new UserException("User not found");

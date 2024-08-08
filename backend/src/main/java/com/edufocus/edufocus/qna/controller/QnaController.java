@@ -4,6 +4,9 @@ import com.edufocus.edufocus.qna.entity.Qna;
 import com.edufocus.edufocus.qna.entity.QnaRequestDto;
 import com.edufocus.edufocus.qna.entity.QnaResponseDto;
 import com.edufocus.edufocus.qna.service.QnaService;
+import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.edufocus.edufocus.user.model.entity.vo.UserRole;
+import com.edufocus.edufocus.user.model.repository.UserRepository;
 import com.edufocus.edufocus.user.util.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,81 +26,100 @@ import java.util.List;
 public class QnaController {
     private final QnaService qnaService;
     private final JWTUtil jwtUtil;
-    private static int PAGE_SIZE=10;
-
+    private static int PAGE_SIZE = 10;
+    private final UserRepository userRepository;
 
     @PostMapping("/{lecture_id}")
-    public ResponseEntity<QnaResponseDto> createQna(@PathVariable("lecture_id") Long lecture_id, @RequestBody QnaRequestDto qnaRequestDto , HttpServletRequest request) {
+    public ResponseEntity<QnaResponseDto> createQna(@PathVariable("lecture_id") Long lecture_id, @RequestBody QnaRequestDto qnaRequestDto, HttpServletRequest request) {
 
 
-        try{
+        try {
             String token = request.getHeader("Authorization");
             Long userId = Long.parseLong(jwtUtil.getUserId(token));
 
-           QnaResponseDto qnaResponseDto= qnaService.createQna(userId,qnaRequestDto,lecture_id);
-            return new ResponseEntity<>( qnaResponseDto,HttpStatus.CREATED);
+            QnaResponseDto qnaResponseDto = qnaService.createQna(userId, qnaRequestDto, lecture_id);
+            return new ResponseEntity<>(qnaResponseDto, HttpStatus.CREATED);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @PostMapping({"/answer/create/{qna_id}"})
-    public ResponseEntity<QnaResponseDto> createAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto)
-    {
+    public ResponseEntity<QnaResponseDto> createAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto, HttpServletRequest request) {
         try {
-            QnaResponseDto responseDto = qnaService.createAnswer(qna_id,qnaRequestDto);
-            return new ResponseEntity<>(responseDto,HttpStatus.ACCEPTED);
-        }
-        catch (Exception e)
-        {
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+            User findUser = userRepository.findById(userId).orElse(null);
+
+            if (findUser.getRole() != UserRole.ADMIN) {
+                throw new RuntimeException();
+            }
+
+            QnaResponseDto responseDto = qnaService.createAnswer(qna_id, qnaRequestDto);
+            return new ResponseEntity<>(responseDto, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @PutMapping({"/answer/update/{qna_id}"})
-    public ResponseEntity<QnaResponseDto> updateAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto)
-    {
+    public ResponseEntity<QnaResponseDto> updateAnswer(@PathVariable("qna_id") Long qna_id, @RequestBody QnaRequestDto qnaRequestDto, HttpServletRequest request) {
         try {
-            QnaResponseDto responseDto = qnaService.updateAnswer(qna_id,qnaRequestDto);
-            return new ResponseEntity<>(responseDto,HttpStatus.ACCEPTED);
-        }
-        catch (Exception e)
-        {
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+            User findUser = userRepository.findById(userId).orElse(null);
+
+            if (findUser.getRole() != UserRole.ADMIN) {
+                System.out.println("role 안맞음");
+                throw new RuntimeException("update 실패");
+            }
+
+            QnaResponseDto responseDto = qnaService.updateAnswer(qna_id, qnaRequestDto);
+            return new ResponseEntity<>(responseDto, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @PostMapping("/answer/delete/{qna_id}")
-    public ResponseEntity<QnaResponseDto> deleteAnswer(@PathVariable("qna_id") Long qna_id)
-    {
+    public ResponseEntity<QnaResponseDto> deleteAnswer(@PathVariable("qna_id") Long qna_id, HttpServletRequest request) {
         try {
-             qnaService.deleteAnswer(qna_id);
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+            User findUser = userRepository.findById(userId).orElse(null);
+
+            System.out.println("delete answer");
+            if (findUser.getRole() != UserRole.ADMIN) {
+                throw new RuntimeException();
+            }
+            qnaService.deleteAnswer(qna_id);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<QnaResponseDto> updateQna(@PathVariable Long id, @RequestBody QnaRequestDto qnaRequestDto) {
-
-        try{
-           QnaResponseDto qnaResponseDto=  qnaService.updateQna(id,qnaRequestDto);
+    public ResponseEntity<QnaResponseDto> updateQna(@PathVariable Long id, @RequestBody QnaRequestDto qnaRequestDto, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        Long userId = Long.parseLong(jwtUtil.getUserId(token));
+        try {
+            QnaResponseDto qnaResponseDto = qnaService.updateQna(id, qnaRequestDto, userId);
             return new ResponseEntity<>(qnaResponseDto, HttpStatus.ACCEPTED);
 
-        }catch (Exception e)
-        {
-            throw new RuntimeException(e);        }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Qna> deleteQna(@PathVariable Long id) {
+    public ResponseEntity<Qna> deleteQna(@PathVariable Long id, HttpServletRequest request) {
         try {
-            qnaService.deleteQna(id);
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
+            qnaService.deleteQna(id, userId);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {
@@ -107,8 +129,8 @@ public class QnaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<QnaResponseDto> getQna(@PathVariable Long id) {
-        try{
-            QnaResponseDto findQna= qnaService.getQna(id);
+        try {
+            QnaResponseDto findQna = qnaService.getQna(id);
             return new ResponseEntity<>(findQna, HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {
@@ -121,7 +143,7 @@ public class QnaController {
         try {
 
 
-            List<QnaResponseDto> qnaList= qnaService.getAllQnasByLecture(id,PAGE_SIZE);
+            List<QnaResponseDto> qnaList = qnaService.getAllQnasByLecture(id, PAGE_SIZE);
 
             return new ResponseEntity<>(qnaList, HttpStatus.ACCEPTED);
         } catch (SQLException e) {
