@@ -56,7 +56,7 @@ public class ReportServiceImpl implements ReportService {
             String inputAnswer = answerInputList.get(idx);
             boolean isCorrect;
             Answer answer;
-            if (quiz.getAnswer().equals(inputAnswer)) {
+            if (quiz.getAnswer().equalsIgnoreCase(inputAnswer)) {
                 correctCount++;
                 isCorrect = true;
             } else {
