@@ -8,14 +8,14 @@ import { useParams } from 'react-router-dom';
 export default function StudentReportPage() {
   const { lectureId } = useParams();
   const { data } = useStudentReports(lectureId);
-  console.log(data);
   const reports = data?.data;
-  console.log(reports);
 
   const totalCounts = reports.reduce(
     (acc, report) => {
-      acc.correctCount += report.correctCount;
-      acc.allCount += report.allCount;
+      if (acc.allCount > 0) {
+        acc.correctCount += report.correctCount;
+        acc.allCount += report.allCount;
+      }
       return acc;
     },
     { correctCount: 0, allCount: 0 }
@@ -32,7 +32,7 @@ export default function StudentReportPage() {
             <ArticleLink
               key={`${report.reportId}`}
               title={report.title}
-              sub={`${Math.round((report.correctCount / report.allCount) * 100)}%`}
+              sub={report.allCount === 0 ? '미응시' : `${Math.round((report.correctCount / report.allCount) * 100)}%`}
               to={`${report.reportId}`}
             />
           ))}
