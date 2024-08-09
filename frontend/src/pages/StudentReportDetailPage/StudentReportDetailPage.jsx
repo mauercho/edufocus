@@ -5,7 +5,7 @@ import { useStudentReportDetail } from '../../hooks/api/useStudentReportDetail';
 import { QuizDetailCard } from '../../components/QuizForm';
 
 export default function StudentReportDetailPage() {
-  const { reportId } = useParams();
+  const { lectureId, reportId } = useParams();
   const { data } = useStudentReportDetail(reportId);
   const report = data.data;
   console.log(report);
@@ -15,7 +15,7 @@ export default function StudentReportDetailPage() {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <Link
-          to={'..'}
+          to={`/lecture/${lectureId}/class/report`}
           className={styles.goBack}
         >
           <BackIcon />

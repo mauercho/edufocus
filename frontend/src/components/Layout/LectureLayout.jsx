@@ -1,7 +1,7 @@
 import styles from './LectureLayout.module.css';
 import { Outlet, useParams } from 'react-router-dom';
 import LectureHeader from '../LectureHeader/LectureHeader';
-import { SideBar, SideLink, SideItem } from '../SideBar';
+import { SideBar, SideLink } from '../SideBar';
 import MaxWidthLayout from './MaxWidthLayout';
 import { Suspense, useEffect } from 'react';
 import useBoundStore from '../../store';
@@ -61,18 +61,11 @@ export default function LectureLayout() {
             <SideLink to={'freeboard'}>자유게시판</SideLink>
             {userType === 'student' && <SideLink to={'report'}>퀴즈 성적</SideLink>}
             {userType === 'teacher' && <SideLink to={'quiz'}>퀴즈 만들기</SideLink>}
-            {userType === 'teacher' && <SideLink to={'enroll'}>수강신청관리</SideLink>}
+            {userType === 'teacher' && <SideLink to={'enroll'}>수강생 관리</SideLink>}
           </SideBar>
           {userType === 'teacher' && (
-            <SideBar title="수업 정보">
-              <SideItem
-                name="수강생"
-                sub="총 12명"
-              />
-            </SideBar>
-          )}
-          {userType === 'teacher' && (
             <SideBar title={'강의 정보 관리'}>
+              <SideLink to={'teacherReportsets'}>퀴즈 성적 보기</SideLink>
               <SideLink
                 to={'edit'}
                 state={lectureData}
@@ -87,19 +80,6 @@ export default function LectureLayout() {
                   강의 삭제
                 </span>
               </li>
-              <SideLink to={'teacherReportsets'}>퀴즈 목록</SideLink>
-            </SideBar>
-          )}
-          {userType === 'student' && (
-            <SideBar title="내 학습">
-              <SideItem
-                name="진도율"
-                sub="2 / 12"
-              />
-              <SideItem
-                name="퀴즈 정답률"
-                sub="80%"
-              />
             </SideBar>
           )}
         </aside>
