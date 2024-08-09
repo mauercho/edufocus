@@ -27,10 +27,10 @@ public class Lecture {
     @Column
     private String title;
 
-    @Lob
+    @Column(columnDefinition = "text")
     private String description;
 
-    @Lob
+    @Column(columnDefinition = "text")
     private String plan;
 
     @Column
