@@ -8,7 +8,6 @@ export default function NoticeListPage() {
   const { data } = useFreeboards(lectureId);
   const notices = data?.data;
 
-  console.log(notices);
   return (
     <ArticleBoard
       title="자유게시판"
@@ -18,7 +17,7 @@ export default function NoticeListPage() {
         <ArticleLink
           key={`${notice.id}`}
           title={notice.title}
-          sub={`${notice.createdAt[0]}. ${notice.createdAt[1]}. ${notice.createdAt[2]}. ${notice.createdAt[3]}:${notice.createdAt[4]}`}
+          sub={`${new Date(notice.createdAt).toLocaleDateString()} ${new Date(notice.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
           to={`${notice.id}`}
         />
       ))}
