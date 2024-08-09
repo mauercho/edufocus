@@ -8,21 +8,39 @@ export default function TeacherReportsetDetailPage() {
   const { data } = useReportSetDetail(reportsetId);
   const reports = data?.data;
 
-  console.log(reports);
+  const formatDate = (dateArray) => {
+    const date = new Date(...dateArray.slice(0, 6));
+    return date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+
   return (
     <ArticleBoard
       title="퀴즈 조회"
       canCreate={false}
     >
       {reports.length &&
-        reports.map?.((report) => (
-          <ArticleLink
-            key={`${report.id}`}
-            title={`${report.name} - ${report.title} 점수: ${report.correctCount}/${report.allCount}`}
-            sub={`${report.date}`}
-            to={`../../report/${report.id}`}
-          />
-        ))}
+        reports.map?.((report) => {
+          const formattedDate = formatDate(report.date);
+          return (
+            <ArticleLink
+              key={`${report.reportId}`}
+              title={
+                report.correctCount == -1
+                  ? `${report.name} - 미응시`
+                  : `${report.name} - ${report.title} 점수: ${report.correctCount}/${report.allCount}`
+              }
+              sub={`${formattedDate}`}
+              to={`../report/${report.reportId}`}
+            />
+          );
+        })}
     </ArticleBoard>
   );
 }

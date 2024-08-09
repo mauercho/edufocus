@@ -8,9 +8,7 @@ import { useParams } from 'react-router-dom';
 export default function StudentReportPage() {
   const { lectureId } = useParams();
   const { data } = useStudentReports(lectureId);
-  console.log(data);
   const reports = data?.data;
-  console.log(reports);
 
   const totalCounts = reports.reduce(
     (acc, report) => {

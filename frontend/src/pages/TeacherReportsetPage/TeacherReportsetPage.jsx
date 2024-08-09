@@ -8,21 +8,34 @@ export default function TeacherReportsetPage() {
   const { data } = useReportSets(lectureId);
   const reports = data?.data;
 
-  console.log(data);
+  const formatDate = (dateArray) => {
+    const date = new Date(...dateArray.slice(0, 6));
+    return date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+
   return (
     <ArticleBoard
-      title="퀴즈 관리"
+      title="퀴즈 성적 목록"
       canCreate={false}
     >
-      {reports.length &&
-        reports.map?.((report) => (
+      {reports.map?.((report) => {
+        const formattedDate = formatDate(report.testAt);
+        return (
           <ArticleLink
             key={`${report.reportSetId}`}
             title={`${report.quizSetTitle}`}
-            sub={`${report.testAt}`}
+            sub={formattedDate}
             to={`${report.reportSetId}`}
           />
-        ))}
+        );
+      })}
     </ArticleBoard>
   );
 }

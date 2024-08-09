@@ -6,9 +6,7 @@ import { QuizDetailCard } from '../../components/QuizForm';
 
 export default function StudentReportDetailPage() {
   const { reportId } = useParams();
-  console.log(reportId);
   const { data } = useStudentReportDetail(reportId);
-  console.log(data.data);
   const report = data.data;
   const { allCount, correctCount, quizzes, title } = report;
   const score = Math.round((100 * correctCount) / allCount);
@@ -24,9 +22,7 @@ export default function StudentReportDetailPage() {
         </Link>
         <div className={styles.title}>{title}</div>
       </header>
-      <p>
-        점수 : {score}점 ( {correctCount} / {allCount} )
-      </p>
+      <p>{allCount === 0 ? '미응시' : `점수 : ${score}점 ( ${correctCount} / ${allCount} )`}</p>
       <div className={styles.grid}>
         {quizzes.map((quiz, index) => (
           <QuizDetailCard
