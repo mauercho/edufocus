@@ -91,11 +91,12 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
-    public QnaResponseDto getQna(Long id) {
-        Optional<Qna> qna;
+    public QnaResponseDto getQna(Long id, Long userId) {
+
+        Qna qna;
         try {
 
-            qna = qnaRepository.findById(id);
+            qna = qnaRepository.findById(id).orElse(null);
 
 
         } catch (Exception e) {
@@ -103,8 +104,18 @@ public class QnaServiceImpl implements QnaService {
             throw new RuntimeException("Qna 없음 " + id, e);
         }
 
+        QnaResponseDto dto = QnaResponseDto.builder()
+                .id(qna.getId())
+                .title(qna.getTitle())
+                .username(qna.getUser().getName())
+                .content(qna.getContent())
+                .createtAt(qna.getCreatedAt())
+                .answer(qna.getAnswer())
+                .isMine(userId == qna.getUser().getId())
+                .build();
 
-        return QnaResponseDto.toEntity(qna.get());
+
+        return dto;
 
     }
 

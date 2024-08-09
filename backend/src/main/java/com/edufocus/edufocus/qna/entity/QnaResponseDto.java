@@ -1,6 +1,7 @@
 package com.edufocus.edufocus.qna.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class QnaResponseDto {
 
 
@@ -20,15 +22,17 @@ public class QnaResponseDto {
     private String content;
     private Date createtAt;
     private String answer;
-    public static QnaResponseDto toEntity(Qna qna)
-    {
+    private boolean isMine;
+
+    public static QnaResponseDto toEntity(Qna qna) {
         return new QnaResponseDto(
                 qna.getId(),
                 qna.getTitle(),
                 qna.getUser().getName(),
                 qna.getContent(),
                 qna.getCreatedAt(),
-        qna.getAnswer()
+                qna.getAnswer(),
+                qna.isMine()
         );
     }
 

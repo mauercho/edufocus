@@ -52,5 +52,7 @@ public class Qna {
     @JoinColumn(name = "lecture_id")
     private Lecture lecture;
 
+    private boolean isMine;
+
 
 }
