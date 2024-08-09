@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Builder
 @Getter
@@ -17,6 +18,6 @@ public class ResponseBoardDetailDto {
     private String title;
     private String content;
     private boolean isMine;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private Date createdAt;
+    private Date modifiedAt;
 }

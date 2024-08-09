@@ -16,5 +16,5 @@ public class ReportResponse {
     private String title;
     private int allCount;
     private int correctCount;
-    private LocalDateTime date;
+    private Date date;
 }

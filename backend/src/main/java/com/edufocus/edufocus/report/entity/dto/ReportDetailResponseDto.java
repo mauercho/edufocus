@@ -14,6 +14,6 @@ public class ReportDetailResponseDto {
     private int allCount;
     private String title;
     private int correctCount;
-    private LocalDateTime testAt;
+    private Date testAt;
     private List<QuizDto> quizzes;
 }

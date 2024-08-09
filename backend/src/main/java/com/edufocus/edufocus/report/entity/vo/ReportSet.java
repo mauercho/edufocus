@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,9 +36,10 @@ public class ReportSet {
     )
     private UUID id;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column
     @CreationTimestamp
-    private LocalDateTime createAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createAt;
 
     @OneToMany(mappedBy = "reportSet", cascade = CascadeType.REMOVE)
     private List<Report> reports;

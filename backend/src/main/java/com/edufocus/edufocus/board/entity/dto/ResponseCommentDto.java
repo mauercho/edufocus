@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Builder
 @Getter
@@ -15,6 +16,6 @@ public class ResponseCommentDto {
     private String name;
     private String content;
     private boolean isMine;
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
+    private Date createAt;
+    private Date modifiedAt;
 }
