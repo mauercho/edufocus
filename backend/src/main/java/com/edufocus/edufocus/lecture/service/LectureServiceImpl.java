@@ -11,6 +11,7 @@ import com.edufocus.edufocus.user.model.entity.vo.UserRole;
 import com.edufocus.edufocus.user.model.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -118,7 +119,7 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public List<LectureSearchResponse> findAllLecture() {
-        List<Lecture> lectureList = lectureRepository.findAll();
+        List<Lecture> lectureList = lectureRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 
         List<LectureSearchResponse> lectureSearchResponseList = new ArrayList<>();
         for (Lecture lecture : lectureList) {
@@ -190,7 +191,7 @@ public class LectureServiceImpl implements LectureService {
         List<LectureSearchResponse> myLectureList = new ArrayList<>();
 
         if (user.getRole() == UserRole.ADMIN) {
-            List<Lecture> lectureList = lectureRepository.findLecturesByUserId(userId);
+            List<Lecture> lectureList = lectureRepository.findLecturesByUserIdOrderById(userId);
             for (Lecture lecture : lectureList) {
                 LectureSearchResponse lectureSearchResponse = LectureSearchResponse.builder()
                         .id(lecture.getId())
@@ -214,6 +215,18 @@ public class LectureServiceImpl implements LectureService {
                     myLectureList.add(lectureSearchResponse);
                 }
             }
+            Collections.sort(myLectureList, new Comparator<LectureSearchResponse>() {
+                @Override
+                public int compare(LectureSearchResponse lsr1, LectureSearchResponse lsr2) {
+                    long lsr1Id = lsr1.getId();
+                    long lsr2Id = lsr2.getId();
+                    if(lsr2Id > lsr1Id)
+                        return 1;
+                    else if(lsr2Id == lsr1Id)
+                        return 0;
+                    return -1;
+                }
+            });
         }
 
         return myLectureList;
