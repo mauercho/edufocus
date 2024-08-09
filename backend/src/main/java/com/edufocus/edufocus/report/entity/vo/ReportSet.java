@@ -45,6 +45,7 @@ public class ReportSet {
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @ManyToOne
