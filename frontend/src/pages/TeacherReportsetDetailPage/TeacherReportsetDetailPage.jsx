@@ -11,12 +11,8 @@ export default function TeacherReportsetDetailPage() {
   const formatDate = (dateArray) => {
     const date = new Date(...dateArray.slice(0, 6));
     return date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
       hour12: true,
+      timeZone: 'Asia/Seoul',
     });
   };
 

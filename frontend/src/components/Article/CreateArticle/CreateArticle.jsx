@@ -7,11 +7,12 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 export default function CreateArticle({ topic, title, onSubmit }) {
   const [articleTitle, setArticleTitle] = useState('');
   const [articleContent, setArticleContent] = useState('');
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
 
   const handleInput = (e) => {
-    setArticleContent(e.target.value);
-    e.target.style.height = 'auto';
-    e.target.style.height = e.target.scrollHeight + 'px';
+    const { value, scrollHeight } = e.target;
+    setArticleContent(value);
+    setTextAreaHeight(scrollHeight + 'px');
   };
 
   return (
@@ -48,6 +49,7 @@ export default function CreateArticle({ topic, title, onSubmit }) {
             placeholder="내용을 입력하세요"
             value={articleContent}
             onChange={handleInput}
+            style={{ height: textAreaHeight, overflow: 'hidden' }}
           ></textarea>
         </div>
         <button
