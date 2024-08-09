@@ -8,6 +8,8 @@ import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -41,11 +43,11 @@ public class Board {
     private int viewCount;
 
     @Column(columnDefinition = "TIMESTAMP")
-    @CreatedDate
+    @CreationTimestamp
     LocalDateTime createdAt;
 
     @Column(columnDefinition = "TIMESTAMP")
-    @LastModifiedDate
+    @UpdateTimestamp
     LocalDateTime modifiedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

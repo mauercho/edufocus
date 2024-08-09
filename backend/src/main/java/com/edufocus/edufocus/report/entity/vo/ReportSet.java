@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -35,10 +36,10 @@ public class ReportSet {
     private UUID id;
 
     @Column(columnDefinition = "TIMESTAMP")
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime createAt;
 
-    @OneToMany(mappedBy = "reportSet", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reportSet", cascade = CascadeType.REMOVE)
     private List<Report> reports;
 
     @ManyToOne

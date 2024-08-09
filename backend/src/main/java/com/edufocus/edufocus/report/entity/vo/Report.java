@@ -6,6 +6,7 @@ import com.edufocus.edufocus.user.model.entity.vo.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -31,7 +32,7 @@ public class Report {
     private int correctCount;
 
     @Column(columnDefinition = "TIMESTAMP")
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime testAt;
 
     private Long lectureId;
@@ -48,7 +49,7 @@ public class Report {
     @JoinColumn(name = "reportset_id")
     private ReportSet reportSet;
 
-    @OneToMany(mappedBy = "report",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "report",  cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
     public ReportResponse makeReportResponse(){
