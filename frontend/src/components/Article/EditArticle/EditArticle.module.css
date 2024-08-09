@@ -108,3 +108,9 @@
   cursor: not-allowed;
   stroke: var(--text-color-tertiary);
 }
+
+.textLength {
+  margin-top: 4px;
+  align-self: end;
+  color: var(--error-color);
+}

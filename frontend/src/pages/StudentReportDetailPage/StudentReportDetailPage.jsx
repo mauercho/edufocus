@@ -34,6 +34,7 @@ export default function StudentReportDetailPage() {
             answer={quiz.answer}
             choices={quiz.choices}
             userAnswer={quiz.userAnswer}
+            correct={quiz.correct}
           />
         ))}
       </div>

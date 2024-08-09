@@ -1,11 +1,10 @@
 import styles from './QuizCard.module.css';
 import { STATIC_URL } from '../../constants';
 
-export default function QuizCard({ index, question, answer, image, choices, userAnswer, correct = true }) {
-  // TODO: 정답 / 오답 관련 표현 필요 시 추가
-  console.log(choices);
+export default function QuizDetailCard({ index, question, answer, image, choices, userAnswer = null, correct = true }) {
+  console.log(correct);
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${!correct && styles.incorrect}`}>
       <div className={styles.header}>
         <span className={styles.heading}>{index}번 퀴즈</span>
       </div>

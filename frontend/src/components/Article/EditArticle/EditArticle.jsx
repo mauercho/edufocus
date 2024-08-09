@@ -9,10 +9,6 @@ export default function EditArticle({ topic, title, prevTitle, prevContent, onSu
   const [articleContent, setArticleContent] = useState(prevContent);
   const textAreaRef = useRef(null);
 
-  //   useEffect(() => {
-  //     adjustTextAreaHeight();
-  //   }, []);
-
   useEffect(() => {
     adjustTextAreaHeight();
   }, [articleContent]);
@@ -48,23 +44,26 @@ export default function EditArticle({ topic, title, prevTitle, prevContent, onSu
           <label className={styles.label}>제목</label>
           <input
             type="text"
-            maxLength={255}
+            maxLength={200}
             className={styles.titleInput}
             placeholder="제목을 입력하세요"
             value={articleTitle}
             onChange={(e) => setArticleTitle(e.target.value)}
           />
-        </div>
+          {articleTitle.length > 190 && <div className={styles.textLength}>{articleTitle.length} / 200</div>}
+          </div>
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>내용</label>
           <textarea
             ref={textAreaRef}
             className={styles.contentInput}
+            maxLength={1000}
             placeholder="내용을 입력하세요"
             value={articleContent}
             onChange={handleInput}
           ></textarea>
-        </div>
+          {articleContent.length > 950 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
+          </div>
         <button
           type="button"
           className={styles.button}

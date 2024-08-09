@@ -1,7 +1,7 @@
 import styles from './InfoEditForm.module.css';
 import { useState, useEffect } from 'react';
 
-export default function InfoEditForm({ name, email, onSubmit }) {
+export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
   const [username, setUsername] = useState(name);
   const [useremail, setUseremail] = useState(email);
 
@@ -39,17 +39,18 @@ export default function InfoEditForm({ name, email, onSubmit }) {
           htmlFor="useremail"
           className={styles.textBody}
         >
-          이메일을 입력하세요.
+          이메일을 입력하세요
         </label>
         <input
           placeholder="이메일"
           type="text"
           id="useremail"
-          className={`${styles.input} ${styles.textBody}`}
+          className={`${styles.input} ${styles.textBody} ${usingEmail && styles.errorBox}`}
           value={useremail}
           onChange={(e) => setUseremail(e.target.value)}
           required
         />
+        {usingEmail && <div className={styles.errorText}>이미 사용중인 이메일입니다</div>}
       </div>
       <button
         disabled={(!username && !useremail) || (username == name && useremail == email)}

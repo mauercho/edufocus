@@ -41,11 +41,13 @@ export default function FreeboardComment({ content, author, onDeleteSubmit, onEd
           <input
             type="text"
             value={newComment}
+            maxLength={200}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="댓글 수정하기"
             className={styles.input}
             required
           />
+          {newComment.length > 190 && <div className={styles.textLength}>{newComment.length} / 200</div>}
           <button
             type="submit"
             className={styles.button}
