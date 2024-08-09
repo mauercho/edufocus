@@ -7,7 +7,7 @@ import styles from './LectureEnrollPage.module.css';
 
 export default function LectureEnrollPage() {
   const { lectureId } = useParams();
-  const { data } = useLectureEnroll(lectureId);
+  const { data, refetch } = useLectureEnroll(lectureId);
   const [newStudents, setNewStudents] = useState([]);
   const [students, setStudents] = useState([]);
 
@@ -20,6 +20,7 @@ export default function LectureEnrollPage() {
 
   const handleNewDelete = async (enrollId) => {
     setNewStudents(newStudents.filter((student) => student.id !== enrollId));
+    refetch();
   };
 
   const handleDelete = async (enrollId) => {
@@ -62,6 +63,3 @@ export default function LectureEnrollPage() {
     </ArticleBoard>
   );
 }
-
-//FIXME: 이 페이지에서 딱 처음 수강신청관리 페이지 들어오면 수강신청 관리용 강의들 안뜨는 문제 있음.
-// FIXME: 그리고 왜 그런지는 모르겠는데 강의 목록이 뜨면 HEADER 부분 강의 이름이 안보임.
