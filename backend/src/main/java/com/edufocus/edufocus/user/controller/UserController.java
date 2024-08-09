@@ -47,12 +47,17 @@ public class UserController {
 
     @PutMapping("/updateinfo")
     public ResponseEntity<String> updateUserInfo(@RequestBody InfoDto infoDto, HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-        Long userId = Long.parseLong(jwtUtil.getUserId(token));
 
-        userService.changeUserInfo(infoDto, userId);
+        try {
+            String token = request.getHeader("Authorization");
+            Long userId = Long.parseLong(jwtUtil.getUserId(token));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            userService.changeUserInfo(infoDto, userId);
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+
     }
 
     // 비밀번호 변경
