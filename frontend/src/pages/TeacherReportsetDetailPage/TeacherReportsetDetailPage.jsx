@@ -8,14 +8,6 @@ export default function TeacherReportsetDetailPage() {
   const { data } = useReportSetDetail(reportsetId);
   const reports = data?.data;
 
-  const formatDate = (dateArray) => {
-    const date = new Date(...dateArray.slice(0, 6));
-    return date.toLocaleString('ko-KR', {
-      hour12: true,
-      timeZone: 'Asia/Seoul',
-    });
-  };
-
   return (
     <ArticleBoard
       title="퀴즈 조회"
@@ -23,7 +15,6 @@ export default function TeacherReportsetDetailPage() {
     >
       {reports.length &&
         reports.map?.((report) => {
-          const formattedDate = formatDate(report.date);
           return (
             <ArticleLink
               key={`${report.reportId}`}
@@ -32,7 +23,7 @@ export default function TeacherReportsetDetailPage() {
                   ? `${report.name} - 미응시`
                   : `${report.name} - ${report.title} 점수: ${report.correctCount}/${report.allCount}`
               }
-              sub={`${formattedDate}`}
+              sub={`${new Date(report.testAt).toLocaleDateString()} ${new Date(report.testAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
               to={`../report/${report.reportId}`}
             />
           );
