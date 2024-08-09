@@ -54,6 +54,7 @@ public class Qna {
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     private boolean isMine;

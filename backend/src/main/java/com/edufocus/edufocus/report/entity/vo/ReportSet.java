@@ -25,7 +25,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class ReportSet {
     @Id
     @GeneratedValue(generator = "UUID")
