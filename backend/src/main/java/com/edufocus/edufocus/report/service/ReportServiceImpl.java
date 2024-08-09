@@ -125,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportSetResponse> findReportSets(long lectureId) {
-        List<ReportSet> reportSets = reportSetRepository.findByLectureId(lectureId);
+        List<ReportSet> reportSets = reportSetRepository.findByLectureIdDesc(lectureId);
 
         return reportSets.stream()
                 .map(ReportSet::makeReportSetResponse)
@@ -134,7 +134,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportResponse> findReports(UUID reportSetId) {
-        List<Report> reports = reportRepository.findByReportSetId(reportSetId);
+        List<Report> reports = reportRepository.findByReportSetIdDesc(reportSetId);
 
         return reports.stream()
                 .map(Report::makeReportResponse)
@@ -143,7 +143,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportResponse> findReports(long lectureId, long userId) {
-        List<Report> reports = reportRepository.findByLectureIdAndUserId(lectureId, userId);
+        List<Report> reports = reportRepository.findByLectureIdAndUserIdDesc(lectureId, userId);
 
         return reports.stream()
                 .map(Report::makeReportResponse)
