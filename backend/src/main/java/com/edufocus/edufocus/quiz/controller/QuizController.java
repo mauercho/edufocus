@@ -34,6 +34,10 @@ public class QuizController {
             , @RequestPart(value = "images", required = false) List<MultipartFile> images) throws IOException {
         long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
+        if (quizSetCreateRequest.getQuizzes().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         QuizSet quizSet = quizSetService.createQuizSet(userId, quizSetCreateRequest.getTitle());
 
         int imageIdx = 0;
