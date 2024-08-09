@@ -8,7 +8,6 @@ export function useQnaWrite() {
       content,
       answer: null,
     };
-    console.log(newQna);
     return instance.post(`${API_URL}/qna/${lectureId}`, newQna);
   };
 
