@@ -1,13 +1,11 @@
 import { ArticleLink } from '../../components/ArticleLink';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { useReportSetDetail } from '../../hooks/api/useReportSetDetail';
-import { useReportSetDelete } from '../../hooks/api/useReportSetDelete';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function TeacherReportsetDetailPage() {
   const { reportsetId } = useParams();
-  const navigate = useNavigate();
-  const { reportsetDelete } = useReportSetDelete();
+
   const { data } = useReportSetDetail(reportsetId);
   const reports = data?.data;
 
@@ -26,7 +24,7 @@ export default function TeacherReportsetDetailPage() {
                   ? `${report.name} - 미응시`
                   : `${report.name} - ${report.title} 점수: ${report.correctCount}/${report.allCount}`
               }
-              sub={`${new Date(report.testAt).toLocaleDateString()} ${new Date(report.testAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
+              sub={`${new Date(report.date).toLocaleDateString()} ${new Date(report.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
               to={`../report/${report.reportId}`}
             />
           );
