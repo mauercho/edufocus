@@ -20,7 +20,7 @@ public interface QnaService {
 
     void deleteQna(Long id, Long userId) throws SQLException;
 
-    QnaResponseDto getQna(Long id) throws SQLException;
+    QnaResponseDto getQna(Long id, Long userId) throws SQLException;
 
     List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int pageNumber) throws SQLException;
 

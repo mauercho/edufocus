@@ -131,9 +131,11 @@ public class QnaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QnaResponseDto> getQna(@PathVariable Long id) {
+    public ResponseEntity<QnaResponseDto> getQna(@PathVariable Long id, HttpServletRequest request) {
         try {
-            QnaResponseDto findQna = qnaService.getQna(id);
+            String token = request.getHeader("Authorization");
+            long userId = Long.parseLong(jwtUtil.getUserId(token));
+            QnaResponseDto findQna = qnaService.getQna(id, userId);
             return new ResponseEntity<>(findQna, HttpStatus.ACCEPTED);
 
         } catch (SQLException e) {

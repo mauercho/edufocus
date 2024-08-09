@@ -29,7 +29,7 @@ public class ReportController {
     @PostMapping("/submit/quizSet/{reportSetId}")
     public ResponseEntity<?> submit(@PathVariable("reportSetId") UUID reportSetId, @RequestBody ReportRequest reportRequest, HttpServletRequest request) {
 
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader("Authoriza]tion");
         long userId = Long.parseLong(jwtUtil.getUserId(token));
 
         if (userService.isTeacher(userId))
@@ -49,38 +49,41 @@ public class ReportController {
 
         List<ReportResponse> reportResponses = reportService.findReports(lectureId, userId);
 
-        if(reportResponses.isEmpty())
+        if (reportResponses.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         return new ResponseEntity<>(reportResponses, HttpStatus.OK);
     }
 
 
-
     @GetMapping("/reportDetail/{reportId}")
-    public ResponseEntity<ReportDetailResponseDto> searchDetailReport(@PathVariable("reportId") long reportId){
+    public ResponseEntity<ReportDetailResponseDto> searchDetailReport(@PathVariable("reportId") long reportId) {
         ReportDetailResponseDto detailReport = reportService.reportDetail(reportId);
 
         return new ResponseEntity<>(detailReport, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 935331e7e93d9c25ec6f32ba6155ed19b5fd60f9
     @GetMapping("/teacher/reportSet/{lectureId}")
-    public ResponseEntity<List<ReportSetResponse>> searchReportSets(@PathVariable("lectureId") long lectureId){
+    public ResponseEntity<List<ReportSetResponse>> searchReportSets(@PathVariable("lectureId") long lectureId) {
         List<ReportSetResponse> reportSetResponses = reportService.findReportSets(lectureId);
-        
-        if(reportSetResponses.isEmpty())
+
+        if (reportSetResponses.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        
+
         return new ResponseEntity<>(reportSetResponses, HttpStatus.OK);
     }
-    
+
     @GetMapping("/teacher/report/{reportSetId}")
-    public ResponseEntity<?> searchReports(@PathVariable("reportSetId") UUID reportSetId){
+    public ResponseEntity<?> searchReports(@PathVariable("reportSetId") UUID reportSetId) {
         List<ReportResponse> reportResponses = reportService.findReports(reportSetId);
-        
-        if(reportResponses.isEmpty())
+
+        if (reportResponses.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        
+
         return new ResponseEntity<>(reportResponses, HttpStatus.OK);
     }
 
