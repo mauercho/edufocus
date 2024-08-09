@@ -64,10 +64,10 @@ public class Board {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board")
     private List<Comment> comments;
 
-    public ResponseBoardSummaryDto makeSummaryDto(){
+    public ResponseBoardSummaryDto makeSummaryDto() {
         return ResponseBoardSummaryDto.builder()
                 .id(id)
                 .title(title)
@@ -76,7 +76,7 @@ public class Board {
                 .build();
     }
 
-    public ResponseBoardDetailDto makeDetailDto(long userId){
+    public ResponseBoardDetailDto makeDetailDto(long userId) {
         return ResponseBoardDetailDto.builder()
                 .id(id)
                 .name(user.getName())
