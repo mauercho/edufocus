@@ -40,9 +40,11 @@ public class Board {
     @Column(nullable = true)
     private int viewCount;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @CreatedDate
     LocalDateTime createdAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @LastModifiedDate
     LocalDateTime modifiedAt;
 
