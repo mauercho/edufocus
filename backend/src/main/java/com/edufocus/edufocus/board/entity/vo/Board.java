@@ -34,15 +34,17 @@ public class Board {
     @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column(nullable = true)
     private int viewCount;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @CreatedDate
     LocalDateTime createdAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @LastModifiedDate
     LocalDateTime modifiedAt;
 

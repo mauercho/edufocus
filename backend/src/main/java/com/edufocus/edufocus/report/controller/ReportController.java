@@ -63,7 +63,10 @@ public class ReportController {
         return new ResponseEntity<>(detailReport, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 935331e7e93d9c25ec6f32ba6155ed19b5fd60f9
     @GetMapping("/teacher/reportSet/{lectureId}")
     public ResponseEntity<List<ReportSetResponse>> searchReportSets(@PathVariable("lectureId") long lectureId) {
         List<ReportSetResponse> reportSetResponses = reportService.findReportSets(lectureId);
@@ -84,4 +87,13 @@ public class ReportController {
         return new ResponseEntity<>(reportResponses, HttpStatus.OK);
     }
 
+    @DeleteMapping("/teacher/report/{reportSetId}")
+    public ResponseEntity<?> deleteReportSet(@PathVariable("reportSetId") UUID reportSetId, HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        long userId = Long.parseLong(jwtUtil.getUserId(token));
+
+        reportService.deleteReportSet(reportSetId, userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -3,9 +3,11 @@ package com.edufocus.edufocus.report.entity.vo;
 import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.report.entity.dto.ReportResponse;
 import com.edufocus.edufocus.user.model.entity.vo.User;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,6 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +30,7 @@ public class Report {
 
     private int correctCount;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @CreatedDate
     private LocalDateTime testAt;
 

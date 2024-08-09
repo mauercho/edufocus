@@ -36,7 +36,7 @@ public class RegistrationController {
     }
 
     @PutMapping("/{registrationId}")
-    public ResponseEntity<?> acceptRigistration(@RequestHeader("Authorization") String accessToken, @PathVariable long registrationId) {
+    public ResponseEntity<?> acceptRegistration(@RequestHeader("Authorization") String accessToken, @PathVariable long registrationId) {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         if (!registrationService.acceptRegistration(userId, registrationId)) {
@@ -47,7 +47,7 @@ public class RegistrationController {
     }
 
     @DeleteMapping("/{registrationId}")
-    public ResponseEntity<?> deleteRigistration(@RequestHeader("Authorization") String accessToken, @PathVariable long registrationId) {
+    public ResponseEntity<?> deleteRegistration(@RequestHeader("Authorization") String accessToken, @PathVariable long registrationId) {
         Long userId = Long.parseLong(jwtUtil.getUserId(accessToken));
 
         if (!registrationService.deleteRegistration(userId, registrationId)) {
