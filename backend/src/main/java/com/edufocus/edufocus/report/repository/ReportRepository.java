@@ -9,10 +9,13 @@ import java.util.UUID;
 
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
+    List<Report> findByUserId(long userId);
+
+    List<Report> findByLectureId(long lectureId);
 
     Report findByReportSetIdAndUserId(UUID reportSetId, long userId);
 
-    List<Report> findByReportSetIdDesc(UUID reportSetId);
+    List<Report> findByReportSetId(UUID reportSetId);
 
-    List<Report> findByLectureIdAndUserIdDesc(long lectureId, long userId);
+    List<Report> findByLectureIdAndUserId(long lectureId, long userId);
 }
