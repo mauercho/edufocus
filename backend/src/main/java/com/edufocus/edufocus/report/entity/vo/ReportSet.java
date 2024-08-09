@@ -5,10 +5,9 @@ import com.edufocus.edufocus.quiz.entity.QuizSet;
 import com.edufocus.edufocus.report.entity.dto.ReportSetResponse;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -46,6 +45,7 @@ public class ReportSet {
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @ManyToOne
