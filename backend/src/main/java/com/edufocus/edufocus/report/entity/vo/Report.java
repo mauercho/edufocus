@@ -24,7 +24,6 @@ import java.util.List;
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
