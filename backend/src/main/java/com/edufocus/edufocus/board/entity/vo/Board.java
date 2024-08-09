@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -59,8 +61,8 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
-
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments;

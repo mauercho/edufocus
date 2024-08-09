@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -50,10 +52,10 @@ public class Report {
     @JoinColumn(name = "reportset_id")
     private ReportSet reportSet;
 
-    @OneToMany(mappedBy = "report",  cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "report", cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
-    public ReportResponse makeReportResponse(){
+    public ReportResponse makeReportResponse() {
         return ReportResponse.builder()
                 .reportId(id)
                 .name(user.getName())

@@ -4,6 +4,8 @@ import com.edufocus.edufocus.lecture.entity.Lecture;
 import com.edufocus.edufocus.user.model.entity.vo.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -13,6 +15,8 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 public class Qna {
 
     // 연관관계 주인
@@ -50,6 +54,7 @@ public class Qna {
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     private boolean isMine;
