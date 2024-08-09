@@ -8,6 +8,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -27,6 +28,7 @@ public class MailServiceImpl implements MailService {
     private final RedisUtil redisUtil;
 
     @Override
+    @Async("mailExecutor")
     public void sendMail(String email) {
         String code = createRandomCode();
 
