@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@OnDelete(action = OnDeleteAction.CASCADE)
+
 public class Qna {
 
     // 연관관계 주인
