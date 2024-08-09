@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -26,10 +28,12 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP")
+    @CreatedDate
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP")
+    @LastModifiedDate
     private LocalDateTime modifiedAt;
 
     @ManyToOne

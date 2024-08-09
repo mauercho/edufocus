@@ -30,6 +30,7 @@ public class Report {
 
     private int correctCount;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @CreatedDate
     private LocalDateTime testAt;
 

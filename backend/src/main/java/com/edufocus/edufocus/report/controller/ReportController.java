@@ -64,9 +64,6 @@ public class ReportController {
         return new ResponseEntity<>(detailReport, HttpStatus.OK);
     }
 
-
-
-
     @GetMapping("/teacher/reportSet/{lectureId}")
     public ResponseEntity<List<ReportSetResponse>> searchReportSets(@PathVariable("lectureId") long lectureId){
         List<ReportSetResponse> reportSetResponses = reportService.findReportSets(lectureId);

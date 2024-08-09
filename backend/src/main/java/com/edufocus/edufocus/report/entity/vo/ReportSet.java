@@ -34,6 +34,7 @@ public class ReportSet {
     )
     private UUID id;
 
+    @Column(columnDefinition = "TIMESTAMP")
     @CreatedDate
     private LocalDateTime createAt;
 
