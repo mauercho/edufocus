@@ -9,11 +9,10 @@ export default function StudentReportPage() {
   const { lectureId } = useParams();
   const { data } = useStudentReports(lectureId);
   const reports = data?.data;
-  console.log(reports);
 
   const totalCounts = reports.reduce?.(
     (acc, report) => {
-      if (acc.allCount > 0) {
+      if (report.allCount > 0) {
         acc.correctCount += report.correctCount;
         acc.allCount += report.allCount;
       }
@@ -27,24 +26,26 @@ export default function StudentReportPage() {
       title="퀴즈 성적"
       canCreate={false}
     >
-      <div className={styles.wrapper}>
-        <div className={styles.LinksContainer}>
-          {reports.map?.((report) => (
-            <ArticleLink
-              key={`${report.reportId}`}
-              title={report.title}
-              sub={report.allCount === 0 ? '미응시' : `${Math.round((report.correctCount / report.allCount) * 100)}%`}
-              to={`${report.reportId}`}
+      {totalCounts && (
+        <div className={styles.wrapper}>
+          <div className={styles.LinksContainer}>
+            {reports.map?.((report) => (
+              <ArticleLink
+                key={`${report.reportId}`}
+                title={report.title}
+                sub={report.allCount === 0 ? '미응시' : `${Math.round((report.correctCount / report.allCount) * 100)}%`}
+                to={`${report.reportId}`}
+              />
+            ))}
+          </div>
+          <div className={styles.reportCardContainer}>
+            <ReportCard
+              correctCount={totalCounts.correctCount}
+              allCount={totalCounts.allCount}
             />
-          ))}
+          </div>
         </div>
-        <div className={styles.reportCardContainer}>
-          <ReportCard
-            correctCount={totalCounts.correctCount}
-            allCount={totalCounts.allCount}
-          />
-        </div>
-      </div>
+      )}
     </ArticleBoard>
   );
 }
