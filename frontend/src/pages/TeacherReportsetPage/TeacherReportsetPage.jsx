@@ -8,26 +8,17 @@ export default function TeacherReportsetPage() {
   const { data } = useReportSets(lectureId);
   const reports = data?.data;
 
-  const formatDate = (dateArray) => {
-    const date = new Date(...dateArray.slice(0, 6));
-    return date.toLocaleString('ko-KR', {
-      hour12: true,
-      timeZone: 'Asia/Seoul',
-    });
-  };
-
   return (
     <ArticleBoard
       title="퀴즈 성적 목록"
       canCreate={false}
     >
       {reports.map?.((report) => {
-        const formattedDate = formatDate(report.testAt);
         return (
           <ArticleLink
             key={`${report.reportSetId}`}
             title={`${report.quizSetTitle}`}
-            sub={formattedDate}
+            sub={`${new Date(report.testAt).toLocaleDateString()} ${new Date(report.testAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
             to={`${report.reportSetId}`}
           />
         );
