@@ -72,11 +72,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeUserInfo(InfoDto infoDto, Long id) {
 
-        User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        User user = userRepository.findById(id).orElse(null);
 
 
         if (isEmailExist(infoDto.getEmail())) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+            throw new RuntimeException("이미 사용 중인 이메일입니다.");
 
         }
 
