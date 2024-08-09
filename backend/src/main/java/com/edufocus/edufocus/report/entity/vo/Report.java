@@ -31,9 +31,10 @@ public class Report {
 
     private int correctCount;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column
     @CreationTimestamp
-    private LocalDateTime testAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date testAt;
 
     private Long lectureId;
 

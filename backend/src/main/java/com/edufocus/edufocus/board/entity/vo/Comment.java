@@ -15,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -30,13 +31,14 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
-    @UpdateTimestamp
-    private LocalDateTime modifiedAt;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -4,6 +4,7 @@ package com.edufocus.edufocus.report.entity.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Builder
@@ -14,5 +15,5 @@ import java.util.UUID;
 public class ReportSetResponse {
     private UUID reportSetId;
     private String quizSetTitle;
-    private LocalDateTime testAt;
+    private Date testAt;
 }

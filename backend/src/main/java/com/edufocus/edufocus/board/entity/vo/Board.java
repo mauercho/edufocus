@@ -15,6 +15,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -42,13 +43,15 @@ public class Board {
     @Column(nullable = true)
     private int viewCount;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column
     @CreationTimestamp
-    LocalDateTime createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column
     @UpdateTimestamp
-    LocalDateTime modifiedAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
