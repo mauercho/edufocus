@@ -9,34 +9,8 @@ export default function StudentReportPage() {
   const { lectureId } = useParams();
   const { data } = useStudentReports(lectureId);
   console.log(data);
-  const reportss = data?.data;
-  console.log(reportss);
-  const reports = [
-    {
-      reportId: 1,
-      title: '퀴즈 1',
-      correctCount: 8,
-      allCount: 10,
-    },
-    {
-      reportId: 2,
-      title: '퀴즈 2',
-      correctCount: 7,
-      allCount: 10,
-    },
-    {
-      reportId: 3,
-      title: '퀴즈 3',
-      correctCount: 9,
-      allCount: 10,
-    },
-    {
-      reportId: 4,
-      title: '퀴즈 4',
-      correctCount: 6,
-      allCount: 10,
-    },
-  ];
+  const reports = data?.data;
+  console.log(reports);
 
   const totalCounts = reports.reduce(
     (acc, report) => {

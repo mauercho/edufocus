@@ -1,7 +1,7 @@
 import styles from './QuizCard.module.css';
 import { STATIC_URL } from '../../constants';
 
-export default function QuizCard({ index, question, answer, image, choices }) {
+export default function QuizCard({ index, question, answer, image, choices, userAnswer, correct = true }) {
   // TODO: 정답 / 오답 관련 표현 필요 시 추가
   console.log(choices);
   return (
@@ -24,6 +24,12 @@ export default function QuizCard({ index, question, answer, image, choices }) {
       <div className={styles.input}>{question}</div>
       <label className={styles.label}>정답</label>
       <div className={styles.input}>{answer}</div>
+      {!correct && (
+        <>
+          <label className={styles.label}>나의 오답</label>
+          <div className={styles.input}>{userAnswer}</div>
+        </>
+      )}
       {choices.length > 0 && <label className={styles.label}>선택지</label>}
       {choices.map?.((choice, idx) => (
         <div
