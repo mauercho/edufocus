@@ -27,7 +27,7 @@ public class Qna {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String content;
 
 
@@ -39,7 +39,7 @@ public class Qna {
     @Temporal(TemporalType.DATE)
     private Date modifiedAt;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String answer;
 
 
