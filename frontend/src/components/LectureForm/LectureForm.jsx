@@ -75,7 +75,6 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <label className={styles.label}>설명</label>
           <textarea
             ref={descriptionRef}
-            maxLength={1000}
             className={styles.textarea}
             placeholder="강의에 대한 설명을 입력하세요"
           ></textarea>
@@ -84,7 +83,6 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <label className={styles.label}>강의 계획</label>
           <textarea
             ref={planRef}
-            maxLength={1000}
             className={styles.textarea}
             placeholder="강의 계획을 입력하세요"
           ></textarea>

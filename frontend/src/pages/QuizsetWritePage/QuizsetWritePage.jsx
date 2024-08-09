@@ -8,6 +8,11 @@ export default function QuizsetWritePage() {
 
   const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
+    console.log(quizzes);
+    if (quizzes.length === 0) {
+      window.alert('퀴즈가 없는 퀴즈셋은 생성할 수 없습니다');
+      return;
+    }
 
     const images = [];
     const quizContents = [];
