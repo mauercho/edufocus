@@ -46,13 +46,15 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "quizset_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private QuizSet quizSet;
 
     @ManyToOne
     @JoinColumn(name = "reportset_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ReportSet reportSet;
 
-    @OneToMany(mappedBy = "report", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "report")
     private List<Answer> answers;
 
     public ReportResponse makeReportResponse() {

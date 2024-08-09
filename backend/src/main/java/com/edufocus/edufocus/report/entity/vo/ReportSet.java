@@ -39,7 +39,7 @@ public class ReportSet {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
 
-    @OneToMany(mappedBy = "reportSet", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "reportSet")
     private List<Report> reports;
 
     @ManyToOne
@@ -49,6 +49,7 @@ public class ReportSet {
 
     @ManyToOne
     @JoinColumn(name = "quizSet_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private QuizSet quizSet;
 
     public ReportSetResponse makeReportSetResponse() {
