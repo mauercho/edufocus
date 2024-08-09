@@ -74,6 +74,12 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
+
+        if (isEmailExist(infoDto.getEmail())) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+
+        }
+
         if (infoDto.getName() != null)
             user.setName(infoDto.getName());
 
@@ -159,7 +165,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isTeacher(long userId){
+    public boolean isTeacher(long userId) {
         return userRepository.findById(userId).orElseThrow(IllegalArgumentException::new).getRole() == UserRole.ADMIN;
     }
 }
