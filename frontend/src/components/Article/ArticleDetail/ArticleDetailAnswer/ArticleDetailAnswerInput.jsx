@@ -4,7 +4,7 @@ import { useAnswerEdit } from '../../../../hooks/api/useAnswerEdit';
 import { useParams } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react';
 import SendIcon from '/src/assets/icons/send.svg?react';
-export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEditing = false }) {
+export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer = '', isEditing = false }) {
   // TODO: 우선 Textarea로 댓글 수정. 필요시 Input으로 다시 변경
   const { answerWrite } = useAnswerWrite();
   const { answerEdit } = useAnswerEdit();
@@ -40,6 +40,8 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEd
     onSubmit(answer);
   };
 
+  console.log(answer);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -53,7 +55,7 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEd
         placeholder="답변 작성하기"
         className={styles.input}
       />
-      {answer.length > 950 && <div className={styles.textLength}>{answer.length} / 1000</div>}
+      {answer && answer.length > 950 && <div className={styles.textLength}>{answer.length} / 1000</div>}
 
       <button
         type="submit"
