@@ -29,7 +29,7 @@ public class ReportController {
     @PostMapping("/submit/quizSet/{reportSetId}")
     public ResponseEntity<?> submit(@PathVariable("reportSetId") UUID reportSetId, @RequestBody ReportRequest reportRequest, HttpServletRequest request) {
 
-        String token = request.getHeader("Authoriza]tion");
+        String token = request.getHeader("Authorization");
         long userId = Long.parseLong(jwtUtil.getUserId(token));
 
         if (userService.isTeacher(userId))
