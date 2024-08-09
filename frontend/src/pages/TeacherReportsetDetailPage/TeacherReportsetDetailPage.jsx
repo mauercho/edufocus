@@ -1,10 +1,13 @@
 import { ArticleLink } from '../../components/ArticleLink';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { useReportSetDetail } from '../../hooks/api/useReportSetDetail';
-import { useParams } from 'react-router-dom';
+import { useReportSetDelete } from '../../hooks/api/useReportSetDelete';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function TeacherReportsetDetailPage() {
   const { reportsetId } = useParams();
+  const navigate = useNavigate();
+  const { reportsetDelete } = useReportSetDelete();
   const { data } = useReportSetDetail(reportsetId);
   const reports = data?.data;
 

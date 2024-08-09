@@ -15,6 +15,7 @@ export default forwardRef(function InputBox({ title, id = null, type, hasError =
         id={id}
         className={`${styles.input} ${styles.textSubheading}`}
         ref={ref}
+        maxLength={200}
         required
       />
       {children}

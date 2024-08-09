@@ -21,19 +21,16 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
   }, [initialValue]);
 
   const handleAddQuiz = () => {
-    console.log(quizzes);
     setQuizzes([...quizzes, { id: quizId, question: '', answer: '', choices: [], image: null }]);
     setQuizId(quizId + 1);
   };
 
   const updateQuiz = (id, updatedQuiz) => {
-    console.log(quizzes);
     const updatedQuizzes = quizzes.map((quiz) => (quiz.id === id ? updatedQuiz : quiz));
     setQuizzes(updatedQuizzes);
   };
 
   const deleteQuiz = (id) => {
-    console.log(quizzes);
     setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
   };
 
@@ -57,7 +54,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         <input
           className={styles.input}
           type="text"
-          maxLength={255}
+          maxLength={200}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"

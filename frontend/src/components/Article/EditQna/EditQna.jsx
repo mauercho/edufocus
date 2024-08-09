@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './EditQna.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
@@ -7,11 +7,21 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 export default function EditQna({ topic, title, prevContent, prevTitle, onSubmit }) {
   const [articleTitle, setArticleTitle] = useState(prevTitle);
   const [articleContent, setArticleContent] = useState(prevContent);
+  const textAreaRef = useRef(null);
+
+  useEffect(() => {
+    adjustTextAreaHeight();
+  }, [articleContent]);
+
+  const adjustTextAreaHeight = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto';
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  };
 
   const handleInput = (e) => {
     setArticleContent(e.target.value);
-    e.target.style.height = 'auto';
-    e.target.style.height = e.target.scrollHeight + 'px';
   };
 
   return (
@@ -34,21 +44,25 @@ export default function EditQna({ topic, title, prevContent, prevTitle, onSubmit
           <label className={styles.label}>제목</label>
           <input
             type="text"
-            maxLength={255}
+            maxLength={200}
             className={styles.titleInput}
             placeholder={'제목을 입력하세요'}
             value={articleTitle}
             onChange={(e) => setArticleTitle(e.target.value)}
           />
+          {articleTitle.length > 190 && <div className={styles.textLength}>{articleTitle.length} / 200</div>}
         </div>
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>내용</label>
           <textarea
+            ref={textAreaRef}
+            maxLength={1000}
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
             value={articleContent}
             onChange={handleInput}
           ></textarea>
+          {articleContent.length > 950 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
         </div>
         <button
           type="button"

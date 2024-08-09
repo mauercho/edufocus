@@ -26,3 +26,9 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.textLength {
+  margin-top: 4px;
+  align-self: end;
+  color: var(--error-color);
+}

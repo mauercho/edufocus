@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './CreateArticle.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
@@ -7,12 +7,22 @@ import BackIcon from '/src/assets/icons/back.svg?react';
 export default function CreateArticle({ topic, title, onSubmit }) {
   const [articleTitle, setArticleTitle] = useState('');
   const [articleContent, setArticleContent] = useState('');
-  const [textAreaHeight, setTextAreaHeight] = useState('auto');
+  const textareaRef = useRef(null);
+
+  const adjustTextareaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [articleContent]);
 
   const handleInput = (e) => {
-    const { value, scrollHeight } = e.target;
+    const { value } = e.target;
     setArticleContent(value);
-    setTextAreaHeight(scrollHeight + 'px');
   };
 
   return (
@@ -35,22 +45,26 @@ export default function CreateArticle({ topic, title, onSubmit }) {
           <label className={styles.label}>제목</label>
           <input
             type="text"
-            maxLength={255}
+            maxLength={200}
             className={styles.titleInput}
             placeholder="제목을 입력하세요"
             value={articleTitle}
             onChange={(e) => setArticleTitle(e.target.value)}
           />
+          {articleTitle.length > 190 && <div className={styles.textLength}>{articleTitle.length} / 200</div>}
         </div>
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>내용</label>
           <textarea
+            ref={textareaRef}
             className={styles.contentInput}
             placeholder="내용을 입력하세요"
             value={articleContent}
+            maxLength={1000}
             onChange={handleInput}
-            style={{ height: textAreaHeight, overflow: 'hidden' }}
+            style={{ overflow: 'hidden' }}
           ></textarea>
+          {articleContent.length > 950 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
         </div>
         <button
           type="button"

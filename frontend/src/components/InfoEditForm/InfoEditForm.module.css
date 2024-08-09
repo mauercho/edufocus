@@ -64,3 +64,12 @@
   cursor: not-allowed;
   stroke: var(--text-color-tertiary);
 }
+
+.errorBox {
+  outline: none;
+  border: 1px solid var(--error-border);
+}
+
+.errorText {
+  color: var(--error-color);
+}

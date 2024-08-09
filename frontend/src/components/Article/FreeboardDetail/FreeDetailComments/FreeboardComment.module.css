@@ -91,3 +91,9 @@
 .delete {
   color: var(--error-color);
 }
+
+.textLength {
+  margin-top: 4px;
+  align-self: end;
+  color: var(--error-color);
+}

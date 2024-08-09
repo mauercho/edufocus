@@ -86,6 +86,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
       <input
         type="text"
         value={question}
+        maxLength={200}
         onChange={(e) => {
           setQuestion(e.target.value);
           updateQuiz(quiz.id, { ...quiz, question: e.target.value, answer, choices, image });
@@ -97,6 +98,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
       <input
         type="text"
         value={answer}
+        maxLength={200}
         onChange={(e) => {
           setAnswer(e.target.value);
           updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });
@@ -134,6 +136,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
           <input
             className={`${styles.input} ${styles.choiceInput}`}
             type="text"
+            maxLength={200}
             value={choice.content}
             onChange={(e) => handleChoiceChange(choice.num, e.target.value)}
             placeholder={`Choice ${choice.num}`}
