@@ -37,7 +37,6 @@ export default function ArticleDetail({
     setSubmittedAnswer(null);
     setIsEditing(false);
   };
-
   return (
     <div className={styles.articleDetail}>
       <header className={styles.header}>
@@ -55,7 +54,7 @@ export default function ArticleDetail({
           </div>
         </div>
         <div className={styles.actionGroup}>
-          {(isMine || (userType === 'teacher' && !isQna)) && (
+          {isMine && (
             <>
               <Link
                 className={styles.edit}

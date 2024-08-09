@@ -3,9 +3,8 @@ import { useAnswerWrite } from '../../../../hooks/api/useAnswerWrite';
 import { useAnswerEdit } from '../../../../hooks/api/useAnswerEdit';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-
-export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEditing = false }) {
 import SendIcon from '/src/assets/icons/send.svg?react';
+export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer, isEditing = false }) {
   const { answerWrite } = useAnswerWrite();
   const { answerEdit } = useAnswerEdit();
   const { questionId } = useParams();

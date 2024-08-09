@@ -8,6 +8,7 @@ export default function NoticeListPage() {
   const { data } = useFreeboards(lectureId);
   const notices = data?.data;
 
+  console.log(notices);
   return (
     <ArticleBoard
       title="자유게시판"

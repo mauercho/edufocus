@@ -24,6 +24,7 @@ export default function QuestionDetailPage() {
       content={qna.content}
       answer={qna?.answer}
       onDelete={handleDelete}
+      isMine={qna.mine}
     />
   );
 }
