@@ -60,7 +60,10 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
         </Link>
         <div className={styles.title}>{topic}</div>
       </header>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles.form}
+      >
         <div className={styles.inputField}>
           <label className={styles.label}>강의명</label>
           <input
@@ -89,16 +92,24 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
         </div>
         <div className={styles.inputField}>
           <label className={styles.label}>강의 기간</label>
-          <input
-            className={styles.input}
-            ref={startDateRef}
-            type="date"
-          />
-          <input
-            className={styles.input}
-            ref={endDateRef}
-            type="date"
-          />
+          <div className={styles.dateWrapper}>
+            <div className={styles.date}>
+              <input
+                className={styles.input}
+                ref={startDateRef}
+                type="date"
+              />
+              <span className={styles.label}>부터</span>
+            </div>
+            <div className={styles.date}>
+              <input
+                className={styles.input}
+                ref={endDateRef}
+                type="date"
+              />
+              <span className={styles.label}>까지</span>
+            </div>
+          </div>
         </div>
         <div className={styles.inputField}>
           <label className={styles.label}>수업 시간</label>
@@ -117,6 +128,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
               type="file"
               ref={imageFileRef}
               accept=".png, .jpg, .jpeg"
+              className={styles.input}
             />
           </div>
         )}

@@ -32,6 +32,33 @@
   font-weight: 800;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dateWrapper {
+  display: flex;
+  gap: 40px;
+}
+
+.date {
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+
+  & > input {
+    width: 100%;
+  }
+
+  & > span {
+    flex-shrink: 0;
+  }
+}
+
 .inputField {
   display: flex;
   flex-direction: column;
@@ -47,11 +74,11 @@
 
 .input {
   background: var(--background-color);
-  padding: 20px;
+  padding: 16px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  font-size: 20px;
-  line-height: 1.2;
+  font-size: 16px;
+  line-height: 1.4;
   font-weight: 400;
 }
 
@@ -60,7 +87,7 @@
 }
 
 .textarea {
-  padding: 20px;
+  padding: 16px;
   height: 80px;
   background: var(--background-color);
   border: 1px solid var(--border-color);
