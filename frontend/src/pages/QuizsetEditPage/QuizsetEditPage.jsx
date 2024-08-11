@@ -9,7 +9,6 @@ export default function QuizsetEditPage() {
   const location = useLocation();
   const initialValue = location.state.initialValue;
   const { quizsetEdit } = useQuizsetEdit();
-  console.log(initialValue);
   const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
 
@@ -40,10 +39,6 @@ export default function QuizsetEditPage() {
       } else {
         formData.append('images', new Blob([''], { type: 'image/jpg' }));
       }
-    });
-
-    formData.forEach((value, key) => {
-      console.log(`FormData - Key: ${key}, Value:`, value);
     });
 
     await quizsetEdit(formData);

@@ -114,3 +114,11 @@
 .delete {
   color: var(--error-color);
 }
+
+.commentWrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border-color);
+  margin-top: 10px;
+  padding-top: 18px;
+}

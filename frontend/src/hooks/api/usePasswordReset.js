@@ -3,7 +3,6 @@ import { API_URL } from '../../constants';
 
 export function usePasswordReset() {
   const sendEmail = (email) => {
-    console.log(email);
     return instance.post(`${API_URL}/mail/sendcode?email=${email}`);
   };
 

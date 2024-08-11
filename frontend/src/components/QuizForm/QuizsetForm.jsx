@@ -16,7 +16,6 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
       setTitle(initialValue.title || '');
       setQuizzes(initialValue.quizzes || []);
       setQuizId(initialValue.quizzes ? initialValue.quizzes[initialValue.quizzes.length - 1].id + 1 : 0);
-      console.log(initialValue.quizzes.length);
     }
   }, [initialValue]);
 
@@ -79,7 +78,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         </div>
         <button
           type="submit"
-          className={`${styles.button} ${styles.add} ${styles.create}`}
+          className={`${styles.button} ${styles.add}`}
         >
           <EditIcon />
           <div>퀴즈 생성하기</div>

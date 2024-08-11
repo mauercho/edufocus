@@ -29,7 +29,6 @@ export default function QuizModal({ startQuiz, quizSets, closeModal }) {
             <li
               key={quizSet.quizSetId}
               onClick={() => {
-                console.log(quizSet.quizSetId);
                 startQuiz(quizSet.quizSetId);
                 closeModal();
               }}

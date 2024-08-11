@@ -109,10 +109,6 @@
   stroke: var(--on-primary);
 }
 
-.create {
-  margin-top: 60px;
-}
-
 .edit {
   font-size: 32px;
 }

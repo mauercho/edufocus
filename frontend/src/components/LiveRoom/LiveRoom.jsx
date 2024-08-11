@@ -116,7 +116,7 @@ export default function LiveRoom() {
           <span>{participants.length}명</span>
         </div>
       </header>
-      <div className="lk-video-conference">
+      <div className={`lk-video-conference ${styles.videoRoom}`}>
         <LayoutContextProvider value={layoutContext}>
           <div className="lk-video-conference-inner">
             {!focusTrack ? (

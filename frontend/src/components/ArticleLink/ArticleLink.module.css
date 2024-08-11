@@ -1,11 +1,13 @@
 .articleLink {
-  border-radius: 8px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
-  box-sizing: border-box;
+  gap: 20px;
+  min-width: 0;
+  width: 100%;
   padding: 16px 20px;
+  border-radius: 8px;
   transition: background-color 0.25s;
+  box-sizing: border-box;
 }
 
 .articleLink:hover {
@@ -17,9 +19,13 @@
   line-height: 1.4;
   font-weight: 400;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .date {
+  flex-shrink: 0;
   font-size: 14px;
   line-height: 1.4;
   font-weight: 400;

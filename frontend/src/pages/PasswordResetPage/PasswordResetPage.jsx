@@ -1,5 +1,5 @@
 import { AuthForm, InputBox } from '../../components/AuthForm';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import styles from './PasswordResetPage.module.css';
 import { Link } from 'react-router-dom';
 import { usePasswordReset } from '../../hooks/api/usePasswordReset';
@@ -11,24 +11,14 @@ export default function PasswordResetPage() {
 
   const { sendEmail } = usePasswordReset();
 
-  useEffect(() => {
-    if (emailSent) {
-      console.log('Updated emailSent:', emailSent);
-    }
-  }, [emailSent]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setNotFound(false);
     await sendEmail(emailRef.current.value)
       .then(() => {
-        const email = emailRef.current.value;
-        console.log(email);
-        setEmailSent(email);
-        console.log(emailSent);
+        setEmailSent(emailRef.current.value);
       })
       .catch((err) => {
-        console.log(err);
         if (err.message === 'Request failed with status code 404') {
           setNotFound(true);
         }

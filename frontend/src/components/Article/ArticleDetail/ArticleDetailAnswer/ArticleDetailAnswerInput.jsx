@@ -31,7 +31,6 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer = '',
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(isEditing);
     if (isEditing) {
       await answerEdit(questionId, answer);
     } else {
@@ -39,8 +38,6 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer = '',
     }
     onSubmit(answer);
   };
-
-  console.log(answer);
 
   return (
     <form

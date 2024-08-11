@@ -10,15 +10,14 @@ export default function QuizsetDetailPage() {
   const { data } = useTeacherQuizsetDetail(quizsetId);
   const quizset = data.data;
   const tested = quizset.tested;
-  console.log(tested);
   const handleEdit = () => {
     navigate('edit', { state: { initialValue: quizset } });
   };
-
   const handleDelete = async () => {
     await quizsetDelete(quizsetId);
     navigate('..');
   };
+
   return (
     <QuizsetDetail
       topic={'퀴즈 목록'}

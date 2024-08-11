@@ -30,3 +30,7 @@
   line-height: 1.4;
   font-weight: 500;
 }
+
+.videoRoom {
+  height: calc(100% - 48px) !important;
+}

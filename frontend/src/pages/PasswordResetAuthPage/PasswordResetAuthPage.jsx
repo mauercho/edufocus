@@ -21,14 +21,11 @@ export default function PasswordResetPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setAuthError(false);
-    console.log(authNumRef.current.value, email);
     verify(authNumRef.current.value, email)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setSentAuthNum(true);
       })
       .catch((err) => {
-        console.log(err);
         if (err.message === 'Request failed with status code 404') {
           setAuthError(true);
         }

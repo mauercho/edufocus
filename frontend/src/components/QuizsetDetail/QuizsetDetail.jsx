@@ -4,7 +4,6 @@ import styles from './QuizsetDetail.module.css';
 import { QuizDetailCard } from '../QuizForm';
 
 export default function QuizsetDetail({ topic, title, quizzes = [], onDelete, onEdit, tested = false }) {
-  console.log('topic', topic, 'title', title, 'quizzes', quizzes);
   return (
     <div className={styles.quizsetDetail}>
       <header className={styles.header}>

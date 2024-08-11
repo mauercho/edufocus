@@ -9,14 +9,11 @@ export default function PasswordChangePage() {
   const { updatePassword } = useAuth();
   const handleSubmit = async (currentPw, newPw, newPwCheck) => {
     await updatePassword(currentPw, newPw, newPwCheck)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         navigate('/');
       })
       .catch((err) => {
-        console.log(err.response.data);
         if (err.response.data === 'Current password is incorrect') {
-          console.log('현재 비밀번호 에러');
           setPwError(true);
         }
       });

@@ -7,7 +7,7 @@ import { useQnas } from '../../hooks/api/useQnas';
 export default function LearningLectureDetailPage() {
   const { lectureId } = useParams();
   const { data: noticesData } = useNotices(lectureId);
-  const notices = noticesData?.data.slice(0, 3);
+  const notices = noticesData.pages[0]?.data.slice(0, 3);
   const { data: qnasData } = useQnas(lectureId);
   const questions = qnasData?.data.slice(0, 3);
 

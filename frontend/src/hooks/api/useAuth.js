@@ -40,12 +40,7 @@ export function useAuth() {
   const logout = () => {
     return instance
       .post(`${API_URL}/user/logout`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
+      .catch(() => {})
       .finally(() => {
         setUserType(null);
         setToken(null);
@@ -66,7 +61,6 @@ export function useAuth() {
       newPassword: newPw,
       newPasswordCheck: newPwCheck,
     };
-    console.log(passwordBody);
     return instance.put(`${API_URL}/user/updatepassword`, passwordBody);
   };
 
