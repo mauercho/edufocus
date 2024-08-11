@@ -6,7 +6,6 @@ import { useLectures } from '../../hooks/api/useLectures';
 export default function StudentHomePage() {
   const { data: allLectures } = useLectures();
   const allClasses = allLectures?.data ?? [];
-  console.log(allClasses);
 
   return (
     <MaxWidthLayout>

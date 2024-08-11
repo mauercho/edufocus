@@ -16,8 +16,6 @@ export default function MyInfoChangePage() {
     await updateInfo(username, useremail)
       .then(() => navigate('/'))
       .catch((err) => {
-        console.log(err);
-        console.log(err.response.data);
         if (err.response.data === '이미 사용 중인 이메일입니다.') {
           setUsingEmail(true);
         }

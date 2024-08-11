@@ -7,7 +7,7 @@ export function useNoticeEdit() {
       title,
       content,
     };
-    console.log(newNotice);
+
     return instance.put(`${API_URL}/board/${boardId}`, newNotice);
   };
 

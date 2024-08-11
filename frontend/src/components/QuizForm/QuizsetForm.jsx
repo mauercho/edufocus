@@ -16,7 +16,6 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
       setTitle(initialValue.title || '');
       setQuizzes(initialValue.quizzes || []);
       setQuizId(initialValue.quizzes ? initialValue.quizzes[initialValue.quizzes.length - 1].id + 1 : 0);
-      console.log(initialValue.quizzes.length);
     }
   }, [initialValue]);
 

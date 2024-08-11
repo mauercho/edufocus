@@ -8,7 +8,6 @@ export default function StudentReportDetailPage() {
   const { lectureId, reportId } = useParams();
   const { data } = useStudentReportDetail(reportId);
   const report = data.data;
-  console.log(report);
   const { allCount, correctCount, quizzes, title } = report;
   const score = Math.round((100 * correctCount) / allCount);
   return (

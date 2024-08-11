@@ -10,15 +10,12 @@ export default function LecutreEditPage() {
   const navigate = useNavigate();
   const { lectureEdit } = useLectureEdit();
 
-  const handleSubmit = async (lectureObject) => {
-    const response = await lectureEdit(lectureId, lectureObject)
-      .then((res) => {
-        console.log(res);
+  const handleSubmit = async (lectureObject) =>
+    await lectureEdit(lectureId, lectureObject)
+      .then(() => {
         navigate('..');
       })
-      .catch((err) => console.log(err));
-    console.log(response?.data);
-  };
+      .catch(() => {});
 
   return (
     <div>

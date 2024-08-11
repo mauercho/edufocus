@@ -33,16 +33,12 @@ instance.interceptors.response.use(
       .then((response) => {
         const { accessToken } = response.data;
 
-        console.log(accessToken);
         useBoundStore.setState({ token: accessToken });
         error.config.headers.Authorization = `${accessToken}`;
         return instance(error.config);
       })
       .catch((error) => {
         useBoundStore.setState({ token: null, userType: null });
-        console.log(error);
-        console.log('---로그아웃----');
-        // TODO: redirect to home
         return Promise.reject(error);
       });
   }

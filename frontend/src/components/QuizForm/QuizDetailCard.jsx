@@ -2,7 +2,6 @@ import styles from './QuizCard.module.css';
 import { STATIC_URL } from '../../constants';
 
 export default function QuizDetailCard({ index, question, answer, image, choices, userAnswer = null, correct = true }) {
-  console.log(correct);
   return (
     <div className={`${styles.card} ${!correct && styles.incorrect}`}>
       <div className={styles.header}>

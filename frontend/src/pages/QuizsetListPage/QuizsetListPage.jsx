@@ -8,8 +8,7 @@ export default function QuizsetListPage() {
   const { lectureId } = useParams();
   const { data } = useQuizsets(lectureId);
   const quizsets = data?.data ?? [];
-  //   const userType = useBoundStore((state) => state.userType);
-  console.log(quizsets);
+
   return (
     <ArticleBoard
       title="퀴즈 목록"

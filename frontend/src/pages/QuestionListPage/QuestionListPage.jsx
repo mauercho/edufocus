@@ -10,7 +10,6 @@ export default function QuestionListPage() {
   const questions = data?.data;
   const userType = useBoundStore((state) => state.userType);
 
-  console.log(questions);
   return (
     <ArticleBoard
       title="Q&A"
