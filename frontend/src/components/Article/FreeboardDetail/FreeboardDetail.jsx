@@ -56,18 +56,22 @@ export default function FreeboardDetail({ topic, title, author, content, onDelet
       <div>
         <p className={styles.content}>{content}</p>
       </div>
-      {comments &&
-        comments.map((comment) => (
-          <FreeboardComment
-            key={comment.id}
-            content={comment.content}
-            author={comment.name}
-            commentId={comment.id}
-            isMine={comment.mine}
-            onDeleteSubmit={refetch}
-            onEditSubmit={refetch}
-          />
-        ))}
+
+      {comments && (
+        <div className={styles.commentWrapper}>
+          {comments.map((comment) => (
+            <FreeboardComment
+              key={comment.id}
+              content={comment.content}
+              author={comment.name}
+              commentId={comment.id}
+              isMine={comment.mine}
+              onDeleteSubmit={refetch}
+              onEditSubmit={refetch}
+            />
+          ))}
+        </div>
+      )}
       <FreeboardCommentInput onCommentSubmit={handleCommentSubmit} />
     </div>
   );
