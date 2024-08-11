@@ -2,7 +2,6 @@ import { ArticleLink } from '../../components/ArticleLink';
 import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { useQuizsets } from '../../hooks/api/useQuizsets';
 import { useParams } from 'react-router-dom';
-// import useBoundStore from '../../store';
 
 export default function QuizsetListPage() {
   const { lectureId } = useParams();

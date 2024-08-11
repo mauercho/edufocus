@@ -14,7 +14,6 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
   const timeRef = useRef('');
   const imageFileRef = useRef(null);
 
-  // 초기 값 설정
   useEffect(() => {
     if (initialValues.title) titleRef.current.value = initialValues.title;
     if (initialValues.description) descriptionRef.current.value = initialValues.description;
