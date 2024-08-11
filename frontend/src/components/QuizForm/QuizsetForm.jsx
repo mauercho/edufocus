@@ -79,7 +79,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         </div>
         <button
           type="submit"
-          className={`${styles.button} ${styles.add} ${styles.create}`}
+          className={`${styles.button} ${styles.add}`}
         >
           <EditIcon />
           <div>퀴즈 생성하기</div>
