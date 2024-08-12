@@ -120,8 +120,8 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
-    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
+    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Qna> qnaPage = qnaRepository.findByLectureId(lectureId, pageable);
 
         return qnaPage.getContent().stream()
