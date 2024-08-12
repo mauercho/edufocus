@@ -9,7 +9,7 @@ export default function LearningLectureDetailPage() {
   const { data: noticesData } = useNotices(lectureId);
   const notices = noticesData.pages[0]?.data.slice(0, 3);
   const { data: qnasData } = useQnas(lectureId);
-  const questions = qnasData?.data.slice(0, 3);
+  const questions = qnasData.pages[0]?.data.slice(0, 3);
 
   return (
     <section className={styles.previews}>
