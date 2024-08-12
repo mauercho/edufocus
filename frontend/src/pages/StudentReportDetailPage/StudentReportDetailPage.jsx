@@ -3,6 +3,7 @@ import styles from './StudentReportDetailPage.module.css';
 import BackIcon from '/src/assets/icons/back.svg?react';
 import { useStudentReportDetail } from '../../hooks/api/useStudentReportDetail';
 import { QuizDetailCard } from '../../components/QuizForm';
+import useBoundStore from '../../store';
 
 export default function StudentReportDetailPage() {
   const { lectureId, reportId } = useParams();
@@ -10,11 +11,18 @@ export default function StudentReportDetailPage() {
   const report = data.data;
   const { allCount, correctCount, quizzes, title } = report;
   const score = Math.round((100 * correctCount) / allCount);
+  const userType = useBoundStore((state) => state.userType);
+  console.log(userType);
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <Link
-          to={`/lecture/${lectureId}/class/teacherReportsets`}
+          to={
+            userType === 'student'
+              ? `/lecture/${lectureId}/class/report`
+              : `/lecture/${lectureId}/class/teacherReportsets`
+          }
           className={styles.goBack}
         >
           <BackIcon />
