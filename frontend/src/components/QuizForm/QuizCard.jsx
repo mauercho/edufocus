@@ -6,7 +6,7 @@ import PlusIcon from '/src/assets/icons/plus.svg?react';
 export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
   // TODO: 카드 디자인 완성 및 이쁘게 바꾸기
   const [question, setQuestion] = useState(quiz.question || '');
-  const [answer, setAnswer] = useState(quiz.answer || '');
+  const [answer, setAnswer] = useState(Number(quiz.answer) || '');
   const [choices, setChoices] = useState(quiz.choices || []);
   const [image, setImage] = useState(quiz.image || null);
   const [imagePreview, setImagePreview] = useState(
@@ -31,6 +31,9 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     if (choices.length > 0) {
       const updatedChoices = choices.slice(0, -1);
       setChoices(updatedChoices);
+      if (updatedChoices.length < answer) {
+        setAnswer('');
+      }
       updateQuiz(quiz.id, { ...quiz, question, answer, choices: updatedChoices, image });
     }
   };
@@ -53,6 +56,12 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     } else {
       setImagePreview(null);
     }
+  };
+
+  const handleChoiceSelect = (choiceContent) => {
+    console.log(choiceContent);
+    setAnswer(choiceContent);
+    updateQuiz(quiz.id, { ...quiz, question, answer: choiceContent, choices, image });
   };
 
   return (
@@ -100,17 +109,32 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         placeholder="질문 내용을 입력하세요"
       />
       <label className={styles.label}>정답</label>
-      <input
-        type="text"
-        value={answer}
-        maxLength={200}
-        onChange={(e) => {
-          setAnswer(e.target.value);
-          updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });
-        }}
-        className={styles.input}
-        placeholder="정답을 입력하세요"
-      />
+      {choices.length > 0 ? (
+        <div className={styles.choicesWrapper}>
+          {choices.map((choice, index) => (
+            <button
+              type="button"
+              key={index + 1}
+              onClick={() => handleChoiceSelect(index + 1)}
+              className={`${styles.choiceButton} ${answer === index + 1 ? styles.selected : ''}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <input
+          type="text"
+          value={answer}
+          maxLength={200}
+          onChange={(e) => {
+            setAnswer(e.target.value);
+            updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });
+          }}
+          className={styles.input}
+          placeholder="정답을 입력하세요"
+        />
+      )}
       <div>
         <span>Tip: 선택지를 넣지 않는다면 단답형 문제가 됩니다</span>
       </div>

@@ -46,6 +46,7 @@
   line-height: 1.2;
   font-weight: 800;
   margin: 0;
+  word-break: break-all;
 }
 
 .image {

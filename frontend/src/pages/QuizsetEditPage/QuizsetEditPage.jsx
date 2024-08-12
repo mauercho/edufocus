@@ -12,18 +12,39 @@ export default function QuizsetEditPage() {
   const handleSubmit = async (e, title, quizzes) => {
     e.preventDefault();
 
+    if (title === '') {
+      window.alert('퀴즈 제목이 없는 퀴즈셋은 생성할 수 없습니다');
+      return;
+    }
+
+    if (quizzes.length === 0) {
+      window.alert('퀴즈가 없는 퀴즈셋은 생성할 수 없습니다');
+      return;
+    }
+
     const images = [];
     const quizContents = [];
-    quizzes.forEach((quiz) => {
-      const { image, ...quizData } = quiz;
-      images.push(image);
-      if (quizData.id > initialValue.quizzes[initialValue.quizzes.length - 1].id) {
-        const { question, answer, choices } = quizData;
-        quizContents.push({ question, answer, choices });
-      } else {
-        quizContents.push(quizData);
+
+    for (let quiz of quizzes) {
+      const { image, question, answer, choices } = quiz;
+
+      if (question === '' || answer === '') {
+        window.alert('질문과 정답은 모든 문제에 필수값입니다.');
+        return;
       }
-    });
+
+      if (choices.length > 0) {
+        for (let choice of choices) {
+          if (choice.content === '') {
+            window.alert('모든 선택지에는 내용이 필요합니다.');
+            return;
+          }
+        }
+      }
+
+      images.push(image);
+      quizContents.push({ question, answer, choices });
+    }
 
     const quizsetObject = {
       id: quizsetId,
