@@ -99,15 +99,9 @@ public class QuizSetServiceImpl implements QuizSetService {
     }
 
     @Override
-    public void updateQuizSetTested(long quizSetId, long userId, boolean tested) {
+    public void updateQuizSetTested(long quizSetId) {
         QuizSet quizSet = quizSetRepository.findById(quizSetId).orElseThrow(NoSuchElementException::new);
-
-        User user = userRepository.findById(userId).orElseThrow(NoSuchElementException::new);
-
-        if (quizSet.getUser().getId() != user.getId()) {
-            throw new UnAuthorizedException();
-        }
-
+        
         quizSet.setTested(true);
         quizSetRepository.save(quizSet);
     }
