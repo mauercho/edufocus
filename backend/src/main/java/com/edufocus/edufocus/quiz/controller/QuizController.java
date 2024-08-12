@@ -38,6 +38,12 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        for (MultipartFile image : images) {
+            if (!image.isEmpty() && !image.getContentType().startsWith("image")) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
         QuizSet quizSet = quizSetService.createQuizSet(userId, quizSetCreateRequest.getTitle());
 
         int imageIdx = 0;
@@ -79,6 +85,12 @@ public class QuizController {
 
         if (quizset.isTested()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        for (MultipartFile image : images) {
+            if (!image.isEmpty() && !image.getContentType().startsWith("image")) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
 
         quizSetService.updateQuizSet(quizSetUpdateRequest.getId(), quizSetUpdateRequest.getTitle());
