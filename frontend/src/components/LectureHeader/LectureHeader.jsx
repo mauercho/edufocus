@@ -3,9 +3,12 @@ import styles from './LectureHeader.module.css';
 import PlayIcon from '/src/assets/icons/play.svg?react';
 import CompassIcon from '/src/assets/icons/compass.svg?react';
 import UserIcon from '/src/assets/icons/user.svg?react';
+import useBoundStore from '../../store';
 
 export default function LectureHeader({ img, title, tutorImg, tutor, isLive = false }) {
   const { lectureId } = useParams();
+  const userType = useBoundStore((state) => state.userType);
+  const isTeacher = userType === 'teacher';
 
   return (
     <div className={styles.wrapper}>
@@ -39,7 +42,7 @@ export default function LectureHeader({ img, title, tutorImg, tutor, isLive = fa
               <div>{tutor}</div>
             </div>
             <div>
-              {isLive ? (
+              {isLive || isTeacher ? (
                 <Link
                   to={`/live/${lectureId}`}
                   target="_blank"
