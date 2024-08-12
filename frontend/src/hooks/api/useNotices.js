@@ -11,7 +11,7 @@ export function useNotices(lectureId) {
       if (lastPage.data.length < PAGE_SIZE) {
         return undefined;
       }
-      return allPages.length + 1;
+      return allPages.length;
     },
   });
 }

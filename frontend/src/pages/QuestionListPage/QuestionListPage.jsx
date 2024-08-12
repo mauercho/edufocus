@@ -3,11 +3,12 @@ import ArticleBoard from '../../components/ArticleBoard/ArticleBoard';
 import { useParams } from 'react-router-dom';
 import { useQnas } from '../../hooks/api/useQnas';
 import useBoundStore from '../../store';
+import IntersectionArea from '../../components/IntersectionArea/IntersectionObserver';
 
 export default function QuestionListPage() {
   const { lectureId } = useParams();
-  const { data } = useQnas(lectureId);
-  const questions = data?.data;
+  const { data, fetchNextPage, hasNextPage } = useQnas(lectureId);
+  const questions = data.pages.flatMap((page) => page.data);
   const userType = useBoundStore((state) => state.userType);
 
   return (
@@ -24,6 +25,7 @@ export default function QuestionListPage() {
             to={`${question.id}`}
           />
         ))}
+      {hasNextPage && <IntersectionArea onObserve={() => fetchNextPage()} />}
     </ArticleBoard>
   );
 }

@@ -1,6 +1,5 @@
 import styles from './LectureInfoPage.module.css';
 import ClassInfo from '../../components/ClassInfo/ClassInfo';
-import { MaxWidthLayout } from '../../components/Layout';
 import LectureHeader from '../../components/LectureHeader/LectureHeader';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 import { useParams, useNavigate } from 'react-router-dom';
