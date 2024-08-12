@@ -38,6 +38,7 @@
   line-height: 1.4;
   margin: 0;
   color: var(--text-color);
+  white-space: pre-line;
   word-break: break-all;
 }
 

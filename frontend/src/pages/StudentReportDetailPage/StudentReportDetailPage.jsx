@@ -14,7 +14,7 @@ export default function StudentReportDetailPage() {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <Link
-          to={`/lecture/${lectureId}/class/report`}
+          to={`/lecture/${lectureId}/class/teacherReportsets`}
           className={styles.goBack}
         >
           <BackIcon />
