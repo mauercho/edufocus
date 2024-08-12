@@ -22,7 +22,7 @@ public interface QnaService {
 
     QnaResponseDto getQna(Long id, Long userId) throws SQLException;
 
-    List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int pageNumber) throws SQLException;
+    List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int page, int pageNumber) throws SQLException;
 
     QnaResponseDto createAnswer(Long id, QnaRequestDto qnaRequestDto) throws SQLException;
 
