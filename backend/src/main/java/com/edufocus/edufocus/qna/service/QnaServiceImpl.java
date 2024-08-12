@@ -120,18 +120,15 @@ public class QnaServiceImpl implements QnaService {
     }
 
     @Override
-    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int pageSize) {
-
-        Pageable pageable = PageRequest.of(0, pageSize);
-
+    public List<QnaResponseDto> getAllQnasByLecture(Long lectureId, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<Qna> qnaPage = qnaRepository.findByLectureId(lectureId, pageable);
-
 
         return qnaPage.getContent().stream()
                 .map(QnaResponseDto::toEntity)
                 .collect(Collectors.toList());
-
     }
+
 
     @Override
     public QnaResponseDto createAnswer(Long id, QnaRequestDto qnaRequestDto) throws SQLException {

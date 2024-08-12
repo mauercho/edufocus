@@ -144,16 +144,14 @@ public class QnaController {
     }
 
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<QnaResponseDto>> getAllQna(@PathVariable Long id) {
+    public ResponseEntity<List<QnaResponseDto>> getAllQna(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page) {
         try {
-
-
-            List<QnaResponseDto> qnaList = qnaService.getAllQnasByLecture(id, PAGE_SIZE);
-
+            List<QnaResponseDto> qnaList = qnaService.getAllQnasByLecture(id, page, PAGE_SIZE);
             return new ResponseEntity<>(qnaList, HttpStatus.ACCEPTED);
         } catch (SQLException e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-
         }
     }
 }
