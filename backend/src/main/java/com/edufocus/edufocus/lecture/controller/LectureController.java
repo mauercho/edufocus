@@ -36,6 +36,10 @@ public class LectureController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
+        if (!image.isEmpty() && !image.getContentType().startsWith("image")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         lectureService.createLecture(userId, lectureCreateRequest, image);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
