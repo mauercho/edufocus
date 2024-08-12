@@ -5,7 +5,7 @@ import EditIcon from '/src/assets/icons/edit.svg?react';
 import BackIcon from '/src/assets/icons/back.svg?react';
 
 export default function LectureForm({ title, topic, to = '..', initialValues = {}, onSubmit, onCreate = false }) {
-  // TODO: 디자인 필요, 필요시 useState로 수정하고 버튼 비활성화 기능 추가
+  // TODO: 디자인 필요, 필요시 useState로 수정하고 버튼 비활성화 기능 추가 및 이미지 파일 입력 처리
   const titleRef = useRef('');
   const descriptionRef = useRef('');
   const planRef = useRef('');
@@ -24,6 +24,11 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
     if (initialValues.time) timeRef.current.value = initialValues.time;
   }, [initialValues]);
 
+  useEffect(() => {
+    console.log(imageFileRef.current.value);
+    console.log(imageFileRef.current && imageFileRef.current.files[0]);
+  }, [imageFileRef]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,7 +46,12 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
 
     const imageFile = (imageFileRef.current && imageFileRef.current.files[0]) ?? null;
     if (imageFile) {
-      formData.append('image', imageFile);
+      const fileType = imageFile.type;
+      if (fileType === 'image/jpeg' || fileType === 'image/png') {
+        formData.append('image', imageFile);
+      } else {
+        window.alert(`${fileType}은 지원되는 파일 타입이 아닙니다. jpg / png / jpeg 이미지 파일을 첨부해 주세요`);
+      }
     }
 
     onSubmit(lectureObject, imageFile);
@@ -126,7 +136,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             <input
               type="file"
               ref={imageFileRef}
-              accept=".png, .jpg, .jpeg"
+              accept="image/*"
               className={styles.input}
             />
           </div>
