@@ -39,7 +39,7 @@ public class QuizController {
         }
 
         for (MultipartFile image : images) {
-            if (!image.isEmpty() && !image.getContentType().startsWith("image")) {
+            if (image != null && !image.getContentType().startsWith("image")) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
@@ -88,7 +88,7 @@ public class QuizController {
         }
 
         for (MultipartFile image : images) {
-            if (!image.isEmpty() && !image.getContentType().startsWith("image")) {
+            if (image != null && !image.getContentType().startsWith("image")) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
