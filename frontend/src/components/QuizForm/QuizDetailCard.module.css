@@ -77,10 +77,6 @@
   padding: 7px;
 }
 
-.input::placeholder {
-  color: var(--text-color-tertiary);
-}
-
 .buttonsWrapper {
   display: flex;
   flex-direction: row;

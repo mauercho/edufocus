@@ -116,3 +116,39 @@
   cursor: pointer;
   padding: 0;
 }
+
+.choicesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.choiceButton {
+  padding: 10px 16px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-tertiary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s,
+    stroke 0.25s,
+    color 0.25s;
+}
+
+.choiceButton:hover {
+  background-color: var(--background-tertiary);
+}
+
+.selected {
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  stroke: var(--on-primary);
+}
+
+.selected:hover {
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+}

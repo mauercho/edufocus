@@ -1,4 +1,4 @@
-import styles from './QuizCard.module.css';
+import styles from './QuizDetailCard.module.css';
 import { STATIC_URL } from '../../constants';
 
 export default function QuizDetailCard({ index, question, answer, image, choices, userAnswer = null, correct = true }) {
