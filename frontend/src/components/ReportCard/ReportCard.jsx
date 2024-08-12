@@ -1,9 +1,10 @@
 import styles from './ReportCard.module.css';
 
 export default function ReportCard({ allCount = 10, correctCount = 7 }) {
-  const radius = 2 * Math.PI * 100;
+  const radius = 100; // Radius of the circles
+  const circumference = 2 * Math.PI * radius; // Circumference of the circles
   const percentage = allCount > 0 ? (correctCount / allCount) * 100 : 0;
-  const strokeDashoffset = radius - (percentage / 100) * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
     <div className={styles.wrapper}>
@@ -16,8 +17,17 @@ export default function ReportCard({ allCount = 10, correctCount = 7 }) {
           <circle
             cx="110"
             cy="110"
-            r="100"
-            strokeDasharray={radius}
+            r={radius}
+            strokeDasharray={circumference}
+            strokeDashoffset={0}
+            transform="rotate(-90 110 110)"
+            className={styles.circleBackground}
+          />
+          <circle
+            cx="110"
+            cy="110"
+            r={radius}
+            strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
             transform="rotate(-90 110 110)"
             className={styles.circle}

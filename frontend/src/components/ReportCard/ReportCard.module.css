@@ -16,6 +16,14 @@
   text-align: center;
 }
 
+.circleBackground {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 20px;
+  stroke-linecap: round;
+  border-radius: 10px;
+}
+
 .circle {
   fill: none;
   stroke: var(--success-color);
