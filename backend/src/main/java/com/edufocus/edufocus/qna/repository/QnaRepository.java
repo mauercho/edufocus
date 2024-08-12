@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface QnaRepository extends JpaRepository<Qna, Long> {
 
-    List<Qna> findByLectureId(Long lecturerId);
-    
+    //List<Qna> findByLectureId(Long lecturerId);
+
     @Query("SELECT q FROM Qna q WHERE q.lecture.id = :lectureId ORDER BY q.createdAt DESC")
     Page<Qna> findByLectureId(Long lectureId, Pageable pageable);
 }
