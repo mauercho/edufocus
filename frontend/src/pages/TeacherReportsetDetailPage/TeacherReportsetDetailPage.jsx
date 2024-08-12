@@ -14,7 +14,7 @@ export default function TeacherReportsetDetailPage() {
       title="퀴즈 조회"
       canCreate={false}
     >
-      {reports.length &&
+      {reports.length > 0 &&
         reports.map?.((report) => {
           return (
             <ArticleLink

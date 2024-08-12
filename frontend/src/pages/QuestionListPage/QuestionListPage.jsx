@@ -15,7 +15,7 @@ export default function QuestionListPage() {
       title="Q&A"
       canCreate={userType === 'student'}
     >
-      {questions.length &&
+      {questions.length > 0 &&
         questions.map?.((question) => (
           <ArticleLink
             key={`${question.title}${question.createtAt}`}

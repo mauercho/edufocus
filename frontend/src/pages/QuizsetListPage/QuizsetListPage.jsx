@@ -13,7 +13,7 @@ export default function QuizsetListPage() {
       title="퀴즈 목록"
       canCreate={true}
     >
-      {quizsets.length &&
+      {quizsets.length > 0 &&
         quizsets.map?.((quizset) => (
           <ArticleLink
             key={`${quizset.quizSetId}`}
