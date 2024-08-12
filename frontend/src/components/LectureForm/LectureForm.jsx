@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './LectureForm.module.css';
 import EditIcon from '/src/assets/icons/edit.svg?react';
@@ -12,7 +12,21 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
   const startDateRef = useRef('');
   const endDateRef = useRef('');
   const timeRef = useRef('');
-  const imageFileRef = useRef(null);
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+    if (file.type.startsWith('image/')) {
+      setImageFile(file);
+      return;
+    }
+    alert('이미지 파일만 업로드 해주세요');
+    event.target.value = null;
+  };
 
   useEffect(() => {
     if (initialValues.title) titleRef.current.value = initialValues.title;
@@ -39,14 +53,8 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
     const formData = new FormData();
     formData.append('lectureCreateRequest', new Blob([JSON.stringify(lectureObject)], { type: 'application/json' }));
 
-    const imageFile = (imageFileRef.current && imageFileRef.current.files[0]) ?? null;
     if (imageFile) {
-      const fileType = imageFile.type;
-      if (fileType === 'image/jpeg' || fileType === 'image/png') {
-        formData.append('image', imageFile);
-      } else {
-        window.alert(`${fileType}은 지원되는 파일 타입이 아닙니다. jpg / png / jpeg 이미지 파일을 첨부해 주세요`);
-      }
+      formData.append('image', imageFile);
     }
 
     onSubmit(lectureObject, imageFile);
@@ -130,9 +138,9 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             <label className={styles.label}>수업 이미지</label>
             <input
               type="file"
-              ref={imageFileRef}
               accept="image/*"
               className={styles.input}
+              onChange={handleImageChange}
             />
           </div>
         )}
