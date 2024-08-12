@@ -37,9 +37,11 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0] ?? null;
-    const fileType = file && file.type;
-    if (file && fileType !== 'image/jpeg' && fileType !== 'image/png') {
-      window.alert(`${fileType}은 지원되는 이미지 형식이 아닙니다. jpg / png / jpeg 이미지 파일을 넣어 주세요.`);
+    if (!file || !file.type.startsWith('image/')) {
+      alert('이미지 파일만 업로드 해주세요');
+      e.target.value = null;
+      setImage(null);
+      setImagePreview(null);
       return;
     }
     setImage(file);
