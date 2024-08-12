@@ -24,11 +24,6 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
     if (initialValues.time) timeRef.current.value = initialValues.time;
   }, [initialValues]);
 
-  useEffect(() => {
-    console.log(imageFileRef.current.value);
-    console.log(imageFileRef.current && imageFileRef.current.files[0]);
-  }, [imageFileRef]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
