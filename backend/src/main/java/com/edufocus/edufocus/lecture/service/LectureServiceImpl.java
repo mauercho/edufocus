@@ -113,6 +113,12 @@ public class LectureServiceImpl implements LectureService {
             return false;
         }
 
+        String image = lecture.getImage();
+        if (image != null) {
+            File file = new File(lecture.getImage());
+            file.delete();
+        }
+
         lectureRepository.deleteById(lectureId);
         return true;
     }
@@ -220,9 +226,9 @@ public class LectureServiceImpl implements LectureService {
                 public int compare(LectureSearchResponse lsr1, LectureSearchResponse lsr2) {
                     long lsr1Id = lsr1.getId();
                     long lsr2Id = lsr2.getId();
-                    if(lsr2Id > lsr1Id)
+                    if (lsr2Id > lsr1Id)
                         return 1;
-                    else if(lsr2Id == lsr1Id)
+                    else if (lsr2Id == lsr1Id)
                         return 0;
                     return -1;
                 }
