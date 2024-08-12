@@ -14,7 +14,7 @@ export default function StudentListPage() {
 
   return (
     <ArticleBoard title="수강생 관리">
-      {students.length &&
+      {students.length > 0 &&
         students.map?.((student) => {
           return (
             <ArticleLink

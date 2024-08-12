@@ -8,7 +8,7 @@ import IntersectionArea from '../../components/IntersectionArea/IntersectionObse
 export default function NoticeListPage() {
   const { lectureId } = useParams();
   const { data, fetchNextPage, hasNextPage } = useNotices(lectureId);
-  const notices = data?.pages.flatMap((page) => page.data);
+  const notices = data.pages.flatMap((page) => page.data);
   const userType = useBoundStore((state) => state.userType);
 
   return (
@@ -16,7 +16,7 @@ export default function NoticeListPage() {
       title="공지사항"
       canCreate={userType === 'teacher'}
     >
-      {notices.length &&
+      {notices.length > 0 &&
         notices.map?.((notice) => (
           <ArticleLink
             key={`${notice.id}`}

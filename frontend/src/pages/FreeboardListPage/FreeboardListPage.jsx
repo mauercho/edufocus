@@ -7,14 +7,14 @@ import IntersectionArea from '../../components/IntersectionArea/IntersectionObse
 export default function NoticeListPage() {
   const { lectureId } = useParams();
   const { data, fetchNextPage, hasNextPage } = useFreeboards(lectureId);
-  const articles = data?.pages.flatMap((page) => page.data);
+  const articles = data.pages.flatMap((page) => page.data);
 
   return (
     <ArticleBoard
       title="자유게시판"
       canCreate={true}
     >
-      {articles.length &&
+      {articles.length > 0 &&
         articles.map?.((notice) => (
           <ArticleLink
             key={`${notice.id}`}

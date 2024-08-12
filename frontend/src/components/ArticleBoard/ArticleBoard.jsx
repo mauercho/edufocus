@@ -1,6 +1,7 @@
 import EditIcon from '/src/assets/icons/edit.svg?react';
 import { Link } from 'react-router-dom';
 import styles from './ArticleBoard.module.css';
+import { Children } from 'react';
 
 export default function ArticleBoard({ title, canCreate, children }) {
   return (
@@ -19,7 +20,7 @@ export default function ArticleBoard({ title, canCreate, children }) {
         )}
       </div>
       <div className={styles.article}>
-        {children ? children : <div className={styles.empty}>표시할 내용이 없습니다.</div>}
+        {Children.toArray(children).length ? children : <div className={styles.empty}>표시할 내용이 없습니다.</div>}
       </div>
     </div>
   );
