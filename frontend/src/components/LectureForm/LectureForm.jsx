@@ -58,7 +58,6 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
       endDate: new Date(endDate).toISOString(),
       time: time,
     };
-    console.log(lectureObject);
 
     const formData = new FormData();
     formData.append('lectureCreateRequest', new Blob([JSON.stringify(lectureObject)], { type: 'application/json' }));
@@ -161,6 +160,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
         {onCreate && (
           <div className={styles.inputField}>
             <label className={styles.label}>수업 이미지</label>
+            <label className={styles.secondary}>* 여백이 충분히 있고 배경이 투명한 이미지를 사용해 주세요</label>
             <input
               type="file"
               accept="image/*"
