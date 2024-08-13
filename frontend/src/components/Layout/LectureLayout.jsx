@@ -15,7 +15,7 @@ export default function LectureLayout() {
   const navigate = useNavigate();
 
   const { lectureDelete } = useLectureDelete();
-  const { data } = useLectureInfo(lectureId);
+  const { data, refetch } = useLectureInfo(lectureId);
   const lecture = data?.data;
   const userType = useBoundStore((state) => state.userType);
   const handleDelete = () => {
@@ -46,6 +46,7 @@ export default function LectureLayout() {
         tutor={lecture.teacherName}
         img={lecture.image}
         isLive={lecture.online}
+        refetch={refetch}
       />
       <MaxWidthLayout hasSideBar>
         <aside>

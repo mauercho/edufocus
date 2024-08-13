@@ -6,9 +6,12 @@ import instance from '../../utils/axios/instance';
 import { API_URL, ROOM_URL } from '../../constants';
 import '@livekit/components-styles';
 import LoadingIndicator from '../../components/LoadingIndicator.jsx/LoadingIndicator';
+import useBoundStore from '../../store';
 
 export default function LivePage() {
   const { roomId } = useParams();
+  const userType = useBoundStore((state) => state.userType);
+  const isTeacher = userType === 'teacher';
   const [liveToken, setLiveToken] = useState(null);
   const generateToken = useCallback(async () => {
     await instance.post(`${API_URL}/video/makeroom/${roomId}`).catch(() => {});
@@ -44,6 +47,14 @@ export default function LivePage() {
               window.close();
             }, 200);
           });
+      }}
+      onConnected={() => {
+        if (!isTeacher) {
+          return;
+        }
+        setTimeout(() => {
+          instance.post(`${API_URL}/video/makeroom/${roomId}`).catch(() => {});
+        }, 500);
       }}
     >
       <Suspense fallback={<LoadingIndicator fill />}>
