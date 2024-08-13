@@ -3,7 +3,7 @@ import { STATIC_URL } from '../../constants';
 
 export default function QuizDetailCard({ index, question, answer, image, choices, userAnswer = null, correct = true }) {
   return (
-    <div className={`${styles.card} ${!correct && styles.incorrect}`}>
+    <div className={`${styles.card} ${correct ? styles.correct : styles.incorrect}`}>
       <div className={styles.header}>
         <span className={styles.heading}>{index}번 퀴즈</span>
       </div>
