@@ -10,8 +10,13 @@
 }
 
 .incorrect {
-  background-color: #db3232;
-  border: 1px solid var(--red300);
+  /* background-color: var(--red200); */
+  border: 2px solid var(--red300);
+}
+
+.correct {
+  /* background-color: var(--green200); */
+  border: 2px solid var(--green300);
 }
 
 .header {
@@ -68,7 +73,7 @@
 
 .numLabel {
   width: 40px;
-  text-align: right;
+  text-align: center;
   display: block;
 }
 
