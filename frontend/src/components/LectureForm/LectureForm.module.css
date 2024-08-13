@@ -117,3 +117,8 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.textLength {
+  align-self: end;
+  color: var(--error-color);
+}
