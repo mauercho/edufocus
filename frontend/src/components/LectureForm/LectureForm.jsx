@@ -81,7 +81,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <input
             className={styles.input}
             ref={titleRef}
-            maxLength={200}
+            maxLength={50}
             type="text"
             placeholder="강의명을 입력하세요"
           />
@@ -128,7 +128,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <input
             type="text"
             ref={timeRef}
-            maxLength={200}
+            maxLength={50}
             className={styles.input}
             placeholder="실제 강의 진행 시간을 입력하세요"
           />

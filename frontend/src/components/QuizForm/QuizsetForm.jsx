@@ -53,7 +53,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         <input
           className={styles.input}
           type="text"
-          maxLength={200}
+          maxLength={50}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"
