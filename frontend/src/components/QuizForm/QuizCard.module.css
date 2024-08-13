@@ -1,31 +1,81 @@
 .card {
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px 12px;
-  width: 416px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 20px;
 }
 
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 20px;
 }
 
-.heading {
+.titleGroup {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-color);
   font-size: 24px;
   line-height: 1.2;
   font-weight: 700;
+
+  & > input {
+    flex-grow: 1;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 700;
+
+    &::placeholder {
+      color: var(--text-color-tertiary);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  align-items: start;
 }
 
 .label {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.4;
   font-weight: 400;
-  margin-bottom: 4px;
+}
+
+.imageArea {
+  position: relative;
+
+  & > button {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 4px;
+    background-color: transparent;
+    stroke: var(--error-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      background-color 0.1s,
+      stroke 0.1s;
+
+    &:hover {
+      background-color: var(--error-color);
+      stroke: var(--on-primary);
+    }
+  }
 }
 
 .imagePreview {
@@ -37,7 +87,6 @@
   align-items: center;
   width: 295px;
   height: 220px;
-  margin: 10px auto;
   border-radius: 8px;
   background-color: var(--background-secondary);
   object-fit: contain;
@@ -49,8 +98,15 @@
   display: none;
 }
 
+.answerArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 .input {
-  padding: 14px;
+  padding: 12px;
   background: var(--background);
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -69,7 +125,7 @@
 
 .choiceInput {
   flex-grow: 1;
-  padding: 7px;
+  padding: 12px;
 }
 
 .input::placeholder {
@@ -77,6 +133,7 @@
 }
 
 .buttonsWrapper {
+  align-self: end;
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -85,27 +142,28 @@
 .button {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
+  padding: 8px 12px;
   font-size: 16px;
   line-height: 1.4;
-  font-weight: 700;
+  font-weight: 500;
   align-self: end;
   border-radius: 8px;
   cursor: pointer;
 }
 
 .add {
-  border: 1px solid var(--primary-color);
+  border: none;
   background-color: var(--primary-color);
   color: var(--on-primary);
   stroke: var(--on-primary);
 }
 
 .remove {
-  border: 1px solid var(--blue100);
-  background-color: var(--blue100);
-  color: var(--info-color);
-  stroke: var(--info-color);
+  /* border: 1px solid var(--blue100); */
+  border: none;
+  background-color: var(--background-tertiary);
+  color: var(--text-color-);
+  stroke: var(--text-color-);
 }
 
 .cardRemove {
@@ -119,22 +177,27 @@
 
 .choicesWrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
   margin-top: 8px;
 }
 
+.choice {
+  display: flex;
+  gap: 8px;
+}
+
 .choiceButton {
-  padding: 10px 16px;
+  padding: 12px 16px;
   background-color: var(--background-secondary);
   border: 1px solid var(--background-tertiary);
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   transition:
-    background-color 0.25s,
-    border-color 0.25s,
-    stroke 0.25s,
-    color 0.25s;
+    background-color 0.1s,
+    border-color 0.1s,
+    stroke 0.1s,
+    color 0.1s;
 }
 
 .choiceButton:hover {
@@ -151,4 +214,8 @@
 .selected:hover {
   border: 1px solid var(--primary-color);
   background-color: var(--primary-color);
+}
+
+.hidden {
+  display: none;
 }

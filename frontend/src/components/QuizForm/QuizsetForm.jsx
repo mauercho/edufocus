@@ -20,7 +20,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
   }, [initialValue]);
 
   const handleAddQuiz = () => {
-    setQuizzes([...quizzes, { id: quizId, question: '', answer: '', choices: [], image: null }]);
+    setQuizzes([...quizzes, { id: quizId, question: '', answer: '', choices: [{ num: 1, content: '' }], image: null }]);
     setQuizId(quizId + 1);
   };
 
@@ -49,7 +49,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
         className={styles.form}
         onSubmit={(e) => onSubmit(e, title, quizzes)}
       >
-        <label className={styles.label}>퀴즈셋 제목</label>
+        <label className={styles.label}>제목</label>
         <input
           className={styles.input}
           type="text"
@@ -58,7 +58,7 @@ export default function QuizsetForm({ headerTitle, topic, to, onSubmit, initialV
           onChange={(e) => setTitle(e.target.value)}
           placeholder="퀴즈셋 제목을 입력해주세요"
         />
-        <div className={styles.grid}>
+        <div className={styles.quizList}>
           {quizzes.map((quiz) => (
             <QuizCard
               key={quiz.id}
