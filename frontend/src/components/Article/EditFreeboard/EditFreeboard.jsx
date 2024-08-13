@@ -50,7 +50,7 @@ export default function EditFreeboard({ topic, title, prevContent, prevTitle, on
             value={articleTitle}
             onChange={(e) => setArticleTitle(e.target.value)}
           />
-          {articleTitle.length > 190 && <div className={styles.textLength}>{articleTitle.length} / 200</div>}
+          {articleTitle.length > 49 && <div className={styles.textLength}>{articleTitle.length} / 50</div>}
         </div>
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>내용</label>
@@ -62,7 +62,7 @@ export default function EditFreeboard({ topic, title, prevContent, prevTitle, on
             value={articleContent}
             onChange={handleInput}
           ></textarea>
-          {articleContent.length > 950 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
+          {articleContent.length > 999 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
         </div>
         <button
           type="button"
