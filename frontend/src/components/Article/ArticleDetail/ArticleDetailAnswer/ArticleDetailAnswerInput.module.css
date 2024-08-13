@@ -1,3 +1,13 @@
+.answerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  & > span {
+    align-self: end;
+  }
+}
+
 .answer {
   border: 1px solid var(--border-color);
   padding: 8px;
@@ -17,6 +27,7 @@
 }
 
 .button {
+  align-self: end;
   display: flex;
   justify-content: center;
   align-items: center;
