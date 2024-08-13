@@ -42,23 +42,25 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer = '',
   return (
     <form
       onSubmit={handleSubmit}
-      className={styles.answer}
+      className={styles.answerWrapper}
     >
-      <textarea
-        maxLength={1000}
-        value={answer}
-        onChange={handleInput}
-        ref={textareaRef}
-        placeholder="답변 작성하기"
-        className={styles.input}
-      />
-      {answer && answer.length > 999 && <div className={styles.textLength}>최대 1000글자까지 작성할 수 있습니다.</div>}
-      <button
-        type="submit"
-        className={styles.button}
-      >
-        <SendIcon />
-      </button>
+      <div className={styles.answer}>
+        <textarea
+          maxLength={1000}
+          value={answer}
+          onChange={handleInput}
+          ref={textareaRef}
+          placeholder="답변 작성하기"
+          className={styles.input}
+        />
+        <button
+          type="submit"
+          className={styles.button}
+        >
+          <SendIcon />
+        </button>
+      </div>
+      {answer && answer.length > 999 && <span>최대 1000글자까지 작성할 수 있습니다.</span>}
     </form>
   );
 }
