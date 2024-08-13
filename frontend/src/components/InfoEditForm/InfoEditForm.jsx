@@ -44,7 +44,7 @@ export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
         </label>
         <input
           placeholder="이메일"
-          type="text"
+          type="email"
           id="useremail"
           className={`${styles.input} ${styles.textBody} ${usingEmail && styles.errorBox}`}
           value={useremail}
