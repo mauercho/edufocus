@@ -5,23 +5,27 @@ import { useState } from 'react';
 
 export default function PasswordChangePage() {
   const navigate = useNavigate();
-  const [pwError, setPwError] = useState(false);
+  const [error, setError] = useState('none');
   const { updatePassword } = useAuth();
   const handleSubmit = async (currentPw, newPw, newPwCheck) => {
+    setError('none');
     await updatePassword(currentPw, newPw, newPwCheck)
       .then(() => {
         navigate('/');
       })
       .catch((err) => {
         if (err.response.data === 'Current password is incorrect') {
-          setPwError(true);
+          setError('currentPwError');
+        }
+        if (err.response.data === 'New password cannot be the same as the current password') {
+          setError('samePwError');
         }
       });
   };
   return (
     <PasswordChangeForm
       onSubmit={handleSubmit}
-      pwError={pwError}
+      onError={error}
     />
   );
 }

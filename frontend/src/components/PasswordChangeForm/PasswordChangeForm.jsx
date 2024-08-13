@@ -1,16 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './PasswordChangeForm.module.css';
 
-export default function PasswordChangeForm({ onSubmit, pwError = false }) {
-  const [errorConfirmMessage, setErrorConfirmMessage] = useState(false);
-  const [errorSameMessage, setErrorSameMessage] = useState(false);
+export default function PasswordChangeForm({ onSubmit, onError }) {
+  const [error, setError] = useState(null);
   const currentPasswordRef = useRef('');
   const newPasswordRef = useRef('');
   const confirmPasswordRef = useRef('');
 
   useEffect(() => {
-    setErrorSameMessage(pwError);
-  }, [pwError]);
+    setError(onError);
+  }, [onError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,10 +18,9 @@ export default function PasswordChangeForm({ onSubmit, pwError = false }) {
     const confirmPassword = confirmPasswordRef.current.value;
 
     if (newPassword === confirmPassword) {
-      setErrorConfirmMessage(false);
       onSubmit(currentPassword, newPassword, confirmPassword);
     } else {
-      setErrorConfirmMessage(true);
+      setError('confirmError');
     }
   };
   return (
@@ -37,11 +35,11 @@ export default function PasswordChangeForm({ onSubmit, pwError = false }) {
           type="password"
           id="currentPassword"
           ref={currentPasswordRef}
-          maxLength={200}
-          className={errorSameMessage ? styles.inputErrorBox : styles.inputBox}
+          maxLength={50}
+          className={error === 'currentPwError' ? styles.inputErrorBox : styles.inputBox}
           required
         />
-        {errorSameMessage && <div className={styles.errorMessage}>현재 비밀번호가 일치하지 않습니다.</div>}
+        {error === 'currentPwError' && <div className={styles.errorMessage}>현재 비밀번호가 일치하지 않습니다.</div>}
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="newPassword">새 비밀번호</label>
@@ -49,10 +47,11 @@ export default function PasswordChangeForm({ onSubmit, pwError = false }) {
           type="password"
           id="newPassword"
           ref={newPasswordRef}
-          maxLength={200}
-          className={styles.inputBox}
+          maxLength={50}
+          className={error === 'samePwError' ? styles.inputErrorBox : styles.inputBox}
           required
         />
+        {error === 'samePwError' && <div className={styles.errorMessage}>현재 비밀번호와 같은 비밀번호입니다.</div>}
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="confirmPassword">새 비밀번호 확인</label>
@@ -60,11 +59,11 @@ export default function PasswordChangeForm({ onSubmit, pwError = false }) {
           type="password"
           id="confirmPassword"
           ref={confirmPasswordRef}
-          maxLength={200}
-          className={errorConfirmMessage ? styles.inputErrorBox : styles.inputBox}
+          maxLength={50}
+          className={error === 'confirmError' ? styles.inputErrorBox : styles.inputBox}
           required
         />
-        {errorConfirmMessage && <div className={styles.errorMessage}>비밀번호가 일치하지 않습니다.</div>}
+        {error === 'confirmError' && <div className={styles.errorMessage}>비밀번호가 일치하지 않습니다.</div>}
       </div>
       <button
         className={styles.button}
