@@ -12,7 +12,6 @@ export default function StudentReportDetailPage() {
   const { allCount, correctCount, quizzes, title } = report;
   const score = Math.round((100 * correctCount) / allCount);
   const userType = useBoundStore((state) => state.userType);
-  console.log(userType);
 
   return (
     <div className={styles.wrapper}>

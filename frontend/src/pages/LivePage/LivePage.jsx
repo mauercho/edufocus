@@ -15,6 +15,9 @@ export default function LivePage() {
     const { data } = await instance.post(`${API_URL}/video/joinroom/${roomId}`).catch(() => {
       alert('방에 입장할 수 없습니다.');
       window.close();
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 100);
     });
 
     return data.token;
@@ -37,7 +40,9 @@ export default function LivePage() {
           .post(`${API_URL}/video/deleteroom/${roomId}`)
           .catch(() => {})
           .finally(() => {
-            window.close();
+            setTimeout(() => {
+              window.close();
+            }, 200);
           });
       }}
     >

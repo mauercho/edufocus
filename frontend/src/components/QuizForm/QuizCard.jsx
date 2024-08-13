@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './QuizCard.module.css';
 import CloseIcon from '/src/assets/icons/close.svg?react';
 import PlusIcon from '/src/assets/icons/plus.svg?react';
@@ -6,12 +6,24 @@ import { Toggle } from '../Toggle';
 import { STATIC_URL } from '../../constants';
 
 export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
+  const isChoice = quiz.choices.length > 0;
   const [question, setQuestion] = useState(quiz.question || '');
-  const [answer, setAnswer] = useState(Number(quiz.answer) || '');
+  const [answer, setAnswer] = useState(isChoice ? Number(quiz.answer) || 1 : quiz.answer || '');
   const [choices, setChoices] = useState(quiz.choices || [{ num: 1, content: '' }]);
   const [image, setImage] = useState(quiz.image || null);
   const [imagePreview, setImagePreview] = useState(quiz.image ? `${STATIC_URL}${quiz.image}` : null);
-  const [quizType, setQuizType] = useState('단답식');
+  const [quizType, setQuizType] = useState(isChoice ? '객관식' : '단답식');
+
+  const handleToggle = (type) => {
+    setQuizType(type);
+    if (type === '단답식') {
+      setAnswer('');
+      setChoices([]);
+      return;
+    }
+    setAnswer(1);
+    setChoices([{ num: 1, content: '' }]);
+  };
 
   const clearImage = () => {
     setImage(null);
@@ -75,10 +87,6 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
     updateQuiz(quiz.id, { ...quiz, question, answer: choiceContent, choices, image });
   };
 
-  useEffect(() => {
-    quizType === '단답식' ? setAnswer('') : setAnswer(1);
-  }, [quizType]);
-
   return (
     <div className={styles.card}>
       <div className={styles.header}>
@@ -131,7 +139,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
         <div className={styles.answerArea}>
           <Toggle
             active={quizType}
-            setActive={setQuizType}
+            setActive={handleToggle}
             choices={['단답식', '객관식']}
           />
           <input

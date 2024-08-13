@@ -28,17 +28,6 @@ export default function LectureHeader({ img, title, tutorImg, tutor, isLive = fa
           <h1 className={styles.title}>{title}</h1>
           <div className={styles.desc}>
             <div className={styles.tutor}>
-              {tutorImg ? (
-                <img
-                  src={tutorImg}
-                  alt="강사 사진"
-                  className={styles.tutorImg}
-                />
-              ) : (
-                <div className={styles.tutorImg}>
-                  <UserIcon />
-                </div>
-              )}
               <div>{tutor}</div>
             </div>
             <div>

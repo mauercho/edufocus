@@ -72,6 +72,13 @@
   line-height: 1.4;
 }
 
+.secondary {
+  color: var(--text-color-secondary);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
 .input {
   background: var(--background-color);
   padding: 16px;
