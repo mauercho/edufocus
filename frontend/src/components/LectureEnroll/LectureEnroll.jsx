@@ -26,7 +26,7 @@ export default function LectureEnroll({ userName, enrollid, onDelete, enrolled =
 
   return (
     <div className={styles.enrollLink}>
-      <span>{userName}</span>
+      <span className={styles.userName}>{userName}</span>
       <div className={styles.buttonWrapper}>
         {!enrolled && (
           <button
