@@ -50,7 +50,7 @@ export default function EditArticle({ topic, title, prevTitle, prevContent, onSu
             value={articleTitle}
             onChange={(e) => setArticleTitle(e.target.value)}
           />
-          {articleTitle.length > 49 && <div className={styles.textLength}>{articleTitle.length} / 50</div>}
+          {articleTitle.length > 49 && <div className={styles.textLength}>최대 50글자까지 작성할 수 있습니다.</div>}
         </div>
         <div className={styles.fieldWrapper}>
           <label className={styles.label}>내용</label>
@@ -62,7 +62,9 @@ export default function EditArticle({ topic, title, prevTitle, prevContent, onSu
             value={articleContent}
             onChange={handleInput}
           ></textarea>
-          {articleContent.length > 950 && <div className={styles.textLength}>{articleContent.length} / 1000</div>}
+          {articleContent.length > 999 && (
+            <div className={styles.textLength}>최대 1000글자까지 작성할 수 있습니다.</div>
+          )}
         </div>
         <button
           type="button"

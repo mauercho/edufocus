@@ -47,7 +47,7 @@ export default function FreeboardComment({ content, author, onDeleteSubmit, onEd
             className={styles.input}
             required
           />
-          {newComment.length > 190 && <div className={styles.textLength}>{newComment.length} / 200</div>}
+          {newComment.length > 199 && <div className={styles.textLength}>최대 200글자까지 작성할 수 있습니다.</div>}
           <button
             type="submit"
             className={styles.button}

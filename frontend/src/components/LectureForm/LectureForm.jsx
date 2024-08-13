@@ -97,7 +97,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             placeholder="강의명을 입력하세요"
             required
           />
-          {lectureTitle.length > 49 && <div className={styles.textLength}>{lectureTitle.length} / 50</div>}
+          {lectureTitle.length > 49 && <div className={styles.textLength}>최대 50글자까지 작성할 수 있습니다.</div>}
         </div>
         <div className={styles.inputField}>
           <label className={styles.label}>설명</label>
@@ -108,7 +108,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             maxLength={2000}
             placeholder="강의에 대한 설명을 입력하세요"
           ></textarea>
-          {description.length > 1999 && <div className={styles.textLength}>{description.length} / 2000</div>}
+          {description.length > 1999 && <div className={styles.textLength}>최대 2000글자까지 작성할 수 있습니다.</div>}
         </div>
         <div className={styles.inputField}>
           <label className={styles.label}>강의 계획</label>
@@ -119,7 +119,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             maxLength={2000}
             placeholder="강의 계획을 입력하세요"
           ></textarea>
-          {plan.length > 1999 && <div className={styles.textLength}>{plan.length} / 2000</div>}
+          {plan.length > 1999 && <div className={styles.textLength}>최대 2000글자까지 작성할 수 있습니다.</div>}
         </div>
         <div className={styles.inputField}>
           <label className={styles.label}>강의 기간</label>
@@ -156,7 +156,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             className={styles.input}
             placeholder="실제 강의 진행 시간을 입력하세요"
           />
-          {time.length > 49 && <div className={styles.textLength}>{time.length} / 50</div>}
+          {time.length > 49 && <div className={styles.textLength}>최대 50글자까지 작성할 수 있습니다.</div>}
         </div>
         {onCreate && (
           <div className={styles.inputField}>
