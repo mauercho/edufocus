@@ -41,6 +41,7 @@
   font-weight: 400;
   line-height: 1.4;
   color: var(--text-color-secondary);
+  word-break: break-all;
 }
 
 .button {
