@@ -26,14 +26,6 @@ export default function Header() {
               />
             </Link>
           </li>
-          <li>
-            <Link
-              to={'/live/1'}
-              target="_blank"
-            >
-              live
-            </Link>
-          </li>
         </ul>
         <ul className={styles.group}>
           {userType && (
