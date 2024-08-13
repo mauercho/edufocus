@@ -52,8 +52,7 @@ export default function ArticleDetailAnswerInput({ onSubmit, initialAnswer = '',
         placeholder="답변 작성하기"
         className={styles.input}
       />
-      {answer && answer.length > 950 && <div className={styles.textLength}>{answer.length} / 1000</div>}
-
+      {answer && answer.length > 999 && <div className={styles.textLength}>최대 1000글자까지 작성할 수 있습니다.</div>}
       <button
         type="submit"
         className={styles.button}
