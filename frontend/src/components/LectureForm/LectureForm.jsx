@@ -38,8 +38,21 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
     if (initialValues.time) timeRef.current.value = initialValues.time;
   }, [initialValues]);
 
+  console.log(startDateRef.current.value, endDateRef.current.value);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const startDate = new Date(startDateRef.current.value);
+    const endDate = new Date(endDateRef.current.value);
+    if (startDate > endDate) {
+      window.alert('시작 날짜가 끝나는 날짜보다 더 늦습니다.');
+      return;
+    }
+
+    if (startDate <= new Date(Date.now() - 86400000)) {
+      window.alert('시작 날짜는 오늘 이후여야 합니다.');
+      return;
+    }
 
     const lectureObject = {
       title: titleRef.current.value,
@@ -49,7 +62,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
       endDate: new Date(endDateRef.current.value).toISOString(),
       time: timeRef.current.value,
     };
-
+    console.log(lectureObject);
     const formData = new FormData();
     formData.append('lectureCreateRequest', new Blob([JSON.stringify(lectureObject)], { type: 'application/json' }));
 
@@ -84,6 +97,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
             maxLength={50}
             type="text"
             placeholder="강의명을 입력하세요"
+            required
           />
         </div>
         <div className={styles.inputField}>
@@ -91,6 +105,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <textarea
             ref={descriptionRef}
             className={styles.textarea}
+            maxLength={2000}
             placeholder="강의에 대한 설명을 입력하세요"
           ></textarea>
         </div>
@@ -99,6 +114,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
           <textarea
             ref={planRef}
             className={styles.textarea}
+            maxLength={2000}
             placeholder="강의 계획을 입력하세요"
           ></textarea>
         </div>
@@ -110,6 +126,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
                 className={styles.input}
                 ref={startDateRef}
                 type="date"
+                required
               />
               <span className={styles.label}>부터</span>
             </div>
@@ -118,6 +135,7 @@ export default function LectureForm({ title, topic, to = '..', initialValues = {
                 className={styles.input}
                 ref={endDateRef}
                 type="date"
+                required
               />
               <span className={styles.label}>까지</span>
             </div>
