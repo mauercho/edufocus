@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -72,10 +73,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeUserInfo(InfoDto infoDto, Long id) {
 
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
 
-        if (isEmailExist(infoDto.getEmail())) {
+        if (isEmailExist(infoDto.getEmail()) && !infoDto.getEmail().equals(user.getEmail())) {
             throw new RuntimeException("이미 사용 중인 이메일입니다.");
 
         }
