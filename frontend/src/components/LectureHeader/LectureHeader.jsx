@@ -2,10 +2,9 @@ import { Link, useParams } from 'react-router-dom';
 import styles from './LectureHeader.module.css';
 import PlayIcon from '/src/assets/icons/play.svg?react';
 import CompassIcon from '/src/assets/icons/compass.svg?react';
-import UserIcon from '/src/assets/icons/user.svg?react';
 import useBoundStore from '../../store';
 
-export default function LectureHeader({ img, title, tutorImg, tutor, isLive = false }) {
+export default function LectureHeader({ img, title, tutor, isLive = false }) {
   const { lectureId } = useParams();
   const userType = useBoundStore((state) => state.userType);
   const isTeacher = userType === 'teacher';
