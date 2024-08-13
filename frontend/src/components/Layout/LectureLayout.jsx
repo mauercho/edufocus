@@ -24,14 +24,6 @@ export default function LectureLayout() {
         navigate('..');
       });
   };
-  const lectureData = {
-    title: lecture.title,
-    description: lecture.description,
-    plan: lecture.plan,
-    startDate: lecture.startDate,
-    endDate: lecture.endDate,
-    time: lecture.time,
-  };
 
   useEffect(() => {
     if (['NOT_ENROLLED', 'MANAGED_BY_OTHERS', 'PENDING'].includes(lecture.status)) {
@@ -66,12 +58,7 @@ export default function LectureLayout() {
           {userType === 'teacher' && (
             <SideBar title={'강의 정보 관리'}>
               <SideLink to={'teacherReportsets'}>퀴즈 성적 보기</SideLink>
-              <SideLink
-                to={'edit'}
-                state={lectureData}
-              >
-                강의 정보 수정
-              </SideLink>
+              <SideLink to={'edit'}>강의 정보 수정</SideLink>
               <li>
                 <span
                   onClick={handleDelete}

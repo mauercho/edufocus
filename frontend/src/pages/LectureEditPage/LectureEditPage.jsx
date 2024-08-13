@@ -1,13 +1,12 @@
 import { LectureForm } from '../../components/LectureForm';
 import { useLectureEdit } from '../../hooks/api/useLectureEdit';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useLectureInfo } from '../../hooks/api/useLectureInfo';
 
 export default function LecutreEditPage() {
   const { lectureId } = useParams();
-  const location = useLocation();
-  const initialData = location.state.from;
-  const lectureInfo = useLectureInfo(lectureId);
+  const { data, refetch } = useLectureInfo(lectureId);
+  const initialData = data.data;
 
   const navigate = useNavigate();
   const { lectureEdit } = useLectureEdit();
@@ -15,7 +14,7 @@ export default function LecutreEditPage() {
   const handleSubmit = async (lectureObject) =>
     await lectureEdit(lectureId, lectureObject)
       .then(() => {
-        lectureInfo.refetch();
+        refetch();
         navigate('..');
       })
       .catch(() => {});
