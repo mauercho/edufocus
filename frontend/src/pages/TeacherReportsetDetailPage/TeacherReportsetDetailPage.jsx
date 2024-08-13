@@ -22,7 +22,7 @@ export default function TeacherReportsetDetailPage() {
               title={
                 report.correctCount == -1
                   ? `${report.name} - 미응시`
-                  : `${report.name} - ${report.title} 점수: ${report.correctCount}/${report.allCount}`
+                  : `${report.name} - 점수: ${report.correctCount}/${report.allCount}`
               }
               sub={`${new Date(report.date).toLocaleDateString()} ${new Date(report.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}
               to={`../report/${report.reportId}`}
