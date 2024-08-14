@@ -5,7 +5,6 @@ import styles from './PasswordResetAuthPage.module.css';
 import { usePasswordReset } from '../../hooks/api/usePasswordReset';
 
 export default function PasswordResetPage() {
-  // TODO: 비밀번호 변경 기능확인 후 최종 완성
   const location = useLocation();
   const email = location.state;
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ export default function PasswordResetPage() {
     setAuthError(false);
     verify(authNumRef.current.value, email)
       .then(() => {
+        authNumRef.current.value = '';
         setSentAuthNum(true);
       })
       .catch((err) => {
