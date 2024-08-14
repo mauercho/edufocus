@@ -33,6 +33,7 @@ export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+        {username.length > 19 && <div className={styles.maxLengthMessage}>최대 20자까지 입력 가능합니다</div>}
       </div>
       <p className={styles.textHeading}>이메일 변경</p>
       <div className={styles.inputBox}>
@@ -52,6 +53,8 @@ export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
           onChange={(e) => setUseremail(e.target.value)}
           required
         />
+        {useremail.length > 49 && <div className={styles.maxLengthMessage}>최대 50자까지 입력 가능합니다</div>}
+
         {usingEmail && <div className={styles.errorText}>이미 사용중인 이메일입니다</div>}
       </div>
       <button
