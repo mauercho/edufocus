@@ -168,7 +168,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
                     <input
                       className={`${styles.input} ${styles.choiceInput}`}
                       type="text"
-                      maxLength={200}
+                      maxLength={50}
                       value={choice.content}
                       onChange={(e) => handleChoiceChange(choice.num, e.target.value)}
                       placeholder={`보기 ${choice.num}`}
@@ -196,7 +196,7 @@ export default function QuizCard({ quiz, updateQuiz, deleteQuiz }) {
               <input
                 type="text"
                 value={answer}
-                maxLength={200}
+                maxLength={50}
                 onChange={(e) => {
                   setAnswer(e.target.value);
                   updateQuiz(quiz.id, { ...quiz, question, answer: e.target.value, choices, image });

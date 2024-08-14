@@ -36,6 +36,7 @@ export default function Quiz({ question, image, choices = [], setAnswers }) {
           <input
             type="text"
             autoFocus
+            maxLength={50}
             placeholder="답 입력"
             onChange={(e) => {
               setAnswers(e.target.value);
