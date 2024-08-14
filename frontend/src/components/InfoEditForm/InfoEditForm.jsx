@@ -27,7 +27,7 @@ export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
           placeholder="이름"
           type="text"
           id="username"
-          maxLength={200}
+          maxLength={20}
           className={`${styles.input} ${styles.textBody}`}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -48,7 +48,7 @@ export default function InfoEditForm({ name, email, onSubmit, usingEmail }) {
           id="useremail"
           className={`${styles.input} ${styles.textBody} ${usingEmail && styles.errorBox}`}
           value={useremail}
-          maxLength={200}
+          maxLength={50}
           onChange={(e) => setUseremail(e.target.value)}
           required
         />

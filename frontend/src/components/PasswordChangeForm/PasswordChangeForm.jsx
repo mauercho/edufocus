@@ -35,7 +35,7 @@ export default function PasswordChangeForm({ onSubmit, onError }) {
           type="password"
           id="currentPassword"
           ref={currentPasswordRef}
-          maxLength={200}
+          maxLength={20}
           className={error === 'currentPwError' ? styles.inputErrorBox : styles.inputBox}
           required
         />
@@ -47,7 +47,7 @@ export default function PasswordChangeForm({ onSubmit, onError }) {
           type="password"
           id="newPassword"
           ref={newPasswordRef}
-          maxLength={200}
+          maxLength={20}
           className={error === 'samePwError' ? styles.inputErrorBox : styles.inputBox}
           required
         />
@@ -59,7 +59,7 @@ export default function PasswordChangeForm({ onSubmit, onError }) {
           type="password"
           id="confirmPassword"
           ref={confirmPasswordRef}
-          maxLength={200}
+          maxLength={20}
           className={error === 'confirmError' ? styles.inputErrorBox : styles.inputBox}
           required
         />

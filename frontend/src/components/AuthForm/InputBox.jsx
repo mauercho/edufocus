@@ -1,7 +1,19 @@
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import styles from './InputBox.module.css';
 
-export default forwardRef(function InputBox({ title, id = null, type, hasError = null, children }, ref) {
+export default forwardRef(function InputBox(
+  { title, id = null, type, hasError = null, children, maxLength = 50 },
+  ref
+) {
+  const [isMaxLengthReached, setIsMaxLengthReached] = useState(false);
+
+  const handleInput = (e) => {
+    if (e.target.value.length >= maxLength) {
+      setIsMaxLengthReached(true);
+    } else {
+      setIsMaxLengthReached(false);
+    }
+  };
   return (
     <div className={`${styles.inputBox} ${hasError && styles.errorBox}`}>
       <label
@@ -15,9 +27,11 @@ export default forwardRef(function InputBox({ title, id = null, type, hasError =
         id={id}
         className={`${styles.input} ${styles.textSubheading}`}
         ref={ref}
-        maxLength={200}
+        maxLength={maxLength}
+        onInput={handleInput}
         required
       />
+      {isMaxLengthReached && <div className={styles.maxLengthMessage}>최대 {maxLength}자까지 입력 가능합니다</div>}
       {children}
     </div>
   );
