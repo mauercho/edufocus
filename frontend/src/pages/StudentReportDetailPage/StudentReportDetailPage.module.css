@@ -32,6 +32,7 @@
   font-size: 32px;
   line-height: 1.2;
   font-weight: 800;
+  word-break: break-word;
 }
 
 .author {
