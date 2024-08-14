@@ -115,6 +115,7 @@ export default function ChatRoom({ isTeacher, ...props }) {
           <input
             className="lk-form-control lk-chat-form-input"
             disabled={isSending}
+            maxLength={200}
             ref={chatInputRef}
             type="text"
             placeholder="메시지"
