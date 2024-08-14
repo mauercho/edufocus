@@ -52,12 +52,14 @@ export default function LoginPage() {
           id="id"
           type="text"
           ref={idRef}
+          maxLength={20}
         />
         <InputBox
           title="비밀번호"
           type="password"
           id="password"
           ref={passwordRef}
+          maxLength={20}
         >
           <Link
             to={'../password-reset'}

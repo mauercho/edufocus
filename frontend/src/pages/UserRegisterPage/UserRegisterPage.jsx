@@ -82,7 +82,9 @@ export default function UserRegisterPage() {
           id="ID"
           ref={idRef}
           hasError={error === 'existingId'}
+          maxLength={20}
         >
+          {}
           {error === 'existingId' && <div>이미 존재하는 아이디입니다</div>}
         </InputBox>
         <InputBox
@@ -90,6 +92,7 @@ export default function UserRegisterPage() {
           type="text"
           id="name"
           ref={nameRef}
+          maxLength={20}
         />
         <InputBox
           title="이메일"
@@ -105,6 +108,7 @@ export default function UserRegisterPage() {
           type="password"
           id="password"
           ref={passwordRef}
+          maxLength={20}
         />
         <InputBox
           title="비밀번호 확인"
@@ -112,6 +116,7 @@ export default function UserRegisterPage() {
           id="passwordConfirm"
           ref={passwordConfirmRef}
           hasError={error === 'pwNotMatch'}
+          maxLength={20}
         >
           {error === 'pwNotMatch' && <div>비밀번호가 일치하지 않습니다</div>}
         </InputBox>
