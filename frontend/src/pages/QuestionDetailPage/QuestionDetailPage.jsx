@@ -13,7 +13,7 @@ export default function QuestionDetailPage() {
 
   const handleDelete = async () => {
     await qnaDelete(qnaId);
-    navigate('..');
+    navigate('..', { replace: true });
   };
 
   return (

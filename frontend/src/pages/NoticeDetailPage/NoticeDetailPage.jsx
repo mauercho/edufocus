@@ -13,7 +13,7 @@ export default function NoticeDetailPage() {
 
   const handleDelete = async () => {
     await noticeDelete(noticeId);
-    navigate('..');
+    navigate('..', { replace: true });
   };
 
   return (
