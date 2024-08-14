@@ -9,18 +9,18 @@ export default function ClassCard({ img, path, children }) {
       to={path}
       className={styles.card}
     >
-      {img ? (
-        <img
-          src={`${STATIC_URL}${img}`}
-          alt="강의 이미지"
-          className={styles.thumbnail}
-        />
-      ) : (
-        <div className={styles.thumbnail}>
+      <div className={styles.thumbnail}>
+        {img ? (
+          <img
+            src={`${STATIC_URL}${img}`}
+            alt="강의 이미지"
+            className={styles.thumbnail}
+          />
+        ) : (
           <CompassIcon />
-        </div>
-      )}
-      <div>{children}</div>
+        )}
+      </div>
+      <div className={styles.title}>{children}</div>
     </Link>
   );
 }

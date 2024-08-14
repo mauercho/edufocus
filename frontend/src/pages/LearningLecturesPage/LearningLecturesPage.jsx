@@ -23,18 +23,18 @@ export default function LearningLecturesPage() {
               to={`/lecture/${lecture.id}/class`}
               className={styles.card}
             >
-              {lecture.image ? (
-                <img
-                  src={`${STATIC_URL}${lecture.image}`}
-                  alt={lecture.title}
-                  className={styles.thumbnail}
-                />
-              ) : (
-                <div className={styles.thumbnail}>
+              <div className={styles.thumbnail}>
+                {lecture.image ? (
+                  <img
+                    src={`${STATIC_URL}${lecture.image}`}
+                    alt={lecture.title}
+                    className={styles.thumbnail}
+                  />
+                ) : (
                   <CompassIcon />
-                </div>
-              )}
-              <div>{lecture.title}</div>
+                )}
+              </div>
+              <div className={styles.title}>{lecture.title}</div>
             </Link>
           ))
         ) : (
