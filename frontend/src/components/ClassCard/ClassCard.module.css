@@ -7,9 +7,26 @@
   font-weight: 400;
   color: var(--text-color);
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  border-radius: 20px;
   white-space: nowrap;
+  box-sizing: border-box;
+
+  & > .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: font-weight 0.25s cubic-bezier(0, 0, 0.5, 1);
+  }
+
+  &:hover {
+    & > .thumbnail {
+      box-shadow: 2px 4px 8px #00000029;
+      scale: 1.05;
+    }
+
+    & > .title {
+      font-weight: 600;
+    }
+  }
 }
 
 .thumbnail {
@@ -24,4 +41,13 @@
   object-fit: contain;
   stroke: var(--text-color-secondary);
   box-sizing: border-box;
+  overflow: hidden;
+  transition:
+    box-shadow 0.25s cubic-bezier(0, 0, 0.5, 1),
+    scale 0.25s cubic-bezier(0, 0, 0.5, 1),
+    rotate 0.25s cubic-bezier(0, 0, 0.5, 1);
+
+  & > img {
+    background-color: var(--background-secondary);
+  }
 }
