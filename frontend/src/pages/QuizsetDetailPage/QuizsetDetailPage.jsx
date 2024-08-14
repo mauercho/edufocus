@@ -15,7 +15,7 @@ export default function QuizsetDetailPage() {
   };
   const handleDelete = async () => {
     await quizsetDelete(quizsetId);
-    navigate('..');
+    navigate('..', { replace: true });
   };
 
   return (

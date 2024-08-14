@@ -13,7 +13,7 @@ export default function FreeboardDetailPage() {
 
   const handleDelete = async () => {
     await freeboardDelete(freeboardId);
-    navigate('..');
+    navigate('..', { replace: true });
   };
 
   return (
