@@ -1,0 +1,28 @@
+.toggle {
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--background);
+
+  & > button {
+    border: none;
+    background-color: var(--background);
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 500;
+    cursor: pointer;
+
+    &.active {
+      color: var(--on-primary);
+      background-color: var(--primary-color);
+    }
+  }
+}

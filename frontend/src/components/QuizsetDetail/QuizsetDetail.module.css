@@ -1,0 +1,86 @@
+.quizsetDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  background-color: var(--background-default);
+  color: var(--text-color);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.headerInside {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+}
+
+.actionGroup {
+  flex-shrink: 0;
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  color: var(--text-color);
+}
+
+.goBack {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--text-color-secondary);
+  stroke: var(--text-color-secondary);
+}
+
+.title {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0;
+  word-break: break-all;
+}
+
+.image {
+  width: 295px;
+  height: 220px;
+  margin: 10px auto;
+  border-radius: 8px;
+  object-fit: contain;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 440px);
+  gap: 20px;
+  justify-content: start;
+  margin-bottom: 40px;
+}
+
+.edit,
+.delete {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: var(--background);
+  color: var(--text-color-tertiary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete {
+  color: var(--error-color);
+}

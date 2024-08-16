@@ -1,0 +1,30 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.groupTitle {
+  color: var(--text-color);
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & > li {
+    padding: 0;
+    margin: 0;
+  }
+}

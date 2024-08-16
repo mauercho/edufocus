@@ -1,0 +1,28 @@
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.textSubheading {
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.errorBox * {
+  color: var(--error-color);
+}
+
+.errorBox input {
+  outline: none;
+  border: 1px solid var(--error-border);
+}

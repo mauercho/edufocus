@@ -1,0 +1,75 @@
+.textHeading {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0px;
+}
+
+.textBody {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--text-color-secondary);
+}
+
+.textBodyStrong {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.infoEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input {
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+  padding: 12px 16px;
+}
+
+.buttonBox {
+  padding: 12px;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  color: var(--on-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  box-sizing: border-box;
+  border-radius: 8px;
+  align-self: end;
+  cursor: pointer;
+}
+
+.buttonCover {
+  display: flex;
+  justify-content: end;
+}
+
+.buttonBox:disabled,
+.buttonBox[disabled] {
+  border-color: var(--border-color);
+  background-color: var(--background-tertiary);
+  color: var(--text-color-tertiary);
+  cursor: not-allowed;
+  stroke: var(--text-color-tertiary);
+}
+
+.errorBox {
+  outline: none;
+  border: 1px solid var(--error-border);
+}
+
+.errorText {
+  color: var(--error-color);
+}
