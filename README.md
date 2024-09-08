@@ -22,7 +22,7 @@
 
 
 ## 📂 시스템 아키텍처
-<img src="exec/아키텍처.jpg">
+![아키텍처](https://github.com/user-attachments/assets/ffdfb6a7-9382-4351-a2af-2522befaddd9)
 
 ## 💻 Stacks
 
@@ -53,7 +53,7 @@
 
 
 ## ERD
-<img src="exec/erd.png">
+![erd](https://github.com/user-attachments/assets/a1abae6a-cccd-42e6-9eba-806100af9adb)
 
 ## 시연영상
 
