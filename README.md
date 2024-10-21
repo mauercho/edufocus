@@ -64,6 +64,7 @@
 ## 시연영상
 
 (이미지를 누르면 영상 링크로 이동합니다.)
+
 [![시연 영상](http://img.youtube.com/vi/BOYHzARg5zE/0.jpg)](https://www.youtube.com/watch?v=BOYHzARg5zE)
 
 ## 팀원 소개
